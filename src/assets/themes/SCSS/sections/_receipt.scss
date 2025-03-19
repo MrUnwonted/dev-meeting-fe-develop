@@ -1,0 +1,331 @@
+.receipt-content-wrap-outer{
+    .receipt-inner-wrap{
+        @include padding(.75rem, .75rem, .75rem, .75rem);
+        overflow: auto;
+        @include scrollbar();
+       .receipt-table{
+        width: 100%;
+            thead{
+                th{
+                    font-size: $small;
+                    color: $black-65;
+                    @include padding(.75rem, .75rem, .75rem, .75rem);
+                    .logo-wrap{
+                       .logo-image{
+                            width: auto;
+                            height: 5.3125rem;
+                            object-fit: contain;
+                            display: inline-block;
+                       }
+                    }
+                    .title-wrap{
+                        text-align: center;
+                        .head{
+                            font-size: $heading-sm !important;
+                            color: $black-65 !important;
+                            margin-bottom:0;
+                            font-weight: $font-weight-semibold !important;
+                        }
+                        .subdesc{
+                            font-size: $para !important;
+                            color: $black-65 !important;
+                            margin-bottom:0;
+                            display: inline-block;
+                            font-weight: $font-weight-normal !important;
+                        }
+                    }
+                    .date-wrap-outer{
+                        @include flex(flex, normal, end);
+                        gap: 1.5rem;
+                    }
+                }
+            }
+            tbody{
+                tr{
+                    td{
+                        vertical-align: top;
+                        @include padding(.75rem, .75rem, .75rem, .75rem);
+                        &.header{
+                            font-size: $para !important;
+                            color: $black-65 !important;
+                            font-weight: $font-weight-medium !important;
+                            text-align: center;
+                            background-color: $gray-15;
+                            @include curve(.5rem);
+                        } 
+                        .text-muted{
+                            display: block;
+                            color: rgb($black, .5);
+                        }
+                        .address-wrap{
+                            .head{
+                                display: block;
+                                font-size: $small !important;
+                                color: $black-65 !important;
+                                font-weight: $font-weight-medium !important;
+                            }
+                            .address{
+                                display: block;
+                                font-size: $small !important;
+                                color: $black-65 !important;
+                                font-weight: $font-weight-normal !important;
+                                line-height: 1.25rem;
+                            }
+                        }
+                        .receipt-wrap{
+                            @include flex(flex, center, space-between);
+                            gap: .5rem;
+                            
+                            .receipt-text{
+                                @include flex(flex, center, normal);
+                                gap: 1.5rem;
+                                font-size: $small !important;
+                                color: rgb( $black-65, .5) !important;
+                                font-weight: $font-weight-normal !important;
+                                .text{
+                                    min-width: 130px;
+                                    display: block;
+                                }
+                                .desc{
+                                    color: $black-65 !important;
+                                }
+                            }
+                        }
+                        .receipt-table-details{
+                            table{
+                               tbody{
+                                    td{
+                                        &:not(.receipt-details-table td){
+                                            padding: 0 !important;
+                                        }
+                                    }
+                               }
+                            }
+                        }
+                        .receipt-details-table{
+                            margin-bottom: 2.5rem;
+                            thead{
+                                border-bottom: 1px solid $gray-15;
+                                th{
+                                    @include padding(.25rem, .25rem, .25rem, .25rem);
+                                    &:first-child{
+                                        padding-left: 0 !important;
+                                    }
+                                    &:last-child{
+                                        padding-right: 0 !important;
+                                        text-align: end;
+                                    }
+                                }
+                            }
+                            tbody{
+                                tr{
+                                    td{
+                                        font-size: $small;
+                                        color:$black-65;
+                                        vertical-align: middle;
+                                        border-right: 1px solid $gray-15;
+                                        border-bottom: 1px solid $gray-15;
+                                        @include padding(.25rem, .25rem, .25rem, .25rem);
+                                        &:first-child{
+                                            padding-left: 0 !important;
+                                        }
+                                        &:last-child{
+                                            padding-right: 0 !important;
+                                            border-right: none !important;
+                                            text-align:end;
+                                        }
+                                        
+                                    }
+                                    &:last-child{
+                                        td{
+                                            border-bottom: 1px solid $black !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .receipt-desc-table{
+                            margin-bottom: 2rem;
+                            border-top: 1px solid $gray-15;
+                            border-bottom: 1px solid $gray-15;
+                            tbody{
+                                tr{
+                                    td{
+                                        &:first-child{
+                                            padding-left: 0 !important;
+                                        }
+                                        &:last-child{
+                                            padding-right: 0 !important;
+                                        }
+                                        .receipt-wrap{
+                                            height: 100%;
+                                            padding-left: 1rem;
+                                            border-left: 1px solid $gray-15;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .footer-table{
+                            border-top: 1px solid $gray-15;
+                             tbody{
+                                td{
+                                    &:first-child{
+                                        width: 30%;
+                                    }
+                                    &:nth-child(2){
+                                        width: 40%;
+                                    }
+                                    &:last-child{
+                                        width: 30%;
+                                    }
+                                }
+                            }
+                            .counter-wrap{
+                                border-right: 1px solid $gray-15;
+                                padding-left: 1.5rem;
+                            }
+                        }
+                    }
+                    &.receipt-description{
+                        td{
+                            &:not(.receipt-desc-table w-100 td){
+                                padding-left: 0 !important;
+                                padding-right: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+            tfoot{
+                td *{
+                    color: $black-65;
+                    font-size: $small;
+                }
+                tr{
+                    td{
+                        @include padding(.5rem, .5rem, .5rem, .5rem);
+                        &:last-child{
+                            border-bottom: 1px solid $gray-15;
+                        }
+                    }
+                    &:last-child{
+                        td{
+                            border-bottom: none !important;
+                        }
+                    }
+                }
+            }
+            .date-wrap, .counter-wrap{
+                @include flex(flex, normal, normal);
+                gap: .5rem;
+                flex-direction: column;
+                .counter-wrap-inner{
+                    @include flex(flex, normal, normal);
+                    gap: .5rem;
+                    flex-direction: column;
+                }
+                .head{
+                    font-size: $small !important;
+                    color: $black-65!important;
+                    display: block;
+                    font-weight: $font-weight-semibold !important;
+                }
+                .date-text, .counter-text{
+                    font-size: $small !important;
+                    color: rgb( $black-65, .5) !important;
+                    display: block;
+                    font-weight: $font-weight-normal !important;
+                }
+                .date,.time, .desc{
+                    font-size: $small !important;
+                    display: block;
+                    color: $black-65 !important;
+                    font-weight: $font-weight-normal !important;
+                }
+            }
+            .date-wrap{
+                .date-text{
+                    @include flex(flex, center, normal);
+                    column-gap: 1rem;
+                }
+            }
+            .counter-wrap{
+                .counter-wrap-inner{
+                    column-gap: 1.5rem;
+                    .counter-text{
+                        @include flex(flex, center, normal);
+                        column-gap: 1.5rem;
+                    }
+                    .text{
+                        min-width: 130px;
+                        display: block;
+                    }
+                }
+                .counter-text{
+                    min-width: 130px;
+                }
+            }
+            .remarks-wrap, .signature-wrap{
+                .head{
+                    margin-bottom: .5rem;
+                    font-size: $small !important;
+                    color: $black-65 !important;
+                    display: block;
+                    font-weight: $font-weight-semibold !important;
+                }
+                .desc{
+                    font-size: $small !important;
+                    color: rgb( $black-65, .5) !important;
+                    display: block;
+                    font-weight: $font-weight-normal !important;
+                }
+                .signature-box{
+                    min-height: 4rem;
+                    .signature{
+                        margin-top: 1rem;
+                    }
+                }
+            }
+            .foot-flex{
+                @include flex(flex, center, space-between);
+                gap: .75rem;
+                &.total{
+                    & * {
+                        color: $black-65;
+                        font-weight: $font-weight-medium; 
+                    }
+                }
+            }
+       }
+
+    }
+}
+
+.receipt-modal{
+    .modal-footer-inner{
+        width: 100%;
+        display: block;
+    }
+    .page-count-wrap{
+        @include flex(flex, center, space-between);
+        gap: .75rem;
+        @include  flex-wraping(wrap);
+        .head{
+            font-size: $small !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 24px !important;
+            color: $gray-150 !important;
+            margin-bottom:0;
+        } 
+        .page-count{
+            font-size: $small !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 24px !important;
+            color: $gray-150 !important;
+            margin-bottom:0;
+        } 
+    }
+}

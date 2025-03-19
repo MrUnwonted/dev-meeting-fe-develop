@@ -1,0 +1,45 @@
+@mixin badge-style($color-name) {
+    $color: map-get($badge-colors, $color-name);
+
+    color: $color;
+    background-color: rgb($color, .05);
+    .bar{
+      background-color: $color;
+      width: .1875rem;
+      display: inline-block;
+      @include  curve(.5rem);
+  }
+}
+
+@mixin badge-outline-style($color-name) {
+    $color: map-get($badge-colors, $color-name);
+
+    color: $color;
+    border: 1px solid $color;
+    .bar{
+      background-color: $color;
+      width: .1875rem;
+      display: inline-block;
+      @include  curve(.5rem);
+  }
+}
+
+// Generate the badge classes
+@each $color-name, $color-value in $badge-colors {
+    .badge-#{$color-name} {
+      @include badge-style($color-name);
+    }
+}
+
+@each $color-name, $color-value in $badge-colors {
+    .badge-outline-#{$color-name} {
+      @include badge-outline-style($color-name);
+    }
+}
+  
+.badge{
+  &.h-24{
+    padding-top: .32rem !important;
+    padding-bottom: .32rem !important
+  }
+}

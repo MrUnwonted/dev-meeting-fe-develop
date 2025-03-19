@@ -1,0 +1,172 @@
+.admin-container{
+    padding-top: 5.1rem;
+    height: calc(100vh - 5rem);
+
+    .profile-drop-down{
+        .dropdown-menu{
+            &:not(:last-child){
+                border-bottom: 1p solid $gray-15;
+            }
+            min-width: 218px;
+            @include curve(.5rem);
+            overflow-x: hidden;
+            left: -1rem;
+            padding: 0 !important;
+        }
+        .dropdown-group{
+            padding-left: 0 !important;
+            margin-bottom: 0 !important;
+            list-style: none;
+            &:not(:last-child){
+                border-bottom: 1px solid $gray-15;
+            }
+        }
+        .dropdown-item{
+            @include padding(.75rem, 1rem, .75rem, 1rem);
+            @include flex(flex, center, normal);
+            gap: .75rem;
+            .text{
+                font-size: $small !important;
+                line-height: 1rem !important;
+                color: $black-65 !important;
+            }
+            &.title{
+               color: $gray-150 !important;
+               font-size: $tiny !important;
+               line-height: 1.125rem !important;
+               margin-bottom: 0;
+               font-weight: $font-weight-medium !important;
+               background-color: transparent !important;
+               &:hover{
+                font-weight: $font-weight-medium !important;
+                background-color: transparent !important;
+                color: $gray-150 !important;
+               } 
+            }
+            &:hover{
+                background-color: $primary-90;
+                .text{
+                    color: $white !important;
+                }
+                .icon{
+                    filter: brightness(200) grayscale(1);
+                }
+            }
+        }
+        .dropdown-toggle{
+            padding: 0 !important;
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            &:after{
+                margin-top: -5px ;
+            }
+            img{
+                &.profile-image{
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    object-fit: cover;
+                    object-position: center;
+                    @include curve (0);
+                }
+            }
+            .name{
+                color: $black-65 !important;
+                font-weight: $font-weight-normal !important;
+                margin-bottom: 0;
+                font-size: $small !important;
+                @include media-breakpoint-down(md){
+                    display:none;
+                }
+                .designation{
+                    margin-top: .25rem;
+                    display: block;
+                    font-size: $tiny !important;
+                    color: $gray-35 !important;
+                    .status-badge{
+                        margin-left: .25rem;
+                        background-color: transparent !important;
+                        border: 1px solid $gray-15 !important;
+                        @include padding(.125rem, .5rem, .125rem, .5rem);
+                        color: $gray-150 !important;
+                        font-size: $tiny !important;
+                        .number{
+                            color: $black-65 !important;
+                            font-weight: $font-weight-medium !important
+                        }
+                    }
+                }
+            }
+        }
+        .dropdown-item{
+            font-size: $small !important;
+            color: $black-65 !important;
+            &:hover, &:focus{
+                background-color: $primary-90 !important;
+                color: $white !important;
+                font-weight: $font-weight-normal !important;
+            }
+        }
+    }
+}
+
+.admin-card{
+    .table-outer-wrap{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        .table-wrap{
+            max-height: calc(100vh - 14rem);
+            overflow-y: auto;
+            @include scrollbar();
+        }
+    }
+}
+
+.admin-layout{
+    .table-outer-wrap{
+        // &.p-0{
+        //     padding: 0 !important;
+        //     .table-wrap{
+        //         // @include curve(0);
+        //         // border-left: none !important;
+        //         // border-right: none !important;
+        //         table{
+        //             @include curve(0);
+        //             &.file-table{
+        //                 @include curve(0);
+        //             }
+        //             thead{
+        //                 background-color: $white;
+        //             }
+        //         }
+        //     }
+        // }
+        .table-wrap{
+            max-height: calc(100vh - 14rem);
+            overflow-y: auto;
+            @include scrollbar();
+        }
+    }
+    .form-control, .form-select{
+        &:hover, &:focus{
+            border-color: $primary-90;
+        }
+    }
+    .top-tabs-content{
+        .arrow-wrap{
+            .btn-outline-primary-90{
+                border-color: rgb($primary-90 , .5) !important;
+                background-color: rgb($primary-90 , .5) !important;
+                &:not( .active){
+                    .icon{
+                        filter: brightness(100);
+                    }
+                }
+                &.active{
+                    background-color: $primary-90 !important;
+                    border-color: $primary-90 !important;
+                }
+            }
+        }
+    }
+}
+
+

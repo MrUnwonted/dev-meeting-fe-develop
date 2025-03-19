@@ -1,0 +1,83 @@
+.finance-layout{
+    .sidebar{
+        .sidebar-wrapper{
+            background-color: $primary-90 !important;
+            width: 100%;
+            .sidebar-wrap-inner{
+                .toggle-btn{
+                    background-color: $primary-90 !important;
+                    &:hover{
+                        background-color: $primary-90 !important;
+                    }
+                }
+                .nav-item{
+                    margin-bottom: 1rem;
+                    &:hover{
+                        background-color: rgb($primary-50, .4) !important;
+                        @include curve(.5rem);
+                    }
+                    &.active{
+                        background-color: $primary-50 !important;
+                        @include curve(.5rem);
+                    }
+                    .nav-link{
+                        .icon{
+                            &:not(.chevron .icon){
+                                width: 1.3rem;
+                                height: 1.3rem;
+                            }
+                        }
+                        .chevron .icon{
+                            width: 1rem;
+                            height: 1rem;
+                        }
+                    }
+                }
+                .sub-menu{
+                    list-style: none !important;
+                    padding-left: 0 !important;
+                    &:not(.minimized .sub-menu){
+                        margin-bottom: 1rem !important;
+                    }
+                    .nav-item{
+                        margin-bottom: .25rem;
+                        &:hover{
+                            background-color: rgb($primary-50, .4);
+                            @include curve(.5rem);
+                        }
+                        &.active{
+                            .nav-link{
+                                background-color: $primary-50;
+                                @include curve(.5rem);
+                                @include animation-all();
+                            }
+                        }
+                        &:before{
+                            content: none;
+                        }
+                        .nav-link{
+                            @include animation-all();
+                            @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                        }
+                    }
+                }
+                .collapse-item-content{
+                    background-color: $primary-90;
+                }
+            }
+        }
+    }
+}
+
+.finance-layout{
+    .sidebar-col{
+        &.minimized{
+            .sub-menu{
+                margin-bottom:0 !important;
+                .label{
+                    display: block !important;
+                }
+            }
+        }
+    }
+}

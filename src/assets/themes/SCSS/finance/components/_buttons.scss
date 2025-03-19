@@ -1,0 +1,39 @@
+
+
+//  btn-primary,btn-secondary,btn-success,btn-danger,btn-info,btn-success
+
+@each $color, $value in $finance-colors {
+  .finance-layout{
+    .btn-#{$color} {
+        @include button-variant($value);
+    }
+  }
+}
+
+// All btn-outline
+
+@each $color, $value in $finance-colors {
+    .finance-layout{
+        .btn-outline-#{$color} {
+            @include button-outline-variant($value);
+        }
+      }
+}
+
+.btn-primary-90{
+    color: $white !important;
+}
+
+// button
+    // Generate Button Styles for Each Theme Color
+    @each $name, $color in $finance-colors {
+      .finance-layout{
+        .btn-#{$name} {
+          @include button-styles($color, 'filled');
+          }
+      
+          .btn-outline-#{$name} {
+          @include button-styles($color, 'outline');
+          }
+      }
+  }

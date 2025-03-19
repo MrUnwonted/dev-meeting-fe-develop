@@ -1,0 +1,7 @@
+.dropdown-toggle{
+    &:after{
+        content: $icon-select;
+        border: none !important;
+        @include curve(0);
+    }
+}

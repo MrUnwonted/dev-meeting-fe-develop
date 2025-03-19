@@ -1,0 +1,121 @@
+//Theme Changing
+
+// main variables
+@import "../scss/bootstrap_5.0.2/functions";
+@import "../scss/variables";
+
+// bootstrap
+
+@import "../scss/bootstrap_5.0.2/bootstrap";
+
+
+// mixins
+@import "../scss/mixins/mixins";
+
+
+// owl carousel
+@import "../scss/components/owl-carousel";
+@import "../scss/components/owl-theme";
+
+// Seperate Mixins
+
+@import "../SCSS/mixins/icons";
+@import "../scss/mixins/button";
+@import "../scss/mixins/forms";
+@import "../scss/mixins/card";
+@import "../scss/mixins/tabs";
+@import "../scss/mixins/typography";
+@import "../scss/mixins/grid";
+@import "../scss/mixins/badges";
+@import "../scss/mixins/scrollbar";
+
+// components
+
+@import "../SCSS/components/icons";
+@import "../scss/components/animations";
+@import "../scss/components/buttons";
+@import "../scss/components/typography";
+@import "../scss/components/grid";
+@import "../scss/components/card";
+@import "../scss/components/tabs";
+@import "../scss/components/modals";
+@import "../scss/components/badges";
+@import "../scss/components/rte";
+@import "../scss/components/table";
+@import "../scss/components/timeline";
+@import "../scss/components/swiper";
+@import "../scss/components/upload-bar";
+@import "../scss/components/toast";
+@import "../scss/components/chips";
+
+// forms
+@import "../scss/forms/labels";
+@import "../scss/forms/forms_control";
+@import "../scss/forms/form-select";
+@import "../scss/forms/form-check";
+@import "../scss/forms/dropdown";
+
+
+// sections
+@import "../SCSS/sections/base";
+@import "../SCSS/sections/header";
+@import "../SCSS/sections/sidebar";
+@import "../SCSS/sections/login";
+@import "../SCSS/sections/selection";
+@import "../SCSS/sections/description";
+@import "../SCSS/sections/inward";
+@import "../SCSS/sections/filters";
+@import "../SCSS/sections/dashboard";
+@import "../SCSS/sections/notes";
+@import "../SCSS/sections/sidecollapse";
+@import "../SCSS/sections/widget";
+@import "../SCSS/sections/preview";
+@import "../SCSS/sections/acknowledgment";
+@import "../SCSS/sections/receipt";
+@import "../SCSS/sections/inbox";
+@import "../SCSS/sections/payment";
+@import "../SCSS/sections/toasts";
+@import "../SCSS/sections/profile";
+@import "../SCSS/sections/document";
+@import "../scss/sections/dropdowns";
+@import "../scss/sections/files";
+@import "../scss/sections/tableformwrap";
+
+// icons list
+@import "../scss/sections/icon-list";
+
+// landing page
+@import "../SCSS/landingpage/common";
+@import "../SCSS/landingpage/header";
+@import "../SCSS/landingpage/banner";
+@import "../SCSS/landingpage/search";
+@import "../SCSS/landingpage/analytic";
+@import "../SCSS/landingpage/clients";
+@import "../SCSS/landingpage/services";
+@import "../SCSS/landingpage/features";
+@import "../SCSS/landingpage/footer";
+@import "../SCSS/landingpage/pagination";
+
+// file manager
+@import "../SCSS/filemanager/allfiles";
+@import "../SCSS/filemanager/activities";
+@import "../SCSS/filemanager/filetable";
+@import "../SCSS/filemanager/photos";
+@import "../SCSS/filemanager/signature";
+@import "../SCSS/filemanager/createfolder";
+@import "../SCSS/filemanager/shared-files";
+@import "../SCSS/filemanager/folders";
+@import "../SCSS/filemanager/filter";
+@import "../SCSS/filemanager/common";
+
+// developer
+@import "../SCSS/developer/developer";
+
+// admin
+@import "../SCSS/admin/admin";
+
+//finance
+@import "../SCSS/finance/finance";
+
+
+

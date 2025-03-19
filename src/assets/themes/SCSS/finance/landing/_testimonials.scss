@@ -1,0 +1,72 @@
+.finance-layout{
+    .testimonials{
+        .testimonials-outer{
+            .testimonials-inner{
+                .heading-wrap{
+                    margin-bottom: 1rem;
+                    text-align: center;
+                    .tag{
+                        font-size: $para !important;
+                        font-weight: $font-weight-medium !important;
+                        line-height: 1.5rem !important;
+                        color: $primary-50 !important;
+                        margin-bottom: 1rem;
+                        display: block;
+                    }
+                    .head{
+                        font-size: $heading-md !important;
+                        font-weight: $font-weight-semibold  !important;
+                        line-height: 3.6rem !important;
+                        color: $black-65 !important;
+                        margin-bottom: 1rem;
+                    }
+                    .subhead{
+                        margin-bottom: 0 !important;
+                        color: $gray-150 !important;
+                        line-height: 1.5rem !important;
+                        display: block;
+                    }
+                }
+                .testi-btn-wrap{
+                    @include flex(flex, center, center);
+                    .testi-btn{
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        line-height: 0 !important;
+                        border: 4px solid $white;
+                        &.active{
+                            .testi-image{
+                                width: 9.375rem;
+                                height: 9.375rem;
+                                border: 4px solid $primary-90;
+                                object-fit: cover;
+                                @include curve(50%);
+                            }
+                        }
+                        .testi-image{
+                            width: 6.25rem;
+                            height: 6.25rem;
+                            object-fit: cover;
+                            @include curve(50%);
+                        }
+                    }
+                }
+                .testi-card{
+                    margin-top: 1rem;
+                    .name-date{
+                        color: $primary-90 !important;
+                    }
+                    .card-body{
+                        padding: 0 !important;
+                        background-color: transparent !important;
+                        @include curve(0);
+                        text-align: center;
+                        .title-flex-wrap{
+                            justify-content: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

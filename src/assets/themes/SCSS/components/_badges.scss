@@ -1,0 +1,27 @@
+.badge{
+    @include padding(.5rem, .75rem, .5rem, .75rem); //8px 12px//
+    @include curve(.25rem); //14px//
+    font-size: $small !important;
+    font-weight: $font-weight-normal !important;
+    min-width: 5.563rem; //89px//
+    .bar{
+        height: .7rem;
+        margin-right: .5rem;
+    }
+    &.xs{
+        font-size: $tiny !important;
+        .bar{
+            height: .6rem;
+        }
+    }
+    &.xxs{
+        font-size: $copyright-text !important;
+        .bar{
+            height: .5rem;
+        }
+        @include padding(.5rem, .5rem, .5rem, .5rem);
+    }
+    &.bg-gray-15{
+        color: $gray-200 !important;
+    }
+}

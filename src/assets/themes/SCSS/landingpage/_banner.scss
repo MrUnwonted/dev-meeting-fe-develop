@@ -1,0 +1,95 @@
+// hero banner
+.hero-banner{
+    background-color: $blue-variant-4;
+    margin-bottom: 0 !important;
+    position: relative;
+    z-index: 1;
+    .hero-banner-inner{
+        @include padding(9.375rem, 0, 9.375rem, 0);
+        @include media-breakpoint-down(md){
+            @include padding(4rem !important, 0, 6rem !important, 0);
+        }
+        .full-container{
+            @include padding(0, 5.9375rem, 0, 5.9375rem );
+        }
+        // leftside
+        .left-side-content{
+            .left-side-inner{
+                @include media-breakpoint-down(lg){
+                    & * {
+                        text-align: center;
+                    }
+                }
+                .head{
+                    color: $white;
+                    font-size: $heading-md !important;
+                    font-weight: $font-weight-bold !important;
+                    margin-bottom: 1rem !important;
+                    line-height: 3rem !important;
+                    .bold{
+                        display: block;
+                    }
+                }
+                .note{
+                    font-size: $subheading-lg !important;
+                    color: $white;
+                    display: block;
+                    font-weight: $font-weight-bold !important;
+                    margin-bottom: 1rem;
+                }
+                .desc{
+                    font-size: $para;
+                    color: $white !important;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                }
+                .button-wrap{
+                    margin-top: 2.5rem;
+                    .get-started-btn{
+                        min-width: 11.3125rem;
+                        line-height: .7rem !important;
+                        white-space: nowrap;
+                        color: $primary-90 !important;
+                        background-color: $white !important;
+                        @include curve(2.25rem);
+                        border-color: $black !important;
+                        font-size: $para !important;
+                        font-weight: $font-weight-medium !important;
+                        @include padding( 1.125rem !important, 1.5rem !important, 1.125rem !important, 1.5rem !important );
+                    }
+                }
+            }
+        }
+
+        // rightside
+        .banner-column{
+            .banner-inner{
+                img{
+                    width:100%;
+                    height: 25.9375rem;
+                    object-fit: contain;
+                    object-position: right;
+                    @include media-breakpoint-down(lg){
+                        object-position: center;
+                    }
+                }
+            }
+        }
+        .hero-dots-overlay{
+            right: 0;
+            mix-blend-mode: color-dodge;
+            position: absolute;
+            top: -56px;
+            z-index: -1;
+            opacity: 40%;
+            height: 100%;
+            width: 100%;
+            img{
+                width: 100%;
+                object-fit: cover;
+                height: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+.documents-preview-content{
+    .document-preview-inner{
+        &.drag{
+            border: 1px dashed $gray-35;
+            position: relative;
+            margin-top: .5rem;
+            &:before{
+                content: $icon-dragger;
+                position: absolute;
+                left: 50%;
+                top: -0.625rem
+            }
+        }
+        .left-side-content{
+            .documents-tab-wrap{
+                @include flex(flex, center, normal);
+                gap: .75rem;
+                flex-flow: row wrap;
+                .tab-btn{
+                    @include animation-all(); 
+                    &.active{
+                        .doc-thumb{
+                            border: 2px solid $primary-68 !important;
+                             @include animation-all(); 
+                        }
+                    }
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    line-height: 0 !important;
+                    .doc-thumb{
+                        border: 2px solid transparent !important;
+                        width: 120px;
+                        height: 120px;
+                        object-fit: cover;
+                        @include curve(.25rem);
+                        margin-bottom: .25rem;
+                    }
+                    .doc-name{
+                        display: block;
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-medium !important;
+                        color: $gray-200 !important;
+                        line-height: 1.125rem !important;
+                    }
+                }
+            }
+        }
+
+        .right-side-content{
+            .documents-card{
+                .card-header{
+                    background-color: $white-15;
+                    @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+                    border-bottom: 1px solid $gray-15;
+                    .head{
+                        font-size: $small !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: 0;
+                        line-height: 1.3125rem;
+                        color: $gray-150 !important;
+                    }
+                }
+                .card-body{
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    max-height: calc(100vh - 33.5rem) !important;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    .document-file{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        .document-slider{
+            .document-thumb-wrap{
+                max-height: calc(100vh - 34.25rem) !important;
+            }
+        }
+    }
+}

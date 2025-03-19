@@ -1,0 +1,138 @@
+button,
+.btn,
+[type="button"],
+[type="reset"],
+[type="submit"]{
+  padding: 1rem 2rem; //16px 32px //
+  white-space: nowrap;
+  @include curve(0.25rem);
+  font-size: $subheading-md;
+  font-weight: $font-weight-medium !important;
+  //button sizes
+  $buttonSizeConfig: 'default' .75rem 1rem $para, 'md' 0.75rem 2rem $para, 'sm' 0.5rem .75rem $para, 'xs' .5rem 2rem $tiny, 'xxs' .25rem 1.5rem $tiny; 
+  @each $tuple in $buttonSizeConfig {
+      &.#{nth($tuple, 1)} {
+          padding: nth($tuple, 2) nth($tuple, 3)  !important;
+          font-size: nth($tuple, 4) !important;
+          &.squared{
+            padding: nth($tuple,2) !important;
+          }
+      }
+  }
+  &:focus{
+    box-shadow: none !important;
+  }
+}
+
+//  btn-primary,btn-secondary,btn-success,btn-danger,btn-info,btn-success
+
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+  @include button-variant($value);
+  }
+}
+
+// All btn-outline
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    @include button-outline-variant($value);
+  }
+}
+
+// btn tertiary
+
+@each $color, $value in $theme-colors {
+  .btn-tertiary-#{$color} {
+    @include button-tertiary-variant($value);
+  }
+}
+
+// button danger{
+.btn-danger{
+  color:$white !important;
+}
+
+// card btn
+.btn-card{
+  width: 100%;
+  border: none !important;
+  text-align: initial;
+  padding: 0;
+  white-space: normal !important;
+}
+
+.folder-btn{
+    line-height: 0 !important;
+    padding: .5rem 1.4rem !important;
+    &.sm{
+      max-width: 95px;
+    }
+    &.lg{
+      max-width: 145px;
+    }
+    .file-icon{
+      width: 3rem;
+      height: 3rem;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      &.lg{
+        width: 4.75rem;
+        height: 4.625rem    
+      }
+    }
+    .profile-image{
+      width: 3rem;
+      height: 3rem;
+      object-fit: cover;
+      @include curve(50%);
+      margin-bottom: 1rem;
+      &.lg{
+        width: 4.75rem;
+        height: 4.625rem    
+      }
+    }
+    .text{
+      display: block;
+      font-size: $tiny !important;
+      font-weight: $font-weight-normal !important;
+      line-height: 1.125rem !important;
+      text-align: center;
+      @include ellipse();
+      max-width: 5.5rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .name{
+      display: block;
+      font-size: $tiny !important;
+      line-height: .875rem !important;
+      text-align: center;
+      color: $black-65;
+      margin-bottom: .75rem;
+      white-space: normal;
+    }
+    .designation{
+      display: block;
+      white-space: normal;
+      font-size: $tiny !important;
+      line-height: .75rem !important;
+      text-align: center;
+      color: $gray-35;
+    }
+    &.active{
+      border: 2px solid $blue-variant-5;
+    }
+}
+
+// button
+    // Generate Button Styles for Each Theme Color
+    @each $name, $color in $theme-colors {
+        .btn-#{$name} {
+        @include button-styles($color, 'filled');
+        }
+    
+        .btn-outline-#{$name} {
+        @include button-styles($color, 'outline');
+        }
+    }

@@ -1,0 +1,43 @@
+<div class="search-and-table">
+
+    <div class="search-flex-outer">
+      <div class="left-side">
+  
+        <!-- search-wrap -->
+        <div class="search-wrap">
+            <label class="form-label">Search</label>
+           <div class="input-wrap">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search" class="form-control md">
+           </div>
+        </div>
+      </div>
+    </div>
+    
+     <div class="table-outer-wrap">
+      <div class="table-wrap">
+        <table mat-table [dataSource]="dataSource" class="mat-table custom-table" matSort >
+           <!-- Dynamic Columns -->
+          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          </ng-container>
+      
+          <!-- Header Row -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+          
+          <!-- Data Rows -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (dblclick)="selectRecord(row)"></tr>
+      
+        </table>
+      
+      </div>
+  
+      <div class="pagination-wrap">
+          <!-- Paginator -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+     </div>
+  
+    
+    </div>
+    

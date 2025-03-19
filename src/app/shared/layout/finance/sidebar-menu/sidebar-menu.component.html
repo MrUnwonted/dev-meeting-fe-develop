@@ -1,0 +1,153 @@
+<aside class="sidebar">
+    <div class="sidebar-wrapper">
+      <ul class="sidebar-wrap-inner">
+        <button class="toggle-btn btn btn-primary-90 sm" id="toggle-btn" (click)="toggleCollapse()">
+          <i class="icon icon-chevron tiny"></i>
+        </button>
+        
+        <!-- Overview Nav Item -->
+        <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/dashboard') }">
+          <a [routerLink]="['/main/finance/dashboard']" class="nav-link">
+            <i class="icon icon-overview"></i>
+            <span class="label">Dashboard</span>
+          </a>
+        </li>
+        
+        <!-- Inbox Nav Item with Collapse -->
+        <li class="nav-item collapse-item" [ngClass]="{ 'active': isActive('/main/finance/masters') }">
+          <a class="nav-link" id="collapse-btn" data-bs-toggle="collapse" href="#collapseMasters" role="button" aria-expanded="false" aria-controls="collapseMasters">
+            <i class="icon icon-inbox"></i>
+            <span class="label">Masters</span>
+            <span class="chevron"><i class="icon icon-chevron"></i></span>
+          </a>
+        </li>
+  
+        <!-- Collapse Content for Inbox -->
+        <div class="collapse collapse-item-content" id="collapseMasters">
+            <ul class="sub-menu">
+              <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/masters/accounts-head') }">
+                <a [routerLink]="['/main/finance/masters/accounts-head']" class="nav-link">
+                  <i class="icon icon-accounting-2"></i>
+                  <span class="label">Accounts Head</span>
+                </a>
+              </li>
+              <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/masters/bank') }">
+                <a [routerLink]="['/main/finance/masters/bank']" class="nav-link">
+                  <i class="icon icon-bank"></i>
+                  <span class="label">Bank</span>
+                </a>
+              </li>
+              <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/masters/ledger') }">
+                <a [routerLink]="['/main/finance/masters/ledger']" class="nav-link">
+                  <i class="icon icon-signature"></i>
+                  <span class="label">Ledger</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+  
+        <!-- Transaction Nav Item -->
+        <li class="nav-item collapse-item" [ngClass]="{ 'active': isActive('/main/finance/transaction') }">
+            <a class="nav-link" id="collapse-btn" data-bs-toggle="collapse" href="#collapseTransactions" role="button" aria-expanded="false" aria-controls="collapseTransactions">
+                <i class="icon icon-inbox"></i>
+                <span class="label">Transaction</span>
+                <span class="chevron"><i class="icon icon-chevron"></i></span>
+              </a>
+        </li>
+
+        <!-- Collapse Content for transaction -->
+        <div class="collapse collapse-item-content" id="collapseTransactions">
+          <ul class="sub-menu">
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/sales') }">
+              <a [routerLink]="['/main/finance/transaction/sales']" class="nav-link">
+                <i class="icon icon-sales"></i>
+                <span class="label">Sales</span>
+              </a>
+            </li>
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/purchase') }">
+              <a [routerLink]="['/main/finance/transaction/purchase']" class="nav-link">
+                <i class="icon icon-purchase"></i>
+                <span class="label">Purchase</span>
+              </a>
+            </li>
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/receipts') }">
+              <a [routerLink]="['/main/finance/transaction/receipts']" class="nav-link">
+                <i class="icon icon-receipt"></i>
+                <span class="label">Receipt</span>
+              </a>
+            </li>
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/payment') }">
+              <a [routerLink]="['/main/finance/transaction/payment']" class="nav-link">
+                <i class="icon icon-payment"></i>
+                <span class="label">Payment</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+  
+        <!-- Utilities Nav Item -->
+        <li class="nav-item collapse-item" [ngClass]="{ 'active': isActive('/main/utilities') }">
+            <a class="nav-link" id="collapse-btn" data-bs-toggle="collapse" href="#collapseUtilities" role="button" aria-expanded="false" aria-controls="collapseUtilities">
+                <i class="icon icon-settings"></i>
+                <span class="label">Utilities</span>
+                <span class="chevron"><i class="icon icon-chevron"></i></span>
+              </a>
+        </li>
+
+         <!-- Reports Nav Item -->
+         <li class="nav-item collapse-item" [ngClass]="{ 'active': isActive('/main/finance/reports') }">
+            <a class="nav-link" id="collapse-btn" data-bs-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false" aria-controls="collapseReports">
+                <i class="icon icon-inbox"></i>
+                <span class="label">Reports</span>
+                <span class="chevron"><i class="icon icon-chevron"></i></span>
+              </a>
+        </li>
+
+        <!-- Collapse Content for Reports -->
+        <div class="collapse collapse-item-content" id="collapseReports">
+          <ul class="sub-menu">
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/balance-sheet') }">
+              <a [routerLink]="['/main/finance/transaction/balance-sheet']" class="nav-link">
+                <i class="icon icon-file-2"></i>
+                <span class="label">Balance Sheet</span>
+              </a>
+            </li>
+            <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/transaction/income-and-expense') }">
+              <a [routerLink]="['/main/finance/transaction/income-and-expense']" class="nav-link">
+                <i class="icon icon-transaction"></i>
+                <span class="label">Income & Expense</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+         <!-- Settings Nav Item -->
+         <li class="nav-item collapse-item" [ngClass]="{ 'active': isActive('/main/finance/settings') }">
+            <a class="nav-link" id="collapse-btn" data-bs-toggle="collapse" href="#collapseSettings" role="button" aria-expanded="false" aria-controls="collapseSettings">
+                <i class="icon icon-inbox"></i>
+                <span class="label">Settings</span>
+                <span class="chevron"><i class="icon icon-chevron"></i></span>
+              </a>
+        </li>
+
+                <!-- Collapse Content for Inbox -->
+                <div class="collapse collapse-item-content" id="collapseSettings">
+                  <ul class="sub-menu">
+                    <li class="nav-item" [ngClass]="{ 'active': isActive('/main/finance/settings/opening-balance') }">
+                      <a [routerLink]="['/main/finance/settings/opening-balance']" class="nav-link">
+                        <i class="icon icon-balance"></i>
+                        <span class="label">Opening Balance</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+      </ul>
+  
+      <!-- Footer Section -->
+      <div class="copyright-wrap">
+        <img src="../../../assets/public/image/png/logo.png" alt="logo" class="logo">
+        <small class="text">Copy right &commat; Techpool 2024-2025</small>
+      </div>
+    </div>
+  </aside>
+  

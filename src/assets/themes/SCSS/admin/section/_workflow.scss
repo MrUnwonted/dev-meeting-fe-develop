@@ -1,0 +1,54 @@
+.workflow-wrap-outer{
+    .workflow-wrap-inner{
+        .workflow-row{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            .activity-card{
+                flex: 1 1 15%;
+                &.workflow{
+                    .card-header{
+                        position: relative;
+                        @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+                        .thumbnail-wrap{
+                            position: unset !important;
+                            .file-type{
+                                height: 125px;
+                            }
+                        }
+                        .more-link{
+                            position: absolute;
+                            top: 1rem;
+                            right: 1rem;
+                        }
+                    }
+                    .card-body{
+                        background-color: $white-15 !important;
+                        margin: 0 !important;
+                        @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+                        .description-wrap{
+                            flex-direction: column;
+                            gap: .75rem !important;
+                            .head{
+                                font-size: $small !important;
+                                font-weight: $font-weight-medium !important;
+                                line-height: .875rem !important;
+                                color: $primary-90 !important;
+                                display: block
+                            }
+                            .created-text{
+                                font-size: $tiny !important;
+                                line-height: .875rem !important;
+                                color: $primary-90 !important;
+                                display: block;
+                                color: $black-65 !important;
+                                .by{
+                                    font-weight: $font-weight-medium !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

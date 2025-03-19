@@ -1,0 +1,123 @@
+.acknowledgement-content-wrap{
+    background-color: $white-40;
+    @include padding(1.5rem, 0, 1.5rem, 0);
+    .acknowledgement-header-wrap{
+        @include curve(.625rem);
+        @include padding(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+        background-color: $white-35;
+        @include flex(flex, center, space-between);
+        gap: 2rem;
+        border-bottom:  1px dashed $gray-150;
+        .left-side-content{
+            @include flex(flex, center, normal);
+            gap: 2rem;
+            .emblem-image{
+                height: 5.4375rem;
+                width: auto;
+                display: inline-block;
+                object-fit: contain;
+            }
+            .header-wrap{
+                max-width: 50rem;
+                width: 100%;
+                .head{
+                    font-size: $subheading-lg !important;
+                    font-weight: $font-weight-semibold !important;
+                    margin-bottom: .5rem;
+                    color: $primary-90 !important;
+                }
+                .subhead{
+                    font-size: $small !important;
+                    font-weight: $font-weight-normal !important;
+                    margin-bottom: 0rem;
+                    color: $gray-70 !important;
+                }
+            }
+        }
+        .right-side-content{
+            .qr-code{
+                height: 5.6875rem;
+                width: auto;
+                display: inline-block;
+                object-fit: contain;
+            }
+        }
+    }
+    .acknowledgment-document-wrap{
+        .item{
+            @include margin(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+            .head{
+                font-size: $tiny !important;
+                font-weight: $font-weight-semibold;
+                margin-bottom: 1rem;
+                color: $primary-90 !important;
+            }
+            .content-wrap{
+                border: 1px solid $gray-15;
+                @include curve(0rem);
+                .item-each{
+                    @include flex(flex, center, normal);
+                    gap: 0rem;
+                    border-bottom: 1px solid $gray-15;
+                   .item-head{
+                        min-height: 32px;
+                        @include padding(.75rem, 1.375rem, .75rem, 1.375rem);
+                        max-width: 500px;
+                        width: 100%;
+                        color: $gray-150 !important;
+                        margin-bottom: 0;
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                   }
+                   .colon{
+                    color: $black-65 !important;
+                    display: inline-block;
+                   }
+                   .item-desc{
+                        @include padding(.5rem, 0, .5rem, 1.375rem);
+                        color: $black-65 !important;
+                        margin-bottom: 0;
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                        line-height: 1.125rem !important;
+                   } 
+                   .profile-wrap{
+                    @include padding(0rem, 0, 0rem, 1.375rem);
+                        @include flex(flex, center, normal);
+                        gap: .5rem;
+                        .profile-image {
+                            width: 1.3125rem;
+                            height: 1.3125rem;
+                            object-fit: cover;
+                            @include curve(50%);
+                        }
+                        .name{
+                            color: $black-65 !important;
+                            margin-bottom: 0;
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-normal !important;
+                            line-height: 1.125rem !important;
+                        }
+                   }
+                   &:last-child{
+                    border-bottom: none !important;
+                   }
+                }
+            }
+            .notes-wrap{
+                background-color: $white;
+                border: 1px solid $gray-15;
+                @include curve(.5rem);
+                @include padding(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+                .summary-note{
+                    color: $black-65 !important;
+                    font-size: $tiny !important;
+                    line-height: 1.125rem !important;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

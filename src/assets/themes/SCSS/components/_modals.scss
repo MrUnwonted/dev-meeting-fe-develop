@@ -1,0 +1,331 @@
+
+.mat-mdc-dialog-container, .mat-mdc-mdc-dialog-container{
+    overflow: hidden !important;
+    @include curve(.25rem);
+    // max-width: 70.625rem;
+    @include padding(0 !important, 0rem !important, 0 !important, 0rem !important);
+    width: 100%;
+        .modal-header{
+            @include padding(.75rem, 1rem, .75rem, 1rem);
+            position: sticky;
+            top:0;
+            z-index: 100;
+            background-color: $white;
+            .extra-header{
+                &.flex{
+                    @include flex(flex, center,normal);
+                    gap: .75rem;
+                }
+            }
+            .title-wrap{
+                @include flex(flex, center,normal);
+                gap: .75rem;
+                .description-wrap{
+                    @include flex(flex, center,normal);
+                    gap: .75rem;
+                    .head{
+                        font-size: $small !important;
+                        line-height: 1.3125rem !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: 0;
+                        color: $primary-90 !important;
+                    }
+                    .divider{
+                        width: 1px;
+                        height: 1rem;
+                        background-color: $gray-15;
+                        display: inline-block;
+                    }
+                    .code{
+                        font-size: $tiny !important;
+                        line-height: .875rem !important;
+                        display: inline-block;
+                        margin-bottom: 0;
+                        color: $black-65 !important;
+                        .number{
+                            font-weight: $font-weight-medium !important;
+                        }
+                    }
+                }
+            }
+        }
+        .modal-body{
+            @include scrollbar();
+            overflow-y: auto;
+            max-height: calc(100vh - 10rem);
+            padding:0 !important;
+            .search-flex-outer{
+                @include padding(1rem, 1rem, 1rem, 1rem);
+                margin-bottom: 0 !important;
+                .left-side{
+                    flex: 50%;
+                }
+                .right-side{
+                    flex: 50%;
+                    .filter-btn{
+                        text-align: end;
+                        @include media-breakpoint-down(md-sm){
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+            .form-label{
+                font-weight: $font-weight-normal !important;
+                font-size: $tiny !important;
+            }
+            .table-outer-wrap, .body-outer-wrap{
+                @include padding(1rem, 1rem, 1rem, 1rem);
+                background-color: $white-15 ;
+                .table-wrap{
+                    max-height: calc(100vh - 22rem);
+                    overflow-y: auto;   
+                    @include scrollbar(); 
+                    .custom-table{
+                        thead{
+                            position: sticky;
+                            top: 0;
+                        }
+                    }                
+                }
+                &.document-form-wrap{
+                    background-color: $white !important ;
+                }
+            }
+            .document-form{
+                .form-group{
+                    &.vertical{
+                        flex-direction: column;
+                        align-items: normal !important;
+                        gap: .25rem;
+                        .form-label{
+                            margin-bottom: 0;
+                        }
+                    }
+                    &.flex-col{
+                        flex-direction: column;
+                        align-items: normal ;
+                    }
+                    @include flex(flex,center, space-between);
+                    // border-bottom: 1px solid $gray-15;
+                    gap: .5rem;
+                    @include padding(.3rem, 0, .3rem, 0);
+                    .left-side{
+                        flex: 50%;
+                    }
+                    .right-side{
+                        flex: 50%;
+                        .date-picker-wrap{
+                            position: relative;
+                            .mat-mdc-datepicker-toggle{
+                                right: 0;
+                                position: absolute;
+                                top: -6px;
+                                svg{
+                                    fill: $primary-90 !important;
+                                }
+                            }
+                       }
+                    }
+                    .form-control, .form-select{
+                        @include padding(.5rem !important , .5rem !important , .5rem !important , .5rem !important );
+                        font-size: $tiny !important;
+                        &.date{
+                            height: 2rem !important;
+                        }
+                    }
+                    .type-select{
+                        @include padding(.2rem !important , 2rem !important , .2rem !important , .5rem !important );
+                        font-size: $tiny !important;
+                        background-color: $gray-15;
+                        background-position: right 0.75rem center;
+                        min-width: 6rem;
+                        width: auto !important;
+                        border-color: $gray-15;
+                        @include curve(7.5rem);
+                    }
+                    .attach-file{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-medium !important;
+                    }
+                }
+                .column{
+                    &:last-child{
+                        .form-group{
+                            border-bottom: none;
+                            padding-bottom: 0 !important;
+                        }
+                    }
+                }
+                .profile-wrap-outer{
+                    @include flex(flex, center, normal);
+                    gap: 1rem;
+                    .profile-wrap{
+                        @include flex(flex, center, normal);
+                        gap: .5rem;
+                        .profile-image{
+                            width: 1.25rem;
+                            height: 1.25rem;
+                            object-fit: cover;
+                            @include curve(50%);
+                        }
+                        .name{
+                            display: inline-block;
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 1.125rem !important;
+                            color: $black-65 !important;
+                        }
+                    }
+                    .add-btn{
+                        .btn{
+                            line-height: 0 !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                            .text{
+                                font-size: $small;
+                                font-weight: $font-weight-medium;
+                                line-height: .875rem;
+                                color: $primary-90;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal-footer{
+            @include padding(.75rem, 1rem, .75rem, 1rem);
+            background-color: $white;
+            position: sticky;
+            bottom: 0;
+            gap: 1rem;
+            .btn{
+                margin: 0;
+                @include flex(flex, center, center);
+                gap: .5rem;
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                line-height: .875rem !important;
+            }
+            .button-wrap{
+                @include flex(flex, center, end);
+                gap: .5rem;
+            }
+        }
+}
+
+// modal backdrop
+.modal-backdrop{
+    z-index: 1000 !important;
+}
+
+.cdk-overlay-pane{
+    margin: 1rem;
+    // width:auto !important;
+    max-width: 100% !important;
+    max-height: 90vh !important;
+}
+.cdk-overlay-container{
+    z-index: 1003;
+}
+
+// date picker popup
+.mat-mdc-datepicker-popup{
+    .mat-mdc-calendar-body-cell{
+        padding:  0 !important;
+    }
+    .mat-mdc-calendar-body-cell-content{
+        font-size: $tiny !important;
+    }
+}
+
+// file-manager modal
+.file-manager-modal{
+    .scrollable{
+        min-height: calc(100vh - 11rem);
+        max-height: calc(100vh - 11rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+        @include scrollbar();
+        .mat-mdc-tab-body-content{
+            overflow-y: hidden;
+        }
+    }
+    .modal-title{
+        font-size: $small !important;
+        font-weight:  $font-weight-medium !important;
+        color: $black-65 !important;
+        .modal-head-image{
+            width: 1.25rem;
+            height: 1.25rem;
+            object-fit: contain;
+            margin-right: .5rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+    .modal-content{
+        @include curve(0);
+        border-top: 0 !important;
+        border-right: 0 !important;
+        border-left: 0 !important;
+    }
+    .modal-body{
+        .modal-body-content{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+        }
+        .main-row{
+            .left-column{
+                background-color: $white-15;
+                border-right: 1px solid $gray-15;
+            }
+        }
+    }
+    .modal-footer{
+        border-top: none !important;
+        .btn{
+            @include padding (.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+            font-size: $small !important;
+            line-height: .875rem !important;
+        }
+    }
+    .btn-close{
+        padding: 0 !important;
+        font-size: 1rem !important;
+        margin: 0;
+    }
+    .button-left{
+        margin-right: auto !important;
+    }
+    .upload-btn{
+        color: $primary-90 !important;
+    }
+
+}
+
+// confirmation modal
+.confirmation-modal{
+    .confirmation-modal-content{
+        padding: 1rem;
+        .icon-wrap{
+            text-align: center;
+            .icon{
+                width: 3rem;
+                height: 3rem;
+            }
+            margin-bottom: 1rem;
+        }
+        .message-content{
+            .head{
+                text-align: center;
+                color: $black-65 !important;
+                font-size: $subheading-lg !important;
+            }
+            .message{
+                text-align: center;
+                display: block;
+                color: $gray-200 !important;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,17 @@
+.photos-files-wrap{
+    .heading-wrap{
+        margin-bottom: 1rem !important;
+    }
+}
+
+.photos-card-wrap{
+    .select-check{
+        margin-bottom: .5rem;
+        .date-label{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1.125rem !important;
+            color: $black-65 !important;
+        }
+    }
+}

@@ -1,0 +1,118 @@
+.recent-activities-wrap{
+    .activities-wrap-inner{
+        .mat-mdc-expansion-panel, .mat-expansion-panel{
+            background-color: transparent;
+            box-shadow: none !important;
+            .mat-mdc-expansion-panel-header, .mat-expansion-panel-header{
+                &:hover, &:focus, &:active{
+                    background-color: transparent !important;
+                }
+                @include padding(0,0,0,0);
+                height: auto;
+                margin-bottom: .5rem;
+                .mat-mdc-expansion-panel-header-title, .mat-expansion-panel-header-title{
+                    font-size: $para !important;
+                    font-weight: $font-weight-medium !important;
+                    color: $black-65 !important;
+                }
+            }
+            .mat-mdc-expansion-indicator, .mat-expansion-indicator{
+                @include padding(0, .1rem, 0, 0.1rem);
+               &:after{
+                color: $black !important;
+               }
+
+            }
+            .mat-mdc-expansion-panel-content, .mat-expansion-panel-content{
+                .mat-mdc-expansion-panel-body, .mat-expansion-panel-body{
+                    margin-bottom: 1rem;
+                    @include padding(0,0,0,0);
+                    height: auto;
+                }
+            }
+        }
+    }
+}
+
+.activities-row{
+    .activity-column{
+        flex: 0 5 20% !important;
+    }
+}
+.activity-card{
+    @include curve(.5rem);
+    .card-header{
+        position:relative;
+        min-height: 9.5625rem;
+        overflow: hidden;
+        .thumbnail-wrap{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1.375rem;
+            .file-type{
+                height: 8.8125rem;
+                width: 100%;
+                object-fit: none;
+                display: inline-block;
+            }
+        }
+    }
+    .card-body{
+        @include padding(.6875rem !important, 1rem !important, .6875rem !important, 1rem !important);
+        background-color: $card-bg-color-gray;
+        .description-wrap{
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            .head{
+                font-size: $tiny !important;
+                margin-bottom: 0;
+                font-weight: $font-weight-normal !important;
+                color: $black-65 !important;
+            }
+        }
+    }
+    .card-footer{
+        display: none;
+    }
+    &.pdf{
+        .card-header{
+            background-color: $card-bg-color-red;
+        }
+    }
+    &.xlsx{
+        .card-header{
+            background-color: $card-bg-color-green;
+        }
+    }
+    &.doc{
+        .card-header{
+            background-color: $card-bg-color-blue;
+        }
+    }
+    &.folder{
+        .card-header{
+            background-color: $card-bg-color-blue;
+            .file-type{
+                object-fit: contain;
+            }
+        }
+    }
+    &.photo{
+        .card-header{
+            card-header{
+                display: block;
+                height:100%;
+            }
+            padding: 0 !important;
+            .thumbnail-wrap{
+                height:100%;
+                position: unset !important;
+                .file-type{
+                    height: 100% !important;
+                    object-fit:cover !important;
+                }
+            }
+        }
+    }
+}

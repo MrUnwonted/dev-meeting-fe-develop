@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="exampleModalLabel">{{title}}</h6>
+    <button type="button" class="btn-close sm" (click)="closeDialog()"  aria-label="Close"></button>
+  </div>
+<div class="modal-body">
+    <ng-content></ng-content>
+</div>
+<div class="modal-footer" *ngIf="buttons && buttons.length">
+
+    <ng-container *ngFor="let button of buttons" class="footer-buttons">
+      <button 
+        *ngIf="button.text" 
+        type="button" 
+        [ngClass]="button.className" 
+        (click)="handleButtonClick(button.action,button.text)">
+        <i *ngIf="button.icon" [ngClass]="button.icon"></i> <!-- Display icon if provided -->
+        {{ button.text }}
+      </button>
+    </ng-container>
+
+    <ng-content select="[extra-footer]"></ng-content>
+</div>

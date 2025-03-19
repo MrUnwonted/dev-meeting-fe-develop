@@ -1,0 +1,284 @@
+<div class="admin-container">
+    <div class="card widget-card table-card admin-card">
+        <div class="card-header">
+            <div class="header-wrap-outer">
+                <div class="header-wrap">
+                    <div class="text-wrap">
+                        <h6>{{"Meetings" | translate }}</h6>
+                    </div>
+
+                </div>
+
+                <div class="search-wrap">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="icon icon-search-gray"></i></span>
+                        <input type="text" name="search" id="search" placeholder="Search" class="form-control xs"
+                            (keyup)="applyFilter($event)" #input>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="loading-tp-spinner-overlay" *ngIf="is_loading">
+            <div class="tp-spinner"> </div>
+        </div>
+        <div class="card-body">
+            <div class="card-body-content">
+                <div class="primary-subject-content">
+                    <div class="row gy-3 gx-0 main-row">
+
+                        <!-- left column -->
+                        <div class="left-column"
+                            [ngClass]="{'expanded col-md-6': isExpanded, 'default col-md-7': !isExpanded}">
+                            <!-- form -->
+                            <!-- <app-primary-subject-form (expandToggled)="onExpandToggle()"></app-primary-subject-form> -->
+                            <!--BEGIN Primary Subject Form Component-->
+                            <div class="form-wrap table-form-wrap"
+                                [ngClass]="{'editable': isEditable, 'saved':!isEditable }">
+                                <a (click)="toggleExpand()" role="button" class="expand-btn"
+                                    [ngClass]="{'expanded': isExpanded}"><i class="icon icon-expand-form"></i></a>
+                                <div class="form-body">
+                                    <div class="row gy-3">
+
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="s-sub" class="form-label">{{"Meeting Code" | translate}}</label>
+                                                <input type="text" name="s-sub" id="s-sub" class="form-control xs"
+                                                    [(ngModel)]="selectedMeetings.meeting_code" (input)="clear_msg()"
+                                                    maxlength="2">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="s-sub-name" class="form-label">{{"Meeting Name" | translate }}</label>
+                                                    <input type="text" name="s-sub-name" id="s-sub-name"
+                                                        class="form-control xs" [(ngModel)]="selectedMeetings.meeting_name"
+                                                        (input)="clear_msg()">
+                                                </div>
+                                            </div>
+    
+                                            <div class="col-lg-6">
+                                                <div class="form-group" *ngIf="bilingual">
+                                                    <label for="s-sub-name-m" class="form-label">{{"Meeting Name" |translate }}
+                                                        (മലയാളം)</label>
+                                                    <input type="text" name="s-sub-name-m" id="s-sub-name-m"
+                                                        class="form-control xs"
+                                                        [(ngModel)]="selectedMeetings.meeting_name_ln" (input)="clear_msg()">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div  class="row gy-3">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                <label for="Acnt-head" class="form-label">Select User</label>
+                                           
+                                                <input (click)="clear_err()" (click)="openUserSearch()" (keydown)="restrictAllEntry($event)" [(ngModel)]="selected_user.seat_name"
+                                                type="text" class="form-control xs" name="sel_user" id="sel_user">
+                                            </div>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label for="Acnt-head" class="form-label">Mark as Owner</label>
+                                            
+                                                <input type="checkbox" name="flg_owner" id="flg_owner"   class="form-group form-check"
+                                                [(ngModel)]="flg_owner">
+                                            </div>
+                                            <div class="col-lg-4 text-start">
+                                                <div class="button-wrap">
+                                                    <button (click)="add_user_tolist()" class="btn-primary-90 sm">
+                                                        Add <i class="icon icon-add" ></i>
+                                                    </button>
+                                                    <button (click)="clear_user_details()" class="btn-outline-primary-90 sm mx-2">
+                                                        Clear
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="left-column col-md-12">
+                                            <div class="table-wrap file-box-wrap pagination-included" style="height: calc(70vh - 20rem);">
+                                                <table mat-table [dataSource]="dataSource1" class="w-100 admin-table file-table">
+                        
+                                                    <!-- Module Column -->
+                                                    <ng-container matColumnDef="slNo">
+                                                        <th mat-header-cell *matHeaderCellDef> Sl No </th>
+                                                        <td mat-cell *matCellDef="let element = index"> <span
+                                                                class="badge bg-gray-15 code-badge xs">{{element+1}}</span></td>
+                                                    </ng-container>
+                        
+                                                    <!-- Code -->
+                                                    <ng-container matColumnDef="seat_name">
+                                                        <th mat-header-cell *matHeaderCellDef> Seat </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.seat_name}} </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="user_name">
+                                                        <th mat-header-cell *matHeaderCellDef> User </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.user_name}} </td>
+                                                    </ng-container>
+                                                    
+                                                    <!--  Head -->
+                                                  
+                                                    <ng-container matColumnDef="email">
+                                                        <th mat-header-cell *matHeaderCellDef> email </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mobile">
+                                                        <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                                        <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                                                    </ng-container>
+                        
+                                                   
+                        
+                        
+                                                    <ng-container matColumnDef="delete">
+                                                        <th mat-header-cell *matHeaderCellDef></th>
+                                                        <td mat-cell *matCellDef="let element; let i = index"> <a role="button"><i
+                                                                    class="icon icon-delete" (click)="onRowClick(element,i)"></i> </a>
+                                                        </td>
+                                                    </ng-container>
+                        
+                        
+                                                    <!-- Header and Row Definitions -->
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                                </table>
+                                            </div>
+                        
+                                            <!-- MatPaginator for Pagination -->
+                                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                                        </div>
+                        
+
+
+
+
+                                       
+                                        <!-- <div class="col-lg-12" *ngIf="isEditable">
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" name="deactivate" id="deactivate"
+                                                    [(ngModel)]="deactive">
+                                                <label for="deactivate" class="form-label">{{"Deactivate" | translate }}</label>
+                                            </div>
+                                        </div> -->
+                                        <div class="add-more-wrap" *ngIf="showError"> <span
+                                                class="error-msg">{{msg | translate}}</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-footer">
+                                    <div class="button-wrap">
+                                        <!-- Conditional rendering of buttons based on the edit state -->
+                                        <button *ngIf="!isEditable" class="sm btn btn-primary-90 save-btn"
+                                            (click)="saveMeeting()">{{"Save" |translate}}</button>
+                                        <button *ngIf="!isEditable" class="sm btn btn-outline-primary-90 cancel-btn"
+                                            (click)="cancelEdit()">{{"Clear" | translate}}</button>
+
+
+                                        <!-- Show Add New or Edit button when form is not editable -->
+                                        <button *ngIf="isEditable && !isAddMode" class="sm btn btn-primary-90 add-btn"
+                                            (click)="editSubject()">{{"Edit" | translate}}</button>
+                                        <button *ngIf="isEditable && !isAddMode"
+                                            class="sm btn btn-outline-primary-90 edit-btn" (click)="addNewSubject()">{{"Add New" | translate}}
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- END of Primary subject Form Component -->
+
+                        </div>
+
+                        <!-- right column -->
+                        <div class="right-column"
+                            [ngClass]="{'minimised col-md-6': isExpanded, 'default col-md-5': !isExpanded}">
+                            <!-- table -->
+                            <div class="table-outer-wrap">
+                                <!-- <app-primary-subject-table></app-primary-subject-table> -->
+                                <!--  BEGIN TABLE TO FILL PRIMARY SUBJECT MASTER -->
+                                <div class="table-wrap file-box-wrap pagination-included">
+                                    <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
+                                        <!-- Sl No Column -->
+                                        <ng-container matColumnDef="slNo">
+                                            <th mat-header-cell *matHeaderCellDef> {{"Sl No" |translate}} </th>
+                                            <!-- <td mat-cell *matCellDef="let element"> {{element.slNo}} </td> -->
+                                            <td mat-cell *matCellDef="let element = index"> {{ (element + 1) +
+                                                (this.paginator.pageIndex * this.paginator.pageSize) }} </td>
+                                        </ng-container>
+
+                                        <!-- Sub Subject Code Column -->
+                                        <ng-container matColumnDef="meeting_code">
+                                            <th mat-header-cell *matHeaderCellDef> {{"Meeting Code" | translate}} </th>
+                                            <td mat-cell *matCellDef="let element"> <span
+                                                    class="badge bg-gray-15 code-badge xs">{{element.meeting_code}}</span>
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- Subject name -->
+                                        <ng-container matColumnDef="meeting_name">
+                                            <th mat-header-cell *matHeaderCellDef> {{"Meeting Name" | translate}} </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.meeting_name}} </td>
+                                        </ng-container>
+
+                                        <!-- Subject Name (മലയാളം) Column -->
+                                        <!-- <ng-container matColumnDef="meeting_name_ln">
+                                            <th mat-header-cell *matHeaderCellDef>
+                                                <div *ngIf="bilingual">{{"Meeting Name" | translate}} <span class="lang">(മലയാളം)</span>
+                                                </div>
+                                            </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <div *ngIf="bilingual">{{element.meeting_name_ln}}</div>
+                                            </td>
+                                        </ng-container> -->
+
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef>{{"Status" | translate}}</th>
+                                            <td mat-cell *matCellDef="let element"> <a role="button"> <i
+                                                        *ngIf="element.active === 1" class="icon icon-check-green"></i>
+                                                    <i *ngIf="element.active === 9"></i></a>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="select">
+                                            <th mat-header-cell *matHeaderCellDef></th>
+                                            <td mat-cell *matCellDef="let element"> <a role="button"
+                                                (click)="navigate(element)"><i
+                                                *ngIf="element.active === 1" class="icon icon-arrow-right "></i>
+                                            <i *ngIf="element.active === 9"></i></a> </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="delete">
+                                            <th mat-header-cell *matHeaderCellDef></th>
+                                            <td mat-cell *matCellDef="let element;let i = index"> <a role="button"><i
+                                                        class="icon icon-edit" (click)="onRowClick(element,i)"
+                                                        ></i> </a>
+                                            </td>
+                                        </ng-container>
+
+
+                                        <!-- Header and Row Definitions -->
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;let i=index"  [class.active]="activeRowIndex === i"></tr>
+                                    </table>
+                                </div>
+
+                                <!-- MatPaginator for Pagination -->
+                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+                                    [pageSize]="10"></mat-paginator>
+
+                                <!-- END TABLE TO FILL PRIMARY SUBJECT MASTER -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

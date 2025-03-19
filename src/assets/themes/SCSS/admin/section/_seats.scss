@@ -1,0 +1,230 @@
+.seats-wrap-outer{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    .seats-wrap-inner{
+        @include flex(flex, center, center);
+        flex-flow: row wrap;
+        gap: 64px;
+        &.added{
+            gap: 1rem;
+            justify-content: start !important;
+        }
+        .item{
+            text-align: center;
+            flex: 0 1 15%;
+            .icon-seats{
+                width: 4rem;
+                height: 4rem;
+            }
+        }
+        .seat-card{
+            flex: 0 1 24%;
+            min-width: 16.875rem;
+        }
+    }
+}
+
+.seat-card{
+    position: relative;
+    .type{
+        position: absolute;
+        left: 1rem;
+        top: -1.35rem;
+        @include curve-each(.5rem, .5rem, 0, 0);
+        @include padding(.0625rem, .3125rem, .0625rem, .3125rem);
+        display: inline-block;
+        background: radial-gradient(50% 50% at 50% 50%, $black 0%, $black 100%);
+        border: 1px solid $black;
+        box-shadow: 0px 0px 4px 0px $gray-15 inset;
+        font-size: $tiny;
+        font-weight: $font-weight-medium;
+        line-height: 1.125rem;
+        color: $white;
+    }
+    .seat-card-inner{
+        @include flex(flex, center, normal);
+        gap: .5rem;
+        @include padding(.75rem, .5rem, .75rem, .5rem);
+        border: 1px solid $gray-15;
+        @include curve(.5rem);
+        .heading-wrap{
+            width: 100%;
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            .icon-wrap{
+                .icon{
+                    width:2rem !important;
+                    height:2rem !important;
+                    background-color: $black-65;
+                }
+            }
+        }
+        .icon-wrap{
+            .icon{
+                width: 3rem;
+                height: 3rem;
+            }
+            .code{
+                text-align: center;
+                display: block;
+                color: $success-100;
+                font-size: $tiny;
+                font-weight: $font-weight-semibold;
+            }
+            .seat-code{
+                font-size: $subheading-sm !important;
+                font-weight: $font-weight-medium !important;
+                line-height: 1.6875rem !important;
+                color: $black-65 !important;
+            }
+        }
+        .description-wrap{
+            @include flex(flex, start, normal);
+            gap: .5rem;
+            flex-direction: column;
+            text-align: left;
+            .title{
+                display: block;
+                color: $secondary !important;
+                font-size: $tiny !important;
+                line-height: .875rem;
+                font-weight: $font-weight-medium;
+            }
+            .head{
+                display: block;
+                color: $gray-200 !important;
+                font-size: $tiny !important;
+                line-height: .875rem;
+                font-weight: $font-weight-normal;
+                .desc{
+                    margin-left: .25rem;
+                    color: $secondary !important;
+                    font-weight: $font-weight-medium;
+                    &.highlight{
+                        background-color: $gray-15;
+                        @include padding(.125rem , .25rem, .125rem , .25rem);
+                        @include curve(.25rem)
+                    }
+                }
+            }
+        }
+        .action-wrap{
+            margin-left: auto;
+            align-self: end;
+            @include flex(flex, center, end);
+            gap: .5rem;
+            .user-image{
+                width: 1.5rem;
+                height: 1.5rem;
+                @include curve(50%);
+                object-fit: cover;
+            }
+            .btn-none{
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .add-user-btn{
+                border: 1px solid $gray-150;
+                @include curve(50%);
+                width: 1.5rem;
+                height: 1.5rem;
+                text-align: center;
+                line-height: 0rem !important;
+            }
+        }
+        &.flex-column{
+            flex-direction: column;
+            align-items: start;
+            .icon-wrap{
+                @include flex(flex, center, end);
+                gap: .5rem;
+            }
+        }
+        .primary-check{
+            min-height: auto;
+        }
+    }
+
+    &.drag{
+        .seat-card-inner{
+            position: relative;
+            padding-left: 1.5rem;
+            .icon-wrap{
+                .icon{
+                    width: 2rem !important;
+                    height: 2rem !important;
+                }
+                .code{
+                    color: $gray-200 !important;
+                }
+            }
+            &:before{
+                position: absolute;
+                content: $icon-drag;
+                background-color: $gray-15;
+                left: 0;
+                height: 100%;
+                @include flex(flex, center, center);
+            }
+        }
+    }
+
+    $seat-card-colors: (
+    blue: (#2D90FA, #2983E4),
+    red: (#F85A5A, #E25252),
+    purple: (#785AF8, #6D52E2)
+);
+
+    @each $name, $colors in $seat-card-colors {
+        $color-primary: nth($colors, 1);
+        $color-secondary: nth($colors, 2);
+
+        &.#{$name} {
+            .type {
+                background: radial-gradient(50% 50% at 50% 50%, $color-primary 0%, $color-secondary 100%);
+                border: 1px solid $color-secondary;
+                box-shadow: 0px 0px 4px 0px #BEDDFD inset;
+            }
+            .seat-card-inner {
+                .icon-wrap {
+                    .icon {
+                        background-color: $color-secondary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.new-seat-wrap{
+    position: relative;
+    &.absolute{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+    .status-tag{
+        position: absolute;
+        top: -.625rem;
+        left: 1rem;
+        z-index: 2;
+        display: block;
+        font-size: $copyright-text;
+        line-height: .875rem;
+        font-weight: $font-weight-medium;
+        color: $white;
+        background-color: $danger-75;
+        @include curve-each(2rem, 2rem, 2rem, 2rem);
+        @include padding(.25rem, .5rem, .25rem, .5rem);
+    }
+    .seat-card{
+        .seat-card-inner{
+            @include curve(0);
+            .icon-wrap{
+                .code{
+                    color: $primary-90 !important;
+                }
+            }
+        }
+    }
+}

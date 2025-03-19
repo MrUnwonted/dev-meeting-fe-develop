@@ -1,0 +1,353 @@
+.create-folder-content-wrap{
+    @include padding(1rem, 1rem, 1rem, 1rem);
+    .document-form-wrap{
+        .document-form{
+            .item-flex{
+                padding: 0 !important;
+                &.radio-flex{
+                  .left-side{
+                    align-self: baseline !important;
+                  }
+                }
+                &:not(:last-child){
+                    margin-bottom: .75rem;
+                }
+                .left-side{
+                    flex: 30%;
+                    .form-label{
+                        margin-bottom: 0 !important;
+                    }
+                }
+                .right-side{
+                    flex: 70%;
+                }
+                .radio-wrap-outer{
+                    .form-check{
+                        .form-label{
+                            font-size: $small !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 1.3125rem !important;
+                            color: $black-65 !important;
+                            .sub-text{
+                                display: block;
+                                font-size: $tiny !important;
+                                font-weight: $font-weight-normal !important;
+                                line-height: 1.125rem !important;
+                                color: $gray-200 !important;
+                            }
+                        }
+                        &:not(:last-child){
+                            margin-bottom: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// share folder
+
+.share-folder-content-wrap,.folder-content{
+    @include padding(1rem, 1rem, 1rem, 1rem);
+    .modal-head{
+        font-size: $para !important;
+        font-weight: $font-weight-medium !important;
+        line-height: 1.5rem !important;
+        margin-bottom: 1rem;
+        color: $warning-300 !important;
+    }
+    .form-label{
+        margin-bottom: .5rem;
+        line-height: 18px;
+    }
+    .button-wrap{
+        .button-group{
+            @include flex(flex, center, center);
+            gap: .5rem;
+            .text{
+                font-size: $small !important;
+                line-height: .875rem !important;
+                display: inline-block;
+                color: $primary-90 !important;
+                font-weight:  $font-weight-medium !important;
+            }
+        }
+    }
+    .tags-wrap{
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        .mat-mdc-select{
+            overflow-y: auto;
+            @include scrollbar();
+            @include curve(.5rem);
+            border: 1px solid $gray-15;
+            @include padding(.5rem, .625rem, .5rem, .625rem);
+            font-size: $tiny !important;
+            color: $gray-200 !important;
+            .mat-mdc-select-trigger{
+                .mat-mdc-select-value {
+
+                }
+            }
+            .mat-mdc-chip{
+                min-height: 1.125rem !important;
+                font-size: $tiny !important;
+                font-weight: $font-weight-normal !important;
+                line-height: 1.125rem !important;
+                background-color: $primary-10;
+                @include padding (0 !important, .5rem !important, 0 !important, .5rem !important);
+                .icon{
+                    width: .75rem;
+                    height: .75rem;
+                }
+            }
+        }
+        .email-select-full-wrap{
+            display: block; 
+            width: 100%;
+        }
+        .email-select-wrap{
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            @include curve(.375rem);
+            border: 1px solid $gray-15;
+            @include padding (.5rem !important, .625rem !important, 0.5rem !important, .625rem !important);
+            .email-input{
+                padding: 0 !important;
+                height: auto !important;
+                border: none !important;
+            }
+            .button-wrap{
+                .view-link{
+                    .text{
+                        font-weight: $font-weight-normal !important;
+                    }
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+            }
+            .mat-mdc-chip-grid-wrapper{
+                .mat-mdc-chip{
+                    min-height: 1.125rem !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    line-height: 1.125rem !important;
+                    background-color: $primary-10;
+                    @include padding ( 0 !important, .5rem !important, 0 !important, .5rem !important);
+                    .icon{
+                        width: .75rem;
+                        height: .75rem;
+                    }
+                }
+            }
+        }
+    }
+    .form-group{
+        &:not(:last-child){
+            margin-bottom: .75rem;
+        }
+        .profile-item{
+            &:not(:last-child){
+                margin-bottom: 1rem;
+            }
+        }
+        .profile-item-outer{
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            .profile-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .profile-image{
+                    width: 1.25rem;
+                    height: 1.25rem;
+                    object-fit: cover;
+                    @include curve(50%);
+                }
+                .name{
+                    display: inline-block;
+                    font-size: $tiny !important;
+                    line-height: 1.125rem !important;
+                    color: $black-65 !important;
+                }
+            }
+            .button-group{
+                &.view-link{
+                    padding: 0 !important;
+                    line-height: 0;
+                    margin: 0 !important;
+                    .text{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// upload pdf
+.upload-pdf-modal-content, .folder-content{
+    @include padding(1rem, 1rem, 1rem, 1rem);
+    .folder-type-check{
+        .form-label{
+            font-weight: $font-weight-medium !important;
+        }
+    }
+    .search-bar{
+        margin-bottom: 1rem;
+        .search-wrap{
+            position: relative;
+            .input-group-text{
+                background-color: transparent;
+                border: none !important;
+                position: absolute;
+                left: 0rem;
+                top: .1rem;
+            }
+            .form-control{
+                @include padding(.25rem, .25rem, .25rem, 2.2rem);  
+                font-size: $tiny !important;
+                color: $gray-35 !important;
+                min-height: 2.75rem;
+            }
+        }
+    }
+    .item-wrap-outer{
+        @include flex(flex, normal, normal);
+        flex-direction: column;
+        gap: 1rem;
+        .item{
+            .header-wrap{
+                margin-bottom: .5rem;
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .breadcrumb-desc{
+                    @include flex(flex, center, normal);
+                    gap: .5rem;
+                }
+                .head, .subhead{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    color: $gray-200 !important;
+                    margin-bottom: 0;
+                }
+            }
+            .content-wrap{
+                @include flex(flex, normal, normal);
+                flex-direction: column;
+                gap: .5rem;
+                .check-item{
+                    min-height: 3rem;
+                    align-items: center;
+                    .doc-image{
+                        width: 3rem;
+                        height: 3rem;
+                        object-fit: cover;
+                        object-position: center;
+                        @include curve(.5rem);
+                        border: 1px solid $gray-35;
+                    }
+                    .form-label{
+                        .head{
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 18px;
+                            display: block;
+                            color: $black-65 !important;
+                        }
+                        .subdesc{
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-normal !important;
+                            line-height: 18px;
+                            display: block;
+                            color: $gray-200 !important;
+                        }
+                    }
+                }
+            }
+            .folder-desc-item{
+                min-height: 3rem;
+                text-decoration: none;
+                color: $black-65 !important;
+                @include flex(flex, center, normal);
+                gap: .6875rem;
+                .folder-icon{
+                    width: auto;
+                    height: 2.5rem;
+                    object-fit: contain;
+                }
+                .folder-name{
+                    font-size: $tiny !important;
+                    line-height: .875rem;
+                    display: inline-block;
+                    color: $black-65 !important;
+                    &.link{
+                        color: $primary-90 !important;
+                        font-weight: $font-weight-medium !important;
+                    }
+                }
+            }
+            .form-group{
+                .input-group-text{
+                    &.profile-image-group{
+                        border-color: $gray-15;
+                        padding: 0 !important;
+                        background-color: transparent;
+                        .profile-image{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            object-fit: cover;
+                            @include curve(50%);
+                        }
+                    }
+                }
+                .input-group{
+                    &.left{
+                        .input-group-text{
+                            border-right: none !important;
+                        } 
+                        .form-control{
+                            border-left: none !important;
+                            @include curve-each(0, .25rem, .25rem, 0);
+                            &:hover, &:focus{
+                                border-color: $gray-15 !important;
+                            }
+                        }
+                    }
+                    .form-control{
+                        &.xs{
+                            height: 2rem;
+                        }
+                    }
+                    &.profile-input{
+                        .form-control{
+                            padding-left: .5rem !important;
+                            padding-right: .25rem !important;
+                            &[readonly]{
+                                background-color: transparent;
+                            }
+                        }
+                        .profile-image-group{
+                            padding-left: .25rem !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+// email select autocomplete
+.email-select-autocomplete {
+    min-width: 15rem !important;
+    @include curve(.5rem);
+    border: 1px solid $gray-15;
+}
+
+.folder-icons-modal{
+    .modal-header{
+        display: none;
+    }
+}

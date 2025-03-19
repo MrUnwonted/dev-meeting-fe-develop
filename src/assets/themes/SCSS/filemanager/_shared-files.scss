@@ -1,0 +1,26 @@
+// requests modal
+.requests-modal-content{
+    @include padding(1rem, 1rem, 1rem, 1rem);
+    .document-wrap{
+        .document-form{
+            @include flex(flex, normal, normal);
+            gap: 1rem;
+            flex-direction: column;
+            .form-group{
+                .type-select{
+                    padding-right: 2rem !important;
+                }
+                .form-label{
+                    margin-bottom: 0;
+                }
+                padding: 0 !important;
+                &.text-area-group{
+                    width: 100%;
+                    align-items: normal;
+                    flex-direction: column;
+                    gap: .25rem;
+                }
+            }
+        }
+    }
+}

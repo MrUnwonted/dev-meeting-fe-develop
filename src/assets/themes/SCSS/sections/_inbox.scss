@@ -1,0 +1,215 @@
+.inbox-wrap-card{
+    max-height: calc(100vh - 35rem);
+    overflow-y: auto;
+    @include scrollbar();
+    .item{
+        @include flex(flex, start, normal);
+        gap: .5rem;
+        @include padding (1rem, 1rem, 1rem, 1rem);
+        @include curve(.5rem);
+        &:nth-child(even){
+            
+            background-color: $white-10;
+        }
+        .profile-wrap{
+            position: relative;
+            .profile-image{
+                width: 2.25rem;
+                height: 2.25rem;
+                @include curve(50%);
+                object-fit: cover;
+            }
+            .online{
+                display: inline-block;
+                width: .75rem;
+                height: .75rem;
+                @include curve(50%);
+                position: absolute;
+                background-color: $success-250;
+                border: 2px solid $white;
+                left: 1.75rem;
+                top: 0;
+            }
+        }
+        .content-flex-wrap{
+            width: 100%;
+            .top-content{
+                @include flex(flex, start, space-between);
+                gap: .5rem;
+                width: 100%;
+                .head-wrap{
+                    max-width: 960px;
+                    width: 100%;
+                    .head{
+                        font-size: $small !important;
+                        margin-bottom: 0;
+                        font-weight: $font-weight-normal !important;
+                        color: $black-65 !important;
+                        margin-bottom: .2rem;
+                    }
+                    .subject-wrap{
+                        @include flex(flex, center, normal);
+                        gap: .75rem;
+                        .subject-text{                            
+                            font-size: $small !important;
+                            font-weight: $font-weight-medium !important;
+                            color: $black-65 !important;
+                            margin-bottom:0;
+                        }
+                        .icon-flag{
+                            @include animation-all();
+                            &.active{
+                                @include animation-all();
+                                background-image: $icon-flag-red;
+                            }
+                            &.disabled{
+                                @include animation-all();
+                                background-image: $icon-flag-disabled !important;
+                            }
+                            &.success{
+                                @include animation-all();
+                                background-image: $icon-flag-green !important;
+                            }
+                        }
+                    }
+                }
+                .date-file-wrap{
+                    @include flex(flex, center, normal);
+                    gap: .75rem;
+                    .file-wrap{
+                        @include flex(flex, center, normal);
+                        gap: .25rem;
+                        .file-btn{
+                            padding: 0 !important;
+                            line-height: 0;
+                            margin: 0 !important;
+                        }
+                        .count{
+                            color: $black-65 !important;
+                            display: inline-block;
+                            font-size: $tiny;
+                        }
+                    }
+                    .date{
+                        font-size: $tiny !important;
+                        margin-bottom: 0;
+                        color: $gray-150 !important;
+                    }
+                }
+            }
+            .middle-content{
+                @include flex(flex, center, space-between);
+                gap: 1rem;
+                // @include padding(.25rem, 0, .25rem, 0);
+                .sub-desc{
+                    font-size: $tiny !important;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    color: $gray-200;
+                    overflow: hidden;
+                }
+                .save-wrap{
+                    .star-btn{
+                        .icon-star{
+                            &.saved{
+                                background-image: $icon-star-orange !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .bottom-content{
+                margin-top: .5rem;
+                @include flex(flex, start, space-between);
+                gap: .5rem;
+                width: 100%;
+                .inward-id{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                    display: block;
+                    margin-bottom: 0;
+                    color: $gray-150;
+                    .id{
+                        color: $blue-variant-5 !important;
+                    }
+                }
+                .inbox-code{
+                    max-width: 960px;
+                    width: 100%;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                    display: block;
+                    margin-bottom: 0;
+                    color: $blue-variant-4 !important;
+                }
+            }
+            .action-button-wrap{
+                @include flex(flex, start, space-between);
+                gap: .5rem;
+                .btn{
+                    @include curve(.75rem);
+                    @include padding(.125rem !important, .5rem !important, .125rem !important, .5rem !important);
+                }
+                .badge{
+                    font-size: $tiny !important;
+                    @include curve(.75rem);
+                    @include padding(.5rem !important, .625rem !important, .5rem !important, .625rem !important);
+                }
+            }
+        }
+    }
+}
+
+.inward-card-container{
+    .table-card{
+        width: 100%;
+        .card-footer{
+            display: none;
+        }
+        .inbox-content-row{
+            .left-content-column{
+                border-right: 1px solid $gray-15;
+                .inbox-wrap-card{
+                    max-height: calc(100vh - 14rem);
+                    .item{
+                        @include animation-all();
+                        @include curve(0);
+                        border: 1px solid transparent;
+                        border-left-width: 4px !important;
+                        &.active{
+                            @include animation-all();
+                            border: 1px solid $blue-variant-6;
+                            border-left-width: 4px !important;
+                        }
+                    }
+                }
+            }
+            .right-content-column{
+                .right-content-popup{
+                    .offcanvas-header{
+                        .left-side{
+                            .close-btn{
+                                .icon-arrow-blue{
+                                    transform: rotate(180deg);
+                                }
+                            }
+                        }
+                    }
+                    .offcanvas-body{
+                        // @include scrollbar();
+                        // max-height: calc(100vh - 21.5rem);
+                        
+                        // overflow-y: auto;
+                        .content-row{
+                            max-height: calc(100vh - 34rem);
+                            overflow-y: auto;
+                            @include scrollbar();
+                        }
+                    }
+                    box-shadow: none !important;
+                }
+            }
+        }
+    }  
+}

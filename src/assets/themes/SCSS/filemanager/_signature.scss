@@ -1,0 +1,185 @@
+// signature-card
+.signature-card-wrap{
+    .mat-mdc-expansion-panel, .mat-expansion-panel{
+        background-color: transparent;
+        box-shadow: none !important;
+        .mat-expansion-panel-header, .mat-mdc-expansion-panel-header{
+            &:hover, &:focus, &:active{
+                background-color: transparent !important;
+            }
+            @include padding(0,0,0,0);
+            height: auto;
+            margin-bottom: .5rem;
+            .mat-mdc-expansion-panel-header-title, .mat-expansion-panel-header-title{
+                font-size: $para !important;
+                font-weight: $font-weight-medium !important;
+                color: $black-65 !important;
+            }
+        }
+        .mat-mdc-expansion-indicator, .mat-expansion-indicator{
+            @include padding(0, .1rem, 0, 0.1rem);
+           &:after{
+            color: $black !important;
+           }
+
+        }
+        .mat-mdc-expansion-panel-content, .mat-expansion-panel-content{
+            .mat-mdc-expansion-panel-body, .mat-expansion-panel-body{
+                margin-bottom: 1rem;
+                @include padding(0,0,0,0);
+                height: auto;
+            }
+        }
+    }
+}
+.signature-card{
+    .card-header{
+        background-color: $card-bg-color-signature !important;
+        border-bottom: none !important;
+        @include padding(2rem !important, 3rem !important, 2rem !important, 3rem !important);
+        .thumbnail-wrap{
+            text-align: center;
+            .signature-image{
+                height: 64px;
+                width: auto;
+                display: inline-block;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+    }
+    .card-body{
+        background-color: $white-15 !important;
+        @include padding(.5rem !important, .5rem !important, .5rem !important, .5rem !important);
+        .signature-content-wrap{
+            .desc{
+                font-size: $tiny !important;
+                line-height: 1.125rem !important;
+                margin-bottom: .5rem !important;
+                color: $black-65 !important;
+            }
+            .button-wrap{
+                .signature-btn{
+                    @include padding(.25rem !important, 1rem !important, .25rem !important, 1rem !important);
+                    font-size: $tiny !important;
+                    line-height: 1.125rem !important;
+                    font-weight: $font-weight-medium;
+                    @include curve(.25rem);
+                }
+            }
+        }
+    }
+}
+
+.signature-files-wrap{
+    // heading wrap
+    .heading-wrap{
+        margin-bottom: 1rem !important;
+    }
+
+    // signature cardswrap
+    .signatures-card-wrap{
+        margin-bottom: 1rem;
+    }
+}
+
+.signature-modal-content {
+    .tabs-wrap-outer{
+        
+        .tab-content-container{
+            border: 1px solid $gray-35;
+            @include curve(.5rem);
+            min-height: 11rem;
+            max-height: 11rem;
+            overflow: hidden;
+            .file-inner{
+                @include padding(1rem, 1rem, 1rem, 1rem);
+                @include flex(flex, normal, normal);
+                gap: .5rem;
+                flex-direction: column;
+                .item{
+                    &.item-flex{
+                        @include flex(flex, center, normal);
+                        gap: .5rem;
+                        .signature-thumb{
+                            width: 3rem;
+                            height: 3rem;
+                            @include curve(.5rem);
+                            object-fit: cover;
+                            border: 1px solid $gray-35;
+                            @include animation-all();
+                        }
+                        .file-name{
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 1.125rem !important;
+                            display: inline-block;
+                            color: $black-65 !important;
+                        }
+                        &:focus, &.active{
+                            .signature-thumb{
+                                border-color: $blue-variant-8 !important;
+                                @include animation-all();
+                            }
+                        }
+                    }
+                }
+            }
+            &.file-container{
+                max-height: 11rem;
+                overflow-y: auto;
+                overflow-x : hidden;
+                @include scrollbar();
+            }
+            &.drop-file-inner{
+                @include flex(flex, center, center);
+                gap: .5rem;
+                flex-direction: column;
+                height: 100%;
+                border: 1px dashed $blue-variant-8;
+                .browse-btn{
+                    @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                    font-size: $small !important;
+                }
+                .text-wrap{
+                    .head{
+                        font-size: $para !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: 0;
+                        color: $black-65 !important;
+                        line-height: 1.5rem !important;
+                        text-align: center;
+                    }
+                    .subdesc{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                        line-height: 1.125rem;
+                        text-align: center;
+                        display: block;
+                        color: $gray-150 !important;
+                    }
+                }
+                .error-message{
+                    margin-bottom:0;
+                    font-size: $tiny !important;
+                    color: $danger;
+                }
+            }
+        }
+    }
+}
+
+// signature canvas
+.signature-container{
+    position: relative;
+    border: 1px solid $gray-35;
+    @include curve(.5rem);
+    min-height: 11rem;
+    max-height: 11rem;
+    overflow: hidden;
+    .btn-delete{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+}

@@ -1,0 +1,96 @@
+.landing-pagination{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    pagination-template{
+        width:100%;
+    }
+    .ngx-pagination {
+        padding-left: 0 !important;
+        margin-bottom: 0;
+        @include flex(flex, center, center);
+        li{
+            padding: 0 !important;
+            &.disabled{
+                opacity: .5;
+                &.pagination-previous{
+                    &:before{
+                        content: $icon-prev;
+                        vertical-align: middle;
+                    }
+                }
+                &.pagination-next{
+                    &:after{
+                        content: $icon-next;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.pagination-previous{
+                margin-right: auto;
+                a{
+                    &:before{
+                        content: $icon-prev;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.pagination-next{
+                margin-left: auto;
+                a{
+                    &:after{
+                        content: $icon-next;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            &.ng-star-inserted{
+                @include curve(.625rem);
+                color: $black-65 !important;
+                &.current{
+                    @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                    background-color: $white-60 !important;
+                    color: $purple !important;
+                }
+            }
+            a{
+                @include padding(.5rem, 1rem, .5rem, 1rem);
+                @include curve(.625rem);
+                display: block;
+                color: $black-65 !important;
+                font-size: $small !important;
+                font-weight: $font-weight-medium !important;
+            }
+        }
+    }
+    .mat-mdc-paginator-container{
+        @include flex(flex, center, space-between !important);
+        gap: 1rem;
+        @include media-breakpoint-down(md){
+            justify-content: center !important;
+        }
+        .mat-mdc-button-disabled{
+            background-color: $white-30 !important;
+            cursor: not-allowed;
+            svg{
+                fill: $gray-80 !important;
+            }
+        }
+        button[mat-icon-button]{
+            background-color: $primary-10;
+            svg{
+                fill: $primary-90;
+            }
+            &:not(:last-child){
+                margin-right: .5rem;
+            }
+        }
+        .mat-mdc-paginator-page-size{
+            @include media-breakpoint-down(md){
+                display: none;
+            }
+        }
+    }
+
+}

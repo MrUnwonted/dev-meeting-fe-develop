@@ -1,0 +1,496 @@
+.custom-table{
+    border: 1px solid $gray-150;
+    width: 100%;
+    thead{
+        background-color: $primary-75; 
+        tr{
+            height: auto !important;
+        }
+        th{
+            color: $white;
+            font-weight: $font-weight-medium !important;
+            font-size: $tiny;
+            @include padding(.2rem !important, .5rem !important, .2rem !important, .5rem !important);
+            &:not(:last-child){
+                border: 1px solid $gray-150;
+            }
+        }
+    }
+    tbody{
+       tr{
+        height: auto !important;
+            td{
+                @include padding(.2rem !important, .5rem !important, .2rem !important, .5rem !important);
+                font-size: $tiny;
+                border: 1px solid $gray-150;
+                &:first-child{
+                    border-left: none !important;
+                }
+                &:last-child{
+                    border-right: none !important;
+                }
+            }
+            &:last-child{
+                td{
+                    border-bottom: none !important;
+                }
+            }
+       }
+    }
+}
+
+// boxed table
+.boxed-table{
+    .add-btn{
+        &.xs{
+            font-size: $tiny !important;
+            @include padding(.1875rem !important, .75rem !important, .1875rem !important, .75rem !important);
+            @include curve(.25rem);
+        }
+    }
+    .table-header-wrap{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+        margin-bottom: 1rem;
+        position: sticky;
+        top: -1rem;
+        background-color: $white-15;
+        .heading-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            &.flex-column{
+                align-items: normal !important;
+                flex-direction: column;
+                gap: .5rem !important;
+            }
+            .head{
+                color: $black-65 !important;
+                margin-bottom: 0;
+                font-weight: $font-weight-medium !important;
+                font-size: $small !important;
+            }
+        }
+        .count{
+            min-width: initial !important;
+            background-color: $warning-200 !important;
+            color: $black !important;
+            @include padding(.375rem !important, .5rem !important, .375rem !important, .5rem !important);
+        }
+        .right-side{
+            @include flex(flex, center, normal);
+            column-gap: 1.5rem;
+            row-gap: 1rem;
+            .receipt-number-wrap{
+               .receipt-text{
+                    font-size: $small;
+                    display: block;
+                    color: $gray-200 !important;
+                    font-weight: $font-weight-normal !important;
+                    .number{
+                        font-family: $font-family-variant !important;
+                        color: $warning-200 !important;
+                        font-weight: $font-weight-semibold !important;
+                    }
+                    .view{
+                        margin-left: .5rem;
+                    }
+               }
+            }
+            .demand-id{
+                .demand-id-text{
+                    font-size: $small;
+                    display: block;
+                    color: $black-65 !important;
+                    font-weight: $font-weight-medium !important;
+                    .id{
+                        font-family: $font-family-variant !important;
+                        color: $warning-200 !important;
+                    }
+                }
+            }
+        }
+    }
+    .table-wrap{
+        overflow: auto;
+        max-height: calc(100vh - 34.5rem);  
+        background-color: $white !important;
+        border: 1px solid $gray-15;
+        @include animation-all();
+        @include curve(.5rem);
+        @include scrollbar();
+        table{
+            thead{
+                background-color: $white;
+                position: sticky;
+                top:0;
+                tr{
+                    height: auto !important;
+                }
+                border-bottom: 1px solid $gray-15;
+                th{
+                    @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+                    color: $black-65 !important;
+                    font-weight: $font-weight-semibold !important;
+                    font-size: $tiny !important;
+                    line-height: .875rem !important;
+                    &.check-head{
+                        width: 5%;
+                    }
+                }
+            }
+            tbody{
+                tr{
+                    height: auto !important;
+                    td{
+                        @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                        color: $gray-200 !important;
+                        font-size: $tiny !important;
+                        line-height: .875rem !important;
+                        a{
+                            font-size: $tiny !important;
+                            text-decoration: underline !important;
+                        }
+                        .check-wrap{
+                            @include flex(flex, center, normal);
+                            gap: .5rem;
+                            .form-label{
+                                font-size: $tiny !important;
+                                color: $black-65 !important;
+                                font-weight: $font-weight-normal !important;
+                                margin-bottom: 0;
+                            }
+                        }
+                        .file-badge{
+                            font-size: $tiny !important;
+                            @include padding(.1875rem, .5313rem,.1875rem, .5313rem);
+                            .icon{
+                                background-position: unset;
+                                margin-left: .4375rem;
+                            }
+                        }
+                        .btn-with-icon{
+                            @include flex(flex, center, normal);
+                            gap: .5rem;
+                            text-decoration: none !important;
+                            .text{
+                                color: $primary-90 !important;
+                                display: inline-block;
+                            }
+                        }
+                    }
+                    &:not(:last-child){
+                        td{
+                            border-bottom: 1px solid $gray-15;
+                        }
+                    }
+                }
+            }
+            tfoot{
+                border-top: 1px solid $gray-15;
+                td{
+                    min-height: 48px;
+                    @include padding(.5rem, 1rem, .5rem, 1rem);
+                    &.total-table-data{
+                        border-left: 1px solid $gray-15;
+                    }   
+                }
+                .amount-badge{
+                    text-align: end;
+                    background-color: $gray-18 !important ;
+                    border-color: $gray-18 !important;
+                    @include curve(.5rem);
+                    @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                }
+            }
+        }
+        &.no-bg{
+            background-color: transparent !important;
+            border: none !important;
+            table{
+                thead{
+                    th{
+                        &:first-child{
+                            padding-left: 0 !important;
+                        }
+                        &:last-child{
+                            padding-right: 0 !important;
+                        }
+                    }
+                }
+                tbody{
+                    tr{
+                        td{
+                            &:first-child{
+                                padding-left: 0 !important;
+                            }
+                            &:last-child{
+                                padding-right: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .total-wrap-flex{
+            @include flex(flex, center, space-between);
+            gap: 1rem;
+            .head{
+                color: $gray-200 !important;
+                margin-bottom: 0;
+                font-weight: $font-weight-normal !important;
+                font-size: $tiny !important;
+            }
+        }
+    }
+    .select-check-wrap{
+        margin-top: 1rem;
+        @include flex(flex, center, normal);
+        gap: .5rem;
+        .form-label{
+            font-size: $tiny !important;
+            color: $primary-90 !important;
+            font-weight: $font-weight-normal !important;
+            margin-bottom: 0;
+        }
+    }
+    .collectables-table-wrap{
+        .select-check-wrap{
+            margin-top: .5rem !important;
+        }
+        .table-wrap{
+            max-height: calc(100vh - 36rem) !important;
+        }
+        table{
+            th{
+                &:last-child{
+                    text-align: end;
+                }
+            }
+            td{
+                &:last-child{
+                    text-align: end;
+                }
+                .amount-input-wrap{
+                    .amount-input{
+                        float: right;
+                        background-color: transparent !important;
+                        border: 1px solid $gray-200 !important;
+                        @include curve(.5rem);
+                        -moz-appearance: textfield;
+                        text-align: end;
+                        font-size: $small;
+                        height: auto;
+                        @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                          -webkit-appearance: none;
+                          margin: 0;
+                        }                  
+                    }
+                    .amount-badge{
+                        text-align: end;
+                        // background-color: transparent !important;
+                        // border: 1px solid $gray-200 !important;
+                        @include curve(.5rem);
+                        @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+                    }
+                }
+            }
+        }
+    }
+    .table-details-wrap{
+        @include padding(.5rem, 0, .5rem, 0);
+        .notes-wrap{
+            .head{
+                font-size: $small !important;
+                font-weight: $font-weight-normal !important;
+                margin-bottom: .5rem;
+                color: $gray-150 !important;
+            }
+            .summary-notes{
+                border-color: $gray-15 !important;
+                font-size: $tiny !important;
+                font-weight: $font-weight-normal !important;
+                @include padding(1.5rem, 1.5rem ,1.5rem, 1.5rem);
+                color: $black-65 !important;
+                background-color: $white; 
+                @include curve(.5rem);
+                width: 100%;
+                resize: none;
+            }
+            .note-text{
+                font-size: $tiny !important;
+                font-weight: $font-weight-normal !important;
+                @include padding(1.5rem, 1.5rem ,1.5rem, 1.5rem);
+                color: $black-65 !important;
+                background-color: $white; 
+                border: 1px solid $gray-15;
+                @include curve(.5rem);
+                width: 100%;
+                display: block;
+            }
+        }
+        &.subject-details-wrap{
+            .note-text{
+                min-height: 16.25rem;
+            }
+        }
+        .details-flex-bottom{
+            margin-top: 1rem;
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            &.end{
+                justify-content: end !important;
+            }
+            .button-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .btn{
+                    @include flex(flex, center, normal);
+                    gap: .5rem;
+                }
+            }
+            .select-check-wrap{
+                margin-top: 0 !important;
+            }
+        }
+        .payment-button-wrap{
+            .inner-wrap{
+                @include flex(flex, center, end);
+                gap: 1rem;
+                .payment-toggle-wrap{
+                    @include flex(flex, center, normal);
+                    gap: .5rem;
+                    .text{
+                        font-weight: $font-weight-normal !important;
+                        margin-bottom: 0 !important;
+                        font-size: $tiny !important;
+                    }
+
+                }
+                .button-wrap{
+                    @include flex(flex, center, end);
+                    gap: 1rem;
+                    max-width: 10.5rem;
+                    width: 100%;
+                    .pay-btn{
+                        @include padding(.25rem !important, 1.5rem !important, .25rem !important, 1.5rem !important);
+                        font-size: $tiny !important;
+                    }
+                }   
+            }
+        }
+    }
+    &.document-table{
+        .table-header-wrap{
+            background-color: transparent !important;
+        }
+        .table-wrap{
+            max-height: calc(100vh - 35.5rem);
+            @include curve-each(.5rem, .5rem, 0, 0);
+            table{
+                &.fee-details-table{
+                    .document-type{
+                        width: 55%;
+                    }
+                    .amount-input{
+                        max-width: 5.3125rem;
+                        height: 2rem;
+                        font-size: $tiny !important;
+                        text-align: center;
+                        color: $gray-200 !important;
+                        @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+                        &::placeholder{
+                            font-size: $tiny !important;
+                            text-align: center;
+                            color: $gray-200 !important;
+                        }
+                    }
+                }
+                thead{
+                    th{
+                        background-color: $white-15 !important;
+                    }
+                }
+                tbody{
+                    td{
+                        .action-flex-wrap{
+                            column-gap: 1.5rem !important;
+                        }
+                    }
+                }
+            }
+        }
+        .more-btn-wrap{
+            background-color: $white !important;
+            border: 1px solid $gray-15;
+            @include curve-each(0, 0, .5rem, .5rem);
+            border-top: none !important;
+            min-height: 3rem;
+            @include flex(flex, center, normal);
+            gap: .5rem;
+            @include padding(.0rem, 1rem, 0rem, 1rem !important);
+            .btn-flex{
+                @include padding(.25rem !important, .875rem !important, .25rem !important, .5rem !important);
+                font-size: $tiny !important;
+                line-height: 1.125rem !important;
+            }
+        }
+    }
+}
+
+.mat-mdc-option-text{
+    color: $black-65 !important;
+}
+
+.cdk-overlay-connected-position-bounding-box .cdk-overlay-pane{
+    max-width: 4rem ;
+    transform: none !important;
+}
+
+.shared-users{
+    @include flex(flex, center, center);
+    .user-link{
+        display: inline-block;
+        .profile-image{
+            @include curve(50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            overflow: hidden;
+            border: 1px solid $blue-variant-6;
+        }
+        &:not(:last-child){
+            margin-right: -2rem;
+        }
+    }
+}
+
+.table-full-wrap {
+    display: flex;
+    flex-direction: column; /* Allow vertical stacking of components */
+    height: 100%; /* Set to 100% to ensure it fills the parent container */
+    position: relative;
+    .table-inner-wrap {
+        flex: 1; /* Allow table wrap to grow and fill remaining space */
+        display: flex;
+        flex-direction: column; /* Stack table and paginator vertically */
+        height: 100%; /* Ensure this takes the full height of the parent */
+        
+        .table-wrap {
+            flex: 1; /* Allow the table to grow and fill available space */
+            overflow-y: auto; /* Enable vertical scrolling for the table */
+            height: 0; /* Initial height set to 0 to allow flex to take control */
+            min-height: 200px; /* Minimum height for the table */
+        }
+    }
+    
+    table {
+        width: 100%; /* Ensure the table takes full width */
+        border-collapse: collapse; /* Optional for better styling */
+    }
+    
+    .mat-mdc-paginator {
+        margin-top: 1rem; /* Space between table and paginator */
+        flex-shrink: 0; /* Prevent paginator from shrinking */
+    }
+}

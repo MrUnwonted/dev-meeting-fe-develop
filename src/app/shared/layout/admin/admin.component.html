@@ -1,0 +1,17 @@
+<div class="page-wrapper admin-layout" [ngClass]="{ 'bg-white': layoutChange }">
+    <app-admin-header [showModuleLogo]="showModuleLogo"></app-admin-header>
+    <div class="full-content-wrap">
+        <app-admin-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-admin-sidebar>
+    </div>
+    <div class="content-wrapper-col" [class.minimized]="isSidebarMinimized" id="content-wrapper-col" >
+        <div *ngIf="showTabsMenu">
+            <app-admin-tab-menu  [class.minimized]="isSidebarMinimized"></app-admin-tab-menu>
+        </div>
+        <!-- main content -->
+        <main class="content-wrapper">
+            <div class="content-wrap-inner" [ngClass]="{ 'px-0 py-0': layoutChange }">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>

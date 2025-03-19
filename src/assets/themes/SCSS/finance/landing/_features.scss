@@ -1,0 +1,137 @@
+.finance-layout{
+    .services{
+        margin-bottom: 7.5rem !important;
+        .services-outer{
+            background-color: rgb($primary-light, .12);
+            .heading-wrap{
+                padding: 2.5rem 0;
+                text-align: center;
+                .tag{
+                    font-size: $para !important;
+                    font-weight: $font-weight-medium !important;
+                    line-height: 1.5rem !important;
+                    color: $primary-50 !important;
+                    margin-bottom: 1rem;
+                    display: block;
+                }
+                .head{
+                    font-size: $heading-md !important;
+                    font-weight: $font-weight-semibold  !important;
+                    line-height: 3.6rem !important;
+                    color: $black-65 !important;
+                    margin-bottom: 1rem;
+                }
+                .subhead{
+                    margin-bottom: 0 !important;
+                    color: $gray-150 !important;
+                    line-height: 1.5rem !important;
+                    display: block;
+                }
+            }
+            .item{
+                background: none !important;
+                @include padding(2.5rem, 0rem, 2.5rem, 0rem);
+                .image-wrap{
+                    overflow: hidden;
+                    img{
+                        height: 27.625rem;
+                        width:100%;
+                        object-fit:cover;
+                        object-position: center;
+                        @include animation-all();
+                    }
+                }
+                .content-wrap{
+                    @include media-breakpoint-down(md){
+                        text-align: center;
+                    }
+                    .tag{
+                        color: $gray-200;
+                        margin-bottom: 1.5rem;
+                        display: block;
+                    }
+                    .content{
+                        margin-bottom: 1rem;
+                        padding-bottom:1rem;
+                        border-bottom: none !important;
+                        .head{
+                            color: $black-65 !important;
+                            margin-bottom: 1.5rem;
+                            font-weight: $font-weight-medium !important;
+                            font-size: $heading-md-sm !important;
+                        }
+                        .desc{
+                            margin-bottom: 0 !important;
+                            color: $gray-150 !important;
+                            line-height: 1.5rem !important;
+                            position: relative;
+                            padding-left: 1rem;
+                            &:before{
+                                left: 0;
+                                position: absolute;
+                                content: "";
+                                width: 4px;
+                                height: 100%;
+                                background-color: $gray-35;
+                            }
+                            &:last-child{
+                                margin-bottom:0;
+                            }
+                        }
+                    }
+                    .view-link{
+                        color: $white !important;
+                        font-weight: $font-weight-medium !important;
+                        @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important );
+                    }
+                }
+                .item-row{
+                    align-items:center;
+                    --bs-gutter-x: 3rem;
+                    
+                }
+                &:nth-child(even){
+                    .item-row{
+                        flex-direction: row-reverse;
+                        .content-wrap{
+                            text-align: left;
+                        }
+                        @include media-breakpoint-down(md){
+                            .content-wrap{
+                                text-align:center;
+                            }
+                        }
+                    }
+                }
+                .full-container{
+                    @include padding(0, 5.9375rem, 0, 5.9375rem );
+                }
+                &:hover{
+                    .image-wrap{
+                        img{
+                            transform: scale(1);
+                            @include animation-all();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    .slide-services{
+        @include padding(7.5rem, 0, 7.5rem, 0);
+        margin-bottom: 0 !important;
+        background-color: $white-15;
+        .slider-services-outer{
+            .slide-services-inner{
+                .slider-wrap{
+                    .owl-carousel{
+                        .owl-stage-outer{
+                            padding-bottom: 2rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+// font
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+body *{
+    font-family: $font-family-base !important;  
+}
+h1{
+    font-size: $heading-lg !important;
+    font-weight: $font-weight-normal !important;
+    @include lh-120();
+}
+h2{
+    font-size: $heading-md !important;
+    font-weight: $font-weight-medium !important;
+    @include lh-120();
+}
+h3{
+    font-size: $heading-sm !important;
+    font-weight: $font-weight-medium !important;
+    @include lh-120();
+}
+h4{
+    font-size: $subheading-lg !important;
+    font-weight: $font-weight-semibold !important;
+    @include lh-120();
+}
+h5{
+    font-size: $subheading-md !important;
+    font-weight: $font-weight-semibold !important;
+    @include lh-120();
+}
+h6{
+    font-size: $subheading-sm !important;
+    font-weight: $font-weight-semibold !important;
+    @include lh-120();
+}
+p{
+    font-size: $para !important;
+    // @include lh-120();
+    line-height: 1.5rem; //24px
+}
+a{
+    font-size: $para !important;
+    color: $primary-90 !important;
+    line-height: 1.5rem !important; // 24px
+    text-decoration: none;
+}
+small{
+    font-size: $small !important;
+    @include lh-120();
+}
+.subtitle1{
+    font-size: $para !important;
+    font-weight: $font-weight-medium !important;
+    @include lh-120();
+}
+.subtitle2{
+    font-size: $small !important;
+    font-weight: $font-weight-medium !important;
+    @include lh-120();
+}
+.small-text{
+    font-size: $tiny !important;
+    font-weight: $font-weight-normal!important;
+    @include lh-120();
+}

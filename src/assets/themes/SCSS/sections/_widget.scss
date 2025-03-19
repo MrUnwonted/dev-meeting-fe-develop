@@ -1,0 +1,204 @@
+.action-widget-wrap{
+    @include flex(flex, center, space-between);
+    gap: 1rem;
+    .page-and-search-header-wrap{
+        @include flex(flex, center, normal);
+        gap: .5rem;
+        .page-title{
+            font-size: $subheading-md !important;
+            font-weight: $font-weight-medium !important;
+            margin-bottom: 0;
+            color: $black-65 !important;
+        }
+        .input-wrap-outer{
+            width: 100%;
+            @include flex(flex, center, normal);
+            gap: .5rem;
+            .input-wrap{
+                width: 100%;
+                position: relative;
+                .icon{
+                    position: absolute;
+                    left: 1rem;
+                    top: .75rem;
+                }
+                .form-control{
+                    width: 100%;
+                    border-color: $gray-15 !important;
+                    font-size: $tiny !important;
+                    color: $gray-35  !important;
+                    padding-left: 2.5rem !important;
+                    &::placeholder{
+                        font-size: $tiny !important;
+                        color: $gray-35  !important;
+                    }
+                }
+            }
+            .menu-btn{
+                border: 1px solid $gray-15;
+            }
+        }
+    }
+    .button-wrap{
+        @include flex(flex, center, end);
+        gap: .5rem;
+        .btn{
+            padding-left: 1.5rem !important;
+            padding-right: 1.5rem !important;
+            line-height: 1.5rem;
+        }
+        .menu-btn{
+            border-color: $gray-15 !important;
+            padding: .25rem !important;
+            min-width: 2rem;
+            @include curve(.25rem);
+        }
+    }
+}
+
+.widget-btn-wrap{
+    @include flex(flex, center, normal);
+    gap: 1rem;
+    @include flex-wraping(wrap);
+    .selection-card{  
+        max-width: 3.1875rem;    
+        width: 100%;  
+        .card-body{
+            @include padding(1rem !important, 1.5rem !important, 1rem !important, 1.5rem !important);
+        }
+        .icon-wrap {
+            text-align: left;
+        }
+        .title{
+            line-height: .875rem !important;
+            text-align: left;
+            color: $gray-200 !important;
+            font-weight: $font-weight-normal !important;
+        }
+    }
+    .dropdown-wrapper{
+        .mat-mdc-menu-trigger , .mat-mdc-menu-trigger{
+            padding: 0 !important;
+            border: none !important;
+            line-height: 0;
+        }
+    }
+}
+
+// widget dropdown menu
+.widget-dropdown-menu{
+    border: 1px solid $gray-15;
+    box-shadow: 0px 0px 16px 0px rgb($black, .08);
+    min-width: 12.5rem !important;
+    min-height: auto !important;
+    background-color: $white-15;
+    margin-top: -1.5rem;
+    .mat-mdc-menu-content{
+        padding: 0  !important;
+        .mat-mdc-menu-item{
+            @include curve(0);
+            @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+            line-height: 0;
+            height: auto !important;
+            &:not(:last-child){
+                border-bottom: 1px solid $gray-15;
+            }
+            .item-inner{
+                @include flex(flex, center, normal);
+                gap: .75rem;
+                .icon{
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+                .text{
+                    font-size: $para !important;
+                    font-weight: $font-weight-normal !important;
+                    display: inline-block;
+                    line-height: 1rem !important;
+                }
+            }
+        }
+    }
+}
+
+.page-title-wrap{
+    margin-bottom: .5rem;
+    .page-title, .sub-title{
+        font-size: $subheading-md-sm !important;
+        font-weight: $font-weight-medium !important;
+        margin-bottom: 0;
+        color: $black-65 !important;
+        line-height: 1rem !important;
+    }
+    .page-title{
+        line-height: 1.875rem !important;
+    }
+    .sub-title{
+        line-height: 1rem;
+    }
+    &.breadcrumb{
+        @include flex(flex, center, normal);
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    &.filter-include{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+    }
+    .filter-wrap{
+        @include flex(flex, center, end);
+        gap: .5rem;
+        .head{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1.125rem !important;
+            margin-bottom: 0;
+            color: $black-65;
+        }
+        .filter-items-wrap{
+            @include flex(flex, center, end);
+            gap: .5rem;
+            .form-select, .date-picker-filter .form-control{
+                @include padding(.1875rem !important, 1.5rem !important, .1875rem !important, .5rem !important);
+                font-size: $tiny !important;
+                color: $black-65 !important;
+                &::placeholder{
+                    color: $black-65 !important;
+                }
+            }
+            .select-filter{
+                max-width: 5.25rem;
+            }
+            .date-picker-filter{
+                max-width: 5.6875rem;
+                .mat-mdc-datepicker-toggle{
+                    top: .35rem !important;
+                    line-height: 0;
+                    display:inline-block;
+                }
+                .mat-mdc-icon-button{
+                    width: 12px;
+                    height: 12px;
+                    line-height: 0;
+                }
+                .mat-mdc-button-wrapper{
+                    line-height: 0;
+                    display: inline-block;
+                    .mat-mdc-datepicker-toggle-default-icon{
+                        width: 12px;
+                        height: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.date-picker-filter{
+    position: relative;
+    .mat-mdc-datepicker-toggle{
+        position: absolute;
+        right: .5rem;
+        top: .5rem;
+    }
+}

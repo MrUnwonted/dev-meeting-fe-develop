@@ -1,0 +1,296 @@
+.topbar{
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+    .container-fluid{
+        min-height: 3.9375rem;
+        padding: 0 !important;
+        align-items: stretch !important;
+        padding-right: 1rem !important;
+    }
+    .empty-module-header{
+        .navbar{
+            box-shadow: 0px -2px 17.4px 0px rgb($black, .18);
+        }
+    }
+    .navbar{
+        border-bottom: 1px solid $white-30;
+        background-color: $white;
+        padding: 0 !important;
+        .navbar-brand{
+            font-size: $subheading-md !important;
+            color: $primary;
+            font-weight: $font-weight-semibold !important;
+            display: inline-block;
+            background-color: $gray-18;
+            @include padding(0, 1.5rem, 0, 1.5rem);
+            margin-right: 0;
+            img{
+                width: 5.5rem !important;
+                width:100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        .navbar-brand-flex{
+            @include flex(flex, stretch, space-between);
+            h4{
+                &.company-name{
+                    font-weight: $font-weight-semibold !important;
+                    margin-bottom: 0;
+                    display: flex;
+                    height: 100%;
+                    align-items: center;
+                    padding-left: 1rem;                
+                }
+            }
+            .module-logo-wrap{
+                position: relative;
+                &:before{
+                    content: "";
+                    position: absolute;
+                    background-color: $white;
+                    left: -.4rem;
+                    top: 1.7rem;
+                    transform: rotate(45deg);
+                    display: block;
+                    width: .75rem;
+                    height: .75rem;
+                }
+                @include media-breakpoint-down(md){
+                    display:none;
+                }
+                &.file-management{
+                    .module-logo{
+                        width: 8.5975rem !important;
+                    }
+                }
+            }
+            .module-logo{
+                width: 8rem;
+                height: 100%;
+                object-fit: contain;
+                object-position: left;
+                padding-left: 1.5rem;
+            }
+            &.empty-module{
+                .navbar-brand{
+                    background-color: transparent;
+                }
+            }
+        }
+        .navbar-nav{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            @include flex(flex, center, space-between);
+            column-gap: 1.5rem;
+            row-gap: 1rem;
+            flex-direction: row;
+            margin-left:auto;
+            .nav-link{
+                &.btn{
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    &.btn-none{
+                        line-height: 0;
+                    }
+                }
+            }
+            .lang-drop-down{
+                .dropdown-menu{
+                    padding: 0 !important;
+                    .active{
+                        .dropdown-item{
+                            color: $primary-90 !important;
+                            font-weight: $font-weight-medium !important;
+                        }
+                    }
+                }
+                .dropdown-item{
+                    @include padding(.5rem !important, 0.5rem !important, .5rem !important, 0.5rem !important);
+                    border: none !important;
+                    background-color: transparent;
+                    color: $black-65 !important;
+                    font-size: $small !important;
+                    font-weight: $font-weight-normal !important;
+                }
+                .dropdown-toggle{
+                    padding: 0 !important;
+                    border: none !important;
+                    background-color: transparent;
+                    color: $black-65 !important;
+                    font-size: $small !important;
+                    font-weight: $font-weight-normal !important;
+                    &:after{
+                        vertical-align: baseline;
+                        margin-left: .5rem;
+                    }
+                }
+                .flag-icon{
+                    margin-right: .5rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    @include curve(50%);
+                    object-fit: cover;
+                    object-position: center;
+                }
+                .lang{
+                    @include media-breakpoint-down(md){
+                        display:none;
+                    }
+                }
+            }
+            .profile-drop-down{
+                max-height: 32px;
+                @include flex(flex, normal, center);
+                flex-direction: column;
+                .dropdown-menu{
+                    &:not(:last-child){
+                        border-bottom: 1p solid $gray-15;
+                    }
+                    min-width: 218px;
+                    @include curve(.5rem);
+                    overflow-x: hidden;
+                    left: -1rem;
+                    padding: 0 !important;
+                }
+                .dropdown-group{
+                    padding-left: 0 !important;
+                    margin-bottom: 0 !important;
+                    list-style: none;
+                    &:not(:last-child){
+                        border-bottom: 1px solid $gray-15;
+                    }
+                }
+                .dropdown-item{
+                    @include padding(.75rem, 1rem, .75rem, 1rem);
+                    @include flex(flex, center, normal);
+                    gap: .75rem;
+                    .switch-btn{
+                        width: 100%;
+                        @include padding(.5rem !important, .75rem !important, .5rem !important, .75rem !important);
+                        font-size: $small !important;
+                    }
+                    .text{
+                        font-size: $small !important;
+                        line-height: 1rem !important;
+                        color: $black-65 !important;
+                    }
+                    &.title{
+                       color: $gray-150 !important;
+                       font-size: $tiny !important;
+                       line-height: 1.125rem !important;
+                       margin-bottom: 0;
+                       font-weight: $font-weight-medium !important;
+                       background-color: transparent !important;
+                       &:hover{
+                        font-weight: $font-weight-medium !important;
+                        background-color: transparent !important;
+                        color: $gray-150 !important;
+                       } 
+                    }
+                    &.btn-item{
+                        &:hover{
+                            background-color: transparent !important;
+                        }
+                    }                  
+                    &:hover{
+                        background-color: $primary-90;
+                        .text{
+                            color: $white !important;
+                        }
+                        .icon{
+                            filter: brightness(200) grayscale(1);
+                        }
+                    }
+                    
+                }
+                .dropdown-toggle{
+                    padding: 0 !important;
+                    @include flex(flex, center, space-between);
+                    gap: .5rem;
+                    &:after{
+                        margin-top: -5px ;
+                    }
+                    img{
+                        &.profile-image{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            object-fit: cover;
+                            object-position: center;
+                            @include curve (0);
+                        }
+                    }
+                    .name{
+                        color: $black-65 !important;
+                        font-weight: $font-weight-normal !important;
+                        margin-bottom: 0;
+                        font-size: $small !important;
+                        @include media-breakpoint-down(md){
+                            display:none;
+                        }
+                    }
+                    .designation-wrap{
+                        @include media-breakpoint-down(md){
+                            display:none;
+                        }
+                        @include flex(flex, center, normal);
+                        gap: .5rem;
+                        .designation-inner{
+                            @include flex(flex, center, normal);
+                            gap: .5rem;
+                            .divider{
+                                display: inline-block;
+                                width: 1px;
+                                height: .75rem;
+                                background-color: $gray-15;
+                            }
+                        }
+                    }
+                    .designation, .sub-desig{
+                        display: block;
+                        font-size: $tiny !important;
+                        color: $gray-35 !important;
+                    }
+                    .status-badge{
+                        min-width: auto !important;
+                        margin-left: .25rem;
+                        background-color: transparent !important;
+                        border: 1px solid $gray-15 !important;
+                        @include padding(.125rem, .5rem, .125rem, .5rem);
+                        color: $gray-150 !important;
+                        font-size: $tiny !important;
+                        .icon{
+                            margin-right: .25rem;
+                        }
+                        .number{
+                            color: $gray-35 !important;
+                            line-height: .9rem;
+                            font-weight: $font-weight-medium !important;
+                        }
+                    }
+                    
+                }
+                .dropdown-item{
+                    font-size: $small !important;
+                    color: $black-65 !important;
+                    &:hover, &:focus{
+                        background-color: $primary-90 ;
+                        color: $white !important;
+                        font-weight: $font-weight-normal !important;
+                    }
+                }
+            }
+        }
+        .divider{
+            background-color: $gray-15;
+            width: 1px;
+            height: 1.5rem;
+            display: block;
+            @include media-breakpoint-down(md){
+                display:none;
+            }
+        }
+    }
+}
+

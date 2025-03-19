@@ -1,0 +1,147 @@
+.notes-wrap-flex{
+    @include flex(flex, normal, normal);
+    gap: .5rem;
+    flex-direction: column;
+    .item{
+        .heading-wrap{
+            @include flex(flex, center, space-between);
+            gap: 1rem;
+            flex-direction: row !important;
+            margin-bottom: 1rem;
+            .profile{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                img{
+                    width: .75rem;
+                    height: .75rem;
+                    object-fit: cover;
+                    object-position: center;
+                    @include curve(50%);
+                }
+                .name{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                    margin-bottom: 0;
+                    color: $black-65 !important;
+                }
+            }
+            .date-time{
+                .date{
+                    color: $gray-150 !important;
+                    margin-bottom:0;
+                    font-size: $tiny !important;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.sticky-notes{
+    position: absolute;
+    right: .5rem;
+    @include media-breakpoint-down(md){
+        position: unset;
+    }
+}
+
+.drag-btn{
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 0 !important;
+    position: absolute;
+    top: -18px;
+    z-index: 22;
+    left: 0;
+    right: 0;
+    .icon{
+        background-color: $white;
+        @include padding(0rem !important, 1rem !important, .5rem !important, 1rem !important);
+    }
+}
+
+.notes-wrap-outer{
+    position: relative;
+    top: 0;
+    border: 1px solid $gray-15;
+    overflow: hidden;
+    &.draggable{
+        overflow: visible !important;
+        margin-top: .5rem;
+    }
+    &.yellow{
+        border-color: $warning-200 !important;
+        &.drag{
+            border-style: dashed !important
+        }
+    }
+    &.green{
+        border-color: $success-200 !important;
+        &.drag{
+            border-style: dashed !important
+        }
+    }
+    @include curve(1rem);
+    .notes-header{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        .left-side{
+           .button-wrap{
+                @include flex(flex, center, normal);
+                gap: 1.5rem;
+           }
+        }
+        .right-side{
+            .button-wrap{
+                @include flex(flex, center, normal);
+                gap: 1.5rem;
+           }
+        }
+        .note-btn{
+            &.warning{
+                color: $warning-200;
+            }
+            &.success{
+                color: $success-200;
+            }
+            padding: 0 !important;
+            margin: 0 !important;
+            line-height: 0 !important;
+            color: $primary-90;
+            .text{
+                font-size: $tiny !important;
+                font-weight: $font-weight-medium !important;
+                line-height: .875rem !important;               
+            }
+        }
+    }
+    .notes-editor-wrap{
+        .tox-tinymce{
+            border: none !important;
+        }
+        .tox:not(.tox-tinymce-inline) {
+            .tox-editor-header{
+                box-shadow: none !important;
+                border-bottom: 1px solid $gray-15 !important;
+                border-top: 1px solid $gray-15 !important;
+            }
+        }
+    }
+}
+
+.swap-row{
+    &.swap{
+        flex-direction: column-reverse;
+    }
+}
+
+.notes-preview-content-wrap{
+    .left-column, .right-column{
+        // @include animation-all();
+        // max-height: calc(100vh - 28.5rem);
+        // overflow-y: auto;
+        // overflow-x: hidden;
+        // @include scrollbar();
+    }
+}

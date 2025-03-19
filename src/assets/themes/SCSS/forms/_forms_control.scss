@@ -1,0 +1,64 @@
+.form-control{
+    opacity: 1;
+    border-color: $gray-15;
+    @include padding(.75rem, 1rem, .75rem, 1rem );
+    @include curve(0.25rem);
+    @include form-variant();
+    color: $black-65;
+    $SizeConfig: 'default' .75rem 1rem $para, 'md' 0.75rem 1rem $tiny, 'sm' 0.5rem 1.5rem $tiny , 'xs' 0.375rem 1rem $tiny ; 
+    @each $tuple in $SizeConfig {
+        &.#{nth($tuple, 1)} {
+            padding: nth($tuple, 2) nth($tuple, 3)  !important;
+            font-size: nth($tuple, 4) !important;
+        }
+    }
+}
+
+.form-wrap, .form-group{
+    .input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback){
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+    .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu), .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3){
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    .input-group-text{
+        @include curve(.25rem);
+        border-color: $gray-15;
+        $SizeConfig: 'default' .75rem 1rem $para, 'md' 0.75rem 1rem $tiny, 'sm' 0.5rem 1.5rem $tiny , 'xs' 0.375rem 1rem $tiny ; 
+        @each $tuple in $SizeConfig {
+            &.#{nth($tuple, 1)} {
+                padding: nth($tuple, 2) nth($tuple, 3)  !important;
+                font-size: nth($tuple, 4) !important;
+            }
+        }
+    }
+}
+
+.file-manager-layout{
+    .form-control, .form-select{
+        border-color: $gray-15;
+    }
+}
+
+.input-group{
+    position: relative;
+    &.right{
+        input{
+            border-top-right-radius: 0.25rem !important;
+            border-bottom-right-radius: 0.25rem !important;
+        }
+        .input-group-text{
+            position: absolute;
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            line-height: 0 !important;
+            &.xs{
+                right: .5rem;
+                top: .5rem
+            }
+        }
+    }
+}

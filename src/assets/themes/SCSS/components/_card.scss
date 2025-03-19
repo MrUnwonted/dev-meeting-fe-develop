@@ -1,0 +1,585 @@
+.card{
+    @include card-variant();
+    height: 100%;
+    &.selection-card{
+        min-width: 15.125rem;
+        max-width: 15.125rem;
+        @include media-breakpoint-down(md-sm){
+            min-width:100%;
+        }
+        @include animation-all();
+        .card-body{
+            @include padding( 1.5rem, 3rem, 1.5rem, 3rem );
+        }
+        .icon-wrap{
+            text-align: center;
+            margin-bottom: .5rem;
+            .icon{
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            .icon-image{
+                height: 2.5rem;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+        .title{
+            color: $black-65 !important;
+            font-size: $small;
+            display: block;
+            text-align: center;
+        }
+        .card-header, .card-footer{
+            display: none;
+        }
+    }
+    &.dashboard-card{
+        &.count{
+            .card-body{
+                padding: 0 !important;
+            }
+        }
+        .card-header{
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            .header-wrap-outer{
+                width: 100%;
+                @include flex(flex, center, space-between);
+                gap: 1rem;
+                @include flex-wraping(wrap);
+            }
+            .divider{
+                background-color: $white-30;
+                border-color: $white-30;
+                margin-top: .75rem !important;
+                margin-bottom: 0 !important; 
+            }
+        }
+    }
+    &.table-card{
+        .card-header{
+            @include padding (.75rem !important, 1rem !important, .75rem !important, 1rem !important );
+            .header-wrap-outer{
+                width: 100%;
+            }
+        }
+    }
+    &.widget-card{
+        .card-header{
+            @include padding(1.125rem, 1.5rem, 1.125rem, 1.5rem );
+            background-color: $white;
+            border-bottom: 1px solid rgb($primary-80, .08);
+            .heading-wrap{
+                @include flex(flex, center, normal);
+                @include media-breakpoint-down(md-sm){
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                gap: 1.5rem;
+                .head{
+                    color: $black-65 !important;
+                    font-weight: $font-weight-medium !important;
+                    margin-bottom: 0;
+                    &.semi-bold{
+                        font-weight: $font-weight-semibold !important;
+                    }
+                }
+                .heading-desc{
+                    @include flex(flex, center, normal);
+                    gap: 1.5rem;
+                    @include media-breakpoint-down(md-sm){
+                        flex-direction: column;
+                        gap: 1rem;
+                    }
+                    .inward-id{
+                        color: $gray-200;
+                        .id{
+                            font-family: $font-family-variant !important;
+                            color: $primary-80 !important;
+                            font-weight: $font-weight-bold !important;
+                        }
+                    }
+                    .inward-date{
+                        color: $gray-200;
+                        .date{
+                            color: $black-65 !important;
+                            font-weight: $font-weight-semibold !important;
+                        }
+                    }
+                    .divider{
+                        @include media-breakpoint-down(md-sm){
+                            display:none;
+                        }
+                        background-color: rgb($primary-80, .24);
+                        width:1px;
+                        height:1rem;
+                    }
+                    .profile-image-wrap{
+                        @include flex(flex, center, normal);
+                        gap: 1rem;
+                        img{
+                            width: 1.25rem;
+                            height: 1.25rem;
+                            @include curve(50%);
+                            object-fit: cover;
+                            object-position: center;
+                        }
+                        .name{
+                            color: $black-65 !important;
+                            font-size: $tiny;
+                            font-weight: $font-weight-normal !important;
+                        }
+                    }
+                }
+            }
+            .header-wrap{
+                @include flex(flex, start, space-between);
+                gap: 1rem;
+                .text-wrap{
+                    h6{
+                        font-size: $para !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: 0rem;
+                        color: $black-80 !important;
+                    }
+                    h5{
+                        font-size: $para !important;
+                        font-weight: $font-weight-semibold !important;
+                        margin-bottom: 0rem;
+                        color: $black-80 !important;
+                    }
+                    p{
+                        margin-bottom: 0 !important;
+                        font-size: $tiny !important;
+                        color: $gray-200 !important;
+                    }
+                }
+            }
+        }
+        .card-body{
+            @include padding(1.5rem ,1.5rem, 1.5rem, 1.5rem);
+        }
+
+        // applicant card
+        &.applicant-card{
+            box-shadow: 0 0 1rem 0 rgb($black, .08);
+            @include animation-all();
+            .card-header{
+                border-bottom: none !important;
+                padding-bottom: 0 !important;
+            }
+            .action-flex-wrap{
+                position: absolute;
+                right: 1.5rem;
+                top: 1.5rem;
+            }
+            .card-body{
+                padding-top: 1rem;
+            }
+            .card-footer{
+                display: none;
+            }
+            .divider{
+                margin: 0 !important;
+                background-color: $gray-15;
+                border-color: $gray-15;
+            }
+            .applicant-image{
+                text-align: center;
+                margin-bottom: .5rem;
+                img{
+                    width: 5rem;
+                    height: 5rem;
+                    object-fit: cover;
+                    object-position: center;
+                    @include curve(50%);
+                    background-color: $gray-15;
+                }
+            }
+            .applicant-name{
+                color: $black-65 !important;
+                font-weight: $font-weight-medium !important;
+                font-size: $small !important;
+                text-align: center;
+                margin-bottom: 0;
+            }
+            .applicant-description-wrap{
+                .applicant-description-wrap-inner{
+                    @include flex(flex, initial, normal);
+                    gap: 1rem;
+                    flex-direction: column;
+                    .item{
+                        @include flex(flex, start, normal);
+                        gap: .75rem;
+                        .icon{
+                            flex: 10%;
+                        }
+                        .text{
+                            flex: 90%;
+                            color: $black-65;
+                            font-weight: $font-weight-normal !important;
+                            font-size: $tiny !important;
+                            word-break: break-word;
+                        }
+                        .address-text{
+                            display: block;
+                        }
+                    }
+                }
+            }
+            &:hover, &:active, &:focus, &.active{
+                border-color: $primary !important;
+                @include animation-all();
+            }
+        }
+        &.testi-card{
+            @include curve(1rem);
+            border-color: transparent !important;
+            *{
+                border-color: transparent !important;
+            }
+            .card-header{
+                overflow: hidden;
+                padding: 0 !important;
+                @include curve-each(1rem, 1rem, 0, 0);
+                .testi-image{
+                    @include animation-all();
+                    width: 100%;
+                    height: 15rem;
+                    object-fit: cover;
+                    object-position: center;
+                    @include curve-each(1rem, 1rem, 0, 0);
+                }
+            }
+            .card-body{
+                background-color: $white-15 !important;
+                @include curve-each(0, 0 , .5rem, .5rem);
+                .testi-content{
+                    .name-date{
+                        color: $blue-variant-2;
+                        display: block;
+                        margin-bottom: .5rem;
+                    }
+                    .head{
+                        font-size: $subheading-md !important;
+                        color: $black-65 !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: .5rem;
+                    }
+                    desc{
+                        font-size: $para !important;
+                        color: $gray-50 !important;
+                        margin-bottom: 1rem;
+                    }
+                    .tags-flex{
+                        @include flex(flex, start, normal);
+                        gap: 1rem;
+                        .badge{
+                            @include padding (.125rem, .625rem, .125rem, .625rem);
+                            font-weight: $font-weight-medium !important;
+                            @include ellipse();
+                        }
+                    }
+                    .title-flex-wrap{
+                        @include flex(flex, normal,space-between);
+                        gap: 1rem;
+                    }
+                }
+            }
+            &:hover{
+                .card-header{
+                    .testi-image{
+                        transform: scale(1.2);
+                        @include animation-all();
+                    }
+                }
+            }
+        }
+        &.service-card{
+            border: none !important;
+            background-color: $white !important;
+            box-shadow: 0px 3px 30px 0px rgb($black, .06);
+            .card-header{
+                border: none !important;
+                @include padding( 0rem !important, 0rem !important, 0rem !important, 0rem !important);
+                @include curve-each(1rem, 1rem, 0, 0);
+                .image-wrap{
+                    overflow: hidden;
+                    @include animation-all();
+                    @include curve-each(1rem, 1rem, 0, 0);
+                    img{
+                        @include animation-all();
+                        width: 100%;
+                        height: 15.25rem;
+                        object-fit: cover;
+                        @include curve-each(1rem, 1rem, 0, 0);
+                    }
+                }
+            }
+            .card-body{
+                border: none !important;
+                @include curve-each(0, 0, 1rem, 1rem);
+                .content{
+                    .head{
+                        font-size: $subheading-md !important;
+                        color: $black-65 !important;
+                        font-weight: $font-weight-semibold !important;
+                        margin-bottom: .5rem;
+                    }
+                    desc{
+                        font-size: $para !important;
+                        color: $gray-50 !important;
+                        margin-bottom: 1rem;
+                    }
+                    .view-more{
+                        color: $primary-90 !important;
+                    }
+                }
+            }
+            &:hover{
+                .card-header{
+                    .image-wrap{
+                        img{
+                            transform: scale(1.2);
+                            @include animation-all();
+                        }
+                    }
+                }
+            }
+        }
+        &.preview-card{
+            .card-header{
+               .heading-wrap{
+                    background-color: $white-15;    
+                    .main-content-description{                      
+                        background-color: transparent !important;
+                        border: none !important;
+                        .main-content-description-inner{
+                            padding: 0 !important;
+                            .item-inner{
+                                border-right: none !important;
+                            }
+                            .head, .desc{
+                                white-space: nowrap;
+                            }
+                            .col{
+                                &:not(:last-child){
+                                    border-right: 1px solid $gray-15;
+                                }
+                            }
+                        }
+                    }
+               }
+            }
+            .main-content-description{
+                min-height: 100% !important;
+                &.preview{
+                    background-color: $white-15 !important;
+                    .main-subject{
+                        .text-wrap{
+                            .desc{
+                                font-size: $tiny !important;
+                            }
+                        }
+                    }
+                    .subject-col{
+                        border-bottom: none !important; 
+                        padding-bottom: 0 !important; 
+                        &:last-child{
+                            border-right: none !important;
+                        }
+                        .text-wrap{
+                            .desc{
+                                font-size: $tiny !important;
+                                color: $primary-90 !important;
+                                font-weight: $font-weight-medium !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .notes-preview-tabs-wrap{
+                @include padding( 1rem, 1rem, 0rem, 1rem);
+                @include media-breakpoint-up(xxl-lg){
+                    width: 33.7%;
+                }
+            }
+            .card-body{
+                overflow-y:  hidden !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
+                background-color: transparent !important;
+                border-color: transparent !important;
+            }
+            .card-footer{
+                &:not(.applicant-card .card-footer){
+                    border-top: 0 !important;
+                }
+            }
+
+        }
+        &.notes-content-card{
+            border: 1px solid $gray-15;
+            background-color: $white !important;
+            @include curve(.5rem);
+            .card-header,.card-footer{
+                display: none;
+            }
+            .card-body{
+                padding-top: 1rem !important;
+                .notes-card-inner{
+                    .notes-content{
+                        @include flex(flex, normal, normal);
+                        gap: 1rem;
+                        .note{
+                            font-size: $tiny !important;
+                            line-height: 1.125rem !important;
+                            color: $gray-200 !important;
+                            display: inline-block;
+                        }
+                    }
+                    .footer-wrap{
+                        @include flex(flex, center, space-between);
+                        gap: 1rem;
+                        .profile{
+                            @include flex(flex, center, normal);
+                            gap: .75rem; 
+                            img{
+                                width: 1.25rem; 
+                                height: 1.25rem;
+                                object-fit: cover;
+                                @include curve(50%);
+                            }
+                            .desc{
+                                .name{
+                                    font-size: $tiny !important;
+                                    font-weight: $font-weight-medium !important;
+                                    line-height: 1.3125rem !important;
+                                    margin-bottom: 0;
+                                    color: $black-65 !important;
+                                }
+                                .designation{
+                                    font-size: $copyright-text !important;
+                                    font-weight: $font-weight-medium !important;
+                                    line-height: 1.3125rem !important;
+                                    margin-bottom: 0;
+                                    display: block;
+                                    color: $gray-150 !important;
+                                }
+                            }
+                        }
+                        .date-time{
+                           .date{
+                                font-size: $tiny !important;
+                                font-weight: $font-weight-normal !important;
+                                line-height: .75rem !important;
+                                margin-bottom: 0;
+                                display: block;
+                                color: $gray-150 !important;
+                                .icon{
+                                    margin-right: .25rem;
+                                }
+                            }
+                        }
+                    }
+                }
+                margin: 0 !important;
+                @include curve(.5rem);
+                border: none !important;
+                background-color: transparent !important;
+            }
+        }
+    }
+}
+
+// status card
+.colors-menu-card{
+    @include padding(.75rem, 1rem, .75rem, 1rem);
+    @include flex(flex, center, space-between);
+    gap: 1rem;
+    height: 3.6875rem;
+    .left{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+    }
+    .icon-wrap{
+        width: 2rem;
+        height: 2rem;
+        @include curve(.5rem);
+        line-height: 2rem;
+        text-align: center;
+        &.up{
+            background-color: $primary-90;
+        }
+        &.down{
+            background: radial-gradient(50% 50% at 50% 50%, $danger-100 0%,  $danger-100 100%);
+            .icon{
+                transform: rotate(180deg);
+            }
+        }
+    }
+    .description-wrap{
+        @include flex(flex, normal, normal);
+        flex-direction: column;
+        .head{
+            font-weight: $font-weight-normal !important;
+            font-size: $small !important;
+            line-height: 1.3125rem !important;
+            color: $gray-150 !important;
+            margin-bottom: 0 !important;
+        }
+        .price{
+            font-weight: $font-weight-semibold !important;
+            font-size: $subheading-sm !important;
+            line-height: 1.6875rem !important;
+            color: $black !important;
+            margin-bottom: 0 !important;
+        }
+    }
+    .status-text-wrap{
+        @include padding(.375rem, .5rem, .375rem, .5rem);
+        @include flex(flex, center, center);
+        gap: .625rem;
+        @include curve(.375rem);
+        .status-text{
+            font-weight: $font-weight-normal !important;
+            font-size: $small !important;
+            line-height: 1.3125rem !important;
+            color: $gray-150 !important;
+            margin-bottom: 0 !important;
+        }
+        &.up{
+            background-color: rgb($success,.3);
+            .status-text{
+                color: $success-100 !important;
+            }
+            .icon-arrow{
+                background-image: $icon-arrow-up-green;
+            }
+        }
+        &.down{
+            background-color: rgb($danger,.3);
+            .status-text{
+                color: $danger-100 !important;
+            }
+            .icon-arrow{
+                transform: rotate(180deg);
+                background-image: $icon-arrow-up-red;
+            }
+        }
+    }
+    &.colored{
+        .description-wrap{
+            .head,.price{
+                color: $white !important;
+            }
+        }
+        .icon-wrap{
+            background-color: transparent !important;
+            background: none;
+        }
+    }
+   
+}
+

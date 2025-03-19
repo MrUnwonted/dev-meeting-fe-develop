@@ -1,0 +1,87 @@
+.status-menu-wrap{
+    border: 1px solid $gray-15;
+    background-color: $white;
+    .column{
+        &:not(:last-child){
+            border-right: 1px solid $gray-15;
+        }
+    }
+}
+
+// status card
+.status-menu-card{
+    @include padding(.75rem, 1rem, .75rem, 1rem);
+    @include flex(flex, center, space-between);
+    gap: 1rem;
+    height: 3.6875rem;
+    .left{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+    }
+    .icon-wrap{
+        width: 2rem;
+        height: 2rem;
+        @include curve(.5rem);
+        line-height: 2rem;
+        text-align: center;
+        &.up{
+            background-color: $primary-50;
+        }
+        &.down{
+            background: radial-gradient(50% 50% at 50% 50%, $red-variant-1 0%, $red-variant-2 100%);
+            .icon{
+                transform: rotate(180deg);
+            }
+        }
+    }
+    .description-wrap{
+        @include flex(flex, normal, normal);
+        flex-direction: column;
+        .head{
+            font-weight: $font-weight-normal !important;
+            font-size: $small !important;
+            line-height: 1.3125rem !important;
+            color: $gray-150 !important;
+            margin-bottom: 0 !important;
+        }
+        .price{
+            font-weight: $font-weight-semibold !important;
+            font-size: $subheading-sm !important;
+            line-height: 1.6875rem !important;
+            color: $black !important;
+            margin-bottom: 0 !important;
+        }
+    }
+    .status-text-wrap{
+        @include padding(.375rem, .5rem, .375rem, .5rem);
+        @include flex(flex, center, center);
+        gap: .625rem;
+        @include curve(.375rem);
+        .status-text{
+            font-weight: $font-weight-normal !important;
+            font-size: $small !important;
+            line-height: 1.3125rem !important;
+            color: $gray-150 !important;
+            margin-bottom: 0 !important;
+        }
+        &.up{
+            background-color: $green-variant;
+            .status-text{
+                color: $success-300 !important;
+            }
+            .icon-arrow{
+                background-image: $icon-arrow-up-green;
+            }
+        }
+        &.down{
+            background-color: $danger-20;
+            .status-text{
+                color: $danger-300 !important;
+            }
+            .icon-arrow{
+                transform: rotate(180deg);
+                background-image: $icon-arrow-up-red;
+            }
+        }
+    }
+}

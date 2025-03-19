@@ -1,0 +1,8 @@
+.folder-list-wrap{
+    @include flex(flex, center, normal);
+    gap: 1rem;
+    @include flex-wraping(wrap);
+    .folder-btn{
+        flex: 15%;
+    }
+}

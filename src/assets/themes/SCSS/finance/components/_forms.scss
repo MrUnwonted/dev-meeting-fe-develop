@@ -1,0 +1,151 @@
+.finance-container{
+    .form-control, .form-select{
+        &:hover, &:focus{
+            border-color: $primary-90;
+        }
+    }
+    .form-label{
+        font-size: $tiny !important;
+        color: $gray-200;
+        margin-bottom: .25rem;
+    }
+    .table-form-wrap{
+        position: relative;
+        background-color: transparent !important;
+        border-right: none !important;
+        .form-label{
+            .sub-text{
+                font-size: $copyright-text !important;
+                display: block;
+            }
+        }
+        .expand-btn{
+            position: absolute;
+            right: .5rem;
+            top: .1rem;
+            .icon{
+                @include animation-all();
+            }
+            &.expanded{
+                .icon-expand-form{
+                    background-image: $icon-minimise-form !important;
+                    @include animation-all();
+                }
+            }
+        }
+        .date-picker-wrap{
+            position: relative;
+            .mat-mdc-datepicker-toggle{
+                right: 0;
+                position: absolute;
+                top: -3px;
+                svg{
+                    fill: $gray-35 !important;
+                }
+            }
+       }
+        .form-body{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            .desc{
+                font-size: $tiny !important;
+                font-weight: $font-weight-medium !important;
+                margin-bottom: 0 !important;
+                color: $black-65 !important;
+                line-height: .875rem !important;
+            }
+            .form-check{
+                .form-label{
+                    margin-bottom: 0 !important;
+                }
+                align-items: center !important;
+            }
+            .flex-input{
+                @include flex(flex, center, normal);
+                gap: .25rem;
+                .code-text{
+                    flex: 50%;
+                    color: $primary-90 !important;
+                    display: inline-block;
+                    font-size: $tiny !important;
+                    line-height: .875rem !important;
+                }
+            }
+            .form-control, .form-select{
+                background-color: transparent !important;
+            }
+            min-height: calc(100vh - 18.5rem);
+            max-height: calc(100vh - 18.5rem);
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include scrollbar();
+            &.sticky-bottom-widget-include{
+                min-height: calc(100vh - 25.5rem);
+                max-height: calc(100vh - 25.5rem);
+                &.receipts{
+                    min-height: calc(100vh - 22rem) !important;
+                    max-height: calc(100vh - 22rem) !important;
+                }
+                .table-wrap{
+                    max-height: calc(100vh - 36rem) !important;
+                }
+                
+            }
+        }
+        .form-row{
+            --bs-gutter-y: .75rem;
+            align-items: center;
+            .form-inner-row{
+                align-items: center;
+            }
+        }
+        .form-group{
+            line-height: 1rem;
+        }
+        .form-footer{
+            width: 100%;
+            @include padding(.75rem, 1rem, .75rem, 1rem);
+            border-top: 1px solid $gray-15;
+            .button-wrap{
+                @include flex(flex, center, end);
+                gap: .5rem;
+                .btn{
+                    @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                    font-size: $small !important;
+                    line-height: .875rem !important;
+                }
+            }
+        }
+        &.saved{
+            .form-body{
+                .form-control{
+                    border: 1px dashed $gray-15 !important;
+                    background-color: transparent !important;
+                    color: $primary-90 !important;
+
+                }
+            }
+        }
+        &.multi-type{
+            .form-body{
+                padding: 0 !important;
+            }
+            .form-row{
+                margin: 0 !important;
+                @include padding(1rem, 0rem, 1rem, 0rem);
+                &.bg-box{
+                    .head{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-medium !important;
+                        line-height: 1.125rem !important;
+                        margin-bottom: 0;
+                        color: $black !important;
+                        margin-top: 0;
+                    }
+                    background-color: $white-15 !important;
+                    border-top: 1px solid $gray-15;
+                    border-bottom: 1px solid $gray-15;
+                }
+            }
+        }
+    }
+}

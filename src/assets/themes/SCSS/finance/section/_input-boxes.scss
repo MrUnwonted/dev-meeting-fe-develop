@@ -1,0 +1,49 @@
+.input-boxes-wrap{
+    @include flex(flex, end, normal);
+    gap: 1rem;
+    @include flex-wraping(wrap);
+    .item{
+        line-height: 1 !important;
+        flex: 1 1 calc(100% / 7 - 1rem);
+        max-width: 3.75rem;
+        min-width: 3.75rem;
+        &.xl{
+            max-width: 16.1875rem;
+            min-width: 16.1875rem;
+        }
+        &.lg{
+            max-width: 10.9375rem;
+            min-width: 10.9375rem;
+        }
+        &.md{
+            max-width: 6.75rem;
+            min-width: 6.75rem;
+        }
+        .form-group{
+            &.flex{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .form-label{
+                    margin-bottom: 0 !important;
+                }
+            }
+        }
+        .form-label{
+            white-space: nowrap;
+            font-weight: $font-weight-normal !important;
+        }
+        .btn{
+            white-space: nowrap;
+            height: 2rem;
+            &.btn-flex{
+                gap: .5rem;
+                line-height: 0 !important;
+                .text{
+                    $font-size: $small !important;
+                    line-height: .875rem !important;
+                }
+            }
+            @include padding(.5rem !important, .75rem !important, .5rem !important, .75rem !important);
+        }
+    }
+}

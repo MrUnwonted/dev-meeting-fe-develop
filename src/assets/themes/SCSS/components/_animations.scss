@@ -1,0 +1,13 @@
+.add-bar, .list-column{
+    @include animation-all();
+}
+.add-bar{
+    padding: 0;
+    &.addbar-close{
+        width: 0px;
+        overflow: hidden;
+    }
+    label,input[type=text],input[type=file],button{
+        white-space: nowrap;
+    }
+}

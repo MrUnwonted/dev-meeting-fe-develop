@@ -1,0 +1,104 @@
+<div class="page-wrapper">
+    <div class="login-wrap">
+        <div class="login-wrap-inner">
+            <div class=" login-container">
+                <div class="row gx-0 login-row">
+                    <div class="col-md-sm-4 col-md-6 login-banner-column">
+                        <div class="login-banner-wrap">
+                            <div class="login-banner-image-wrap">
+                                <img src="../../assets/public/image/png/login-image.png" alt="image" class="banner-image">
+                            </div>
+                            <div class="login-heading-wrap">
+                                <h2>Welcome Back!</h2>
+                                <p>Lorem Ipsum is simply dummy text of the printing 
+                                    and typesetting industry.</p>
+                            </div>
+                            <div class="logo-overlay">
+                                <img src="../../assets/public/image/svg/logo-overlay.svg" alt="logo-overlay" class="logo-item">
+                                <img src="../../assets/public/image/svg/logo-overlay.svg" alt="logo-overlay" class="logo-item">
+                                <img src="../../assets/public/image/svg/logo-overlay.svg" alt="logo-overlay" class="logo-item">
+                                <img src="../../assets/public/image/svg/logo-overlay.svg" alt="logo-overlay" class="logo-item">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-sm-8 col-md-6 login-content-column">
+                        <div class="login-content-wrap">
+                            <div class="logo-wrap-outer">
+                                <div class="logo-wrap">
+                                    <img src="../../assets/public/image/png/logo.png" alt="logo">
+                                </div>
+                                <h6 class="head">  {{"Login" | translate}}</h6>
+                            </div>
+                            <div class="company-desc-erap">
+                                <h1 class="head">ERP for eGovernance</h1>
+                                <p>in Local Self-Government Institutions</p>
+                            </div>
+                            <div class="login-form-wrap">
+                               <form (ngSubmit)="onSubmit(form.value)" class="form-wrap" #form="ngForm">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="ecode" class="form-label">Employee code</label>
+                                                <input type="text" name="ecode" id="ecode" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group">
+                                                <label for="ecode" class="form-label">Employee code</label>
+                                                <div class="input-wrap icon-attached-right">
+                                                    <input type="password" name="pwd" id="pwd" class="form-control">
+                                                    <span class="icon"><i class="icon icon-eye-open xl"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="password-flex">
+                                                <div class="check-wrap form-check">
+                                                    <input type="checkbox" name="rem" id="rem" class="form-check-input">
+                                                    <label for="rem" class="form-label"> Remember me</label>
+                                                </div>
+                                                <a href="#" class="forget-pass">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <!-- captcha section -->
+                                            <div class="captcha-wrap">
+                                                <div class="captcha-wrap-inner">
+                                                    <h5 class="head">Please enter the captcha text</h5>
+                                                    <div class="content-wrap">
+                                                        <div class="row gy-3 align-items-center">
+                                                            <div class="col-md-6">
+                                                                <div class="captcha-text-wrap">
+                                                                    <h2 class="captcha-text">X y N 1 1</h2>
+                                                                    <div class="action-flex-wrap">
+                                                                        <a href="#" class="action-link" title="Reload"><i class="icon icon-reload"></i></a>
+                                                                        <a href="#" class="action-link" title="Voice"><i class="icon icon-voice"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <form action="" class="captca-form-wrap">
+                                                                    <div class="form-flex-wrap">
+                                                                        <input type="text" name="" id="" class="form-control">
+                                                                        <a href="#" class="verify-btn">Verify</a>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="submit-button">
+                                                <button type="submit"  class="btn btn-primary-80 sm">Sign In</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

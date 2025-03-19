@@ -1,0 +1,10 @@
+@mixin icons-variant($image: null){
+    background-image: $image;
+    &.colored{
+        background-image: none; // Set the desired hex color here
+        mask-image: $image;
+        -webkit-mask-image: $image;
+        mask-size: contain;
+        mask-repeat: no-repeat;
+    }
+}

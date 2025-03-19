@@ -1,0 +1,682 @@
+
+.dashboard-wrap{
+    padding-top: 5.1rem;
+    .widget-card{
+        .card-header{
+            min-height: 54px;
+            @include flex(flex, center, space-between);
+            width: 100%;
+            border-bottom: 1px solid $gray-15 !important; 
+            @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+        }
+        .card-body:not(.table-card .card-body){
+            @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+        }
+    }
+}
+// doughnut chart
+.doughnut-chart-wrap{
+    // @include flex(flex, center, space-between);
+    // gap: 1.5rem;
+    .chart-wrap{
+        // flex: 45%;
+        width: 100%;
+        height: 180px;
+        .chart{
+            width: 100%;
+            height: 100%;
+        }
+        canvas{
+            height: 100% !important;
+            width: 100% !important;
+        }
+    }
+    .table-wrap{
+        flex: 55%;
+        table{
+            thead{
+                border-bottom: 1px solid $gray-15;
+                th{
+                    text-align: end;
+                    color: $gray-160 !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                    @include padding( .375rem, .5rem, .375rem, .5rem );
+                }
+            }
+            tbody{
+                td{
+                    text-align: end;
+                    color: $black-60;
+                    font-size: $tiny !important;
+                    @include padding( .375rem, .5rem, .375rem, .5rem );
+                    .label-text{
+                        font-size: $tiny !important;
+                        color: $black-60 !important;
+                        margin-bottom: 0;
+                        font-weight: $font-weight-normal !important;
+                        @include flex(flex, center, end);
+                        gap: .5rem;
+                        .circle{
+                            width: .75rem;
+                            height: .75rem;
+                            @include curve(50%);
+                            background-color: $gray-60;
+                        }
+                        .label1{
+                            background-color: $blue-variant;
+                        }
+                        .label2{
+                            background-color: $primary-90;
+                        }
+                    }
+                    .profile-wrap{
+                        @include flex(flex, center, end);
+                        gap: .5rem;
+                        .prof-image{
+                            width: 1.25rem;
+                            height: 1.25rem;
+                            @include curve(50%);
+                        }
+                        .name{
+                            color: $black-65 !important;
+                            margin-bottom: 0;
+                            display: inline-block;
+                            font-size: $tiny !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// bar chart
+.bar-chart-wrap{
+    .chart-wrap{
+        .chart{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.table-card{
+    .card-header{
+        @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+        .header-wrap-outer{
+            @include flex(flex, center, space-between);
+            gap: 1rem;
+            @include flex-wraping(wrap);
+            .header-wrap{
+                .text-wrap{
+                    h6{
+                        font-weight: $font-weight-semibold !important;
+                    }
+                }
+            }
+            .select-wrap{
+                @include flex(flex, center, end);
+                gap: 1rem;
+                .form-label{
+                    white-space: nowrap;
+                    font-weight: $font-weight-normal !important;
+                    margin-bottom: 0 !important;
+                }
+                .form-select{
+                    min-width: 160px;
+                }
+            }
+            .search-wrap{
+                .input-group{
+                    &.xs{
+                        .input-group-text, input{
+                            height: 2rem !important;
+                        }
+                    }
+                    .input-group-text{
+                        border-right: none !important;
+                        @include curve-each(.5rem, 0, 0, .5rem);
+                        @include padding(.5rem, 0, .5rem, 1rem);
+                        background-color: transparent;
+                        border-color: $gray-15 !important; 
+                        color: $gray-35;
+                        font-size: $tiny !important;
+                        &::placeholder{
+                            color: $gray-35;
+                        }
+                    }
+                    .form-control{
+                        @include padding(.5rem !important, .25rem !important, .5rem !important, .5rem !important);
+                        border-color: $gray-15 !important; 
+                        border-left: transparent !important;
+                        @include curve-each(0 , 0.5rem, 0.5rem , 0rem);
+                    }
+                }
+            }
+        }
+    }
+    .card-body{
+        padding: 0 !important;
+    }
+    thead{
+        border-bottom: 1px solid $white-30;
+        th{
+            @include padding(.5rem, .5rem, .5rem , .5rem);
+            color: $black-65;
+            font-weight: $font-weight-semibold !important;
+            font-size: $tiny;
+        }
+    }
+    tbody{
+        td{
+            & * {
+                font-size: $tiny !important; 
+            }
+            @include padding(.5rem, .5rem, .5rem , .5rem);
+            .profile-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+            }
+        }
+        tr{
+            &:not(:last-child){
+                td{
+                    border-bottom: 1px solid $white-30;
+                }
+            }
+        }
+    }
+    .form-check{
+        label{
+            color: $black-65;
+            font-weight: $font-weight-normal !important;
+            @include ellipse();
+        }
+    }
+    .card-footer{
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        border-color: $gray-15;
+        background-color: $white;
+        @include padding(.75rem, 1rem, .75rem, 1rem );
+        @include flex(flex, center, end);
+        gap: 1rem;
+        @include media-breakpoint-down(md){
+            flex-direction: column;
+        }
+        &.between{
+            justify-content: space-between !important;
+        }
+        .back-btn-wrap{
+            .btn{
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+        }
+        .card-action-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include media-breakpoint-down(md-sm){
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn{
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                font-size:  $small !important;
+                line-height: 14px !important;
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+            .preview-btn{
+                color: $primary-90 !important;
+            }
+        }
+        .card-back-btn{
+            .btn{
+                font-size:  $small !important;
+                @include padding(.375rem !important, 1.5rem !important, .375rem !important, 1.5rem !important);
+            }
+        }
+        .card-footer-group{
+            @include flex(flex, center, end);
+            gap: 1rem;
+            width:100%;
+            &.include-back{
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+// new content
+.new-content-wrap{
+    .new-content{
+        border: 1px solid $gray-15;
+        @include curve(.75rem);
+        .count-wrap{
+            @include flex(flex, center, normal);
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            border-bottom: 1px solid $gray-15;
+            gap: .5rem;
+            .icon-wrap{
+                background-color: rgb($primary-25, .2);
+                @include curve(50%);
+                width: 2.625rem;
+                height: 2.625rem;
+                @include padding(.5rem, .5rem, .5rem, .5rem);
+                .icon{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .count-text-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .count-text{
+                    font-size: $heading-sm  !important;
+                    font-weight: $font-weight-normal !important;
+                    color: $black-65 !important;
+                    margin-bottom: 0;
+                }
+                .status{
+                    font-size: $copyright-text !important;
+                    display: inline-block;
+                    color: $gray-150 !important;
+                }
+            }
+        }
+        .splitup-wrap{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            .head{
+                font-size: $tiny !important;
+                margin-bottom: .5rem;
+                font-weight: $font-weight-normal !important;
+                color: $black-65 !important;
+            }
+            .splitup-item-wrap{
+                @include flex(flex, normal, normal);
+                gap: .5rem;
+                flex-direction: column;
+                .item{
+                    @include flex(flex, center, space-between);
+                    gap: .5rem;
+                    .item-head{
+                        font-size: $tiny !important;
+                        margin-bottom: 0rem;
+                        font-weight: $font-weight-normal !important;
+                        color: $gray-150 !important;
+                    }
+                    .dotted-line{
+                        border: 1px dashed $gray-150;
+                        display: block;
+                        width: 100%;
+                    }
+                    .item-count{
+                        flex: 30%;
+                        @include flex(flex, center, normal);
+                        gap: .5rem;
+                    }
+                    .count{
+                        font-size: $tiny !important;
+                        margin-bottom: 0rem;
+                        font-weight: $font-weight-medium !important;
+                        color: $black-65 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.inward-container{
+    .select-wrap{
+        position: relative;
+        @include flex(flex, center, normal);
+        gap: .5rem;
+        &.date-select{
+            &:before{
+                content: $icon-calendar-light;
+                position: absolute;
+                left: .5rem
+            }
+            .form-select{
+                padding-left: 1.5rem !important
+            }
+        }
+    }
+    &.dashboard-wrap{
+        height: 100% !important;
+        padding-bottom: 1rem;
+    }
+    .dashboard-card{
+        h6{
+            &.semi-bold{
+                font-weight: $font-weight-semibold !important;
+            }
+        }
+        .file-box-wrap{
+            border-right: 0 !important;
+            border-left: 0 !important;
+        }
+        &.counts{
+            height: 4.1875rem !important;
+            @include flex(flex, normal, center);
+            flex-direction: column;
+            padding: 0 !important;
+            $variants: (
+            'info': $blue-variant-5,
+            'success': $success-250,
+            'warning': $warning-250,
+            'danger': $danger-25,
+            'danger-2': $danger-75
+            );
+            @each $name, $color in $variants {
+                &.#{$name}-variant {
+                  background-color: $color;
+                  border-color: $color !important;
+                }
+            }
+        }
+        .colors-menu-card{
+            padding: 0 !important;
+        }
+        .transactions{
+            max-height: 21rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include scrollbar();
+        }
+        .outcome-statistics{
+            max-height: 15rem;
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include scrollbar();
+        }
+        &.primary-card{
+            border-color: $primary-90 !important;
+            background-color: $primary-90 !important;
+            .select-wrap{
+                .form-select{
+                    background-color: transparent  !important;
+                    border-color:rgb( $primary-20, .5) !important;
+                    color: $primary-10 !important;
+                }
+            }
+            .card-header{
+                background-color: $primary-90 !important;
+                .text-wrap{
+                    h6,h5{
+                        color: $white !important;
+                    }
+                }
+            }
+            .content-wrap{
+                .head, .price{
+                    color: $white !important;
+                }
+            }
+            .status-bar{
+                height: 5px;
+                @include curve(.8125rem);
+                .mat-mdc-progress-bar-fill{
+                    &::after{
+                        background-color: $green-variant-1 !important;
+                        @include curve(.8125rem);
+                    }
+                }
+            }
+            
+        }
+        .card-header{
+            border-bottom: none !important;
+        }
+        .view-btn{
+            color: $primary-90 !important;
+            font-size: $small !important;
+            font-weight: $font-weight-medium !important;
+            display: inline-block;
+            line-height: 1.3125rem !important;
+        }
+        .action-wrap{
+            @include flex(flex, center, normal);
+            gap: .5rem;
+            &.end{
+                justify-content: end !important;
+            }
+            .select-wrap{
+                .form-select{
+                    color: $gray-35 !important;
+                    min-width: 100% !important;
+                    padding-right: 2rem !important;
+                }
+            }
+        }
+    
+        //flex items
+        .flex-item-wrap-outer{
+            .flex-item-inner{
+                @include flex(flex, normal, normal);
+                flex-direction: column;
+                .flex-item{
+                    @include flex(flex, center, space-between);
+                    gap: .5rem;
+                    .left{
+                        flex: 65%;
+                    }
+                    .right{
+                        flex: 35%;
+                        .price{
+                            text-align: end;
+                        }
+                    }
+                    .flex-head{
+                        font-size: $small !important;
+                        font-weight: $font-weight-normal !important;
+                        line-height: 1.3125rem !important;
+                        color: $gray-35 !important;
+                        margin-bottom: .125rem;
+                    }
+                    .content-wrap{
+                        &.flex{
+                            @include flex(flex, center, normal);
+                            gap: .5rem;
+                        }
+                        .status-bar{
+                            height: 5px;
+                            @include curve(.8125rem);
+                            .mat-mdc-progress-bar-fill{
+                                &::after{
+                                    background-color: $primary-90;
+                                    @include curve(.8125rem);
+                                }
+                            }
+                        }
+                        .icon-wrap{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            @include curve(50%);
+                            text-align: center;
+                            background-color: $primary-90;
+                            &.no-bg{
+                                background-color: transparent !important;
+                                @include curve(0);
+                            }
+                            .legend-bar{
+                                display: inline-block;
+                                width: .75rem;
+                                height: .75rem;
+                                @include curve(.25rem);
+                                background-color: $white-15;
+                                $legend-bg: (
+                                    'requested': $blue-variant-9,
+                                    'processing': $blue-variant-6,
+                                    'pending': $blue-variant-10,
+                                    'delivered': $primary-200,
+                                );
+                                @each $name, $color in $legend-bg {
+                                    &.#{$name} {
+                                        background-color: $color !important;
+                                    }
+                                }
+                            }
+                        }
+                        .head{
+                            color: $black-65;
+                            font-size: $small !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 1.3125rem !important;
+                            margin-bottom: 0;
+                        }
+                        .title{
+                            color: $black-65;
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-semibold !important;
+                            line-height: 1.125rem !important;
+                            margin-bottom: 0;
+                        }
+                        .sub-title{
+                            color: $black-65;
+                            font-size: $copyright-text !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: .9375rem !important;
+                            display: block;
+                        }
+                        .sub-desc{
+                            color: $gray-150;
+                            font-size: $tiny !important;
+                            line-height: 1.125rem !important;
+                            display: block;
+                        }
+                        .number{
+                            font-size: $para;
+                            font-weight: $font-weight-semibold !important;
+                            line-height: 1.1719rem !important;
+                            color: $black-65 !important;
+                            margin-bottom: 0 !important;
+                            $color-variants: (
+                            'info': $blue-variant-5,
+                            'success': $success-250,
+                            'warning': $warning-250,
+                            'danger': $danger-25,
+                            'danger-2': $danger-75
+                            );
+                            @each $name, $color in $color-variants {
+                                &.#{$name} {
+                                color: $color !important;
+                                }
+                            }
+                        }
+                        .graph-status-wrap{
+                            .graph-status-image{
+                                height: 1.125rem;
+                                width: 100%;
+                                object-fit: contain;
+                            }
+                        }
+                        .price-wrap{
+                            @include flex(flex, center, normal);
+                            gap: 1rem;
+                            &.end{
+                                justify-content: end !important;
+                            }
+                            .icon-arrow-up-red{
+                                transform: rotate(180deg);
+                            }
+                        }
+                        .price{
+                            display: block;
+                            color: $black-65;
+                            font-size: $small !important;
+                            font-weight: $font-weight-medium !important;
+                            line-height: 1.3125rem !important;
+                            &.success{
+                                color: $success-100 !important;
+                            }
+                            &.danger{
+                                color: $danger-100 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .services{
+            .flex-item-wrap-outer{
+                .content-wrap{
+                    &.flex{
+                        gap: .25rem !important;
+                    }
+                }
+            }
+        }
+        .outcome-statistics{
+            .head{
+                font-size: $para !important;
+                color:  $black-65 !important;
+            }
+        }
+        .new-files{
+            .table-outer-wrap{
+                .table-wrap{
+                    max-height: 25rem;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    @include scrollbar();
+                }
+            }
+        }
+        .loan{
+            &.card-body{
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            .flex-item-wrap-outer{
+                max-height: 19rem;
+                overflow-y: auto;
+                overflow-x: hidden;
+                @include scrollbar();
+                .flex-item{
+                    padding-top: .375rem;
+                    padding-bottom:  .375rem;
+                    &:not(:last-child){
+                        border-bottom: 1px solid $gray-15;
+                    }
+                }
+            }
+            .view-more-wrap{
+                text-align: center;
+                .btn{
+                    @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                    font-size: $small !important
+                }
+            }
+        }
+        .total-services{
+            .flex-item-inner{
+                gap: .75rem;
+            }
+        }
+        .account-management{
+            .flex-item-wrap-outer{
+                .flex-item{
+                    column-gap: 25px;
+                    justify-content: normal !important;
+                }
+            }
+            .content-wrap{
+                .price{
+                    text-align: left !important; 
+                }
+            }
+            .view-btn-outline{
+                font-size: $small !important;
+                @include padding(.25rem !important, .5rem !important, .25rem !important, .5rem !important);
+            }
+        }
+    }
+}
+

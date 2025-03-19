@@ -1,0 +1,251 @@
+.payment-modal{
+    .back-btn{
+        margin-right: auto !important;
+    }
+    .btn{
+        min-width: 7rem;
+    }
+}
+
+
+.payment-table-wrap{
+    .item{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+        @include padding(1rem, 0, 1rem, 0);
+        border-bottom: 1px solid $gray-15;;
+        &.header{
+            .head{
+                color: $black-65 !important;
+                margin-bottom: 0;
+                font-size: $small !important;
+                font-weight: $font-weight-medium !important;
+                flex: 50%;
+                &:last-child{
+                    text-align: end;
+                }
+            }
+        }
+        &.content-item{
+            .head{
+                flex: 50%;
+                color: $black-65;
+                margin-bottom: 0;
+                font-size: $small !important;
+                font-weight: $font-weight-normal !important;
+            }
+            .desc{
+                text-align: end;
+                flex: 50%;
+                color: $black-65 !important;
+                margin-bottom: 0;
+                display: block;
+                font-size: $small !important;
+                font-weight: $font-weight-normal !important;
+            }
+        }
+    }
+    .total-wrap{
+        margin-left: auto;
+        max-width: 16.5rem;
+        width: 100%;
+        .item{
+            &:last-child{
+                border-bottom: none !important;
+            }
+            &.content-item{
+                .head{
+                    color: $gray-45 !important;
+                }
+            }
+            &.total-item{
+                .head{
+                    flex: 50%;
+                    margin-bottom: 0;
+                    font-size: $small !important;
+                    color: $primary-90 !important;
+                    font-weight: $font-weight-semibold !important;
+                }
+                .desc{
+                    text-align: end;
+                    flex: 50%;
+                    margin-bottom: 0;
+                    display: block;
+                    color: $primary-90 !important;
+                    font-weight: $font-weight-semibold !important;
+                }
+            }
+        }
+    }
+}
+
+.payment-table-outer{
+    @include padding(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+    .divider{
+        background-color: $gray-15 !important;
+        border-color: $gray-15 !important;
+        margin-top: 1rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+}
+.payment-radio-wrap{
+    .head{
+        color: $black-65 !important;
+        margin-bottom: 1rem;
+        font-weight: $font-weight-semibold !important;
+        font-size: $small !important;
+    }
+    .radio-wrap-outer{
+        @include flex(flex, center, normal);
+        column-gap: 3rem;
+        row-gap: 1rem;
+        label{
+            font-size: $small !important;
+            color: $black-65 !important;
+        }
+        .mat-mdc-radio-outer-circle{
+            border-color: $gray-45 !important;
+        }
+        .mat-mdc-radio-checked{
+            .mat-mdc-radio-outer-circle{
+                border-color: $primary-68 !important;
+            }
+            .mat-mdc-radio-inner-circle{
+                background-color: $primary-68 !important;
+            }
+        }
+        
+        .form-check{
+            accent-color: $primary-68 !important;
+        }
+    }
+}
+
+// payment method
+.payment-method{
+    @include padding(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+    background-color: $white-15;
+    border-bottom: 1px solid $gray-15;
+    .head{
+        font-size: $tiny !important;
+        font-weight: $font-weight-semibold !important;
+        color: $black-65 !important;
+        margin-bottom: 1rem;
+    }
+    .item-outer{
+        @include flex(flex, center, normal);
+        column-gap: 3rem;
+        row-gap: 1rem;
+        @include flex-wraping(wrap);
+        .item{
+            @include flex(flex, start, normal);
+            gap: 1rem;
+            .form-label{
+                .logo{
+                    height: 1.125rem;
+                    width: auto;
+                    object-fit: contain;
+                }
+                .text{
+                    display: block;
+                    margin-top: .375rem;
+                    font-size: $tiny !important;
+                    color: $gray-150 !important;
+                }
+            }
+        }
+    }
+}
+
+
+.save-cards-new-card{
+    @include padding(1.5rem, 1.5rem, 1.5rem, 1.5rem);
+    // save new-card
+    .save-cards-wrap{
+        .head{
+            font-size: $tiny !important;
+            font-weight: $font-weight-semibold !important;
+            color: $black-65 !important;
+            margin-bottom: .5rem;
+        }
+        .card-btn{
+            padding: 0 !important;
+            border-color: transparent !important;
+            .card-image{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+    .new-card-wrap{
+        .head{
+            font-size: $tiny !important;
+            font-weight: $font-weight-semibold !important;
+            color: $black-65 !important;
+            margin-bottom: .75rem;
+        }
+        .new-card-row{
+            .column{
+                .form-group{
+                    .form-label{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                        color: $gray-150 !important;
+                        margin-bottom: .5rem;
+                    }
+                    .form-control{
+                        @include padding(0 !important, 0 !important, .5rem !important, 0 !important);
+                        border-color: $white-25 !important;
+                        @include curve(0);
+                        border-top: none !important;
+                        border-right: none !important;
+                        border-left: none !important;
+                    }
+                    .input-wrap{
+                        .logo-image{
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            .logo{
+                                width: 1rem;
+                                height: 1rem;
+                                object-fit: contain;
+                            }
+                        }
+                    }
+                }
+                .submit-btn{
+                    margin-top: .5rem;
+                    .btn{
+                        @include padding(.25rem !important, 1.5rem !important, .25rem  !important, 1.5rem !important);
+                        font-size: $tiny !important;
+                    }
+                }
+            }
+        }
+    }
+    .amount-wrap{
+        margin-top: 2.5rem;
+        @include curve(.5rem);
+        background-color: $white-15;
+        border-color: $gray-15;
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        @include padding(1rem, 1.5rem, 1rem, 1.5rem);
+        .head{
+            font-size: $small !important;
+            font-weight: $font-weight-medium !important;
+            color: $black-65 !important;
+            margin-bottom: 0rem;
+        }
+        .price{
+            font-size: $para !important;
+            font-weight: $font-weight-semibold !important;
+            color: $black-65 !important;
+            margin-bottom: 0rem;
+            display: block
+        }
+    }
+}
+

@@ -1,0 +1,146 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="529" height="264" viewBox="0 0 529 264" fill="none">
+<style>
+    text {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+<g id="Bar Area">
+<g id="_Grid">
+<g id="X-asix-grid">
+<g id="Value">
+<g id="Line-container">
+<g id="Plot-area">
+<path id="Line" d="M0.5 8V240" stroke="#C7C7CC"/>
+</g>
+</g>
+<g id="Value_2">
+<text id="Text" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="-2.875" y="260.102">0</tspan></text>
+</g>
+</g>
+<g id="Value_3">
+<g id="Line-container_2">
+<g id="Plot-area_2">
+<path id="Line_2" d="M88.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_4">
+<text id="Text_2" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="81.75" y="260.102">20</tspan></text>
+</g>
+</g>
+<g id="Value_5">
+<g id="Line-container_3">
+<g id="Plot-area_3">
+<path id="Line_3" d="M176.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_6">
+<text id="Text_3" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="169.75" y="260.102">40</tspan></text>
+</g>
+</g>
+<g id="Value_7">
+<g id="Line-container_4">
+<g id="Plot-area_4">
+<path id="Line_4" d="M264.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_8">
+<text id="Text_4" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="257.75" y="260.102">60</tspan></text>
+</g>
+</g>
+<g id="Value_9">
+<g id="Line-container_5">
+<g id="Plot-area_5">
+<path id="Line_5" d="M352.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_10">
+<text id="Text_5" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="345.75" y="260.102">80</tspan></text>
+</g>
+</g>
+<g id="Value_11">
+<g id="Line-container_6">
+<g id="Plot-area_6">
+<path id="Line_6" d="M440.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_12">
+<text id="Text_6" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="430.375" y="260.102">100</tspan></text>
+</g>
+</g>
+<g id="Value_13">
+<g id="Line-container_7">
+<g id="Plot-area_7">
+<path id="Line_7" d="M528.5 8V240" stroke="#F2F2F7" stroke-dasharray="2 2"/>
+</g>
+</g>
+<g id="Value_14">
+<text id="Text_7" fill="#898B8F" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" letter-spacing="0em"><tspan x="518.375" y="260.102">120</tspan></text>
+</g>
+</g>
+</g>
+</g>
+<g id="Bars">
+<g id="Bar">
+<g id="Label">
+<text id="Text_8" fill="#03346E" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="10" letter-spacing="0em"><tspan x="8.5" y="15.5">M. Fowler</tspan></text>
+</g>
+<g id="Mark">
+<g id="Bar_2">
+<rect width="428" height="16" transform="translate(0.5 20)" fill="#03346E"/>
+</g>
+</g>
+<g id="Mark_2">
+<g id="Bar_3">
+<rect width="390" height="16" transform="translate(0.5 38)" fill="#5CC8BE"/>
+</g>
+</g>
+</g>
+<g id="Bar_4">
+<g id="Label_2">
+<text id="Text_9" fill="#03346E" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="10" letter-spacing="0em"><tspan x="8.5" y="75.5">J. Wells</tspan></text>
+</g>
+<g id="Mark_3">
+<g id="Bar_5">
+<rect width="308" height="16" transform="translate(0.5 80)" fill="#03346E"/>
+</g>
+</g>
+<g id="Mark_4">
+<g id="Bar_6">
+<rect width="496" height="16" transform="translate(0.5 98)" fill="#5CC8BE"/>
+</g>
+</g>
+</g>
+<g id="Bar_7">
+<g id="Label_3">
+<text id="Text_10" fill="#03346E" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="10" letter-spacing="0em"><tspan x="8.5" y="135.5">J. Lindsey</tspan></text>
+</g>
+<g id="Mark_5">
+<g id="Bar_8">
+<rect width="228" height="16" transform="translate(0.5 140)" fill="#03346E"/>
+</g>
+</g>
+<g id="Mark_6">
+<g id="Bar_9">
+<rect width="186" height="16" transform="translate(0.5 158)" fill="#5CC8BE"/>
+</g>
+</g>
+</g>
+<g id="Bar_10">
+<g id="Label_4">
+<text id="Text_11" fill="#03346E" xml:space="preserve" style="white-space: pre" font-family="Poppins" font-size="10" letter-spacing="0em"><tspan x="8.5" y="195.5">D. Fox</tspan></text>
+</g>
+<g id="Mark_7">
+<g id="Bar_11">
+<rect width="268" height="16" transform="translate(0.5 200)" fill="#03346E"/>
+</g>
+</g>
+<g id="Mark_8">
+<g id="Bar_12">
+<rect width="436" height="16" transform="translate(0.5 218)" fill="#5CC8BE"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

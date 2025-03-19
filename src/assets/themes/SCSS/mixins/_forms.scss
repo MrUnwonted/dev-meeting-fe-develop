@@ -1,0 +1,111 @@
+@mixin form-variant(
+    $hover-border: $primary,
+    $active-border: $primary,
+    $focus-border: mix($white,$primary,25%),
+    $disabled-bg:$black-75,
+    $disabled-color: $gray-100,
+    $disabled-border:$black-85
+){
+    &::placeholder{
+        color: $gray-35;
+    }
+    &:hover{
+        border-color: $hover-border;
+         @include zero-shadow();
+         opacity: 1 !important;
+         @include animation-all();
+         color: $gray;
+    }
+    &:focus{
+        border-color: $focus-border;
+         @include zero-shadow();
+         opacity: 1 !important;
+         @include animation-all();
+         color: $gray;
+    }
+    &:active{
+        border-color: $active-border;
+         @include zero-shadow();
+         opacity: 1 !important;
+         @include animation-all();
+         color: $gray;
+    }
+    &:disabled{
+        background-color: $disabled-bg !important;
+        color: rgb($disabled-color,.4) !important;
+        border-color: $disabled-border !important;
+        opacity: 1 !important;
+        @include animation-all();
+    }
+    &.disabled{
+        @extend :disabled;
+    }
+}
+
+@mixin form-check-variant(
+    $hover-border: $primary-90,
+    $active-border: $primary-90,
+    $focus-border: mix($white,$primary,25%),
+    $disabled-bg:$gray-40,
+    $disabled-color:$gray-100,
+    $disabled-border:$gray-40,
+    $error-color: $danger,
+    $checked-color: $primary-90,
+    $disabled-check: $icon-disabled-check,
+    $check-icon: $icon-check-normal-white
+){
+    border-color: $gray-60 !important;
+    &:not(:checked){
+        &:hover{
+            border-color: $hover-border !important;
+             @include zero-shadow();
+        }
+        &:focus{
+            border-color: $focus-border !important;
+             @include zero-shadow();
+        }
+        &:active{
+            border-color: $active-border !important;
+             @include zero-shadow();
+        }
+        &:disabled{
+            background-color: $disabled-bg !important;
+            color: $disabled-color !important;
+            border-color: $disabled-border !important;
+        }
+        &.disabled{
+            background-color: $disabled-bg !important;
+            color: $disabled-color !important;
+            border-color: $disabled-border !important;
+        }
+        &.error{
+            border-color: $error-color !important;
+        }
+    }
+    &:checked{
+        background-color: $checked-color !important ;
+        background-image: $check-icon !important;
+         @include zero-shadow();
+        &:hover{
+             @include zero-shadow();
+        }
+        &:focus{
+             @include zero-shadow();
+        }
+        &:focus{
+             @include zero-shadow();
+        }
+         &:disabled{
+            background-color: $disabled-bg !important;
+            opacity: 1  !important;
+            background-image: $disabled-check !important;
+            border-color: $disabled-bg !important;
+        }
+        &.disabled{
+            background-color: $disabled-bg !important;
+            opacity: 1  !important;
+            background-image: $disabled-check !important;
+            border-color: $disabled-bg !important;
+        }
+    }
+}

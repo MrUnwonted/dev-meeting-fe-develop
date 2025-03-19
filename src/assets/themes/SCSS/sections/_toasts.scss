@@ -1,0 +1,60 @@
+.toast-modal{
+    .modal-header, .modal-footer{
+        display: none
+    }
+    .modal-body{
+        .success-modal-content{
+            @include padding(3rem, 3rem, 3rem, 3rem);
+            min-height: 19.6875rem;
+            @include flex(flex, center, normal);
+            flex-direction: column;
+            gap: 1.5rem;
+            .status-image{
+                .status{
+                    height: 64px;
+                    width: 64px;
+                    object-fit: cover;
+                    @include curve(50%);
+                }
+            }
+            .description-wrap{
+                text-align: center;
+                @include flex(flex, normal, normal);
+                flex-direction: column;
+                gap: .75rem;
+                .title{
+                    color: $success-200 !important;
+                    margin-bottom: 0;
+                    font-weight: $font-weight-normal !important;
+                    font-size: $subheading-lg !important;
+
+                }
+                .desc{
+                    color: $black-65 !important;
+                    margin-bottom: 0;
+                    font-weight: $font-weight-medium !important;
+                    font-size: $small !important;
+                }
+                .receipt-wrap{
+                    @include flex(flex, center, center);
+                    gap: .5rem;
+                    .receipt-text{
+                        color: $gray-150 !important;
+                        font-size: $small !important;
+                        .number{
+                            font-weight: $font-weight-medium !important;
+                            color: $warning-200 !important;
+                        }
+                    }
+                }
+                .ok-btn{
+                    width: max-content;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 1rem;
+                    @include padding(.375rem !important, 1.5rem !important,.375rem !important, 1.5rem !important);
+                }
+            }
+        }
+    }
+}

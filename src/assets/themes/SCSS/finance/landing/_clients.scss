@@ -1,0 +1,32 @@
+.finance-layout{
+    .clients{
+        margin-bottom: 7.5rem !important;
+        .container{
+            @include media-breakpoint-up(md){
+                max-width: 100%;
+            }
+        }
+        .clients-inner{
+            background-color: $white;
+            @include padding(1.5rem, 0, 1.5rem, 0);
+            text-align: center;
+            .head{
+                font-size: $para !important;
+                font-weight: $font-weight-normal !important;
+                margin-bottom: 1.5rem;
+                color: $gray-35 !important;
+            }
+            .clients-wrap-flex{
+                @include flex(flex, center, center);
+                column-gap: 7.4375rem;
+                row-gap: 1rem;
+                @include flex-wraping(wrap);
+                .client-logo{
+                    height: 1.25rem;
+                    max-width: 100%;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+}

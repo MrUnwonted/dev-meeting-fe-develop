@@ -1,0 +1,17 @@
+<div class="page-wrapper finance-layout">
+    <app-header-menu [showModuleLogo]="showModuleLogo"></app-header-menu>
+    <div class="full-content-wrap">
+        <app-sidebar-menu (sidebarToggled)="onSidebarToggled($event)"></app-sidebar-menu>
+    </div>
+    <div class="content-wrapper-col" [class.minimized]="isSidebarMinimized" id="content-wrapper-col" >
+        <div *ngIf="showStatusMenu">
+            <app-status-menu  [class.minimized]="isSidebarMinimized"></app-status-menu>
+        </div>
+        <!-- main content -->
+        <main class="content-wrapper">
+            <div class="content-wrap-inner">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>

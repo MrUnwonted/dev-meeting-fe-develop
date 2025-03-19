@@ -1,0 +1,99 @@
+<aside class="sidebar" >
+    <div class="sidebar-wrapper">
+
+        <!-- masters module items -->
+        <ul class="sidebar-wrap-inner">
+            <button class="toggle-btn btn btn-primary-90 sm" id="toggle-btn" (click)="toggleCollapse()"><i class="icon icon-chevron tiny"></i></button>
+
+            <!-- masters module sidebar item -->
+            <ng-container>
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/dashboard') }">
+                <a [routerLink]="['/main/admin/masters/dashboard']" class="nav-link" title="Home"> <i class="icon icon-home-2"></i>
+                    <span class="label">Home</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/primary-subject') }">
+                <a [routerLink]="['/main/admin/masters/primary-subject']" class="nav-link" title="Primary Subject"> <i class="icon icon-primary-subject"></i>
+                    <span class="label">Primary Subject</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/sub-subject') }">
+                <a [routerLink]="['/main/admin/masters/sub-subject']" class="nav-link" title="Sub Subject"> <i class="icon icon-subject"></i>
+                    <span class="label">Sub Subject</span>
+                
+                    <!-- <span class="count-item">4</span> -->
+                </a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/subject') }">
+                    <a [routerLink]="['/main/admin/masters/subject']" class="nav-link" title="Subject"> <i class="icon icon-sub-subject"></i>
+                    <span class="label">Subject</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/subject-info') }">
+                    <a [routerLink]="['/main/admin/masters/subject-info']" class="nav-link"> <i class="icon icon-subject-info"></i>
+                    <span class="label">Subject Info</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/checklist') }">
+                    <a [routerLink]="['/main/admin/masters/checklist']" class="nav-link" title="Checklist"> <i class="icon icon-checklist"></i>
+                    <span class="label">Checklist</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/template-form') }">
+                    <a [routerLink]="['/main/admin/masters/template-form']" class="nav-link" title="Template Form"> <i class="icon icon-template-form"></i>
+                    <span class="label">Template Form</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/masters/roles') }">
+                    <a [routerLink]="['/main/admin/masters/roles']" class="nav-link" title="Roles"> <i class="icon icon-roles"></i>
+                    <span class="label">Roles</span></a>
+                </li>
+            </ng-container>
+
+            <!-- users module sidebar item -->
+            <ng-container *ngIf="currentModule === 'users'">
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/users/user-management') }">
+                <a [routerLink]="['/main/admin/users/user-management']" class="nav-link" title="User Mangement"> <i class="icon icon-home-2"></i>
+                    <span class="label">User Management</span></a>
+                </li>
+
+            </ng-container>
+
+            <!-- office module sidebar item -->
+            <ng-container *ngIf="currentModule === 'office'">
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/office/home') }">
+                <a [routerLink]="['/main/admin/office/home']" class="nav-link" title="Home"> <i class="icon icon-home-2"></i>
+                    <span class="label">Home</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/office/office-management') }">
+                <a [routerLink]="['/main/admin/office/office-management']" class="nav-link" title="Offices"> <i class="icon icon-primary-subject"></i>
+                    <span class="label">Offices</span></a>
+                </li>
+
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/office/seats') }">
+                <a [routerLink]="['/main/admin/office/seats']" class="nav-link" title="Seats"> <i class="icon icon-primary-subject"></i>
+                    <span class="label">Seats</span></a>
+                </li>
+
+            </ng-container>
+
+            <!-- workflow module sidebar item -->
+            <ng-container *ngIf="currentModule === 'workflow'">
+                <li class="nav-item" [ngClass]="{ 'active': isActive('/main/admin/workflow') }">
+                <a [routerLink]="['/main/admin/office/home']" class="nav-link" title="Workflow"> <i class="icon icon-home-2"></i>
+                    <span class="label">Workflow</span></a>
+                </li>
+
+            </ng-container>
+
+        </ul>
+
+
+        <div class="copyright-wrap">
+            <img src="../../../assets/public/image/png/logo.png" alt="logo" class="logo">
+            <small class="text">Copy right &commat; Techpool 2024-2025</small>
+        </div>
+    </div>
+</aside>

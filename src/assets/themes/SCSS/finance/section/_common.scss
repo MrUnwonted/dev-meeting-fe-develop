@@ -1,0 +1,171 @@
+.finance-container{
+    padding-top: .5rem;
+    padding-bottom: 0;
+    height:100%;
+    height: calc(100vh - 10rem);
+    .select-wrap{
+        @include flex(flex, center, end);
+        gap: 1rem;
+        position: relative;
+        .form-label{
+            white-space: nowrap;
+            font-weight: $font-weight-normal !important;
+            margin-bottom: 0 !important;
+        }
+        .form-select{
+            min-width: 160px;
+            &.medium{
+                @include padding(.5rem !important, 1rem !important, .5rem !important, 1rem !important);
+            }
+            &.small{
+                @include padding(.5rem !important, .5625rem !important, .5rem !important, .5625rem  !important);
+            }
+            &.extra-small{
+                @include padding(.1rem !important, .5rem !important, .1rem !important, .5rem  !important);
+            }
+        }
+        &.date-select{
+            &:before{
+                content: $icon-calendar-light;
+                position: absolute;
+                left: .5rem
+            }
+            .form-select{
+                padding-left: 1.5rem !important
+            }
+        }
+    }
+    .check-wrap-outer{
+        @include flex(flex, center, normal);
+        gap: 1rem;
+        @include flex-wraping(wrap);
+    }
+    .form-check{
+        .form-label{
+            margin-bottom: 0;
+        }
+        .form-check-input{
+            margin-top: 0 !important;
+        }
+    }
+    // padding box
+    .p-box{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+    }
+    .tabs-wrap-outer{
+        .mat-mdc-tab-label-active{
+            color: $primary-90;
+        }
+        .mat-mdc-ink-bar{
+            background-color: $primary-90 !important;
+        }
+    }
+    .table-card{
+        .table-outer-wrap{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            &.relative{
+                position: relative;
+                .mat-mdc-paginator{
+                    border-top: 1px solid $gray-15 !important;
+                    position: sticky;
+                }
+                .table-wrap{
+                    max-height: calc(100vh - 25rem) !important;
+                }
+                &.md{
+                    .table-wrap{
+                        max-height: calc(100vh - 19.5rem) !important;
+                    }
+                }
+            }
+            .mat-mdc-paginator{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                .mat-mdc-paginator-container{
+                    justify-content: center;
+                }
+            }
+        }
+    }
+    .fin-row{
+        .left-column{
+            .table-card{
+                @include curve(0);
+                border-right: none !important;
+            }
+        }
+        .right-column{
+            .table-card{
+                @include curve(0);
+                border-left: .5px solid $gray-15 !important;
+            }
+        }
+    }
+}
+
+.finance-layout{
+    .profile-drop-down{
+        .dropdown-item{
+            &:hover, &:focus{
+                background-color: $primary-90 !important;
+            }
+        }
+    }
+}
+.gradient-box{
+    background: linear-gradient(90deg, $primary-90 11.5%, $primary-50 100%);
+    @include curve(.5rem);
+    .gradient-box-inner{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        .heading-wrap{
+            @include flex(flex, center, normal);
+            gap: .75rem;
+            &.end{
+                justify-content: end !important;
+                .heading{
+                    .head, .desc{
+                        text-align: end;
+                    }
+                }
+            }
+            .symbol-wrap{
+                .symbol{
+                    font-family: 'roboto' !important;
+                    font-size: $heading-md-3 !important;
+                    font-weight: $font-weight-light !important;
+                    line-height: 3.2225rem !important;
+                    color: $white !important;
+                    margin-bottom: 0 !important;
+                    opacity: 40%;
+                }
+            }
+            .heading{
+                .head{
+                    color: $white !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    margin-bottom: .5rem;
+                    line-height: .75rem !important;
+                }
+                .desc{
+                    color: $white !important;
+                    font-size: $para !important;
+                    font-weight: $font-weight-semibold !important;
+                    margin-bottom: 0rem;
+                    line-height: .875rem !important;
+                    .amount{
+                        color: $white-15 !important;
+                        font-weight: $font-weight-semibold !important;
+                    }
+                    .subdesc{
+                        font-size: $small !important;
+                        font-weight: $font-weight-normal !important;
+                        line-height: 1.3125rem !important;
+                    }
+                }
+            }
+        }
+    }
+}

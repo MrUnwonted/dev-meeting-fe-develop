@@ -1,0 +1,143 @@
+<app-common-modals [title]="'UserList'" [buttons]="modalButtons" class="admin-modal admin-layout">
+    <div class="search-flex-outer">
+      <div class="left-side">
+          <div class="search-wrap">
+              <div class="input-wrap">
+                  <input type="text" name="search" id="search01" placeholder="Search by EmpCode" class="form-control md">
+                  <button class="btn btn-primary-80 sm search-btn"> Go </button>
+              </div>
+          </div>
+      </div>
+      <div class="right-side">
+          <div class="filter-btn">
+              <button class="btn btn-none filter-btn-search sm" type="button" data-bs-toggle="collapse" data-bs-target="#advsearch" aria-expanded="false" aria-controls="advsearch">
+                  <i class="icon icon-filter-search xl"></i>
+                  Show Advance Search
+              </button>            
+          </div>
+      </div>
+    </div>
+  
+    <!-- adv search collapse -->
+    <div class="collapse advanced-search" id="advsearch">
+      <app-cards [cardClass]="'card widget-card'">
+        <div card-body>
+          <div class="filter-wrap">
+              <div class="row gy-3">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="subj" class="form-label">Department</label>
+                          <select name="subj" id="" class="form-select md">
+                              <option value="1">Choose Department</option>
+                              <option value="2">Dept1</option>
+                              <option value="3">Dept2</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="subj2" class="form-label">Choose Section</label>
+                          <select name="subj2" id="" class="form-select md">
+                              <option value="1">Choose Section</option>
+                              <option value="2">Subject</option>
+                              <option value="3">Subject</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="subj3" class="form-label">Seat</label>
+                          <select name="subj2" id="" class="form-select md">
+                              <option value="1">Choose Seat</option>
+                              <option value="2">Subject</option>
+                              <option value="3">Subject</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="row gy-3">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="subj" class="form-label">Employee Name</label>
+                        <input type="text" name="search" id="search02" placeholder="Type emp.Name" class="form-control md">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="subj" class="form-label">Mobile No</label>
+                    <input type="text" name="search" id="search03" placeholder="Type Mobile No." class="form-control md">
+                </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="subj" class="form-label">email </label>
+                    <input type="text" name="search" id="search04" placeholder="Type email" class="form-control md">
+  
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <label for="subj" class="form-label"> </label>
+                <button class="btn btn-primary-80 sm search-btn"> Search </button>
+                </div>
+  
+            </div>
+          </div>
+        </div>
+      </app-cards>
+    </div>
+  
+    <!-- content full wrap inside modal body -->
+    <div class="body-outer-wrap">
+  
+   
+  
+      <!-- applicant list wrap -->
+      <div class="applicant-card-list-wrap list-wrap">
+          <div class="table-wrap">
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Designation</th>
+                          <th>Seat</th>
+                          <th>Email ID</th>
+                          <th>Phone</th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                   <tr *ngFor="let item of user_list">
+                    <td>
+                      <div class="profile-wrap">
+                          <img src="../../../../../../assets/public/image/png/dummy-avatar.png" alt="" class="profile-image">
+                          <h6 class="name">{{item.user_name}}</h6>
+                      </div>
+                  </td>
+                  <td>
+                    {{item.seat}}
+                  </td>
+                  <td>
+                     {{item.email}}
+                  </td>
+                  <td>
+                     {{item.mobile}}
+                  </td>
+                  <td>
+                      <a href="#"><i class="icon icon-more-3"></i></a>
+                  </td>
+                   </tr>
+  
+  
+  
+                     
+                    
+                  
+                  
+                  
+  
+                  </tbody>
+              </table>
+          </div>
+      </div>
+    </div>
+  </app-common-modals>

@@ -1,0 +1,113 @@
+.transaction-details-wrap{
+    &.sticky-bottom{
+        position: sticky;
+        bottom: 0rem;
+        width: 100%;
+        background-color: white;
+    }
+    .item-row{
+        @include flex(flex, center, space-between);
+        gap:.75rem;
+        &:not(:last-child){
+            border-bottom: 1px solid $gray-15;
+        }
+        &:first-child{
+            border-top: 1px solid $gray-15;
+        }
+    }
+    &.b-none{
+        border: none !important;
+    }
+    &.b-top{
+        border-top: 1px solid $gray-15 !important;
+    }
+    .item{
+        @include padding(.75rem, .75rem, .75rem, .75rem);
+        .head{
+            color: $gray-200 !important;
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            margin-bottom: .5rem;
+            line-height: .75rem !important;
+        }
+        .desc{
+            color: $black-65 !important;
+            font-size: $para !important;
+            font-weight: $font-weight-semibold !important;
+            margin-bottom: 0rem;
+            line-height: .875rem !important;
+            &.summary-text{
+                font-weight: $font-weight-medium !important;
+            }
+        }
+        &.total-item{
+            border-left: 1px solid $gray-15;
+            &.flex-item{
+                @include flex(flex, center, end);
+                gap: 1rem;
+            }
+            .status-text{
+                text-align: left !important;
+                font-size: $small !important;
+                line-height: 1.3125rem !important;
+                font-weight: $font-weight-medium !important;
+                display: block;
+                color: $black-65 !important;
+            }
+            .desc{
+                font-size: $subheading-lg !important;
+                font-weight: $font-weight-normal !important;
+                color: $gray-150 !important;
+            }
+            .amount{
+                color: $primary-90 !important;
+                font-weight: $font-weight-semibold !important;
+            }
+        }
+    }
+    .discount-item{
+        @include flex(flex, center, normal);
+        column-gap: 2rem;
+        row-gap: .75rem;
+    }
+    .total-row{
+        background-color: $white-15;
+        .item{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            &:first-child{
+                padding-left: .75rem !important;
+            }
+            &:last-child{
+                padding-right: .75rem !important;
+            }
+        }
+    }
+
+    &.no-bg{
+        border: none !important;
+        .total-row{
+            background-color: transparent;
+            &.end{
+                justify-content: end !important;
+                text-align: end;
+            }
+        }
+    }
+}
+
+.table-form-wrap{
+    .transaction-details-wrap{
+        .item-row{
+            &.b-none{
+                border: none !important;
+            }
+            &:first-child{
+                border-top: 0 !important;
+            }
+            border-bottom: 1px solid $gray-15;
+            .total-item{
+                border-left: none;
+            }
+        }
+    }
+}

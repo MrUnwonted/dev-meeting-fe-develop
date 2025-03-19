@@ -1,0 +1,92 @@
+.resuable-button-container{
+    .list-group{
+        .list-group-item{
+            @include curve(0);
+            font-size: $small !important;
+            @include animation-all();
+            &.active{
+                @include animation-all();
+                background-color: $primary-90 !important;
+                color: $white !important;
+            }
+            &:hover{
+                @include animation-all();
+                background-color: rgb($primary-90 , .2)!important;
+            }
+        }
+    }
+}
+
+.reusable-left-column{
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    @include scrollbar();
+}
+.reusable-container{
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    @include scrollbar();
+    .buttons-container{
+        .button-item{
+            background-color: $white-15 !important;
+            padding: 1rem;
+            @include curve(.5rem); 
+            .head{
+                font-size: $para !important;
+                font-weight: $font-weight-medium !important;
+                color: $black-65 !important;
+            }
+        }
+    }
+    .form-element-outer-wrap{
+        .item{
+            background-color: $white-15 !important;
+            padding: 1rem;
+            @include curve(.5rem); 
+            .head{
+                font-size: $para !important;
+                font-weight: $font-weight-medium !important;
+                color: $black-65 !important;
+            }
+            &:not(:last-child){
+                margin-bottom: 1rem;
+            }
+        }
+    }
+   .badges-outer-wrap,.text-editor-outer-wrap,.description-wrap, .dropdown-outer{
+        .badges-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include flex-wraping(wrap);
+        }
+        .item{
+            background-color: $white-15 !important;
+            padding: 1rem;
+            @include curve(.5rem); 
+            .head{
+                font-size: $para !important;
+                font-weight: $font-weight-medium !important;
+                color: $black-65 !important;
+            }
+            &:not(:last-child){
+                margin-bottom: 1rem;
+            }
+        }
+        .curves-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include flex-wraping(wrap);
+            .block{
+                display: block;
+                background-color: $primary-90;
+                width: 200px;
+                height: 150px;
+                margin-bottom: 1rem;
+            }
+            .text{
+                display: block;
+                text-align: center;
+            }
+        }
+   }
+}

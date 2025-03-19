@@ -1,0 +1,15 @@
+.file-manager-container{
+    padding-top: 1.5rem;
+    .selection-card{
+        .icon{
+            width: 2rem !important;
+            height: 2rem !important; 
+        }
+    }
+    .action-widget-wrap{
+        margin-bottom: 1.5rem;
+    }
+    .widget-btn-wrap{
+        margin-bottom: 1rem;
+    }
+}

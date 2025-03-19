@@ -1,0 +1,77 @@
+.table-form-wrap{
+    position: relative;
+    background-color: rgb($gray-18, .18);
+    border-right: 1px solid $gray-15;
+    &.border-none{
+        border: none !important;
+    }
+    .expand-btn{
+        position: absolute;
+        right: .5rem;
+        top: .1rem;
+        .icon{
+            @include animation-all();
+        }
+        &.expanded{
+            .icon-expand-form{
+                background-image: $icon-minimise-form !important;
+                @include animation-all();
+            }
+        }
+    }
+    .form-body{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        .form-check{
+            .form-label{
+                margin-bottom: 0 !important;
+            }
+            align-items: center !important;
+        }
+        .flex-input{
+            @include flex(flex, center, normal);
+            gap: .25rem;
+            .code-text{
+                flex: 50%;
+                color: $primary-90 !important;
+                display: inline-block;
+                font-size: $tiny !important;
+                line-height: .875rem !important;
+            }
+        }
+        .form-control, .form-select{
+            background-color: transparent !important;
+        }
+        min-height: calc(100vh - 17.5rem);
+        max-height: calc(100vh - 17.5rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+        @include scrollbar();
+    }
+    .form-group{
+        line-height: 1rem;
+    }
+    .form-footer{
+        width: 100%;
+        @include padding(.75rem, 1rem, .75rem, 1rem);
+        border-top: 1px solid $gray-15;
+        .button-wrap{
+            @include flex(flex, center, end);
+            gap: .5rem;
+            .btn{
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                font-size: $small !important;
+                line-height: .875rem !important;
+            }
+        }
+    }
+    &.saved{
+        .form-body{
+            .form-control{
+                border: 1px dashed $gray-15 !important;
+                background-color: transparent !important;
+                color: $primary-90 !important;
+
+            }
+        }
+    }
+}

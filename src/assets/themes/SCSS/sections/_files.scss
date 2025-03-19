@@ -1,0 +1,235 @@
+.file-details-top-widget{
+    @include padding(1rem, 1rem, 1rem, 1rem);
+    background-color: $primary-10;
+    .file-box{
+        .head{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1.125rem !important;
+            margin-bottom: 0;
+            color: $black-65 !important;
+        }
+        .desc{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1.125rem !important;
+            margin-bottom: 0;
+            display: block;
+            color: $black-65 !important;
+            &.bold{
+                font-weight: $font-weight-semibold !important;
+            }
+        }
+    }
+}
+
+.file-box-wrap{
+    @include scrollbar();
+    overflow: auto;
+    @include curve(.5rem);
+    border: 1px solid $gray-15;
+    &.curve-0{
+        @include curve(0rem);
+    }
+}
+
+.file-table{
+    @include curve(.5rem);
+    thead{
+        background-color: $white-15;
+        border-bottom: 1px solid $white-30;
+        position: sticky;
+        top: 0;
+        tr{
+            &.mat-mdc-header-row{
+                height: 3rem;
+            }
+        }
+        th{
+            white-space: nowrap;
+            font-size: $tiny !important;
+            color: $black-65;
+            font-weight: $font-weight-semibold;
+            line-height: .875rem;
+            .flex-table-header{
+                @include flex(flex, center, normal);
+                gap: .75rem;
+                .text{
+                    font-size: $tiny !important;
+                    color: $black-65 !important;
+                    font-weight: $font-weight-semibold !important;
+                    line-height: .875rem !important;
+                    display: inline-block;
+                }
+            }
+            &.more-column{
+                width: 5%;
+            }
+            &.folder-name{
+                width: 60%;
+            }
+            &.star-column{
+                width: 5%;
+            }
+            &.access-column{
+                width: 15%;
+            }
+            &.date-column{
+                width: 15%;
+            }
+        }
+    }
+    tbody{
+        tr{
+            td{
+                white-space: nowrap;
+                border-bottom: 1px solid $white-30;
+                font-size: $tiny;
+                color: $black-65;
+                line-height: .875rem;
+                .flex-tabledata{
+                    @include flex(flex, center, normal);
+                    gap: .75rem;
+                    .file-text{
+                        font-size: $tiny !important;
+                        color: $black-65 !important;
+                        line-height: .875rem !important;
+                        display: inline-block;
+                        .view-link{
+                            font-size: $tiny !important;
+                            color: $blue-variant-9 !important;
+                            line-height: 1.3125rem !important;
+                            display: block;
+                        }
+                    }
+                    .file-thumb{
+                        width: 2.5rem;
+                        height: 2.5rem;
+                        @include curve(.5rem);
+                        object-fit: cover;
+                    }
+                }
+                .size-badge{
+                    min-width: auto !important;
+                    width: auto !important;
+                }
+                .profile-wrap{
+                    @include flex(flex, center, normal);
+                    gap: .5rem;
+                    .profile-image{
+                        @include curve(50%);
+                        width: 1.25rem;
+                        height: 1.25rem;
+                        object-fit: cover;
+                    }
+                    .name{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-medium !important;
+                        line-height: 1.3125rem;
+                        color: $black-65 !important;
+                    }
+                }
+                // .attachment-link{
+                //     display: inline-block;
+                //     text-decoration: none;
+                //     @include flex(flex, center, normal);
+                //     gap: .1875rem;
+                //     .icon{
+                //         width: .8125rem !important;
+                //         height: .8125rem !important;
+                //     }
+                //     .link-text{
+                //         font-size: $tiny !important;
+                //         color: $primary-90 !important;
+                //         text-decoration: underline;
+                //     }
+                // }
+            }
+            &:last-child{
+                td{
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    &.selected-file-table{
+       thead{
+        th{
+            &.folder-name{
+                width: 40%;
+            }
+            &.file-size-column{
+                width: 10%;
+            }
+            &.file-type-column{
+                width: 10%;
+            }
+            &.date-column{
+                width: 20%;
+            }
+            &.acess-column{
+                width: 20%;
+            }
+        }
+       }
+    }
+    &.file-requests-table{
+        thead{
+            th{
+                &.folder-name{
+                    width: 25%;
+                }
+                &.created-date-column{
+                    width: 20%
+                }
+                &.expiry-date-column{
+                    width: 20%
+                }
+                &.profile-column{
+                    width: 10%
+                }
+                &.attachment-column{
+                    width: 15%
+                }
+            }
+        }
+        tbody{
+           tr{
+                td{
+                    .file-wrap{
+                        @include flex(flex, center, normal);
+                        .action-flex-wrap{
+                            visibility: hidden;
+                        }
+                    }
+                }
+                &:hover{
+                    .file-wrap{
+                        .action-flex-wrap{
+                            visibility: visible;
+                        }
+                    }
+                }
+           }
+        }
+    }
+    .action-flex-wrap{
+        gap: .75rem !important;
+    }
+}
+
+.attachment-link{
+    display: inline-block;
+    text-decoration: none;
+    @include flex(flex, center, normal);
+    gap: .1875rem;
+    .icon{
+        width: .8125rem !important;
+        height: .8125rem !important;
+    }
+    .link-text{
+        font-size: $tiny !important;
+        color: $primary-90 !important;
+        text-decoration: underline;
+    }
+}

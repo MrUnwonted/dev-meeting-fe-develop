@@ -1,0 +1,28 @@
+.filter-wrap{
+    .form-label{
+        font-weight: $font-weight-normal !important;
+    }
+    .type-select{
+        @include flex(flex, center, space-between);
+        gap: 1rem;
+        margin-bottom: 1rem;
+        .type{
+            font-size: $tiny !important;
+            font-weight:$font-weight-medium !important;
+            line-height: 1.125rem !important;
+            color: $gray-35 !important;
+        }
+        .view-all{
+            font-size: $tiny !important;
+            font-weight:$font-weight-medium !important;
+            line-height: 1.125rem !important;
+            color: $blue-variant-5 !important;
+        }
+    }
+    .check-box-wrap{
+        .file-type-image{
+            @include flex(flex, center, normal);
+            gap: .5rem;
+        }
+    }
+}

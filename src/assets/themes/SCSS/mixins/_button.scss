@@ -1,0 +1,174 @@
+// button background
+@mixin gradient-bg($color: null) {
+    background-color: $color !important;
+  }
+  
+//  btn-primary,btn-secondary,btn-success,btn-danger,btn-info,btn-success
+  @mixin button-variant(
+    $background,
+    $color: color-contrast($background),
+    $hover-bg:mix($black,$background,10%),
+    $focus-bg:mix($black,$background,25%),
+    $active-bg:$background,
+    $disabled-bg:$gray-20,
+    $disabled-color:$gray-60
+  ){
+    color: $color;
+    @include gradient-bg($background);
+    border: none !important;
+    &:hover{
+        background-color: $hover-bg !important;
+    }
+    &:focus{
+        background-color: $focus-bg !important;
+        @include zero-shadow()
+    }
+    &:active{
+        background-color: $focus-bg !important;
+        @include zero-shadow()
+    }
+    &:disabled{
+        opacity: .4;
+        cursor: not-allowed !important;
+    }
+    &.disabled{
+      @extend :disabled;
+    }
+  }
+
+// All btn-outline
+  @mixin button-outline-variant(
+    $color,
+    $hover-color:mix($black,$color,10%),
+    $focus-color:mix($black,$color,25%),
+    $active-color:$color,
+    $disabled-border:$gray-40,
+    $disabled-color:$gray-20,
+    $active-text-color: $white
+  ){
+    color: $color;
+    background-color: transparent !important;
+    border: 1px solid $color !important;
+    // @include theme($color, transparent !important);
+    &:hover{
+        border-color: $hover-color !important;
+        color: $hover-color !important;
+        @include zero-shadow()
+    }
+    &:focus{
+        border-color: $focus-color !important;
+        color: $focus-color !important;
+        @include zero-shadow()
+    }
+    &:active{
+        border-color: $active-color !important;
+        color: $active-color !important;
+        @include zero-shadow()
+    }
+    &.active{
+        background-color: $color !important;
+        color: $active-text-color !important;
+        @include zero-shadow()
+    }
+    &:disabled{
+        opacity: .4;
+        cursor: not-allowed !important;
+    }
+    &.disabled{
+      @extend :disabled;
+    }
+  }
+
+  @mixin button-tertiary-variant(
+    $color,
+    $background-color:$gray-20,
+    $hover-color:mix($black,$color,10%),
+    $focus-color:mix($black,$color,25%),
+    $active-color:$color,
+    $disabled-color: $gray-20
+  ){
+    color: $color;
+    background-color: transparent;
+    border: none !important;   
+    &:hover{
+        color: $hover-color !important;
+        background-color: $background-color !important ;
+        box-shadow: none !important;
+    }
+    &:focus{
+        color: $focus-color !important;
+        background-color: $background-color !important ;
+        box-shadow: none !important;
+    }
+    &:active{
+        color: $active-color !important;
+        background-color: $background-color !important ;
+        box-shadow: none !important;
+    }
+    &:disabled{
+        color: $disabled-color;
+        background-color: transparent;
+    }
+    &.disabled{
+        @extend :disabled;
+    }
+  }
+
+// Mixin for Button Styles Based on Theme Colors and Type
+@mixin button-styles($color, $type) {
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  @if $type == 'filled' {
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 200%;
+      background: lighten($color, 10%);
+      transform: rotate(45deg);
+      transition: top 0.4s ease, left 0.4s ease;
+      z-index: -1;
+    }
+
+    &:hover {
+      background-color: darken($color, 10%);
+      box-shadow: 0 4px 10px rgba($color, 0.4);
+
+      &:before {
+        top: 0;
+        left: 200%;
+        width: 100%;
+      }
+    }
+  }  @else if $type == 'outline' {
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $color;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+
+    &:hover {
+      color: #fff;
+
+      &:before {
+        opacity: 0.3;
+      }
+    }
+  }
+}
+
+

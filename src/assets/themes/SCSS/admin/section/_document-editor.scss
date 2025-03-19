@@ -1,0 +1,258 @@
+.editor-box-outer{
+    @include flex(flex, center, center);
+    height: 100%; 
+    .document-card{
+        max-width: 48rem;
+        max-height: 30rem;
+        min-height: 30rem;
+        width: 100%;
+    }
+}
+
+.document-card{
+    box-shadow: 0px 0px 16px 0px rgb($black, .08);
+    border: 1px solid $gray-15;
+    // max-width: 48rem;
+    // max-height: 30rem;
+    // min-height: 30rem;
+    // width: 100%;
+    .card-header{
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+        .head{
+            font-size: $para !important;
+            font-weight: $font-weight-semibold !important;
+            line-height: 1.5rem !important;
+            margin-bottom: 0;
+            color: $black-65 !important;
+        }
+        .search-wrap{
+            .input-group{
+                .input-group-text{
+                    height: 2rem;
+                    border-right: none !important;
+                    @include curve-each(.5rem, 0, 0, .5rem);
+                    @include padding(.5rem, 0, .5rem, 1rem);
+                    background-color: transparent;
+                    border-color: $gray-15 !important; 
+                    color: $gray-35;
+                    font-size: $tiny !important;
+                    &::placeholder{
+                        color: $gray-35;
+                    }
+                }
+                .form-control{
+                    height: 2rem;
+                    @include padding(.5rem !important, .25rem !important, .5rem !important, .5rem !important);
+                    border-color: $gray-15 !important; 
+                    border-left: transparent !important;
+                    @include curve-each(0 , 0.5rem, 0.5rem , 0rem);
+                }
+            }
+        }
+    }
+    .card-body{
+        padding: 0 !important;
+        .add-more-wrap{
+            background-color: $white-15;
+            @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+            @include flex(flex, end, space-between);
+            gap: 1rem;
+            .input-wrap{
+                width: 100%;
+                .form-label{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    color: $gray-200;
+                    margin-bottom: .5rem;
+                }
+                .form-control{
+                    max-height: 2rem;
+                    @include padding(.5rem !important, .625rem !important, .5rem !important, .625rem !important);
+                }
+            }
+            .button-wrap{
+                .btn{
+                    @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                    font-size: $small !important;
+                    line-height: .875rem !important;
+                }
+            }
+        }
+        .document-flex-form{
+            @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: calc(100% - 10rem);
+            @include scrollbar();
+            margin-bottom: 1rem;
+            @include flex(flex, normal, normal);
+            gap: 1rem;
+            flex-direction: column;
+            .item{
+                @include flex(flex, center, space-between);
+                gap: 1rem;
+                padding-bottom: .5rem;
+                border-bottom: 1px solid $gray-15;
+            }
+            .action-flex-wrap{
+                column-gap: 1.5rem !important;
+            }
+            .description-wrap{
+                .head{
+                    font-size: $tiny !important;
+                    line-height: 1.125rem !important;
+                    display: inline-block !important;
+                    color: $black-65 !important;
+                }
+            }
+        }
+        .add-more-wrap{
+            @include flex(flex, end, space-between);
+            gap: 1rem;
+            .input-wrap{
+                width: 100%;
+                .form-label{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    color: $gray-200;
+                    margin-bottom: .5rem;
+                }
+                .form-control{
+                    max-height: 2rem;
+                    @include padding(.5rem !important, .625rem !important, .5rem !important, .625rem !important);
+                }
+            }
+            .button-wrap{
+                .btn{
+                    @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                    font-size: $small !important;
+                    line-height: .875rem !important;
+                }
+            }
+        }
+        .document-card-form{
+            @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+            overflow: auto;
+            max-height: calc(100vh - 21rem);
+            @include scrollbar();
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            .add-btn-wrap{
+                position: sticky;
+                top: 0;
+            }
+            .added-item-wrap{
+                @include flex(flex, center, normal);
+                gap: 1rem;
+                @include flex-wraping(wrap);
+            }
+            .item{
+                padding: 0 !important;
+                margin: 0 !important;
+                background-color: $white-15 !important;
+                border: 1px solid $gray-15 !important;
+                min-width: 7.8125rem;
+                max-width:  7.8125rem;
+                min-height: 112px;
+                @include ellipse();
+                @include curve(.5rem);
+                @include padding(1rem !important, 1rem !important, 1rem !important, 1rem !important);
+                .item-inner{
+                    .skeleton-image{
+                        margin-bottom: 1rem;
+                        .skeleton{
+                            height: 2.5rem;
+                            width: auto;
+                            object-fit: contain;
+                        }
+                    }
+                    .icon-wrap{
+                        margin-bottom: .5rem;
+                        .icon{
+                            width: 2.5rem;
+                            height: 2.5rem;
+                        }
+                    }
+                    .description-wrap{
+                        line-height: 0;
+                        .head{
+                            font-size: $tiny !important;
+                            line-height: 1rem !important;
+                            display: inline-block !important;
+                            color: $black-65 !important;
+                        }
+                    }
+                }
+                &.add-item{
+                    border-color: $primary-90 !important;
+                    font-weight: $font-weight-normal  !important;
+                    .item-inner{
+                        .description-wrap{
+                            .head{
+                                color: $primary-90 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .card-footer{
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        border-color: $gray-15;
+        background-color: $white;
+        @include padding(.75rem, 1rem, .75rem, 1rem );
+        @include flex(flex, center, end);
+        gap: 1rem;
+        @include media-breakpoint-down(md){
+            flex-direction: column;
+        }
+        &.between{
+            justify-content: space-between !important;
+        }
+        .back-btn-wrap{
+            .btn{
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+        }
+        .card-action-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include media-breakpoint-down(md-sm){
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn{
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                font-size:  $small !important;
+                line-height: 14px !important;
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+            .preview-btn{
+                color: $primary-90 !important;
+            }
+        }
+        .card-back-btn{
+            .btn{
+                font-size:  $small !important;
+                @include padding(.375rem !important, 1.5rem !important, .375rem !important, 1.5rem !important);
+            }
+        }
+        .card-footer-group{
+            @include flex(flex, center, end);
+            gap: 1rem;
+            width:100%;
+            &.include-back{
+                justify-content: space-between;
+            }
+        }
+    }
+}

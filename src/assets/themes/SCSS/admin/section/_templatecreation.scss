@@ -1,0 +1,140 @@
+.template-creation-wrap-outer{
+    .scrollable{
+        @include scrollbar();
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .element-btn{
+        border: 1px solid $gray-150  !important;
+        background-color: transparent !important;
+        @include padding(.25rem !important, 1rem !important, .25rem !important, 1rem !important);
+    }
+
+    .form-group-outer{
+        .editable{
+            @include padding(1rem , 1rem, 1rem, 1rem);
+            @include curve(.25rem);
+            position: relative;
+            &:hover{
+                border: 1px solid $danger-75;
+            }
+        }
+    }
+    .widget-item{
+        &:not(:last-child){
+            margin-bottom: 1.5rem;
+        }
+        .mat-mdc-expansion-panel,.mat-expansion-panel{
+            box-shadow: none !important;
+            .mat-mdc-expansion-panel-header, .mat-expansion-panel-header{
+                height: auto;
+                padding: 0 !important;
+                justify-content: space-between;
+                .mat-mdc-expansion-panel-header-description, .mat-expansion-panel-header-description{
+                    flex-grow: initial !important;
+                }
+            }
+            .mat-mdc-expansion-panel-header-title, .mat-expansion-panel-header-title{
+                font-size: $tiny;
+                font-weight: $font-weight-medium;
+                line-height: 1rem;
+                color: $black-65;
+            }
+            .mat-mdc-expansion-panel-header-description, .mat-expansion-panel-header-description{
+                margin-right: 0;
+            }
+            .mat-mdc-expansion-panel-body, .mat-expansion-panel-body{
+                @include padding(.5rem, 0, 0, 0);
+            }
+            .widget-list{
+                padding-left: 0 !important;
+                margin-bottom: 0 !important;
+                .item{
+                    @include flex(flex, center, normal);
+                    gap: .75rem;
+                    @include padding(.5rem, 1rem, .5rem, 1rem);
+                    border: 1px solid $gray-15;
+                    @include curve(.5rem);
+                    &:not(:last-child){
+                        margin-bottom: .5rem;
+                    }
+                    .item-name{
+                        font-size: $small;
+                        line-height: 1rem;
+                        color: $black-65;
+                    }
+                }
+            }
+        }
+    }
+    .item-head{
+        font-size: $tiny !important;
+        font-weight: $font-weight-medium !important;
+        line-height: 1rem !important;
+        color: $black-65 !important;
+    }
+    .form-label{
+        font-size: $tiny !important;
+        font-weight: $font-weight-normal !important;
+        line-height: 1.125rem !important;
+        color: $gray-150 !important;
+    }
+
+    .footer-group{
+        @include flex(flex, center, normal);
+        &.between{
+            justify-content: space-between;
+        }
+        &.end{
+            justify-content: end;
+        }
+        @include padding(.75rem, 1rem, .75rem, 1rem);
+        border-top: 1px solid $gray-15;
+        .btn{
+            @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+            font-size: $small !important;
+            line-height: .875rem !important;
+        }
+    }
+
+    .bordered{
+        border: 1px solid $gray-35;
+        @include curve(.5rem);
+    }
+
+    .form-title{
+        font-size: $para !important;
+        font-weight: $font-weight-semibold !important;
+        color: $black-65 !important;
+    }
+    .drop-area{
+        &.saved{
+            @include flex(flex, center, center);
+            height: 100%;
+        }
+        .column{
+            position: relative;
+            padding: 1rem;
+            border: 1px solid transparent;
+            &:hover{
+                border: 1px solid $danger-75;
+                @include curve(.5rem);
+                .action-flex-wrap{
+                    display: flex;
+                }
+            }
+            .action-flex-wrap{
+                display: none;
+                position: absolute;
+                top: -.75rem;
+                right: 1rem;
+            }
+        }
+    }
+
+    .action-btn{
+        line-height: 0;
+        padding: .25rem !important;
+    }
+
+}

@@ -1,0 +1,15 @@
+.keyword-select{
+    .mat-mdc-chip {
+        background-color: $blue-variant-5 !important;
+        min-height: 24px;
+        font-size: $tiny !important;
+        font-weight: $font-weight-normal !important;
+        color: $white !important;
+        .mat-mdc-chip-remove{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            color: $white !important;
+            opacity: 1;
+        }
+    }
+}

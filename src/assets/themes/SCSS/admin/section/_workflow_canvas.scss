@@ -1,0 +1,180 @@
+.workflow-canvas-full-wrap{
+    .scrollable{
+        @include scrollbar();
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .if-step{
+        background-color: $white;
+        color: $black-65;
+        @include curve(1rem);
+        border: 1px solid $gray-15;
+        @include padding (1rem, 1rem, 1rem, 1rem);
+    }
+    .route-card{
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        text-align:center;
+        @include curve(50%);
+        border: 1px solid $gray-15;
+
+    }
+    .footer-group{
+        @include flex(flex, center, normal);
+        &.between{
+            justify-content: space-between;
+        }
+        &.end{
+            justify-content: end;
+        }
+        @include padding(.75rem, 1rem, .75rem, 1rem);
+        border-top: 1px solid $gray-15;
+        .btn{
+            @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+            font-size: $small !important;
+            line-height: .875rem !important;
+        }
+    }
+    .workflow-title{
+        font-size: $para;
+        font-weight: $font-weight-medium !important;
+        line-height: 1.5rem !important;
+        color: $black-65 !important;
+        margin-bottom: 0;
+        @include padding(.75rem, 1rem, .75rem, 1.5rem);
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    .form-label{
+        font-weight: $font-weight-normal !important;
+        color: $gray-200 !important;
+    }
+    
+    
+    #canvas {
+        @include scrollbar();
+        width: 100%;
+        background-color: transparent;
+        background-image: linear-gradient(to right, #d9d9d9 1px, transparent 1px), linear-gradient(to bottom, #d9d9d9 1px, transparent 1px); 
+        background-image: radial-gradient(circle, #d9d9d9 1px, transparent 1px), radial-gradient(circle, #d9d9d9 1px, transparent 1px);
+        background-size: 1rem 1rem;
+    }
+    
+    #palette {
+    
+        & .plugin-op {
+            user-select: none;
+            display: block;
+    
+        }
+    }
+    
+    section {
+        padding: 1rem;
+        border-bottom: 1px solid $gray-15;
+    
+        & .wide {
+            width: 100%;
+        }
+    }
+    
+    .sub-section {
+        padding: 0.5em 0;
+    }
+    
+    
+    .card {
+        padding: 1em;
+        background: white;
+        box-shadow: 0px 4px 2em rgba(22, 33, 74, 0.05);
+        border-radius: 4px;
+        min-width: 12em;
+        height: 4em;
+    }
+    
+    div#canvas[disabled="true"] {
+        opacity: .7;
+    }
+    
+    div#canvas[disabled="true"] ::ng-deep.ngflowchart-step-wrapper {
+        opacity: .7;
+    }
+
+    .nested-flow-step{
+        .seat-card{
+            min-width: 20rem;
+            .seat-card-inner{
+                background-color: $white;
+                @include padding(1rem, 1rem, 1rem, 1rem);
+                @include curve(1rem);
+                box-shadow: 0px 4px 8px 0px rgb($gray-200, .2);
+                .heading-wrap{
+                    padding-bottom: .5rem;
+                    border-bottom: 1px solid $gray-15;
+                    margin-bottom: .5rem;
+                }
+            }
+        }
+    }
+
+    // list
+    .workflow-seat-list-wrap{
+        .list-wrap{
+            list-style: none;
+            padding-left: 0;
+            .list-item{
+               &:not(:last-child){
+                margin-bottom: .5rem;
+               }
+            }
+        }
+    }
+
+    .action-btn-wrap{
+        @include flex(flex, center, normal);
+        gap: 1rem;
+        width: fit-content;
+        @include padding(.5rem, .5rem, .5rem, .5rem);
+        border: 1px solid $gray-15;
+        @include curve(.5rem);
+        .btn-none{
+            padding: 0 !important;
+            line-height: 0 !important;
+            .text{
+                display: inline-block;
+                color: $gray-160 !important;
+                font-size: $copyright-text;
+                line-height: .625rem;
+                font-weight: $font-weight-medium;
+            }
+        }
+        .divider{
+            background-color: $gray-15;
+            width: .0625rem;
+            height: 1rem;
+            display: inline-block;
+        }
+    }
+
+    .right-side-content{
+        .action-btn-wrap{
+            position: absolute;
+            top: 1rem;
+            left: .5rem;
+            z-index: 2;
+        }
+    }
+}
+
+// condition modal
+.condition-modal{
+    .modal-header{
+        display: none;
+    }
+    .modal-footer{
+        border-top: none !important;
+    }
+}

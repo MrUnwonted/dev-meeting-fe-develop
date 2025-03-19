@@ -1,0 +1,239 @@
+html{
+    height: 100%;
+}
+body{
+    overflow-x: hidden;
+}
+.input-wrap{
+    position: relative;
+    &.icon-attached-right{
+        .form-control{
+            padding-right: 4.5rem;
+        }
+        .icon{
+            position: absolute;
+            right:.5rem;
+            top: .4375rem;
+        }
+    }
+}
+
+.border{
+    &-end, &-start, &-bottom, &-top{
+        border-color: $gray-15;
+    }
+}
+
+.form-group{
+    &.flex{
+        @include flex(flex, center, normal);
+    }
+}
+
+.button-wrap{
+    @include flex(flex, center, inherit);
+    &.end{
+        justify-content: end;
+    }
+}
+.table-outer-wrap{
+    height: 100%;
+}
+.search-outer-wrap{
+    .input-group{
+        &.xs{
+            .input-group-text, input{
+                height: 2rem !important;
+            }
+        }
+        .input-group-text{
+            border-right: none !important;
+            @include curve-each(.25rem, 0, 0, .25rem);
+            @include padding(.5rem, 0, .5rem, 1rem);
+            background-color: transparent;
+            border-color: $gray-15 !important; 
+            color: $gray-35;
+            font-size: $tiny !important;
+        }
+        .form-control{
+            @include padding(.5rem !important, .25rem !important, .5rem !important, .5rem !important);
+            border-color: $gray-15 !important; 
+            border-left: transparent !important;
+            @include curve-each(0 , 0.25rem, 0.25rem , 0rem);
+            &::placeholder{
+                color: $gray-35;
+            }
+        }
+    }
+}
+.action-flex-wrap{
+    @include flex(flex, center, normal);
+    gap: .5rem;
+    &.end{
+        justify-content: end !important;
+    }
+}
+
+// content-wrapper
+.content-wrapper-col{
+    @include animation-all();
+    margin-left: 15rem;
+    .content-wrapper{
+        .content-wrap-inner{
+            padding: .3rem 1rem;
+        }
+    }
+    &.minimized{
+        margin-left: 4.5rem;
+    }
+}
+//  page heading
+.page-heading-wrap{
+    margin-bottom: 1.5rem;
+    .head{
+        font-size: $subheading-lg !important;
+        margin-bottom: .5rem;
+        color: $black-65 !important;
+        font-weight: $font-weight-medium !important; 
+    }
+    .subhead{
+        color: $gray-200 !important;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+}
+
+.offcanvas{
+    @include animation-all();
+    &.show{
+        visibility: visible;
+        z-index: 2000;
+        @include animation-all();
+    }
+}
+
+.page-wrapper{
+    background-color: $white-50;
+    min-height: 100vh;
+    &.file-manager-layout{
+        .sidebar-col{
+            width: 18.9375rem;
+            .sidebar-wrap-inner{
+                max-height: calc(100vh - 10rem);
+                overflow-y: auto;
+                overflow-x: hidden;
+                @include scrollbar();
+            }
+        }
+        .content-wrapper-col{
+            margin-left: 18.9375rem;
+        }
+        background-color: $white;
+        .content-wrapper-col{
+            &.minimized{
+                margin-left: 7rem;
+            }
+        }
+    }
+}
+
+// attach file
+.attach-file-wrap{
+    position: relative;
+    .file-input{
+        display: none;
+        position: absolute;
+        left:0;
+        top:0;
+    }
+}
+
+
+.btn-flex{
+    @include flex(flex, center, center);
+    gap: .5rem;
+}
+
+// drag and drop
+.drop-file-inner{
+    @include flex(flex, center, center);
+    gap: .5rem;
+    flex-direction: column;
+    height: 100%;
+    border: 1px dashed $blue-variant-8;
+    .browse-btn{
+        @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+        font-size: $small !important;
+    }
+    .text-wrap{
+        .head{
+            font-size: $para !important;
+            font-weight: $font-weight-medium !important;
+            margin-bottom: 0;
+            color: $black-65 !important;
+            line-height: 1.5rem !important;
+            text-align: center;
+        }
+        .subdesc{
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1.125rem;
+            text-align: center;
+            display: block;
+            color: $gray-150 !important;
+        }
+    }
+    .error-message{
+        margin-bottom:0;
+        font-size: $tiny !important;
+        color: $danger;
+    }
+}
+
+// error msg
+.error-msg{
+    color: $danger-100;
+    font-size: $copyright-text !important;
+    font-weight:  $font-weight-medium !important;
+    display: inline-block;
+}
+
+
+.curve-0{
+    @include curve(0rem);
+}
+
+
+.date-pick-wrap{
+    position: relative;
+    .mat-mdc-datepicker-toggle{
+        right: 0;
+        position: absolute;
+        top: -3px;
+        svg{
+            fill: $gray-35 !important;
+        }
+    }
+}
+
+.rounded{
+    &-0{
+        @include curve(0rem);
+    }
+    &-1{
+        @include curve(.2rem);
+    }
+    &-2{
+        @include curve(.25rem);
+    }
+    &-3{
+        @include curve(.375rem);
+    }
+    &-4{
+        @include curve(.5rem);
+    }
+    &-5{
+        @include curve(.75rem);
+    }
+}

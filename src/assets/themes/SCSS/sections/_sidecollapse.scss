@@ -1,0 +1,804 @@
+.right-content-popup{
+    min-width: 654px;
+    border: none !important;
+    box-shadow: 0px 0px 16px 0px rgb($black, .08);
+    @include animation-all();
+    @include curve(.5rem);
+    &.full-width{
+        width: 75%;
+        @include animation-all();
+    }
+    @include media-breakpoint-down(md){
+        width: 100%;
+        min-width: 100%;
+    }
+    .show{
+        @include animation-all();
+    }
+    .offcanvas-header{
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        @include padding(.5rem, .5rem, .5rem, .5rem);
+        .left-side{
+            .close-btn{
+                color: $blue-variant-5 !important;
+                font-size: $tiny !important;
+            }
+        }
+        .right-side-wrap{
+            .button-wrap{
+                @include flex(flex, center, end);
+                gap: 1.5rem;
+            }
+            .divider{
+                height: 1rem;
+                width: 1px;
+                background-color: $gray-15;
+                display: inline-block;
+            }
+            .item-group{
+                @include flex(flex, start, space-between);
+                gap: 1.5rem;
+                .btn{
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+            }
+        }
+    }
+    .offcanvas-body{
+        @include scrollbar();
+        @include padding(.5rem, .5rem, .5rem, .5rem);
+        overflow-x: hidden;
+        .left-side-column{
+            @include animation-all();
+        }
+        .left-side-content{
+            @include animation-all();
+        }
+    }
+    .btn-expand{
+        background-color: $white-15 !important;
+        border-color: $white-15 !important;
+        @include animation-all();
+        &.minimise-btn{
+            .icon{
+                transform: rotate(-180deg);
+                @include animation-all();
+                @include media-breakpoint-down(md){
+                    transform: rotate(90deg);
+                }
+            }
+        }
+        &.maximise-btn{
+            .icon{
+                @include animation-all();
+                @include media-breakpoint-down(md){
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+    }
+    .offcanvas-footer{
+        @include padding(.75rem, 1rem, .75rem, 1rem);
+        .right-inbox-content-footer-wrap{
+            @include flex(flex, start, space-between);
+            gap: .5rem;
+            .left-side{
+                    .forward-btn{
+                        color: $blue-variant-5 !important;
+                        font-size: $tiny !important;
+                        padding: 0 !important;
+                }
+            }
+            .right-side-wrap{
+                .button-wrap{
+                    @include flex(flex, start, end);
+                    gap: 1.5rem;
+                    .btn{
+                        padding: 0 !important;
+                        margin: 0 !important;
+                    }
+                }
+            }  
+        }
+    }
+    &.offcanvas{
+        .offcanvas-body{
+            overflow: hidden !important;
+            .content-row{
+                max-height: calc(100vh - 18.9rem);
+                overflow-y: auto;
+                @include scrollbar();
+            }
+        }
+    }
+}
+.content-popup{
+    .main-row{
+        @include padding(0rem, 1rem, 1rem, 1rem);    
+    }
+    .main-heading-wrap{
+        border-bottom: 1px solid $gray-15;
+        @include padding(1rem, 0rem, 1rem, 0rem);
+        width: 100%;
+        @include flex(flex, start, space-between);
+        gap: .75rem;
+        @include flex-wraping(wrap);
+        .head{
+            color: $black-65 !important;
+            font-size: $small !important;
+            margin-bottom: .5rem;
+            font-weight: $font-weight-medium !important;
+        }
+        .desc{
+            color: $gray-200 !important;
+            font-size: $small !important;
+            margin-bottom: .5rem;
+        }
+        .status-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            .profile-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .profile-image{
+                    width: .9375rem;
+                    height: .9375rem;
+                    object-fit: cover;
+                    @include curve(50%);
+                }
+                .name{
+                    color: $black-65 !important;
+                    font-size: $tiny !important;
+                    margin-bottom: 0rem;
+                    font-weight: $font-weight-normal !important;
+                }
+            }
+        }
+        .left-side{
+            @include flex(flex, normal, normal);
+            flex-direction: column;
+            gap: .25rem;
+            .subject-wrap{
+                @include flex(flex, center, normal);
+                gap: .75rem;
+                .subject-text{                            
+                    font-size: $small !important;
+                    font-weight: $font-weight-medium !important;
+                    color: $black-65 !important;
+                    margin-bottom:0;
+                }
+                .icon-flag-red{
+                    @include animation-all();
+                    &.active{
+                        @include animation-all();
+                        background-color: $icon-flag-red;
+                    }
+                    &.disabled{
+                        @include animation-all();
+                        background-color: $icon-flag-disabled !important;
+                    }
+                }
+            }
+            .inward-id{
+                font-size: $tiny !important;
+                font-weight: $font-weight-medium !important;
+                display: block;
+                margin-bottom: 0;
+                color: $gray-150;
+                .id{
+                    color: $blue-variant-5 !important;
+                }
+            }
+        }
+        .right-side{
+            @include flex(flex, end, normal);
+            gap: .5rem;
+            flex-direction: column;
+            .action-wrap{
+                @include flex(flex, center, normal);
+                gap: 1rem;
+            }
+            .gotofilebtn{
+                padding: 0 !important;
+                line-height: 0 !important;
+                margin: 0 !important;
+                .text{
+                    line-height: 1.125rem;
+                    color: $blue-variant-5 !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                }
+            }
+            .file-wrap{
+                @include flex(flex, center, normal);
+                gap: .25rem;
+                .file-btn{
+                    padding: 0 !important;
+                    line-height: 0;
+                    margin: 0 !important;
+                }
+                .count{
+                    color: $black-65 !important;
+                    display: inline-block;
+                    font-size: $tiny;
+                }
+            }
+            .date{
+                font-size: $tiny !important;
+                margin-bottom: 0;
+                color: $gray-150 !important;
+            }
+        }
+        .description-wrap{
+            .desc{
+                font-size: $tiny !important;
+                color: $gray-200!important;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+    .content-row{
+        --bs-gutter-x: .75rem;
+    }
+    .right-side-content{
+        border:  1px solid $gray-15;
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        @include curve(.5rem);
+        .bordered-bottom{
+            border-bottom:  1px solid $gray-15;
+            @include padding(0rem, 0rem, .5rem, 0rem);
+            &:last-child{
+                border-bottom: none !important;
+            }
+        }
+    }
+}
+
+.table-box{
+    .head{
+        color: $black-65 !important;
+        font-size: $tiny !important;
+        margin-bottom: .75rem;
+        font-weight: $font-weight-semibold !important;
+    }
+    .table-box-outer-wrap{
+        .table-box-inner{
+            @include flex(flex, normal, normal);
+            flex-direction: column;
+            .item{
+                @include padding(.5rem, 0, .5rem, 0);
+                @include flex(flex, center, space-between);
+                gap: .5rem;
+                .item-head{
+                    color: $gray-200 !important;
+                    font-size: $copyright-text !important;
+                    margin-bottom: 0rem;
+                    font-weight: $font-weight-normal !important;
+                }
+                .item-desc{
+                    color: $black-65 !important;
+                    font-size: $copyright-text !important;
+                    margin-bottom: 0rem;
+                    font-weight: $font-weight-medium !important;
+                }
+                &:not(:last-child){
+                    border-bottom: 1px solid $gray-15;
+                }
+            }
+        }
+    }
+}
+
+.card-box{
+    .heading-wrap{
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        margin-bottom: .75rem;
+    }
+    .head{
+        color: $black-65 !important;
+        font-size: $tiny !important;
+        margin-bottom: 0rem;
+        font-weight: $font-weight-semibold !important;
+    }
+    .button-wrap{
+        @include flex(flex, center, end);
+        gap: .5rem;
+        .download-btn{
+            @include flex(flex, center, center);
+            gap: .25rem; 
+        }
+    }
+    .activity-card{
+        .card-body{
+            @include padding(0.5rem !important, .75rem !important, .5rem !important, .75rem !important);
+
+        }
+    }
+}
+
+.comment-box-outer{
+    .head-wrap{
+        @include flex(flex, center, space-between);
+        gap: .5rem;
+        margin-bottom: 1rem;
+        position: sticky;
+        top: 0;
+        background-color: $white;
+        z-index: 2;
+        .head{
+            margin-bottom: 0 !important;
+        }
+    }
+    &.drag{
+        border: 1px dashed $gray-35;
+        position: relative;
+        margin-top: .5rem;
+        &:before{
+            content: $icon-dragger;
+            position: absolute;
+            left: 50%;
+            top: -0.625rem;
+            z-index: 3;
+        }
+    }
+    .head{
+        color: $black-65 !important;
+        font-size: $tiny !important;
+        margin-bottom: 1rem;
+        font-weight: $font-weight-semibold !important;
+    }
+    .comment-box-list{
+        margin-bottom: 0;
+        padding-left: 0;
+        list-style: none;
+        .comment-item{
+            position: relative;
+            overflow: hidden;
+            @include padding(0rem, 0rem, 0rem, 0rem);
+            .profile-outer{
+                @include flex(flex, center, space-between);
+                gap: .5rem;
+            }
+            .profile-image-wrap{
+                @include flex(flex, start, normal);
+                gap: .5rem;
+                position: relative;
+                &:after{
+                    position: absolute;
+                    border-top: .75rem solid rgb($gray-200, .20);
+                    border-left: .5rem solid transparent;
+                    border-right: .5rem solid transparent;
+                    height: 0;
+                    width: 1rem;
+                    content: "";
+                    bottom: -.6rem;
+                    left: .395rem;
+                
+                }
+                .name-wrap{
+                    @include flex(flex, normal, normal);
+                    gap: .25rem;
+                    flex-direction: column;
+                }
+                .profile-image{
+                    width: 1.6875rem;
+                    height: 1.6875rem;
+                    object-fit: cover;
+                    @include curve(50%);
+
+                }
+                .name{
+                    color: $black-65 !important;
+                    font-size: $tiny !important;
+                    margin-bottom: 0rem;
+                    font-weight: $font-weight-normal !important;
+                }
+                .designation{
+                    color: $gray-150 !important;
+                    font-size: $copyright-text !important;
+                    margin-bottom: 0rem;
+                    display: inline-block;
+                    font-weight: $font-weight-normal !important;
+                }
+            }
+            .date{
+                color: $black-65 !important;
+                font-size: $copyright-text !important;
+                margin-bottom: 0rem;
+                display: inline-block;
+                font-weight: $font-weight-normal !important;
+            }
+            .comment{
+                @include curve-each(0rem, .5rem, .5rem, .5rem);
+                border: 1px dashed $gray-15;
+                margin-left: 2rem;
+                margin-top: .5rem;
+                margin-bottom: 1.5rem;
+                @include padding(.75rem, 1rem, .75rem, 1rem);
+                p{
+                    color: $gray-200 !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    &.flex{
+                        @include flex(flex, center, normal);
+                        gap: .25rem;
+                    }
+                }
+                .file-link{
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-normal !important;
+                    color: $primary-90 !important;
+                }
+                .bold{
+                    font-weight: $font-weight-semibold !important;
+                }
+                .mediumbold{
+                    font-weight: $font-weight-medium !important;
+                }
+                .profile-wrap{
+                    @include flex(flex, center, normal);
+                    gap: .25rem;
+                    &.blue{
+                        .name{
+                            color: $primary-68 !important;
+                            font-size: $copyright-text !important;
+                            line-height: 1.3125rem !important;
+                        }   
+                        .profile-image{
+                            border: 1px solid $primary-68;
+                            width: 1.375rem;
+                            height: 1.375rem;
+                            object-fit: cover;
+                            @include curve(50%);
+                        }
+                    }
+                }
+                // &.green{
+                //     border-color: $succes-250!important;
+                // }
+                // &.yellow{
+                //     border-color: $warning-250 !important;
+                // }
+                // &.blue{
+                //     border-color: $blue-variant-5 !important;
+                // }
+            }
+            &:before{
+                content: "";
+                position: absolute;
+                height: 100%;
+                border: 1px dashed rgb($gray-200, .20);
+                left: .8rem;
+                z-index: 0;
+                top: 2.5rem;
+            }
+            // &:last-child{
+            //     &:before{
+            //         content: none;
+            //     }
+            //     .profile-image-wrap{
+            //         &:after{
+            //             content: none !important;
+            //         }
+            //     }
+            // }
+            $colors: $blue-variant-5, $success-250, $warning-250, $danger, $purple, $violet, $yellow, $indigo; // Define the colors you want to use
+
+            // Loop through each color and apply it to specific classes
+            @each $color, $i in $colors {
+                
+                &.blue {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $blue-variant-5;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $blue-variant-5;
+                    }
+                    .name {
+                        color: $blue-variant-5 !important;
+                    }
+                    &:before {
+                        border-color: $blue-variant-5;
+                    }
+                    .comment{
+                        border-color: $blue-variant-5 !important;
+                    }
+                }
+        
+                &.red {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $danger;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $danger;
+                    }
+                    .name {
+                        color: $danger !important;
+                    }
+                    &:before {
+                        border-color: $danger;
+                    }
+                    .comment{
+                        border-color: $danger !important;
+                    }
+                }
+        
+                &.green {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $success-250;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $success-250;
+                    }
+                    .name {
+                        color: $success-250 !important;
+                    }
+                    &:before {
+                        border-color: $success-250;
+                    }
+                    .comment{
+                        border-color: $success-250 !important;
+                    }
+                }
+
+                &.indigo {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $indigo;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $indigo;
+                    }
+                    .name {
+                        color: $indigo !important;
+                    }
+                    &:before {
+                        border-color: $indigo;
+                    }
+                    .comment{
+                        border-color: $indigo !important;
+                    }
+                }
+        
+                &.orange {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $warning-250;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $warning-250;
+                    }
+                    .name {
+                        color: $warning-250 !important;
+                    }
+                    &:before {
+                        border-color: $warning-250;
+                    }
+                    .comment{
+                        border-color: $warning-250 !important;
+                    }
+                }
+                &.yellow {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $warning-250;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $yellow;
+                    }
+                    .name {
+                        color: $yellow !important;
+                    }
+                    &:before {
+                        border-color: $yellow;
+                    }
+                    .comment{
+                        border-color: $yellow !important;
+                    }
+                }
+                &.violet {
+                    .profile-image-wrap {
+                        &:after {
+                            position: absolute;
+                            border-top: .75rem solid $violet;
+                            border-left: .5rem solid transparent;
+                            border-right: .5rem solid transparent;
+                            height: 0;
+                            width: 1rem;
+                            content: "";
+                            bottom: -.6rem;
+                            left: .395rem;
+                        }
+                    }
+                    .profile-image {
+                        border: 1px solid $violet;
+                    }
+                    .name {
+                        color: $violet !important;
+                    }
+                    &:before {
+                        border-color: $violet;
+                    }
+                    .comment{
+                        border-color: $violet !important;
+                    }
+                }
+            }
+            
+        }
+    }
+    &.files-outer{
+        .comment-item{
+            &:before{
+                border-color: $warning-250 !important;
+            }
+        }
+        .profile-outer{
+            .profile-image-wrap{
+                &:after{
+                    border-top: .75rem solid $warning-250 !important;
+                    border-left: .5rem solid rgba(0, 0, 0, 0);
+                    border-right: .5rem solid rgba(0, 0, 0, 0);
+                }
+                .profile-image{
+                    @include curve(0);
+                    border: none !important;
+                }
+            }
+        }
+    }
+}
+
+
+
+.details-wrap-box{
+    .head{
+        color: $gray-150 !important;
+        font-size: $small !important;
+        margin-bottom: 1rem;
+        font-weight: $font-weight-normal !important;
+    }
+    .details-item-wrap{
+        @include flex(flex, normal, normal);
+        flex-direction: column;
+        gap: 1rem;
+        @include media-breakpoint-down(md-sm){
+            @include media-breakpoint-up(sm){
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+        }
+        .item{
+            .assignee-badge{
+                background-color: $primary-10;
+                color: $gray-200;
+            }
+            &.flex{
+                @include flex(flex, center, space-between);
+                gap: .5rem;
+                .item-head{
+                    margin-bottom: 0 !important;
+                }
+            }
+            .item-head{
+                color: $gray-200 !important;
+                font-size: $copyright-text !important;
+                margin-bottom: 0.5rem;
+                font-weight: $font-weight-normal !important;
+            }
+            .item-badge{
+                @include padding(.125rem !important, .25rem !important, .125rem !important, .25rem !important);
+                @include curve(.1875rem);
+                @include flex(flex, center, center);
+                gap: .25rem;
+            }
+            .item-desc{
+                color: $black-65 !important;
+                font-size: $copyright-text !important;
+                font-weight: $font-weight-normal !important;
+                &:last-child{
+                    margin-bottom: 0rem;
+                }
+                &.bold{
+                    font-weight: $font-weight-semibold !important;
+                }
+            }
+            .profile-wrap{
+                @include flex(flex, center, normal);
+                gap: .5rem;
+                .profile-image{
+                    width: 2.25rem;
+                    height: 2.25rem;
+                    object-fit: cover;
+                    @include curve(50%);
+
+                }
+                .name{
+                    color: $black-65 !important;
+                    font-size: $tiny !important;
+                    margin-bottom: 0rem;
+                    font-weight: $font-weight-normal !important;
+                }
+            }
+            &.flex-row{
+                @include flex(flex, center, space-between);
+                gap: .5rem;
+                .item-head{
+                    margin-bottom: 0 !important;
+                }
+                .profile-wrap{
+                    .profile-image{
+                        width: .9375rem;
+                        height: .9375rem;
+                    }
+                }
+            }
+        }
+    }
+}

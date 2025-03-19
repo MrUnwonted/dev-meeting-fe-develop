@@ -1,0 +1,24 @@
+.admin-layout{
+    .sidebar-wrapper{
+        background-color: $primary-90 !important;
+        .toggle-btn{
+            &:hover, &:focus, &.active{
+                background-color: $primary-90 !important;
+            }
+        }
+        .nav-item{
+            // &:hover{
+            //     background-color: rgb($primary-light, .6) !important;
+            // }
+            // &.active{
+            //     background-color: $primary-light !important;
+            //     .icon{
+            //         filter: invert(1);
+            //     }
+            //     .label{
+            //         color: $black-variant !important;
+            //     }
+            // }
+        }
+    }
+}

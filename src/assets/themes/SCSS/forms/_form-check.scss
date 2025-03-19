@@ -1,0 +1,37 @@
+
+// check or radiu wrap
+
+.form-check{
+    @include flex(flex !important, normal, normal);
+    gap: .5rem;
+    padding: 0 !important;
+    .form-label{
+        margin-bottom: 0;
+    }
+    .form-check-input{
+        margin-left: 0 !important;
+    }
+  }
+  
+  // checkbox
+  
+  .form-check-input[type='checkbox']{
+     &:not(.form-switch .form-check-input ){
+        width: 1.125rem;
+        height: 1.125rem;
+        
+        @include form-check-variant();
+        @include curve(.25rem);
+        @include margin(0 !important, 0, 0, 0);
+     }
+  }
+  
+  .check-box-wrap{
+    @include flex(flex,normal, normal);
+    flex-direction: column;
+    &.flex{
+        gap: 1rem;
+        align-items: center;
+        flex-direction: row;
+    }
+  }

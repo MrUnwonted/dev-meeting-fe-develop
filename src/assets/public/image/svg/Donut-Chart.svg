@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="167" height="166" viewBox="0 0 167 166" fill="none">
+<style>
+    text {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+<g id="Donut Chart">
+<g id="Chart-container">
+<g id="Total-container">
+<text id="Label" fill="#737373" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12" font-weight="500" letter-spacing="0em"><tspan x="53.5352" y="69.1016">Total Value</tspan></text>
+<text id="Value" fill="#0A0A0A" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="28" font-weight="bold" letter-spacing="0em"><tspan x="67.4219" y="102.57">72</tspan></text>
+</g>
+<g id="Container">
+<path id="Ellipse" d="M83.5 0C99.9158 1.95757e-07 115.963 4.86787 129.612 13.988C143.262 23.1082 153.9 36.071 160.182 51.2373C166.464 66.4035 168.108 83.0921 164.905 99.1925C161.703 115.293 153.798 130.082 142.19 141.69C130.582 153.298 115.793 161.203 99.6925 164.405C83.5921 167.608 66.9035 165.964 51.7373 159.682C36.571 153.4 23.6082 142.762 14.488 129.112C5.36786 115.463 0.5 99.4158 0.5 83H15.357C15.357 96.4774 19.3535 109.652 26.8412 120.858C34.3288 132.064 44.9713 140.798 57.4228 145.956C69.8743 151.114 83.5756 152.463 96.794 149.834C110.012 147.204 122.154 140.714 131.684 131.184C141.214 121.654 147.704 109.512 150.334 96.294C152.963 83.0756 151.614 69.3743 146.456 56.9228C141.298 44.4713 132.564 33.8288 121.358 26.3412C110.152 18.8535 96.9774 14.857 83.5 14.857V0Z" fill="#14B8A6" stroke="white" stroke-width="2"/>
+<path id="Ellipse_2" d="M0.5 83C0.500002 60.987 9.24462 39.8757 24.8101 24.3101C40.3757 8.74462 61.487 -2.62502e-07 83.5 0V14.94C65.4494 14.94 48.138 22.1106 35.3743 34.8743C22.6106 47.638 15.44 64.9494 15.44 83H0.5Z" fill="#03346E" stroke="white" stroke-width="2"/>
+</g>
+</g>
+</g>
+</svg>

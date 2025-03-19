@@ -1,0 +1,40 @@
+// thumbnail types and height
+$ThumbnailConfig: ( 
+'xs' 3.125rem, //50px//
+'sm' 9.375rem, // 150px
+'md' 13.5rem, // 216px
+'lg' 25rem // 400px
+);
+
+@mixin card-variant(
+    $paragraph-text: $small
+){
+    @include curve(0.5rem); // 8px //
+    border: 1px solid $gray-15;
+    overflow: hidden;
+    @each $tuple in $ThumbnailConfig {
+        .thumbnail-#{nth($tuple, 1)}{
+            &-cover{
+                height: nth($tuple, 2);
+                width: 100%;
+                @include curve-each(.5rem, .5rem, 0, 0);
+                @include object(cover, center);
+            }
+            &-contain{
+                @extend .thumbnail-#{nth($tuple, 1)}-cover;
+                @include object(contain, center);
+            }
+        }
+    }
+    p{
+        // font-size: $paragraph-text !important;
+        color: $gray-100 !important;
+    }
+}
+
+// mixin for services card in home banner, disease cards
+
+@mixin service-card-bg-variant($color){
+    background-color: $color;
+}
+

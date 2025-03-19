@@ -1,0 +1,22 @@
+.form-label{
+    font-size: $small;
+    color: $black-65;
+    font-weight: $font-weight-semibold;
+    margin-bottom: .2rem;
+    &.head{
+        color: $gray-200;
+        line-height: 1.125rem;
+    }
+    &.sm{
+        font-size: $copyright-text;
+        color: $gray-150;
+        margin-bottom: .25rem;
+        font-weight: $font-weight-normal;
+    }
+}
+
+.form-wrap{
+    .form-label{
+        font-weight: $font-weight-normal !important;
+    }
+}

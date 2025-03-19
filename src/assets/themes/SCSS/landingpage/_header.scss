@@ -1,0 +1,154 @@
+.landing-topbar{
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+    .navbar{
+        min-height: 64px;
+        background-color: $white;
+        box-shadow: 0px 0px 16px 0px rgb($blue-variant-4, .08);
+        @include padding(.25rem, 0, .25rem, 0);
+        .navbar-brand{
+            font-size: $subheading-md !important;
+            color: $primary;
+            font-weight: $font-weight-semibold !important;
+            display: inline-block;
+            img{
+                width: 100%;
+                height: 2.5rem;
+                object-fit: contain;
+            }
+        }
+        .navbar-brand-flex{
+            @include flex(flex, center, space-between);
+            gap: 1.5rem;
+            h4{
+                &.company-name{
+                    font-weight: $font-weight-semibold !important;
+                    margin-bottom: 0;
+                    @include media-breakpoint-down(md){
+                        display:none;
+                    }
+                }
+            }
+            .module-logo{
+                width: 100%;
+                height: 2rem;
+                object-fit: contain;
+            }
+        }
+        .navbar-nav{
+            @include flex(flex, center, space-between);
+            gap: 1rem;
+            flex-direction: row;
+            margin-left:auto;
+            @include media-breakpoint-down(md){
+                flex-direction: column;
+            }
+            .profile-drop-down{
+                .dropdown-toggle{
+                    @include flex(flex, center, space-between);
+                    gap: 1rem;
+                    &:after{
+                        margin-top: -5px ;
+                    }
+                    img{
+                        &.profile-image{
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            object-fit: cover;
+                            object-position: center;
+                            @include curve (0);
+                        }
+                    }
+                    .name{
+                        color: $black-65 !important;
+                        font-weight: $font-weight-normal !important;
+                        margin-bottom: 0;
+                        font-size: $small !important;
+                        @include media-breakpoint-down(md){
+                            display:none;
+                        }
+                        .designation{
+                            display: block;
+                            font-size: $tiny !important;
+                        }
+                    }
+                }
+            }
+            .nav-item{
+                .nav-link{
+                    color: $black-65 !important;
+                    &.active{
+                        color: $primary-68 !important;
+                    }
+                }
+            }
+        }
+        .lang-drop-down{
+            .lang{
+                @include media-breakpoint-down(md){
+                    display:none;
+                }
+            }
+            .dropdown-menu{
+                padding: 0 !important;
+                .active{
+                    .dropdown-item{
+                        color: $primary-90 !important;
+                        font-weight: $font-weight-medium !important;
+                    }
+                }
+            }
+            .dropdown-item{
+                @include padding(.5rem !important, 0.5rem !important, .5rem !important, 0.5rem !important);
+                border: none !important;
+                background-color: transparent;
+                color: $black-65 !important;
+                font-size: $small !important;
+                font-weight: $font-weight-normal !important;
+            }
+            .dropdown-toggle{
+                padding: 0 !important;
+                border: none !important;
+                background-color: transparent;
+                color: $black-65 !important;
+                font-size: $small !important;
+                font-weight: $font-weight-normal !important;
+                &:after{
+                    vertical-align: baseline;
+                    margin-left: .5rem;
+                }
+            }
+            .flag-icon{
+                margin-right: .5rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                @include curve(50%);
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+        .nav-right{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include media-breakpoint-down(md){
+                flex-direction: column;
+            }
+        }
+        .login-btn{
+            @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+            .icon{
+                margin-right: .5rem;
+            }
+        }
+        .divider{
+            background-color: $gray-15;
+            width: 1px;
+            height: 1.5rem;
+            display: block;
+            @include media-breakpoint-down(md){
+                display:none;
+            }
+        }
+    }
+}

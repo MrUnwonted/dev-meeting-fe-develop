@@ -1,0 +1,88 @@
+.fin-card{
+    height: 100%;
+    .table-card{
+        .card-header{
+            @include flex(flex, center, space-between);
+            gap: .5rem;
+            min-height: 3.5rem;
+
+        }
+        .card-body{
+            .single-content{
+                &.sticky-bottom-widget-include{
+                    min-height: calc(100vh - 22.5rem);
+                    max-height: calc(100vh - 22.5rem);
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    @include scrollbar();
+                    .table-wrap{
+                        max-height: calc(100vh - 27.5rem) !important;
+                    }
+                }
+            }
+            .multiple-contents-wrap{
+                &.sticky-bottom-widget-include{
+                    min-height: calc(100vh - 25.5rem);
+                    max-height: calc(100vh - 25.5rem);
+                    &.receipts{
+                        min-height: calc(100vh - 22rem) !important;
+                        max-height: calc(100vh - 22rem) !important;
+                    }
+                    .table-wrap{
+                        max-height: calc(100vh - 36rem) !important;
+                    }
+                    
+                }
+                max-height: calc(100vh - 16.5rem);
+                overflow-y: auto;
+                overflow-x: hidden;
+                @include scrollbar();
+            }
+        }
+        &.footer-not-include{
+            .mat-mdc-paginator{
+                bottom: 0rem !important;
+            }
+            .table-wrap{
+                max-height: calc(100vh - 18rem);
+            }
+        }
+        &.footer-include{
+            .mat-mdc-paginator{
+                bottom: 4rem !important;
+            }
+            .table-wrap{
+                max-height: calc(100vh - 23rem);
+            }
+        }
+    }
+
+    .fin-row{
+        .left-column{
+            .table-card{
+                @include curve-each(.5rem, 0, 0, .5rem);
+            }
+        }
+        .right-column{
+            .table-card{
+                @include curve-each(0rem, 0.5rem, 0.5rem, 0rem);
+            }
+        }
+    }
+    .transaction-content{
+        height: 100%;
+    }
+    .card-body-content{
+        height: 100%;
+        .main-row{
+            height: 100%;
+            .left-column{
+                height: 100%;
+                border-right: 1px solid $gray-15;
+            }
+            .right-column{
+                height: 100%;
+            }
+        }
+    }
+}

@@ -1,0 +1,108 @@
+.hamburger-menu-btn{
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 0 !important;
+}
+
+.menu-dropdown-menu{
+    min-width: 13.4375rem !important;
+    background-color: $primary-90 !important;
+    @include padding(.5rem, .5rem, .5rem, .5rem);
+    @include curve(.5rem);
+    .mat-mdc-menu-item{
+        @include padding(.5rem, .5rem, .5rem, .5rem);
+        min-height: 48px !important;
+        line-height: 0 !important;
+    }
+    .mat-mdc-menu-content{
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    .item-inner{
+        @include flex(flex, center, normal);
+        gap: .75rem;
+        .icon{
+            filter: brightness(0) invert(1);
+        }
+        .text{
+            color: $white !important;
+            font-size: $small !important;
+            font-weight: $font-weight-normal !important;
+            line-height: 1rem !important;
+            display: inline-block;
+        }
+    }
+    .mat-expansion-panel{
+        box-shadow: none !important;
+        background-color: transparent !important;
+        .mat-expansion-panel-header{
+            padding: 0 .5rem!important;
+        }
+        .mat-expansion-indicator{
+            margin-right: .5rem;
+            &:after{
+                color: $chevron;
+            }
+        }
+        .mat-action-row{
+            padding: 0 !important;
+            flex-direction: column;
+            .mat-mdc-menu-item{
+                .text{
+                    color: $white !important;
+                    font-size: $small !important;
+                    font-weight: $font-weight-normal !important;
+                    line-height: 1rem !important;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+
+// view more dropdown
+.view-more-dropdown-btn{
+    min-width: 0 !important;
+    padding: 0 !important;
+    &:hover{
+        background-color: transparent;
+    }
+}
+.view-more-dropdown{
+    padding: 0 !important;
+    @include curve(.5rem);
+    box-shadow: 0px 0px 16px 0px rgb($black, .16);
+    min-width: 13.625rem !important;
+    .mat-mdc-menu-content{
+        padding: 0 !important; 
+    }
+    .view-more-wrap-inner{
+        padding: 0 !important;
+        .mat-mdc-menu-item{
+            @include padding(.75rem !important, 1rem !important, .75rem !important, 1rem !important);
+            line-height: 0 !important;
+            height: auto !important;
+            @include curve(0);
+            &:hover{
+                background-color: $primary-90 !important;
+                .icon{
+                    filter: brightness(200) grayscale(1);
+                }
+                .text{
+                    color: $white !important;
+                }
+            }
+        }
+        .item-inner{
+            @include flex(flex, center, normal);
+            gap: .75rem;
+            .text{
+                font-weight: $font-weight-normal !important;
+                font-size: $small !important;
+                line-height: 1rem;
+                color: $black-65 !important;
+            }
+        }
+    }
+}

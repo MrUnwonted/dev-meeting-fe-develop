@@ -1,0 +1,297 @@
+.nav-pills{
+    @include tabs-variant();
+    margin-bottom: 1.5rem;
+}
+
+// top tabs
+.top-tabs-wrap{
+    @include animation-all();
+    position: fixed;
+    right: 0;
+    left: 15rem;
+    z-index: 999;
+    @include flex( flex, center, space-between);
+    border-bottom: 1px solid $gray-15;
+    border-top: 1px solid $gray-15;
+    @include padding(0.2rem, 1rem, .2rem, 2.5rem);
+    background-color: $white;
+    @include media-breakpoint-down(md-sm){
+        flex-direction: column;
+        gap:1rem;
+        padding: 1rem;
+    }
+    .left-side{
+        @include flex( flex, center, normal);
+        column-gap: 1.5rem;
+        row-gap: 1rem;
+        @include media-breakpoint-down(md-sm){
+            flex-direction: column;
+            gap:1rem;
+        }
+    }
+    .nav-pills{
+        column-gap: .5rem;
+        row-gap: 1rem;
+        margin-bottom: 0;
+        .nav-item{
+            .nav-link{
+                @include padding(.5rem !important, .5rem !important, .5rem !important, .5rem !important);
+                @include curve(.5rem);
+                border: none !important;
+                min-width: 6rem;
+                .text{
+                    display: block;
+                    color: $gray-200;
+                    margin-top: .25rem;
+                    font-size: $tiny !important;
+                }
+                .icon{
+                   &:not(.admin-layout .top-tabs-wrap .icon){
+                        width: 1rem !important;
+                        height: 1rem !important;
+                   }
+                }
+                &.active{
+                    background-color: $primary-75;
+                    border-color: $primary-75;
+                    .icon{
+                        filter: brightness(200);
+                    }
+                    .text{
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+    .add-btn-wrap{
+        .add-btn{
+            @include padding(.5rem, .5rem, .5rem, .5rem );
+            @include curve(.5rem);
+            background-color: $primary;
+            .icon{
+                &:not(.admin-layout .top-tabs-wrap .add-btn-wrap .icon){
+                    width: 1rem !important;
+                    height: 1rem !important;
+                }
+            }
+            .text{
+                display: block;
+                color: $gray-200;
+                margin-top: .25rem;
+                font-size: 12px !important;
+                color: $white;
+            }
+        }
+    }
+    .view-more-btn-wrap{
+        .view-btn{
+            @include padding(.5rem, .5rem, .5rem, .5rem );
+            @include curve(.5rem);
+            background-color: transparent !important;
+            border: 1px solid $gray-15;
+            &:before{
+                content: none;
+            }
+            &:hover{
+                box-shadow: none; 
+                &:before{
+                    content: none; 
+                }
+            }
+            .icon{
+                width: 1rem !important;
+                height: 1rem !important;
+            }
+            .text{
+                display: block;
+                color: $gray-200 !important;
+                margin-top: .25rem;
+                font-size: 12px !important;
+                color: $white;
+            }
+        }
+    }
+}
+
+.top-tabs-content{
+    position: relative;
+    z-index: 1;
+    .arrow-wrap{
+        position: absolute;
+        top: 50%;
+        z-index: 6;
+        width: 100%;
+        .btn{
+            line-height: 1rem;
+            @include animation-all();
+            @include padding(.5rem !important ,.625rem !important, .5rem !important, .625rem  !important);
+            &:disabled{
+                opacity: .32 !important;
+                @include animation-all();
+            }
+            &.active{
+                opacity: 1 !important;
+                background-color: $primary-90 !important;
+                border-color: $primary-90 !important;
+                color: $white !important;
+                @include animation-all();
+                .icon{
+                    filter: brightness(100);
+                }
+            }
+            &.prev{
+                @include animation-all();
+                position: absolute;
+                left: -.9rem;
+            }
+            &.next{
+                position: absolute;
+                right: -.9rem;
+                .icon{
+                    @include animation-all();
+                    filter: brightness(200);
+                    transform: rotate(180deg)
+                }
+            }
+        }
+    }
+}
+.minimized{
+    .top-tabs-wrap{
+        left: 3.75rem;
+        @include animation-all();
+    }
+}
+
+// notes tabs
+.notes-preview-tabs-wrap{
+    .nav-pills{
+        @include padding(.2rem !important ,.2rem !important, .2rem !important, .2rem  !important);
+        background-color: $white-15;
+        border: 1px solid $gray-15;
+        @include curve(.5rem);
+        gap: 1rem;
+        margin-bottom: 0;
+        .nav-item{
+            flex: 30%;
+            .item-link{
+                width: 100%;
+                &:not(.active){
+                    background-color: transparent !important;
+                    border-color: transparent !important;
+                    color: $primary-90 !important;
+                    font-weight: $font-weight-normal !important;
+                }
+            }
+        }
+    }
+}
+
+// file-tabs
+.file-table-tabs{
+    @include flex(flex, center, normal);
+    gap: 1rem;
+    .tab-item{
+        @include flex(flex, center, normal);
+        gap: .5rem;
+    }
+    .divider{
+        display: inline-block;
+        height: 1rem;
+        width: 1px;
+        background-color: $gray-15;
+    }
+    .tabs-btn{
+        @include flex(flex, center, center);
+        border-color: $gray-15 !important;
+        gap: .25rem;
+        @include animation-all();
+        @include padding(.5rem !important, .625rem !important, .5rem !important, .625rem !important);
+        @include curve(6.875rem);
+        line-height: 0rem !important;
+        .text{
+            color: $gray-150 !important;
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            line-height: .75rem !important;
+            display: inline-block;
+            @include animation-all();
+        }
+        &.active{
+            .text{
+                color: $white !important;
+                @include animation-all();
+            }
+            background-color: $primary-90 !important;
+            border-color:  $primary-90 !important;
+            @include animation-all();
+        }
+        &.all-btn{
+            min-width: 4.125rem;
+        }
+    }
+}
+
+// mat tabs
+.tabs-wrap-outer{
+    &.tab-head-bordered{
+        .mat-mdc-tab-header, .mat-mdc-tab-mdc-header{
+            border-bottom: 1px solid $gray-15 !important;
+        }
+    }
+    .title{
+        color: $black-65 !important;
+        font-size: $tiny !important;
+        font-weight: $font-weight-semibold !important;
+        line-height: 1.125rem !important;
+        margin-bottom: 0;
+    }
+    .mat-mdc-tab-header, .mat-mdc-mdc-tab-header, .mdc-tab-bar{
+        border-bottom: none !important;
+        margin-bottom: .75rem;
+    }
+    .mat-mdc-ink-bar, .mat-mdc-mdc-ink-bar{
+        background-color: $blue-variant-6 !important;
+    }
+    .mat-mdc-tab-labels, .mat-tab-labels{
+        justify-content: center;
+        column-gap: 1.5rem;
+        row-gap: 1rem;
+        .mat-mdc-tab-label,  .mdc-tab{
+            @include padding(.5rem !important, 0 !important, .5rem !important, 0 !important);
+            height: auto !important;
+            min-width: auto !important;
+            opacity: 1 !important;
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            color: $black-65;
+            &.mat-mdc-tab-label-active, .mat-tab-level-active, .mdc-tab--active{
+                font-weight: $font-weight-medium !important;
+                color: $primary-200; 
+            }
+        }
+    }
+    .mat-mdc-tab-body-content, .mat-tab-body-content{
+        overflow-x: hidden !important
+    }
+    &.full-width-tab{
+        .mat-mdc-tab-label, .mdc-tab__label{
+            flex: 50%;
+        }
+    }
+}
+
+// admin
+.top-tabs-wrap{
+    .nav-pills{
+        .nav-item{
+            .nav-link{
+                .text{
+                    margin-top: 0rem !important;
+                }
+            }
+        }
+    }
+}
+

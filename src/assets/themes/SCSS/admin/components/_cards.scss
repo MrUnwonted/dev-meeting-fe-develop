@@ -1,0 +1,336 @@
+.admin-card{
+    .card-header{
+        .main-content-description{
+            &.added{
+                .item-inner{
+                    .text-wrap{
+                        .head{
+                            .id{
+                                color: $primary-90 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .add-btn-wrap{
+            .add-btn{
+                .text{
+                    color: $primary-90 !important;
+                    @include flex(flex, center, center);
+                    gap: .5rem;
+                }
+            }
+        }
+        .header-wrap-outer{
+            .list-menu-btn{
+                line-height: 0 !important;
+                padding: .25rem !important;
+                @include curve(.375rem);
+                @include animation-all();
+                .icon{
+                    @include animation-all();
+                    width: 1.375rem !important;
+                    height: 1.375rem !important;
+                }
+                &.active{
+                    background-color: $primary-90;
+                    @include animation-all();
+                    .icon{
+                        filter: invert(1) brightness(500);
+                        @include animation-all();
+                    }
+                }
+            }
+            .search-wrap{
+                .input-group{
+                    .input-group-text, .form-control{
+                        height: 2rem;
+                    }
+                }
+            }
+            .header-wrap{
+                @include flex(flex, center, normal);
+                gap: 1rem;
+                .divider{
+                    display: inline-block;
+                    height: 1.5rem;
+                    width: 1px;
+                    background-color: $gray-15;
+                    position: relative;
+                    margin-left: .2188rem;
+                    margin-right: .2188rem;
+                    &:after{
+                        content:"\A";
+                        border-style: solid;
+                        border-width: 7px;
+                        border-color: transparent $gray-15 transparent transparent;
+                        position: absolute;
+                        transform: rotate(180deg);
+                        top: .25rem;
+                    }
+                }
+                .button-wrap{
+                    .btn{
+                        @include padding(.5rem  !important, 1.5rem !important, .5rem  !important, 1.5rem !important);
+                        line-height: .875rem !important;
+                        font-size: $small !important;
+                    }
+                }
+                .subject-title-wrap{
+                    @include flex(flex, center, normal);
+                    gap: .5rem;
+                    .title-wrap{
+                        @include flex(flex, center, normal);
+                        gap: .25rem;
+                    }
+                    .code-badge{
+                        color: $primary-90 !important;
+                        background-color: transparent !important;
+                        min-width: auto !important;
+                        @include padding(.375rem !important, .5rem !important, .375rem !important, .5rem !important);
+                        border: 1px solid $primary-90 !important;
+                    }
+                    .title{
+                        display: inline-block;
+                        color: $primary-90 !important;
+                        line-height: .875rem !important;
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-semibold !important;
+                    }
+                    .title-type{
+                        display: inline-block;
+                        color: $gray-35 !important;
+                        line-height: .875rem !important;
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-normal !important;
+                    }
+
+                }
+            }
+
+            .right-side{
+                @include flex(flex, center, normal);
+                gap: 1rem;
+            }
+
+            .button-wrap{
+                @include flex(flex, center, normal);
+                gap: 1rem;
+                .add-btn{
+                    @include curve(.25rem);
+                    gap: .125rem !important;
+                    @include padding(.5rem !important, .75rem !important, .5rem !important, .5rem !important);
+                    font-size: $small !important;
+                    line-height: .875rem !important;
+                }
+            }
+        }
+    }
+    .card-body{
+        @include margin(0 !important, 0 !important, 0 !important, 0 !important);
+        padding: 0 !important;
+        border: none !important;
+        @include curve(0); 
+        background-color: transparent !important;
+        .card-body-content{
+            .left-column, .right-column{
+                @include animation-all();
+                position: relative;
+            }
+            .mat-mdc-paginator, .mat-mdc-mdc-paginator{
+                position: absolute;
+                bottom: 0rem;
+                right: 0;
+                &.left{
+                    right: auto !important;
+                    left: 0rem !important
+                }
+            }
+            .subject-details-wrap{
+                margin-bottom: .5rem;
+                .item-inner{
+                    @include flex(flex, center, space-between);
+                    gap: 1rem;
+                    .head{
+                        color: $gray-50 !important;
+                        font-weight: $font-weight-normal !important;
+                        margin-bottom: 0.2rem;
+                        font-size: $tiny !important;
+                        @include flex(flex, center, normal);
+                        .id{
+                            color: $primary-90;
+                            @include curve(.125rem);
+                            display: inline-block;
+                            margin-left: .5rem;
+                            font-weight: $font-weight-semibold;
+                            text-align: center;
+                            @include flex(flex, center, space-between);
+                            gap: .25rem;
+                        }
+                    }
+                    .desc{
+                        font-size: $small;
+                        display:block;
+                        color: $black-65 !important;
+                    }
+                }
+            }
+        }
+        .card-outer-wrap{
+            @include padding(1rem, 1rem, 1rem, 1rem);
+            max-height: calc(100vh - 14rem);
+            overflow-y: auto;
+            overflow-x: hidden;
+            @include scrollbar();
+            // .card-wrap{
+            &.seats-wrap-outer{
+                max-height: calc(100vh - 17rem);
+            }
+            // }
+        }
+        .list-outer-wrap{
+            padding: 0 !important;
+        }
+        .applicant-card{
+            border: 1px solid $gray-18;
+            position: relative;
+            .card-header{
+                background-color: transparent !important;
+                border: none;
+            }
+            background-color: transparent !important;
+            box-shadow: none !important;
+            .card-header{
+                @include padding(1.5rem !important, 1.5rem !important, 0rem !important, 1.5rem !important);
+                border-bottom: none !important;
+            }
+            .card-body{
+                @include padding(1rem !important, 1.5rem !important, 1.5rem !important, 1.5rem !important);
+            }
+            .action-flex-wrap{
+                position: absolute;
+                right: 1.5rem;
+                top: 1.5rem;
+            }
+            &.place-holder{
+                & *{
+                    color: $gray-35 !important;;
+                }
+                .icon{
+                    filter: grayscale(100);
+                    opacity: .5;
+                }
+            }
+        }
+    }
+    .table-wrap{
+        &.curve-0{
+            @include curve(0rem);
+        }
+        thead{
+            position: sticky;
+            top:0;
+        }
+        &.pagination-included{
+            max-height: calc(100vh - 19rem) !important;
+
+        }
+    }
+    &.management-card{
+        .card-header{
+            .header-wrap-outer{
+                .header-wrap{
+                    .text-wrap{
+                        h6{
+                            font-size: $para !important;
+                            font-weight: $font-weight-semibold !important;
+                            line-height: 1.5rem !important;
+                        }
+                    }
+                }
+            }
+            .main-content-description{
+                .add-btn-wrap{
+                    text-align: center;
+                    border-bottom: 1px solid $gray-15;
+                    background-color: $white-15;
+                    @include padding(.75rem, 1rem, .75rem, 1rem);
+                    .btn{
+                        padding: 0 !important;
+                        margin: 0 auto !important;
+                        &.add-btn{
+                            line-height: 0 !important;
+                            @include flex(flex, center, center);
+                            gap: .5rem;
+                           .text{
+                                display:inline-block;
+                                background-color: transparent !important;
+                                border-color: transparent !important;
+                                color: $primary-90 !important;
+                                font-size: $para !important;
+                                font-weight: $font-weight-medium !important;
+                                line-height: 1.5rem !important;
+                           }
+                        }
+                    }
+                }
+                &.added{
+                    border-bottom: 1px solid $gray-15 ;
+                    border-top: 1px solid $gray-15;
+                    background-color: $white-15;
+                    .main-content-description-inner{
+                        @include padding(.75rem, 1rem, .75rem, 1rem);
+                        .subject-col{
+                            border-bottom: none !important;
+                            padding-bottom: 0 !important;
+                           &:not(:last-child){
+                            border-right: 1px solid rgb($primary-90, .08);
+                           }
+                        }
+                        .item-inner{
+                            @include flex(flex, center, space-between);
+                            gap: 1rem;
+                            .head{
+                                color: $gray-50 !important;
+                                font-weight: $font-weight-normal !important;
+                                margin-bottom: 0.2rem;
+                                font-size: $tiny !important;
+                                line-height: .75rem !important;
+                                .id{
+                                    color: $warning-200;
+                                    @include curve(.125rem);
+                                    display: inline-block;
+                                    margin-left: .5rem;
+                                    font-weight: $font-weight-semibold;
+                                    text-align: center;
+                                }
+                            }
+                            .desc{
+                                font-size: $tiny !important;
+                                display:block;
+                                line-height: .875rem !important;
+                                color: $black-65 !important;
+                                font-weight: $font-weight-medium !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .card-body{
+            .pagination-included{
+                    max-height: calc(100vh - 23rem) !important;
+            }
+            .table-outer-wrap{
+                .table-wrap{
+                    table{
+                        thead{
+                            background-color: $white !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,535 @@
+.new-inward-card{
+    @include curve(0.5rem);
+    .card-header{
+        padding: 0 !important;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        .heading-wrap{
+            @include padding(.75rem, 1rem, .75rem, 1rem );
+            background-color: $white;
+            .back-btn-flex{
+                padding: 0 !important;
+                margin: 0 !important;
+                line-height: 0 !important;
+                gap: .25rem !important;
+                .icon-arrow-blue{
+                    transform: rotate(180deg);
+                }
+                .text{
+                    color: $blue-variant-5 !important;
+                    line-height: .75rem !important;
+                    font-size: $tiny !important;
+                    font-weight: $font-weight-medium !important;
+                }
+            }
+        }
+        .timeline-outer-wrap{
+            @include padding(.75rem , 1rem , 0rem, .75rem);
+        }
+        .add-btn-wrap{
+            @include padding(.55rem !important ,0rem !important, .55rem !important, 0rem !important);
+        }
+        &:not(.application-card .card-header){
+            border-bottom: transparent;
+        }
+        .header-wrap-outer{
+            @include flex(flex, center, space-between);
+            gap: 1rem;
+            @include flex-wraping(wrap);
+            @include padding(.75rem, 1rem, .75rem, 1rem );
+            background-color: $white;
+            .header-wrap{
+                .text-wrap{
+                    h6{
+                        font-weight: $font-weight-semibold !important;
+                    }
+                }
+            }
+            .search-wrap{
+                .input-group{
+                    .input-group-text{
+                        border-right: none !important;
+                        @include curve-each(.5rem, 0, 0, .5rem);
+                        @include padding(.5rem, 0, .5rem, 1rem);
+                        background-color: transparent;
+                        border-color: $gray-15 !important; 
+                        color: $gray-35;
+                        font-size: $tiny !important;
+                        &::placeholder{
+                            color: $gray-35;
+                        }
+                    }
+                    .form-control{
+                        @include padding(.5rem !important, .25rem !important, .5rem !important, .5rem !important);
+                        border-color: $gray-15 !important; 
+                        border-left: transparent !important;
+                        @include curve-each(0 , 0.5rem, 0.5rem , 0rem);
+                    }
+                }
+            }
+        }
+    }
+    // .add-btn-wrap{
+    //     border: 1px solid $gray-15;
+    //     background-color: $white-15;
+    //     height: 100%;
+    //     @include curve(0.5rem);
+    //     position: relative;
+    //     .add-btn{
+    //         height: 100%;
+    //         width: 100%;
+    //         border: none !important;
+    //         @include padding(.75rem !important ,1rem !important, .75rem !important, 1rem !important);
+    //         .text{
+    //             @include padding(.5rem, 1rem, .5rem, 1rem);
+    //             margin-bottom: 0rem;
+    //             font-size: $para !important;
+    //             color: $primary-90 !important
+    //         }
+    //         .sub-text{
+    //             color: $gray-200;
+    //             display: block;
+    //             font-size: $tiny !important;
+    //             font-weight: $font-weight-normal !important;
+    //             white-space: normal;
+    //         }
+            
+    //     }
+    //     .button-fixed{
+    //         .add-btn{
+    //             cursor: default !important;
+    //             .text{
+    //                 display: inline-block;
+    //             }
+    //         }
+    //         width:100%;
+    //         height: 100%;
+    //         position: absolute;
+    //         left: 0;
+    //         right: 0;
+    //         top: 0;
+    //         @include media-breakpoint-down(md){
+    //             position: unset;
+    //         }
+    //     }
+    // }
+    // .main-content-description{
+    //     .add-btn-wrap{
+    //         border-left: none !important;
+    //         border-right: none !important;
+    //         @include curve(0);
+    //         // height: 7.26rem;
+    //         .add-btn{
+    //            padding: 0 !important;
+    //         }
+    //     }
+    //     &.added{
+    //         border-bottom: 1px solid $gray-15 ;
+    //         border-top: 1px solid $gray-15;
+    //         background-color: $white-15;
+    //         .main-content-description-inner{
+    //             @include padding(.75rem, 1.5rem, .75rem, 1.5rem);
+    //             .inward-col{
+    //                 border: 1px solid $gray-15 !important;
+    //                 @include padding(.5rem, .5rem, .5rem, .5rem);
+    //                 .desc, .head{
+    //                     color: $gray-150 !important;
+    //                     line-height: 1.0313rem !important;
+    //                     white-space: nowrap;
+    //                 }
+    //                 .head{
+    //                     font-weight: $font-weight-normal !important;
+    //                 }
+    //                 .desc{
+    //                     font-weight: $font-weight-medium !important;
+    //                 }
+    //             }
+    //             .subject-col{
+    //                 border-bottom: 1px solid rgb($primary-90, .08);
+    //                 padding-bottom: .5rem;
+    //             }
+    //             .minor-subject-col{
+    //                 .item-inner{
+    //                     border-right: 1px solid rgb($primary-90, .08);
+    //                 }
+    //             }
+    //             .item-inner{
+    //                 @include flex(flex, center, space-between);
+    //                 gap: 1rem;
+    //                 .head{
+    //                     color: $gray-50 !important;
+    //                     font-weight: $font-weight-normal !important;
+    //                     margin-bottom: 0.2rem;
+    //                     font-size: $tiny !important;
+    //                     .id{
+    //                         color: $warning-200;
+    //                         @include curve(.125rem);
+    //                         display: inline-block;
+    //                         margin-left: .5rem;
+    //                         font-weight: $font-weight-semibold;
+    //                         text-align: center;
+    //                     }
+    //                 }
+    //                 .desc,.subject_desc{
+    //                     font-size: $small2 !important;
+    //                     display:block;
+    //                     color: $black-65 !important;
+    //                     line-height: 1rem !important;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     &.preview{
+    //         .subject-col{
+    //             border-bottom: none !important;
+    //             .item-inner{
+    //                 border-right: 1px solid rgb($primary-90, .08);
+    //             }
+    //         }
+    //     }
+    // }
+    .card-body{
+        & .disabled{
+            * {
+                opacity: .8;
+                cursor: not-allowed;
+            }
+        }
+        .add-btn-wrap{
+            border: none !important;
+        }
+        &:not(.applicant-card .card-body){
+            background-color: $white-15;
+            border : 1px solid $gray-15; 
+            @include margin(.5rem, 1rem, 1rem , 1rem );
+            @include curve(.5rem);
+        }
+        // div[card-body]{
+        //     &:not(.applicant-card .card-body div[card-body]){
+        //         min-height: calc(100vh - 23rem);
+        //         max-height: calc(100vh - 23rem);
+        //         overflow-y: auto;
+        //         overflow-x: hidden;
+        //         @include scrollbar();
+        //     }
+        //     height: 100%;
+        // }
+        @include scrollbar();
+        @include padding(1rem !important,1rem !important, 1rem !important, 1rem !important);
+        .add-applicant{
+            .add-btn{
+                min-height: 12.1875rem;
+            }
+            .applicant-card{
+                border: 1px solid $gray-18;
+                position: relative;
+                .card-header{
+                    background-color: transparent !important;
+                    border: none;
+                }
+                background-color: transparent !important;
+                box-shadow: none !important;
+                .card-header{
+                    @include padding(1.5rem !important, 1.5rem !important, 0rem !important, 1.5rem !important);
+                    border-bottom: none !important;
+                }
+                .action-flex-wrap{
+                    position: absolute;
+                    right: 1.5rem;
+                    top: 1.5rem;
+                }
+                &.place-holder{
+                    & *{
+                        color: $gray-35 !important;;
+                    }
+                    .icon{
+                        filter: grayscale(100);
+                        opacity: .5;
+                    }
+                }
+            }
+            &.added{
+                .applicant-card{
+                    .card-header{
+                        border-bottom: 1px solid $gray-15 !important;
+                        padding-bottom: 1.5rem !important;
+                    }
+                }
+                .card-body{
+                    padding-top: 1.5rem !important;
+                }
+                .applicant-card-row{
+                    margin-bottom: 1.5rem;
+                    position: relative;
+                    .pagination-column{
+                        background-color: $white-15;
+                        bottom: -15px;
+                        position: sticky;
+                        // position: relative;
+                        z-index: 10;
+                        .swiper-button-prev, .swiper-button-next{
+                            &.swiper-button-disabled{
+                                opacity: 1 !important;
+                                color: $primary-90 !important;
+                                cursor: not-allowed;
+                            }
+                            &:after{
+                                font-size: $tiny !important;
+                                color: $primary-90 !important;
+                                opacity: 1 !important;
+                                font-weight: $font-weight-bold !important;
+                            }
+                        }
+                    }
+                }
+                .applicant-slider{
+                    margin-left: initial !important;
+                    margin-right: initial !important;
+                    padding-right: calc(var(--bs-gutter-x)* .5);
+                    padding-left: calc(var(--bs-gutter-x)* .5);
+                }
+                .applicant-pagination{
+                    position: unset !important;
+                    @include flex(flex, center, center);
+                    gap: .75rem;
+                    .swiper-pagination-bullet{
+                        opacity: 1;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-color: transparent !important;
+                        min-width: 1.5rem;
+                        margin: 0 !important;
+                        height: 1.5rem;
+                        border: 1px solid $gray-15;
+                        @include animation-all();
+                        &.swiper-pagination-bullet-active{
+                            border: 1px solid $primary-68;
+                            @include animation-all();
+                        }
+                        &.more-bullets{
+                            pointer-events: none;
+                            background-color: $primary-90 !important;
+                            border-color: $primary-90;
+                            line-height: 1.5rem;
+                            text-align: center;
+                            color: $white;
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-medium;
+                        }
+                    }
+                }
+            }
+        }
+        .timeline-outer-wrap{
+            @include padding(.5rem !important, .5rem !important, .5rem !important, .5rem !important)
+        }
+    }
+    .card-footer{
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        border-color: $gray-15;
+        background-color: $white;
+        @include padding(.75rem, 1rem, .75rem, 1rem );
+        @include flex(flex, center, end);
+        gap: 1rem;
+        @include media-breakpoint-down(md){
+            flex-direction: column;
+        }
+        &.between{
+            justify-content: space-between !important;
+        }
+        .back-btn-wrap{
+            .btn{
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+        }
+        .card-action-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            @include media-breakpoint-down(md-sm){
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn{
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                font-size:  $small !important;
+                line-height: 14px !important;
+                @include media-breakpoint-down(md-sm){
+                    width: 100%;
+                }
+            }
+            .preview-btn{
+                color: $primary-90 !important;
+            }
+        }
+        .card-back-btn{
+            .btn{
+                font-size:  $small !important;
+                @include padding(.375rem !important, 1.5rem !important, .375rem !important, 1.5rem !important);
+            }
+        }
+        .card-footer-group{
+            @include flex(flex, center, end);
+            gap: 1rem;
+            width:100%;
+            &.include-back{
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+.inward-card-container{
+    padding-top: 5.1rem;
+    @include media-breakpoint-up(lg){
+        height: calc(100vh - 5rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .new-inward-card{
+            width: 100% !important;
+            height: 100% !important;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 0px 16px 0px rgb($black, .08);
+            border-color: $gray-15 !important;
+            .card-body{
+                div[card-body]{
+                    height: 100%;
+                }
+                &:not(.application-card .card-body){
+                    flex: 1 1 auto;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+            }
+            .main-content-description{
+                .add-btn-wrap{
+                    height: 7.26rem;
+                }
+                &.added{
+                    min-height: 7.26rem;
+                }
+            }
+        }
+    }
+}
+
+// card list wrap
+.applicant-card-list-wrap{
+    .card-list-wrap{
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: calc( 100vh - 22rem);
+        min-height: 43vh;
+        @include scrollbar();
+    }
+    &.list-wrap{
+        .profile-wrap{
+            @include flex(flex, center, normal);
+            gap: .5rem;
+            .profile-image{
+                width: 1.25rem;
+                height: 1.25rem;
+                @include curve(50%);
+                object-fit:cover;
+            }
+            .name{
+                font-size: $tiny !important;
+                font-weight: $font-weight-normal !important;
+                margin-bottom: 0;
+                color: $black-65 !important;
+            }
+        }
+        .table-wrap{
+            overflow-x: auto;
+            max-height: calc( 100vh - 42.5rem);
+            min-height: 43vh;
+            @include scrollbar();
+            @include curve(.5rem);
+            border: 1px solid $white-30;
+            table{
+                width: 100%;
+                @include curve(.5rem);
+                thead{
+                    position: sticky;
+                    top:0;
+                    border-bottom: 1px solid $white-30;
+                    background-color: $white-15;
+                    th{
+                        font-size: $tiny !important;
+                        font-weight: $font-weight-semibold !important;
+                        margin-bottom: 0;
+                        color: $black-65 !important;
+                        @include padding(1rem, 1rem, 1rem, 1rem);
+                    }
+                }
+                tbody{
+                    tr{
+                        &:not(:last-child){
+                            td{
+                                border-bottom: 1px solid $white-30;
+                            }
+                        }
+                        td{
+                            background-color: $white;
+                            @include padding(1rem, 1rem, 1rem, 1rem);
+                            font-size: $tiny !important;
+                            font-weight: $font-weight-normal !important;
+                            color: $black-65 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.add-btn-wrap{
+    border: 1px solid $gray-15;
+    background-color: $white-15;
+    height: 100%;
+    @include curve(0.5rem);
+    position: relative;
+    .add-btn{
+        height: 100%;
+        width: 100%;
+        border: none !important;
+        @include padding(.75rem !important ,1rem !important, .75rem !important, 1rem !important);
+        .text{
+            @include padding(.5rem, 1rem, .5rem, 1rem);
+            margin-bottom: 0rem;
+            font-size: $para !important;
+            color: $primary-90 !important
+        }
+        .sub-text{
+            color: $gray-200;
+            display: block;
+            font-size: $tiny !important;
+            font-weight: $font-weight-normal !important;
+            white-space: normal;
+        }
+        
+    }
+    .button-fixed{
+        .add-btn{
+            cursor: default !important;
+            .text{
+                display: inline-block;
+            }
+        }
+        width:100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        @include media-breakpoint-down(md){
+            position: unset;
+        }
+    }
+}

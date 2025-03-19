@@ -1,0 +1,30 @@
+@import "../finance/finance-variables";
+
+// components
+@import "../finance/components/buttons";
+@import "../finance/components/modal";
+
+@import "../finance/components/cards";
+@import "../finance/components/forms";
+
+// landing
+@import "../finance/landing/common";
+@import "../finance/landing/header";
+@import "../finance/landing/banner";
+@import "../finance/landing/clients";
+@import "../finance/landing/overview";
+@import "../finance/landing/features";
+@import "../finance/landing/testimonials";
+@import "../finance/landing/footer";
+
+// section
+@import "../finance/section/common";
+@import "../finance/section/header";
+@import "../finance/section/login";
+@import "../finance/section/sidebar";
+@import "../finance/section/status-menu";
+@import "../finance/section/input-boxes";
+@import "../finance/section/transaction";
+@import "../finance/section/table";
+@import "../finance/section/document";
+@import "../finance/section/dashboard";

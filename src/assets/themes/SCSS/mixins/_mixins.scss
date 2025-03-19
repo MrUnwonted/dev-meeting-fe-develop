@@ -1,0 +1,121 @@
+@mixin animation-all {
+    transition-property: background-color, border, font-size, visibility, transform, translate, color, width, margin, display, max-width, left, background-image;
+    transition-timing-function: ease-in-out;
+    transition-duration: .5s !important;
+}
+
+@mixin banner-gradient{
+    background: linear-gradient(270.21deg, #111E4F -18.16%, #0039CE 40.4%, #5CA27C 67.26%, #FFF700 96.31%);
+}
+
+@mixin zero-shadow{
+    box-shadow: none !important;
+}
+//ellipse
+@mixin ellipse {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// line clamp 
+@mixin line-clamp{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+//box sizing
+@mixin box-sizing {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+//theme
+@mixin theme($color, $bg) {
+    color: $color;
+    background-color: $bg;
+}
+
+@mixin border-color($color, $border-color) {
+    color: $color;
+    border-color: $border-color;
+}
+
+@mixin box-shadow($color, $bg, $box-shadow) {
+    color: $color;
+    background-color: $bg;
+    box-shadow: $box-shadow;
+}
+
+@mixin background($bg-size, $bg-position, $bg-repeat) {
+    background-size: $bg-size;
+    background-position: $bg-position;
+    background-repeat: $bg-repeat;
+}
+
+//flex
+@mixin flex($display, $align-items, $justify-content) {
+    display: $display;
+    align-items: $align-items;
+    justify-content: $justify-content;
+}
+
+@mixin flex-gap($display, $gap) {
+    display: $display;
+    gap: $gap;
+}
+
+//flex-wrap
+@mixin flex-wraping($flex-wrap) {
+    flex-wrap: $flex-wrap;
+}
+
+//object
+@mixin object($object-fit, $object-position) {
+    object-fit: $object-fit;
+    object-position: $object-position;
+}
+
+//bg
+@mixin bg($bg-fit, $bg-position) {
+    background-size: $bg-fit;
+    background-position: $bg-position;
+}
+
+//padding
+@mixin padding($top, $right, $bottom, $left) {
+    padding-top: $top;
+    padding-right: $right;
+    padding-bottom: $bottom;
+    padding-left: $left;
+}
+//margin
+@mixin margin($top, $right, $bottom, $left) {
+    margin-top: $top;
+    margin-right: $right;
+    margin-bottom: $bottom;
+    margin-left: $left;
+}
+
+// border radius
+@mixin curve($value){
+    border-radius: $value; 
+}
+@mixin curve-each($top_left, $top_right, $bottom_right, $bottom_left){
+    border-radius: $top_left $top_right $bottom_right $bottom_left; 
+}
+
+// section main wrap padding
+
+@mixin main-wrap-padding(){
+    padding-top: 4rem; // 64px
+    padding-bottom: 4rem; // 64px
+}
+
+@mixin gradient-theme($gradient-1, $gradient-2) {
+    background: $gradient-1;
+    background: $gradient-2;
+}

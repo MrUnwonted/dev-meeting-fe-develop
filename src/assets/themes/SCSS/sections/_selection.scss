@@ -1,0 +1,22 @@
+.selection-page-wrap{
+    @include padding(1.5rem, 0rem, 0rem, 0rem);
+    display: block;
+}
+.selection-cards-wrap{
+    @include flex(flex, center, normal);
+    gap: 1rem;
+    @include flex-wraping(wrap);
+    .item{
+        // @include media-breakpoint-down(lgs){
+        //     flex: 25%;
+        // }
+        &:hover{
+            .selection-card{
+                @include animation-all();
+                background-color: $white;
+                border-color: $blue-variant-5 !important;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,62 @@
+.add-more-dropdown{
+    @include curve(.5rem);
+    box-shadow: 0px 0px 16px 0px rgb($black, .08);
+    min-width: 20rem !important;
+    .add-more-wrap-inner{
+        @include padding(1rem, 1rem, 0rem, 1rem);
+        @include flex(flex, normal, normal);
+        gap: 1.5rem;
+        flex-direction: column;
+        .check-item-outer{
+            @include flex(flex, normal, normal);
+            gap: 1.5rem;
+            flex-direction: column;
+            max-height: 16rem;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            @include scrollbar();       
+        }
+        .input-group{
+            .input-group-text{
+                @include padding(.5rem, 0.2rem, .5rem, .875rem);
+                background-color: transparent !important;
+                border-color: $gray-15 !important;
+                border-right: none !important;
+                @include curve-each(.5rem, 0, 0, .5rem);
+            }
+            .form-control{
+                border-left: none !important;
+                @include padding(.5rem !important, .25rem !important, .5rem !important, 0 !important);
+                @include curve-each(0rem, .5rem, 0.5remm, 0rem);
+                &:focus, &:active, &:hover{
+                    border-color: $gray-15 !important;
+                }
+            }
+        }
+        .form-check{
+            align-items: center;
+            gap: 1rem;
+            .form-label{
+                font-weight: $font-weight-normal !important;
+                line-height: 1.125rem !important;
+                font-size: $tiny !important;
+            }
+        }
+    }
+    .add-wrap-footer{
+        @include padding(1rem, 1rem, 1rem, 1rem);
+        .button-wrap{
+            @include flex(flex, center, end);
+            gap: .5rem;
+            .btn{
+                @include padding(.5rem !important, 1.5rem !important, .5rem !important, 1.5rem !important);
+                font-size: $small !important;
+                line-height: .875rem !important;
+                &.add-btn{
+                    @include padding(.5rem !important, 2.375rem !important, .5rem !important, 2.375rem !important);
+                }
+            }
+        }
+    }
+}
+

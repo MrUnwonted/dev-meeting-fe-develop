@@ -1,0 +1,84 @@
+// search wrap
+.search-flex-outer{
+    @include flex(flex, center, space-between);
+    gap: 1rem;
+    @include media-breakpoint-down(md-sm){
+        flex-direction: column;
+        gap: 1rem;
+    }
+    margin-bottom: 1rem;
+    .action-wrap{
+        @include flex(flex, center, normal);
+        gap: 1rem;
+        &.end{
+            justify-content: end;
+        }
+        &.between{
+            justify-content: space-between;
+        }
+    }
+    .search-wrap{
+        .input-wrap{
+            @include flex(flex, center, normal);
+            gap: 1rem;
+            .form-label{
+                font-weight: $font-weight-normal !important;
+                font-size: $tiny !important;
+            }
+            input{
+                max-width: 18rem;
+                background-color: $white-15;
+                border: 1px solid $gray-15;
+            }
+        }
+        .search-btn{
+            &.xs{
+                @include padding(.25rem !important, .75rem !important, .25rem !important, .75rem !important);
+                font-size: $tiny !important;
+                line-height: 1.125rem !important;
+                min-height: 2rem;
+            }
+        }
+    }
+    .filter-btn{
+        @include flex(flex, center, end);
+        gap: 1.5rem;
+        .filter-btn-search{
+            color: $primary-75 !important;
+        }
+        .view-toggle{
+            @include flex(flex, center, end);
+            gap: .75rem;
+            .btn{
+                padding: .25rem !important;
+                .icon{
+                    @include animation-all();
+                }
+                &:not(.active){
+                    background-color: transparent !important;
+                    border-color: transparent !important;
+                }
+                &.active{
+                    .icon{
+                        @include animation-all();
+                        filter: brightness(100);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// advanced search
+.advanced-search{
+    .widget-card{
+        border: 1px solid $gray-15;
+        background-color: $white-15 ;
+        @include curve(0);
+        .card-header{
+            display: none;
+        }
+    }
+}
+
+

@@ -1,0 +1,31 @@
+// line height
+@mixin lh-120{
+    line-height: 1.2 !important;
+}
+
+@mixin title-wrap(
+    $heading-size: $subheading-lg,
+    $subheading-size: $subheading-sm,
+    $heading-color: $black-100,
+    $subheading-color: $gray-60,
+    $heading-weight: $font-weight-medium,
+    $subheading-weight: $font-weight-normal
+){
+    .main-heading{
+        font-size: $heading-size !important;
+        color: $heading-color;
+        font-weight: $heading-weight !important;
+    }
+    .sub-heading{
+        font-size: $subheading-size !important;
+        color: $subheading-color;
+        font-weight: $subheading-weight !important;
+    }
+    .view-link{
+        a{
+            text-decoration: none;
+            @include flex(flex,center,normal);
+            gap: .5rem; // 8px
+        }
+    }
+}

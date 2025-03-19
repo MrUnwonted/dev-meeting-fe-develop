@@ -1,0 +1,14 @@
+.file-manager-container{
+    .file-manager-page-content{
+        .left-column, .right-column{
+            max-height: calc(100vh - 9rem);
+            min-height: calc(100vh - 9rem);
+            overflow-x: hidden;
+            overflow-y: auto;
+            @include scrollbar(); 
+        }
+        .left-column{
+            border-right: 1px solid $gray-15;
+        }
+    }
+}

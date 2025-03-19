@@ -1,0 +1,111 @@
+
+<header class="header" [ngClass]="{'empty-module-header': !showModuleLogo}">
+    <nav class="navbar navbar-expand">
+        <div class="container-fluid">
+            <div [ngClass]="{'navbar-brand-flex': true, 'empty-module': !showModuleLogo}">
+                <a class="navbar-brand" href="#"><img src="../../../assets/public/image/svg/logo3.svg" alt="logo"></a>
+                <div class="module-logo-wrap" *ngIf="showModuleLogo">
+                    <img src="../../../assets/public/image/svg/admin.svg" alt="logo" class="module-logo">
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item lang-drop-down">
+                        <div class="dropdown">
+                            <button class="btn sm btn-none nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img [src]="currentLang.icon" alt="flag-icon" class="flag-icon"> 
+                                <span class="lang">{{ currentLang.name }}</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let lang of languages" (click)="switchLanguage(lang)" >
+                                    <button class="btn btn-none dropdown-item sm" href="">
+                                      {{ lang.name }}
+                                    </button>
+                                  </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item search-drop-down">
+                        <button class="nav-link btn btn-none">
+                            <i class="icon icon-search lg"></i>
+                        </button>
+                    </li>
+
+                    <li class="nav-item notify-drop-down">
+                        <button class="nav-link btn btn-none">
+                            <i class="icon icon-notification lg"></i>
+                            <span class="count"></span>
+                        </button>
+                    </li>   
+
+                   <li class="nav-item">
+                    <span class="divider"></span>
+                   </li>
+
+                   <li class="nav-item dropdown profile-drop-down">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="profile-image" src="../../../assets/public/image/png/Male.png"> 
+                            <div class="desc-wrap">
+                                <h6 class="name">Patricia Sanders </h6>
+                                <div class="designation-wrap">
+                                    <span class="designation-inner">
+                                        <span class="designation">Village</span>
+                                        <span class="divider"></span>
+                                        <span class="sub-desig">Village Officer</span>
+                                    </span>
+                                    <span class="badge bg-gray-15 status-badge">
+                                        <i class="icon icon-seats-3"></i>
+                                        <span class="number">140</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <ul class="dropdown-group border-bottom-0">
+                                <li>
+                                <div class="dropdown-item btn-item">
+                                    <button class="btn btn-primary-90 sm switch-btn" (click)="openSwitchSeatsModal()">Switch Account</button>
+                                </div>
+                                </li>            
+                            </ul>
+        
+                            <ul class="dropdown-group">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="icon icon-user-2"></i>
+                                        <span class="text">Profile</span>
+                                    </a>
+                                </li>   
+        
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="icon icon-lock"></i>
+                                        <span class="text">Password Change</span>
+                                    </a>
+                                </li> 
+        
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="icon icon-settings-2"></i>
+                                        <span class="text">Settings</span>
+                                    </a>
+                                </li>   
+                            </ul>
+        
+                            <ul class="dropdown-group">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="icon icon-logout-2"></i>
+                                        <span class="text">Log Out</span>
+                                    </a>
+                                </li>      
+                            </ul>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </nav>
+</header>
+

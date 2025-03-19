@@ -1,0 +1,96 @@
+.timeline-outer-wrap{
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include scrollbar();
+    .timeline{
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        @include flex(flex, center, center);
+        li{
+            &.item{
+                @include flex(flex, center, end);
+                flex-direction: column;
+                gap: .5rem;
+                min-width: 14.525rem;
+                position: relative;
+                z-index: 1;
+                &:after{
+                    content: "";
+                    background-color: $gray-25;
+                    width: 100%;
+                    height: 2px;
+                    position: absolute;
+                    left: calc(8.75rem - 2rem);
+                    top: 1rem;
+                    z-index: -1;
+                }
+                .circle{
+                    width: 2rem ;
+                    height:2rem;
+                    @include curve(50%);
+                    border: 2px solid $gray-15;
+                    background-color: $white;
+                    display: inline-block;
+                }
+                .desc{
+                    color: $gray-200;
+                    font-size: $small !important; 
+                    @include ellipse();
+                    width: 100%;
+                    display: inline-block;
+                    text-align: center;
+                }
+                &:last-child{
+                    &:after{
+                        content: none;
+                    }
+                }
+                &.finished{
+                    .circle{
+                        border-color: $primary-90 !important;
+                        background-color: $primary-90 !important;
+                        &:before{
+                            content: $icon-check;
+                            width: 100%;
+                            display: inline-block;
+                            height: 100%;
+                            text-align: center;
+                            position: absolute;
+                            bottom: -0.25rem;
+                            left: 0;
+                        }
+                    }
+                }
+                &.current-item{
+                    .circle{
+                        border-color: $primary-90 !important;
+                        position: relative;
+                        &:before{
+                            content: "";
+                            position: absolute;
+                            width: .625rem;
+                            height: .625rem;
+                            @include curve(50%);
+                            background-color:  $primary-90;
+                            top: 32%;
+                            right: 32%;
+                        }
+                    }
+                    .desc{
+                        color: $black-65;
+                        font-weight: $font-weight-medium;
+                    }
+                }
+            }
+        }
+    }
+    &.disabled{
+        desc {
+            opacity: .5;
+        }
+        .circle{
+            border: 2px solid rgb($gray-15, .8) !important;
+        }
+    }
+}

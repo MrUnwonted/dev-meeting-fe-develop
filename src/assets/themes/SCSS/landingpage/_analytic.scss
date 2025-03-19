@@ -1,0 +1,35 @@
+.analytic{
+    margin-top: 7.5rem;
+    .analytic-outer{
+        // background: linear-gradient(180deg, rgba($primary-68, 0.16) 3.54%, $white 140.38%, $white 156.23%);
+        // background-color: $blue-variant-3;
+        // @include curve-each( 1.875rem, 1.875rem, 0,  0 );
+        // @include padding( 3.75rem !important, 3.75rem !important, 3.75rem !important, 3.75rem !important );
+        .analytic-inner{
+            text-align: center;
+            @include media-breakpoint-up(md){
+                max-width: 48rem;
+                margin: 0 auto;
+            }
+           .head{
+                color: $black-65 !important;
+                font-weight: $font-weight-medium !important;
+                font-size: $heading-md-sm !important;
+                margin-bottom: 1.5rem;
+                line-height: 2.4rem;
+           }
+           .desc{
+                color: $black-65 !important;
+                margin-bottom: 1.5rem;
+           }
+           .watch-btn{
+            color: $primary-68 !important;
+            @include padding(.5rem !important, .75rem !important, .5rem !important, .75rem !important);
+            min-width: 10.25rem;
+            .icon{
+                margin-left: .5rem;
+            }
+           }
+        }
+    }
+}

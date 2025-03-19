@@ -1,0 +1,75 @@
+.main-content-description{
+    .add-btn-wrap{
+        border-left: none !important;
+        border-right: none !important;
+        @include curve(0);
+        // height: 7.26rem;
+        .add-btn{
+           padding: 0 !important;
+        }
+    }
+    &.added{
+        border-bottom: 1px solid $gray-15 ;
+        border-top: 1px solid $gray-15;
+        background-color: $white-15;
+        .main-content-description-inner{
+            @include padding(.75rem, 1.5rem, .75rem, 1.5rem);
+            .inward-col{
+                border: 1px solid $gray-15 !important;
+                @include padding(.5rem, .5rem, .5rem, .5rem);
+                .desc, .head{
+                    color: $gray-150 !important;
+                    line-height: 1.0313rem !important;
+                    white-space: nowrap;
+                }
+                .head{
+                    font-weight: $font-weight-normal !important;
+                }
+                .desc{
+                    font-weight: $font-weight-medium !important;
+                }
+            }
+            .subject-col{
+                border-bottom: 1px solid rgb($primary-90, .08);
+                padding-bottom: .5rem;
+            }
+            .minor-subject-col{
+                .item-inner{
+                    border-right: 1px solid rgb($primary-90, .08);
+                }
+            }
+            .item-inner{
+                @include flex(flex, center, space-between);
+                gap: 1rem;
+                .head{
+                    color: $gray-50 !important;
+                    font-weight: $font-weight-normal !important;
+                    margin-bottom: 0.2rem;
+                    font-size: $tiny !important;
+                    .id{
+                        color: $warning-200;
+                        @include curve(.125rem);
+                        display: inline-block;
+                        margin-left: .5rem;
+                        font-weight: $font-weight-semibold;
+                        text-align: center;
+                    }
+                }
+                .desc,.subject_desc{
+                    font-size: $small2 !important;
+                    display:block;
+                    color: $black-65 !important;
+                    line-height: 1rem !important;
+                }
+            }
+        }
+    }
+    &.preview{
+        .subject-col{
+            border-bottom: none !important;
+            .item-inner{
+                border-right: 1px solid rgb($primary-90, .08);
+            }
+        }
+    }
+}

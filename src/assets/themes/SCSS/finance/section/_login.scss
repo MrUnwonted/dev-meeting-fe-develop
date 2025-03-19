@@ -1,0 +1,274 @@
+.finance-layout{
+    .login-wrap{
+        .login-wrap-inner{
+            overflow-x: hidden;
+            height: 100vh;
+            .login-container{
+                height: 100%;
+            }
+            .login-row{
+                height:100%;
+            }
+            .login-banner-column{
+                @include media-breakpoint-down(md-sm){
+                    display:none;
+                   }
+            }
+            .login-banner-wrap{
+                overflow: hidden;
+                position: relative;
+                background-color: $primary-90;
+                background-image: none;
+                background-size: cover;
+                @include flex(flex,normal, center);
+                flex-direction: column;
+                height: 100%;
+                padding: 0;
+                & * {
+                        color: $white;
+                }
+               .login-heading-wrap{
+                    max-width: 35rem;
+                    @include margin(0, auto, 2rem, auto);
+                    width: 100%;
+                    h2{
+                        font-size: $heading-sm !important;
+                        font-weight: $font-weight-normal !important;
+                    }
+                    p{
+                        &:last-child{
+                            margin-bottom:0;
+                        }
+                    }
+               }
+               .image-wrap{
+                 img{
+                    height: 27.2719rem;
+                    width:100%;
+                    object-fit: contain;
+                    object-position: center;
+                 }
+               }
+               .login-banner-image-wrap{
+                    text-align: center;
+                    .banner-image{
+                        width:fit-content;
+                        height: 22.513rem;
+                        object-fit: contain;
+                        position: relative;
+                        z-index: 1;
+                        // object-position: left;
+                    }            
+               }
+               .bottom-text-note{
+                    max-width: 35rem;
+                    @include margin(2.5rem, auto, 0rem, auto);
+                    width: 100%;
+                    @include media-breakpoint-down(lg){
+                        display: none;
+                    }
+                    p{
+                        &:last-child{
+                            margin-bottom:0;
+                            color: $white !important;
+                        }
+                    }
+               }
+               .ellipse-wrap{
+                    position: absolute;
+                    left: -27%;
+                    top: 2rem;
+                    .ellipse-overlay{
+                        &:first-child{
+                            position: absolute;
+                            height: 47.8125rem;
+                            width: auto;
+                            object-fit: contain;
+                            left: -14rem;
+                        }
+                        &:last-child{
+                            position: absolute;
+                            left: 19rem;
+                            top: -22rem;
+                            height: 463px;
+                            width: auto;
+                            object-fit: contain;
+                        }
+                    }
+                }
+               .logo-overlay{
+                    @keyframes rotateInfinite {
+                        0% {
+                        transform: rotate(0deg);
+                        }
+                        100% {
+                        transform: rotate(360deg);
+                        }
+                    }
+                    .logo-item{
+                        animation: rotateInfinite 5s infinite linear;
+                        &:first-child{
+                            width: 22rem;
+                            height:22rem;
+                            object-fit:contain;
+                            position:absolute;
+                            top: -8rem;
+                            right: -3.1875rem;
+                        }
+                        &:nth-child(2){
+                            width: 9.0625rem ;
+                            height:9.0625rem;
+                            object-fit:contain;
+                            position:absolute;
+                            bottom: -4rem;
+                            left: 6rem;                                     
+                        }
+                        &:nth-child(3){
+                            width: 11.875rem ;
+                            height:11.875rem;
+                            object-fit:contain;
+                            position:absolute;
+                            top: 59%;
+                            right: 5.6875rem;                                       
+                        }
+                        &:nth-child(4){
+                            width: 9.0625rem ;
+                            height:9.0625rem;
+                            object-fit:contain;
+                            position: absolute;
+                            bottom: -3rem;
+                            right: -3.3125rem;                                    
+                        }
+                    }
+               }
+            }
+            .login-content-column{
+                position: relative;
+                z-index: 2;
+                background-color: $white;
+            }
+            .login-content-wrap{
+                max-width: 26.25rem;
+                margin: 0 auto;
+                @include flex(flex,normal, center);
+                flex-direction: column;
+                height: 100%;
+                @include media-breakpoint-down(md-sm){
+                    max-width:100%;
+                }
+                .logo-wrap-outer{
+                    margin-bottom: 1rem;
+                    .logo-wrap{
+                        @include margin(0, auto, 0.5rem, auto);
+                        width: 10.5rem;
+                        height: 4.5rem;
+                        text-align: center;
+                        line-height: 4.5rem;
+                        img{
+                            width:100%;
+                            height:100%;
+                            object-fit:contain;
+                            object-position: center;
+                            padding: .5rem;
+                        }
+                    }
+                    h6{
+                        &.head{
+                            font-size: $subheading-md !important;
+                            margin-bottom: 0;
+                            text-align: center;
+                            font-weight: $font-weight-normal !important;
+                        }
+                    }
+                }
+                .company-desc-erap{
+                    text-align: center;
+                    margin-bottom: 1.5rem;
+                    .head{
+                        font-size: $subheading-xl !important;
+                        font-weight: $font-weight-semibold !important;
+                        color: $primary-80;
+                        margin-bottom: 0;
+                    }
+                    p{
+                        color: $gray-200;
+                        &:last-child{
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .login-form-wrap{
+                    .form-label{
+                        font-weight: $font-weight-semibold !important;
+                    }
+                    .form-group{
+                        &.input-wrap{
+                            .icon-attached-right{
+                                .form-control{
+                                    padding-right: 2rem;
+                                }
+                                .icon{
+                                    background-size: auto !important;
+                                    position: absolute;
+                                    right:.5rem;
+                                }
+                            }
+                        }
+                    }
+                    .password-flex{
+                        margin-top: 0.5rem;
+                        @include flex(flex, center, space-between);
+                        .check-wrap{
+                            .form-label{
+                                color: $primary-50 !important;
+                                font-weight: $font-weight-normal !important;
+                            }
+                        }
+                        .forget-pass{
+                            font-size: $small !important;
+                            color: $primary-50 !important;
+                            font-weight: $font-weight-semibold !important;
+                        }
+                    }
+                }
+                .captcha-wrap{
+                    @include curve(.5rem);
+                    background-color: rgb($primary-light, .3);
+                    .captcha-wrap-inner{
+                        @include padding(.75rem, .75rem, .75rem, .75rem);
+                        .head{
+                            color: $gray-150;
+                            font-weight: $font-weight-normal !important;
+                            font-size: $tiny !important;
+                            margin-bottom: 0rem;
+                        }
+                        .content-wrap{
+                            .captcha-text-wrap{
+                                @include flex(flex, center, space-between);
+                                gap: 1rem;
+                                .captcha-text{
+                                    font-size: $subheading-lg !important;
+                                    font-weight: $font-weight-semibold !important;
+                                    margin-bottom: 0;
+                                }
+                            }
+                            .form-flex-wrap{
+                                @include flex(flex, center, space-between);
+                                gap: 1rem;
+                                .verify-btn{
+                                    font-weight: $font-weight-medium;
+                                    color: $primary-50 !important;
+                                }
+                            }
+                        }
+                    }
+                }
+                .submit-button{
+                    .btn{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

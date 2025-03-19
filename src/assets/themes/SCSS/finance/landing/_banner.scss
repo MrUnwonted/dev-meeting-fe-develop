@@ -1,0 +1,187 @@
+// hero banner
+.finance-layout{
+    .hero-banner{
+        background: linear-gradient(281.06deg, $primary-90 11.99%, $primary-50 88.01%);
+        margin-bottom: 0 !important;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        @include curve(4rem);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        .hero-banner-inner{
+            @include padding(8.5rem,17.5rem, 8.5rem, 17.5rem);
+            min-height: 48.375rem;
+            .full-container{
+                padding: 0 !important;
+            }
+            // leftside
+            .left-side-content{
+                .left-side-inner{
+                    max-width: 38.8125rem;
+                    @include media-breakpoint-down(lg){
+                        & * {
+                            text-align: center;
+                        }
+                    }
+                    .tag{
+                        margin-bottom: 2rem;
+                        width: fit-content;
+                        @include flex(flex, center, normal);
+                        gap: .25rem;
+                        line-height: 0  !important;
+                        @include curve(4rem);
+                        @include padding(.5rem, 1rem, .5rem, 1rem);
+                        border: 1px solid $white;
+                        .text{
+                            font-size: $tiny !important;
+                            display: inline-block;
+                            line-height: .75rem;
+                            color: $white;
+                        }
+                    }
+                    .head{
+                        color: $white;
+                        font-size: $heading-lg !important;
+                        font-weight: $font-weight-medium !important;
+                        margin-bottom: 2rem !important;
+                        line-height: 3.75rem !important;
+                        .bold{
+                            display: block;
+                        }
+                    }
+                    .note{
+                        font-size: $subheading-lg !important;
+                        color: $white;
+                        display: block;
+                        font-weight: $font-weight-bold !important;
+                        margin-bottom: 1rem;
+                    }
+                    .desc{
+                        max-width: 30rem;
+                        font-size: $para;
+                        color: $white !important;
+                        &:last-child{
+                            margin-bottom: 0;
+                        }
+                    }
+                    .button-wrap{
+                        margin-top: 3rem;
+                        .get-started-btn{
+                            min-width: 11.3125rem;
+                            line-height: .7rem !important;
+                            white-space: nowrap;
+                            color: $primary-90 !important;
+                            background-color: $white !important;
+                            @include curve(.5rem);
+                            border-color: $black !important;
+                            font-size: $para !important;
+                            font-weight: $font-weight-medium !important;
+                            @include padding( 1.125rem !important, 1.5rem !important, 1.125rem !important, 1.5rem !important );
+                        }
+                    }
+                }
+            }
+    
+            // rightside
+            .banner-column{
+                @include media-breakpoint-down(lgs){
+                   display:none;
+                }
+                .banner-inner{
+                    position: relative;
+                    top: -1.5rem;
+                    @include media-breakpoint-down(xxl){
+                        transform-origin: right;
+                        transform: scale(.5) !important;
+                    }
+                    @include media-breakpoint-down(xxxl){
+                        transform-origin: right;
+                        transform: scale(.7);
+                    }
+                    img{
+                        position: absolute;
+                        &.banner-image{
+                            &:nth-child(1){
+                                width: 411.05px;
+                                height: 264.15px;
+                                object-fit: contain;
+                                @include curve(1.25rem);  
+                                bottom: 0;
+                                right: 0;                              
+                            }
+                            &:nth-child(2){
+                                width: 369px;
+                                height: 232px;                               
+                                object-fit: contain;
+                                @include curve(1.25rem);
+                                right: 19rem;
+                                bottom: -10rem;                                
+                            }
+                            &:nth-child(3){
+                                width: 243px;
+                                height: 77px;
+                                object-fit: contain;
+                                @include curve(1.25rem); 
+                                bottom: -7rem;
+                                right: 2rem;                               
+                            }
+                            &:nth-child(4){
+                                width:216px;
+                                height: 79px;
+                                object-fit: contain;
+                                @include curve(1.25rem);  
+                                bottom: -16.5rem;    
+                                right: 32rem;                          
+                            }
+                            &:nth-child(5){
+                                width: 351px;
+                                height: 221px;
+                                object-fit: contain;
+                                @include curve(1.25rem);  
+                                bottom: -22.5rem;
+                                right: 4rem;                              
+                            }
+                        }
+                    }
+                }
+            }
+            .hero-dots-overlay{
+                right: 0;
+                mix-blend-mode: luminosity;
+                position: absolute;
+                top: 0;
+                z-index: -1;
+                opacity: 100%;
+                height: 100%;
+                width: 100%;
+                img{
+                    width: 100%;
+                    object-fit: cover;
+                    height: 100%;
+                }
+            }
+            .ellipse-wrap{
+                position: absolute;
+                left: -27%;
+                top: 2rem;
+                .ellipse-overlay{
+                    &:first-child{
+                        position: absolute;
+                        height: 47.8125rem;
+                        width: auto;
+                        object-fit: contain;
+                    }
+                    &:last-child{
+                        position: absolute;
+                        left: 33rem;
+                        top: -22rem;
+                        height: 463px;
+                        width: auto;
+                        object-fit: contain;
+                    }
+                }
+            }
+        }
+    }
+}

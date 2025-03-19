@@ -1,0 +1,42 @@
+footer{
+    .footer-outer{
+        background-color: $blue-variant-3;
+        @include padding(4.0625rem, 0, 4.0625rem, 0);
+        .footer-inner{
+            .search-group{
+                input{
+                    @include curve( 3.75rem );
+                    @include padding(.5rem, 9.5rem, .5rem, 1.5rem);
+                    height:  4.5rem;     
+                    box-shadow: 0px 8px 25px 0px rgb($black, .06);           
+                }
+                .input-group-text{
+                    position: absolute;
+                    right: 1rem;
+                    top: .6rem;
+                    z-index: 3;
+                    @include padding(.875rem !important, 1.5rem !important, .875rem !important, 1.5rem !important);
+                }
+            }
+            .logo-wrap{
+                margin-bottom: .5rem;
+                img{
+                    height: 2.75rem;
+                    width: fit-content;
+                    object-fit: contain;
+                    object-position: center;
+                }
+                @include media-breakpoint-down(md){
+                    text-align: center;
+                }
+            }
+            .copyright-text{
+                color: $white !important;
+                @include media-breakpoint-down(md){
+                    text-align: center;
+                    display: block;
+                }
+            }
+        }
+    }
+}

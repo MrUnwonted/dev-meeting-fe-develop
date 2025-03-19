@@ -1,0 +1,74 @@
+.landing-page-wrapper{
+    .icon{
+        background-size: auto; 
+    }
+    .btn{
+        @include curve( 6.25rem );
+    }
+    .container{
+        @include media-breakpoint-up(md){
+            max-width: 81.875rem;
+        }
+    }
+    background-color: $white !important;
+    .heading-wrap{
+        margin-bottom: 2rem;
+        @include media-breakpoint-down(md){
+            & * {
+                text-align: center;
+            }
+        }
+        .head{
+            font-size: $heading-md-sm !important;
+            font-weight: $font-weight-medium !important;
+            margin-bottom: 0;
+            color: $black-65 !important;
+        }
+        .subhead{
+            font-size: $para !important;
+            color: $gray-150 !important;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+        &.white{
+            *{
+                color: $white !important;
+            }
+        }
+    }
+    section{
+        margin-bottom: 7.5rem;
+        @include media-breakpoint-down(lg){
+            overflow-x: hidden;
+        }
+    }
+    .view-link{
+        color: $primary-68 !important;
+        font-weight: $font-weight-semibold;
+        .icon{
+            margin-left: .5rem;
+            width: 1.125rem;
+            height: 1.125rem;
+        }
+    }
+
+   // button
+    // Generate Button Styles for Each Theme Color
+    @each $name, $color in $theme-colors {
+        .btn-#{$name} {
+        @include button-styles($color, 'filled');
+        }
+    
+        .btn-outline-#{$name} {
+        @include button-styles($color, 'outline');
+        }
+    }
+}
+
+.full-container{
+    @include media-breakpoint-down(lg){
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}

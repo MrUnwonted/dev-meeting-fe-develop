@@ -1,0 +1,14 @@
+.admin-layout{
+    .top-tabs-wrap{
+        .nav-pills{
+            .nav-item{
+                .nav-link{
+                    &.active{
+                        background-color: $primary-90 !important;
+                        border-color: $primary-90 !important;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+// Image grid - small
+@mixin small-img-grid(){
+    @include flex(flex, center, normal);
+    @include flex-wraping(wrap);
+    gap:1.5rem; // 24px //
+}
+
+// appointment button grid
+@mixin appointment-grid(){
+    @include flex(flex, center, normal);
+    @include flex-wraping(wrap);
+    gap: 0.625; // 10px //
+}
+
