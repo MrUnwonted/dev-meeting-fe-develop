@@ -11,13 +11,28 @@ export class ServiceService {
   constructor(private http: HttpClient) { }
   apihost = '';
 
+  //  // Save Meeting
+  //  saveMeeting(data: any): Observable<any> {
+  //   return this.postservice('api/v0/save_meetings', data);
+  // }
+
+  // // Get Meetings
+  // getMeetings(officeId: number): Observable<any> {
+  //   return this.getService('api/v0/get_meetings', { officeId });
+  // }
+
+  // Get Meeting Child
+  getMeetingChild(meetingId: number): Observable<any> {
+    return this.getService('api/v0/get_meeting_child', { meeting_id: meetingId });
+  }
+
   // GET METHOD
   getService(methodName: string, params: any = null) {
     if (params) {
       let i = 0;
       let parmsdet = '';
       let paramvariable = '';
-     
+
       for (const key in params) {
         paramvariable = '';
         if (i > 0) {
@@ -40,7 +55,7 @@ export class ServiceService {
     //console.log(params);
     var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    // JSON.stringify(data) 
+    // JSON.stringify(data)
     return this.http
       .post<any>(`${environment.serviceUrl}/` + this.apihost + methodName, params, { headers: reqHeader });
 
@@ -50,24 +65,24 @@ export class ServiceService {
 
 
   getServiceWithJsonParam(methodName : String , params : any, parmtag = null) {
-    
+
     //  JSON input Param sending with url-encoding
     //  Params :
-    //       methodName :  Name of API 
-    //       params     :  Params in Json format. 
-    //       parmtag    :  @RequestParam tag in Api . Default value is 'req'.    
-    // 
+    //       methodName :  Name of API
+    //       params     :  Params in Json format.
+    //       parmtag    :  @RequestParam tag in Api . Default value is 'req'.
+    //
 
 
     //console.log("getServiceWithJsonParam()" );
-    let encoded_param = encodeURIComponent (JSON.stringify(params));   
-    let paramvariable = '';    
-    
+    let encoded_param = encodeURIComponent (JSON.stringify(params));
+    let paramvariable = '';
+
     // If parameter tag specified then append with that tag else append with 'req'
     if(parmtag){
       paramvariable = '?' +  parmtag + '=' + encoded_param;
     }  else{
-      paramvariable = '?req'+ '=' + encoded_param;  
+      paramvariable = '?req'+ '=' + encoded_param;
     }
     //console.log(paramvariable);
     return this.http.get(`${environment.serviceUrl}/` + methodName + paramvariable);
@@ -75,7 +90,7 @@ export class ServiceService {
 
   // getServiceImg(methodName: string, params: any = null) {
   //   //console.log( `${environment.serviceUrl}/` + this.apihost + methodName +"/"+ params );
-    
+
   //     return this.http.get(`${environment.serviceUrl}/` + this.apihost + methodName +"/"+ params);
   // }
 
@@ -83,11 +98,11 @@ export class ServiceService {
   getServiceImg(url: string, param: string): Observable<Blob> {
     return this.http.get(`${environment.serviceUrl}/${param}`, { responseType: 'blob' });
   }
-  
 
-upload_service(methodName:string, params:any = null ,authenticate:boolean = false) {    
-  this.apihost = '' 
-  // JSON.stringify(data) 
+
+upload_service(methodName:string, params:any = null ,authenticate:boolean = false) {
+  this.apihost = ''
+  // JSON.stringify(data)
   return this.http
     .post<any>(`${environment.serviceUrl}/` +  this.apihost + methodName, params);
 

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,10 +17,9 @@ import { SearchUserComponent } from '../search-user/search-user.component';
 @Component({
   selector: 'app-create-meetings',
   templateUrl: './create-meetings.component.html',
-  styleUrls: ['./create-meetings.component.scss']
+  styleUrls: ['./create-meetings.component.scss'],
 })
 export class CreateMeetingsComponent implements OnInit {
-
   @Output() expandToggled = new EventEmitter<void>();
   isExpanded = false;
   toggleExpand() {
@@ -27,71 +32,85 @@ export class CreateMeetingsComponent implements OnInit {
     meeting_id: '',
     meeting_code: '',
     meeting_name: '',
-    meeting_name_ln: ''
+    meeting_name_ln: '',
   };
 
   // Variable to track whether the form is in edit mode
   isEditable: boolean = false;
-  is_loading:boolean =false // handle loader
+  is_loading: boolean = false; // handle loader
   // Track whether the form is in Add New mode or Edit mode
   isAddMode: boolean = false;
   subject_data: any = [];
-  displayedColumns: string[] = ['slNo', 'meeting_code', 'meeting_name',  'status', 'select', 'delete'];
+  displayedColumns: string[] = [
+    'slNo',
+    'meeting_code',
+    'meeting_name',
+    'status',
+    'select',
+    'delete',
+  ];
   dataSource: any;
   selectedRow: any;
   primary_id: any;
   deactive: any; //to activate/ deactivate primary subject
   bilingual: any; //for handle the local languages
   language: any; // check the bilingual whether true/false
-  showError: boolean = false;// for handle the vlidation errr message
-  msg: string = '';// to store validation messages
+  showError: boolean = false; // for handle the vlidation errr message
+  msg: string = ''; // to store validation messages
 
-    // Active class for table row when clicks
-    activeRowIndex: number | null = null; // Track the active row index
+  // Active class for table row when clicks
+  activeRowIndex: number | null = null; // Track the active row index
 
-    selected_user={
-      seat_name:'',
-      seat_id:'',
-      user_name:'',
-      user_eamil:'',
-      user_mob:'',
-      user_id:''
-    };
-    flg_owner:boolean = false;
-    dataSource1:any;
-    displayedColumns1: string[] = ['slNo', 'seat_name', 'user_name', 'email', 'mobile','delete'];
-
+  selected_user = {
+    seat_name: '',
+    seat_id: '',
+    user_name: '',
+    user_eamil: '',
+    user_mob: '',
+    user_id: '',
+  };
+  flg_owner: boolean = false;
+  dataSource1: any;
+  displayedColumns1: string[] = [
+    'slNo',
+    'seat_name',
+    'user_name',
+    'email',
+    'mobile',
+    'delete',
+  ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private commonsvr: ServiceService, 
-    private router:Router,
-    private dialog:MatDialog
-  ) { }
+  constructor(
+    private commonsvr: ServiceService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.language = environment.lang;
     console.log(this.language);
     this.bilingual = environment.bilingual;
     console.log(this.bilingual);
-  //  this.fetch_meetings(); //to fetch all primary subjects
+    this.fetch_meetings(); //to fetch all primary subjects
   }
 
   // Handle "Add New" button click
   addNewSubject() {
-    this.primary_id = null;//Reset to save new subject
-    this.activeRowIndex =null;
+    this.primary_id = null; //Reset to save new subject
+    this.activeRowIndex = null;
     this.isEditable = false;
     this.isAddMode = true; // Set to Add New mode
-    this.showError = false;//to hide err msg
+    this.showError = false; //to hide err msg
     this.deactive = false;
     // Clear the form fields for adding a new subject
     this.selectedMeetings = {
       meeting_id: '',
       meeting_code: '',
       meeting_name: '',
-      meeting_name_ln: ''
+      meeting_name_ln: '',
     };
     this.paginator.firstPage();
   }
@@ -100,7 +119,7 @@ export class CreateMeetingsComponent implements OnInit {
   editSubject() {
     this.isEditable = true;
     this.isAddMode = false; // Set to Edit mode
-    this.saveMeeting()
+    this.saveMeeting();
   }
 
   // Handle "Cancel" button click
@@ -115,11 +134,10 @@ export class CreateMeetingsComponent implements OnInit {
         meeting_id: '',
         meeting_code: '',
         meeting_name: '',
-        meeting_name_ln: ''
+        meeting_name_ln: '',
       };
       this.isEditable = false;
       this.isAddMode = false;
-
     }
     this.showError = false;
   }
@@ -127,36 +145,37 @@ export class CreateMeetingsComponent implements OnInit {
   // Handle "Save" button click
   saveMeeting() {
     if (!this.validate_meeting()) {
-      console.log(this.msg);  // Display error message if validation fails
+      console.log(this.msg); // Display error message if validation fails
       return;
     }
 
     let data = {
-      "primary_id": this.selectedMeetings.meeting_id,
-      "primary_code": this.selectedMeetings.meeting_code.toUpperCase(),
-      "primary_subject": this.selectedMeetings.meeting_name,
-      "primary_subject_ln": this.selectedMeetings.meeting_name_ln, // this.sub_name,
-      "active": this.deactive == true ? 9 : 1,
-    }
-    this.is_loading=true
-    this.commonsvr.postservice("api/v0/save_primary_subjects", data).subscribe((data: any) => {
-      console.log(data);
-      if (data.data) {
-        this.openCustomSnackbar('success', 'Saved Successfully');
-        this.primary_id = data.data.primary_id;
-      } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
-        this.msg = "This Primary Subject Code is already in the list.!";
-        this.showError = true;
-      } else {
-        this.openCustomSnackbar('error', 'Failed to save');
-      }
+      primary_id: this.selectedMeetings.meeting_id,
+      primary_code: this.selectedMeetings.meeting_code.toUpperCase(),
+      primary_subject: this.selectedMeetings.meeting_name,
+      primary_subject_ln: this.selectedMeetings.meeting_name_ln, // this.sub_name,
+      active: this.deactive == true ? 9 : 1,
+    };
+    this.is_loading = true;
+    this.commonsvr
+      .postservice('api/v0/save_meetings', data)
+      .subscribe((data: any) => {
+        console.log(data);
+        if (data.data) {
+          this.openCustomSnackbar('success', 'Saved Successfully');
+          this.primary_id = data.data.primary_id;
+        } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
+          this.msg = 'This Primary Subject Code is already in the list.!';
+          this.showError = true;
+        } else {
+          this.openCustomSnackbar('error', 'Failed to save');
+        }
 
-      if (this.primary_id) {
-        this.isEditable = true;
-      }
-      this.fetch_meetings();
-   
-    })
+        if (this.primary_id) {
+          this.isEditable = true;
+        }
+        this.fetch_meetings();
+      });
     this.isAddMode = false; // Reset mode after saving
   }
 
@@ -167,69 +186,96 @@ export class CreateMeetingsComponent implements OnInit {
     this.showError = false;
 
     // Check if  Subject Code is empty or undefined
-    if (this.selectedMeetings.meeting_code == '' || this.selectedMeetings.meeting_code.trim().length === 0) {
-      this.msg = "Enter Primary Subject Code!";
-      this.showError = true;
-      return false;
-    }
+    // if (this.selectedMeetings.meeting_code == '' || this.selectedMeetings.meeting_code.trim().length === 0) {
+    //   this.msg = "Enter Primary Subject Code!";
+    //   this.showError = true;
+    //   return false;
+    // }
     // // Check if Subject Code has at least 3 characters
-    if (this.selectedMeetings.meeting_code.trim().length !== 2) {
-      this.msg = "Primary Subject Code must have 2 characters!";
-      this.showError = true;
-      return false;
-    }
-
-
+    // if (this.selectedMeetings.meeting_code.trim().length !== 2) {
+    //   this.msg = "Primary Subject Code must have 2 characters!";
+    //   this.showError = true;
+    //   return false;
+    // }
     // Check if  Subject Name is empty or undefined
-    if (this.selectedMeetings.meeting_name == '' || this.selectedMeetings.meeting_name.trim().length === 0) {
-      this.msg = "Enter Primary Subject Name!";
+    if (
+      this.selectedMeetings.meeting_name == '' ||
+      this.selectedMeetings.meeting_name.trim().length === 0
+    ) {
+      this.msg = 'Enter Primary Subject Name!';
       this.showError = true;
       return false;
     }
-
-
-
-    if (this.bilingual) {
-      if (!this.selectedMeetings.meeting_name || this.selectedMeetings.meeting_name.trim().length === 0) {
-        this.showError = true;
-        this.msg = 'Enter Primary Subject Name in local language';
-        return false;
-      }
-    }
+    // if (this.bilingual) {
+    //   if (!this.selectedMeetings.meeting_name || this.selectedMeetings.meeting_name.trim().length === 0) {
+    //     this.showError = true;
+    //     this.msg = 'Enter Primary Subject Name in local language';
+    //     return false;
+    //   }
+    // }
 
     // If all checks pass
     return true;
   }
 
-
   // function to  fetch all subjects
   fetch_meetings() {
-    this.commonsvr.getService('api/v0/get_all_meetings').subscribe((res: any) => {
-      console.log(res);
-      this.subject_data = res;
-      this.dataSource = new MatTableDataSource(this.subject_data);
-      this.is_loading=false
-      this.dataSource.paginator = this.paginator;
-
-    });
-
+    let param = {
+      officeId: 1,
+    };
+    this.commonsvr
+      .getService('api/v0/get_meetings', param)
+      .subscribe((res: any) => {
+        // this.commonsvr.getMeetings(1).subscribe((res: any) => {
+        console.log('Response:', res);
+        this.subject_data = res;
+        this.dataSource = new MatTableDataSource(this.subject_data);
+        this.is_loading = false;
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   //to get data from table to edit subject
-  onRowClick(e: any,index:number): void {
-    console.log(e);
+  onRowClick(e: any, index: number): void {
+    console.log('e:',e);
     this.activeRowIndex = index;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
     this.selectedMeetings = {
-      meeting_id: "1",
+      meeting_id: '1',
       meeting_code: e.primary_code,
       meeting_name: e.primary_subject,
-      meeting_name_ln: e.primary_subject_ln
+      meeting_name_ln: e.primary_subject_ln,
     };
+    // Fetch child data for the selected meeting
+    const meetingId =e.primary_id; // Assuming `primary_id` is the meeting ID
+
+    let param ={
+      "meeting_id": 1
+    }
+    //  // Validate primary_id before making the API call
+    //  if (!this.primary_id) {
+    //   console.error('Invalid primary_id');
+    //   this.msg = 'Invalid meeting ID. Please select a valid meeting.';
+    //   this.showError = true;
+    //   return;
+    // }
+    // if()
+    this.commonsvr.getService('api/v0/get_meeting_child',param).subscribe(
+      (response) => {
+        console.log('Meeting Child Data:', response);
+        // Assign the child data to `dataSource1`
+        this.dataSource1 = response; // Use `dataSource1` to store the child data
+      },
+      (error) => {
+        console.error('Error fetching meeting child data:', error);
+        // Handle errors (e.g., show a message to the user)
+      }
+    );
+
     this.showError = false;
     this.isEditable = true; // The form starts in view mode
-    this.isAddMode = false;  // Disable Add Mode
+    this.isAddMode = false; // Disable Add Mode
   }
 
   // apply filter based on search box entry
@@ -239,44 +285,30 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   // Success toast
-  openCustomSnackbar(type: any, msg: any) {
-   
-  }
-
+  openCustomSnackbar(type: any, msg: any) {}
 
   // clear error message
   clear_msg() {
-    this.showError = false
+    this.showError = false;
   }
 
   //to navigate to sub subject component
-  navigate(row:any){
-   
-  }
+  navigate(row: any) {}
 
-  clear_err(){
+  clear_err() {}
 
-  }
+  restrictAllEntry(e: any) {}
 
+  add_user_tolist() {}
 
-  restrictAllEntry(e:any){
+  clear_user_details() {}
 
-  }
-
-  add_user_tolist(){
-
-  }
-
-  clear_user_details(){
-
-  }
-
-  openUserSearch(){
+  openUserSearch() {
     var dialogRef = this.dialog.open(SearchUserComponent, {
-      width: "1130px"
-    })
+      width: '1130px',
+    });
     dialogRef?.afterClosed().subscribe((data: any) => {
-      console.log(data)
-  });
+      console.log(data);
+    });
   }
 }
