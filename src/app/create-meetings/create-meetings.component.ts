@@ -344,9 +344,15 @@ export class CreateMeetingsComponent implements OnInit {
 
   onClickDelete(element: any, index: number) {
     console.log('DeleteRow:', element);
-    this.addedUsers.splice(index, 1);
-    this.dataSource1.data = [...this.addedUsers]; // Update table
+    // ✅ Find the correct index inside addedUsers (using user_id)
+    const userIndex = this.addedUsers.findIndex((user) => user.user_id === element.user_id);
+
+    if (userIndex !== -1) {
+      this.addedUsers.splice(userIndex, 1); // Remove user
+      this.dataSource1.data = [...this.addedUsers]; // ✅ Update table
+    }
   }
+
 
   clear_user_details() {
      // Clear input fields
