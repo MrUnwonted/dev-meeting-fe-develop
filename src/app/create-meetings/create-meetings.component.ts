@@ -152,12 +152,18 @@ export class CreateMeetingsComponent implements OnInit {
     }
 
     let data = {
-      primary_id: this.selectedMeetings.meeting_id,
-      primary_code: this.selectedMeetings.meeting_code.toUpperCase(),
-      primary_subject: this.selectedMeetings.meeting_name,
-      primary_subject_ln: this.selectedMeetings.meeting_name_ln, // this.sub_name,
-      active: this.deactive == true ? 9 : 1,
+      meeting_name: this.selectedMeetings.meeting_name,  // Meeting name
+      office_id:  1,   // Default office ID
+      child: this.addedUsers.map(user => ({
+        user_id: user.user_id,      // User ID
+        seat_id: user.seat_id,      // Seat ID
+        flg_chair: user.flg_owner ? 1 : 0,  // Flag if chairperson
+        user_name: user.user_name,  // User name
+        email: user.user_email || null,  // Optional email
+        mobile: user.user_mob || null,   // Optional mobile number
+      }))
     };
+    console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
     this.commonsvr
       .postservice('api/v0/save_meetings', data)
@@ -306,7 +312,7 @@ export class CreateMeetingsComponent implements OnInit {
       email_id: this.selected_user.email_id, // ✅ Fix typo
       mobile: this.selected_user.user_mob,
       user_id: this.selected_user.user_id,
-      isOwner: this.flg_owner, // ✅ Add owner flag
+      flg_owner: this.flg_owner, // ✅ Add owner flag
     };
 
     // Prevent duplicate users
