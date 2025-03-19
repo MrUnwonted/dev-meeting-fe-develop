@@ -241,31 +241,21 @@ export class CreateMeetingsComponent implements OnInit {
     this.activeRowIndex = index;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
-    this.selectedMeetings = {
-      meeting_id: '1',
-      meeting_code: e.primary_code,
-      meeting_name: e.primary_subject,
-      meeting_name_ln: e.primary_subject_ln,
-    };
-    // Fetch child data for the selected meeting
-    const meetingId =e.primary_id; // Assuming `primary_id` is the meeting ID
 
     let param ={
       "meeting_id": 1
     }
-    //  // Validate primary_id before making the API call
-    //  if (!this.primary_id) {
-    //   console.error('Invalid primary_id');
-    //   this.msg = 'Invalid meeting ID. Please select a valid meeting.';
-    //   this.showError = true;
-    //   return;
-    // }
-    // if()
     this.commonsvr.getService('api/v0/get_meeting_child',param).subscribe(
       (response) => {
         console.log('Meeting Child Data:', response);
         // Assign the child data to `dataSource1`
         this.dataSource1 = response; // Use `dataSource1` to store the child data
+        this.selectedMeetings = {
+          meeting_id: '1',
+          meeting_code: e.meeting_code,
+          meeting_name: e.meeting_name,
+          meeting_name_ln: e.meeting_name_ln,
+        };
       },
       (error) => {
         console.error('Error fetching meeting child data:', error);
