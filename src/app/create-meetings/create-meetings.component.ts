@@ -246,24 +246,26 @@ export class CreateMeetingsComponent implements OnInit {
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
     console.log('e:', e);
-    this.activeRowIndex = index;
+    this.activeRowIndex = index+1;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
 
     let param = {
-      meeting_id: 1,
+      meeting_id:  this.activeRowIndex,
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
-      (response) => {
-        console.log('Meeting Child Data:', response);
-        // Assign the child data to `dataSource1`
-        this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
-        this.selectedMeetings = {
-          meeting_id: '1',
-          meeting_code: e.meeting_code,
-          meeting_name: e.meeting_name,
-          meeting_name_ln: e.meeting_name_ln,
-        };
+      (response: any) => {
+         // ✅ Corrected `if` syntax
+          console.log('Meeting Child Data:', response);
+          // ✅ Correct way to assign data to MatTableDataSource
+          this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
+          // ✅ Assign meeting details
+          this.selectedMeetings = {
+            meeting_id: e.meeting_id,
+            meeting_code: e.meeting_code,
+            meeting_name: e.meeting_name,
+            meeting_name_ln: e.meeting_name_ln,
+          };
       },
       (error) => {
         console.error('Error fetching meeting child data:', error);
