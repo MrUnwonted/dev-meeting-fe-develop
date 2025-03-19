@@ -110,7 +110,7 @@ export class SearchUserComponent implements OnInit {
     }
     this.svr.postservice("api/v0/get_userby_empcode", param).subscribe((res: any) => {
       if (res.length !== 0) {
-        console.log("  test ");
+        // console.log("  test ");
         this.is_message = false;
         this.user_list = res
       } else {
@@ -133,7 +133,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     this.svr.postservice("api/v0/get_emp_list", param).subscribe((res: any) => {
-      console.log(JSON.stringify(res, null, 2));
+      // console.log(JSON.stringify(res, null, 2));
 
       if (res.length !== 0) {
         this.is_message = false;
@@ -167,7 +167,7 @@ department_data() {
 }
 
 get_sections() {
-    console.log("Testing if it's working or not");
+    // console.log("Testing if it's working or not");
 
     let param = {
         "office_id": 1

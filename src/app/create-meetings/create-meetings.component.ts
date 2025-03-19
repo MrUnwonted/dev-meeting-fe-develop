@@ -65,18 +65,21 @@ export class CreateMeetingsComponent implements OnInit {
     seat_name: '',
     seat_id: '',
     user_name: '',
-    user_eamil: '',
+    title: '',
+    user_email: '',
     user_mob: '',
     user_id: '',
   };
   flg_owner: boolean = false;
-  dataSource1: any;
+  addedUsers: any[] = []; // Stores added users
+  dataSource1 = new MatTableDataSource<any>([]);
   displayedColumns1: string[] = [
     'slNo',
     'seat_name',
     'user_name',
     'email',
     'mobile',
+    'owner',
     'delete',
   ];
 
@@ -227,7 +230,7 @@ export class CreateMeetingsComponent implements OnInit {
       .getService('api/v0/get_meetings', param)
       .subscribe((res: any) => {
         // this.commonsvr.getMeetings(1).subscribe((res: any) => {
-        console.log('Response:', res);
+        // console.log('Response:', res);
         this.subject_data = res;
         this.dataSource = new MatTableDataSource(this.subject_data);
         this.is_loading = false;
@@ -237,19 +240,19 @@ export class CreateMeetingsComponent implements OnInit {
 
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
-    console.log('e:',e);
+    console.log('e:', e);
     this.activeRowIndex = index;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
 
-    let param ={
-      "meeting_id": 1
-    }
-    this.commonsvr.getService('api/v0/get_meeting_child',param).subscribe(
+    let param = {
+      meeting_id: 1,
+    };
+    this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response) => {
         console.log('Meeting Child Data:', response);
         // Assign the child data to `dataSource1`
-        this.dataSource1 = response; // Use `dataSource1` to store the child data
+        this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
         this.selectedMeetings = {
           meeting_id: '1',
           meeting_code: e.meeting_code,
@@ -289,16 +292,87 @@ export class CreateMeetingsComponent implements OnInit {
 
   restrictAllEntry(e: any) {}
 
-  add_user_tolist() {}
+  add_user_tolist() {
+    console.log('Before Adding:', this.selected_user); // 🔍 Debugging
 
-  clear_user_details() {}
+    if (!this.selected_user || !this.selected_user.seat_name) {
+      alert('Please select a user before adding.');
+      return;
+    }
+
+    const newUser = {
+      seat_name: this.selected_user.seat_name,
+      seat_id: this.selected_user.seat_id,
+      user_name: this.selected_user.user_name, // ✅ Ensure correct property name
+      email: this.selected_user.user_email, // ✅ Fix typo
+      mobile: this.selected_user.user_mob,
+      user_id: this.selected_user.user_id,
+      isOwner: this.flg_owner, // ✅ Add owner flag
+    };
+
+    // Prevent duplicate users
+    if (this.addedUsers.some(user => user.seat_id === newUser.seat_id)) {
+      alert('User already added!');
+      return;
+    }
+
+    this.addedUsers.push(newUser);
+    this.dataSource1 = new MatTableDataSource([...this.addedUsers]); // ✅ Update table
+
+    console.log('After Adding:', this.dataSource1); // 🔍 Debugging
+
+    // Clear fields after adding
+    this.selected_user = {
+      seat_name: '',
+      seat_id: '',
+      user_name: '',
+      title: '',
+      user_email: '',
+      user_mob: '',
+      user_id: '',
+    };
+    this.flg_owner = false;
+  }
+
+
+
+  onClickDelete(element: any, index: number) {
+    console.log('DeleteRow:', element);
+    this.addedUsers.splice(index, 1);
+    this.dataSource1.data = [...this.addedUsers]; // Update table
+  }
+
+  clear_user_details() {
+     // Clear input fields
+     this.selected_user = {
+      seat_id: '',
+      seat_name: '',
+      user_name: '',
+      title: '',
+      user_email: '',
+      user_mob: '',
+      user_id: '',
+    };
+    console.log('Cleared user details', this.selected_user);
+  }
 
   openUserSearch() {
-    var dialogRef = this.dialog.open(SearchUserComponent, {
+    const dialogRef = this.dialog.open(SearchUserComponent, {
       width: '1130px',
     });
-    dialogRef?.afterClosed().subscribe((data: any) => {
-      console.log(data);
+
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      console.log('Modal Response:', response); // 🔍 Debugging
+
+      if (response && response.data) {
+        this.selected_user = response.data; // ✅ Correct assignment
+        this.flg_owner = false; // ✅ Keep it unchecked initially
+      }
+
+      console.log('Selected User:', this.selected_user); // 🔍 Debugging
     });
   }
+
+
+
 }
