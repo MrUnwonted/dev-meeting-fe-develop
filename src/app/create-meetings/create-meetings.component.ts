@@ -65,7 +65,7 @@ export class CreateMeetingsComponent implements OnInit {
     seat_name: '',
     seat_id: '',
     user_name: '',
-    user_email: '',
+    email_id: '',
     user_mob: '',
     user_id: '',
   };
@@ -303,7 +303,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
       user_name: this.selected_user.user_name, // ✅ Ensure correct property name
-      email: this.selected_user.user_email, // ✅ Fix typo
+      email: this.selected_user.email_id, // ✅ Fix typo
       mobile: this.selected_user.user_mob,
       user_id: this.selected_user.user_id,
       isOwner: this.flg_owner, // ✅ Add owner flag
@@ -325,7 +325,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_name: '',
       seat_id: '',
       user_name: '',
-      user_email: '',
+      email_id: '',
       user_mob: '',
       user_id: '',
     };
@@ -346,13 +346,29 @@ export class CreateMeetingsComponent implements OnInit {
       seat_id: '',
       seat_name: '',
       user_name: '',
-      user_email: '',
+      email_id: '',
       user_mob: '',
       user_id: '',
     };
     console.log('Cleared user details', this.selected_user);
   }
 
+  // openUserSearch() {
+  //   const dialogRef = this.dialog.open(SearchUserComponent, {
+  //     width: '1130px',
+  //   });
+
+  //   dialogRef?.afterClosed().subscribe((response: any) => {
+  //     console.log('Modal Response:', response); // 🔍 Debugging
+
+  //     if (response && response.data) {
+  //       this.selected_user = response.data; // ✅ Correct assignment
+  //       this.flg_owner = false; // ✅ Keep it unchecked initially
+  //     }
+
+  //     console.log('Selected User:', this.selected_user); // 🔍 Debugging
+  //   });
+  // }
   openUserSearch() {
     const dialogRef = this.dialog.open(SearchUserComponent, {
       width: '1130px',
@@ -362,13 +378,25 @@ export class CreateMeetingsComponent implements OnInit {
       console.log('Modal Response:', response); // 🔍 Debugging
 
       if (response && response.data) {
-        this.selected_user = response.data; // ✅ Correct assignment
+        const userData = response.data;
+
+        // ✅ Map response keys to match selected_user structure
+        this.selected_user = {
+          seat_name: userData.seat_name || '',  // From `CS-FED001`
+          seat_id: userData.seat_id || '',      // From `7`
+          user_name: userData.title || '',      // From `Malachi Punith`
+          email_id: userData.email || '',     // From `punith@kvgbank.com`
+          user_mob: userData.mobile || '',      // From `8551265956`
+          user_id: userData.user_id || '',      // From `3`
+        };
+
         this.flg_owner = false; // ✅ Keep it unchecked initially
       }
 
       console.log('Selected User:', this.selected_user); // 🔍 Debugging
     });
   }
+
 
 
 

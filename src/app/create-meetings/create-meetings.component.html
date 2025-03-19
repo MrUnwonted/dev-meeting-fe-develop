@@ -196,7 +196,7 @@
                           <ng-container matColumnDef="email">
                             <th mat-header-cell *matHeaderCellDef>email</th>
                             <td mat-cell *matCellDef="let element">
-                              {{ element.email }}
+                              {{ element.email_id || 'N/A' }}
                             </td>
                           </ng-container>
                           <ng-container matColumnDef="mobile">
