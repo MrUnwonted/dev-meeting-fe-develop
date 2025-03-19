@@ -65,9 +65,8 @@ export class CreateMeetingsComponent implements OnInit {
     seat_name: '',
     seat_id: '',
     user_name: '',
-    title: '',
-    email: '',
-    mobile: '',
+    user_email: '',
+    user_mob: '',
     user_id: '',
   };
   flg_owner: boolean = false;
@@ -303,10 +302,9 @@ export class CreateMeetingsComponent implements OnInit {
     const newUser = {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
-      user_name: this.selected_user.user_name,
-      email: this.selected_user.email,
-      title: this.selected_user.title,
-      mobile: this.selected_user.mobile,
+      user_name: this.selected_user.user_name, // ✅ Ensure correct property name
+      email: this.selected_user.user_email, // ✅ Fix typo
+      mobile: this.selected_user.user_mob,
       user_id: this.selected_user.user_id,
       isOwner: this.flg_owner, // ✅ Add owner flag
     };
@@ -327,9 +325,8 @@ export class CreateMeetingsComponent implements OnInit {
       seat_name: '',
       seat_id: '',
       user_name: '',
-      title: '',
-      email: '',
-      mobile: '',
+      user_email: '',
+      user_mob: '',
       user_id: '',
     };
     this.flg_owner = false;
@@ -349,9 +346,8 @@ export class CreateMeetingsComponent implements OnInit {
       seat_id: '',
       seat_name: '',
       user_name: '',
-      title: '',
-      email: '',
-      mobile: '',
+      user_email: '',
+      user_mob: '',
       user_id: '',
     };
     console.log('Cleared user details', this.selected_user);
@@ -366,7 +362,8 @@ export class CreateMeetingsComponent implements OnInit {
       console.log('Modal Response:', response); // 🔍 Debugging
 
       if (response && response.data) {
-        this.selected_user = response.data; 
+        this.selected_user = response.data; // ✅ Correct assignment
+        this.flg_owner = false; // ✅ Keep it unchecked initially
       }
 
       console.log('Selected User:', this.selected_user); // 🔍 Debugging
