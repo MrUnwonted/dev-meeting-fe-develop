@@ -303,7 +303,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
       user_name: this.selected_user.user_name, // ✅ Ensure correct property name
-      email: this.selected_user.email_id, // ✅ Fix typo
+      email_id: this.selected_user.email_id, // ✅ Fix typo
       mobile: this.selected_user.user_mob,
       user_id: this.selected_user.user_id,
       isOwner: this.flg_owner, // ✅ Add owner flag
@@ -353,29 +353,14 @@ export class CreateMeetingsComponent implements OnInit {
     console.log('Cleared user details', this.selected_user);
   }
 
-  // openUserSearch() {
-  //   const dialogRef = this.dialog.open(SearchUserComponent, {
-  //     width: '1130px',
-  //   });
-
-  //   dialogRef?.afterClosed().subscribe((response: any) => {
-  //     console.log('Modal Response:', response); // 🔍 Debugging
-
-  //     if (response && response.data) {
-  //       this.selected_user = response.data; // ✅ Correct assignment
-  //       this.flg_owner = false; // ✅ Keep it unchecked initially
-  //     }
-
-  //     console.log('Selected User:', this.selected_user); // 🔍 Debugging
-  //   });
-  // }
+  // Open user search dialog from modal
   openUserSearch() {
     const dialogRef = this.dialog.open(SearchUserComponent, {
       width: '1130px',
     });
 
     dialogRef?.afterClosed().subscribe((response: any) => {
-      console.log('Modal Response:', response); // 🔍 Debugging
+      // console.log('Modal Response:', response); // 🔍 Debugging
 
       if (response && response.data) {
         const userData = response.data;
@@ -392,8 +377,7 @@ export class CreateMeetingsComponent implements OnInit {
 
         this.flg_owner = false; // ✅ Keep it unchecked initially
       }
-
-      console.log('Selected User:', this.selected_user); // 🔍 Debugging
+      // console.log('Selected User:', this.selected_user); // 🔍 Debugging
     });
   }
 
