@@ -152,27 +152,34 @@ export class CreateMeetingsComponent implements OnInit {
     }
 
     let data = {
-      meeting_name: this.selectedMeetings.meeting_name,  // Meeting name
-      office_id:  1,   // Default office ID
-      child: this.addedUsers.map(user => ({
-        user_id: user.user_id,      // User ID
-        seat_id: user.seat_id,      // Seat ID
-        flg_chair: user.flg_owner ? 1 : 0,  // Flag if chairperson
-        user_name: user.user_name,  // User name
-        email: user.user_email || null,  // Optional email
-        mobile: user.user_mob || null,   // Optional mobile number
-      }))
+      meeting_name: this.selectedMeetings.meeting_name, // Meeting name
+      office_id: 1, // Default office ID
+      child: this.addedUsers.map(user => {
+        let childObj: any = {
+          user_id: user.user_id, // User ID
+          seat_id: user.seat_id, // Seat ID
+          flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
+          user_name: user.user_name, // User name
+        };
+
+        // ✅ Only add email & mobile if they exist
+        if (user.email) childObj.email = user.email;
+        if (user.mobile) childObj.mobile = user.mobile;
+
+        return childObj;
+      })
     };
+
     console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
+
     this.is_loading = true;
-    this.commonsvr
-      .postservice('api/v0/save_meetings', data)
-      .subscribe((data: any) => {
-        console.log(data);
-        if (data.data) {
+    this.commonsvr.postservice('api/v0/save_meetings', data)
+      .subscribe((response: any) => {
+        console.log(response);
+        if (response.data) {
           this.openCustomSnackbar('success', 'Saved Successfully');
-          this.primary_id = data.data.primary_id;
-        } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
+          this.primary_id = response.data.primary_id;
+        } else if (response.msg === 'Fail' && response.reason === 'Duplicate Code') {
           this.msg = 'This Primary Subject Code is already in the list.!';
           this.showError = true;
         } else {
@@ -184,8 +191,10 @@ export class CreateMeetingsComponent implements OnInit {
         }
         this.fetch_meetings();
       });
+
     this.isAddMode = false; // Reset mode after saving
   }
+
 
   // check if all data entry are valid
   validate_meeting() {
@@ -255,7 +264,6 @@ export class CreateMeetingsComponent implements OnInit {
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
-         // ✅ Corrected `if` syntax
           console.log('Meeting Child Data:', response);
           // ✅ Correct way to assign data to MatTableDataSource
           this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
