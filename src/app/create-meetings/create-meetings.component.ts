@@ -80,6 +80,7 @@ export class CreateMeetingsComponent implements OnInit {
     'actions',
   ];
   originalData: any; // Store original fetched data for comparison
+  // fetchMeeting: any; //Store the JSON when fetching
 
   @ViewChild('paginator1') paginator1!: MatPaginator;
   @ViewChild('paginator2') paginator2!: MatPaginator;
@@ -154,28 +155,40 @@ export class CreateMeetingsComponent implements OnInit {
       console.log(this.msg); // Display error message if validation fails
       return;
     }
-    let data = {
-      meeting_name: this.selectedMeetings.meeting_name, // Meeting name
-      office_id: 1, // Default office ID
-      child: this.dataSource1.data.map((user) => ({
-        user_id: user.user_id, // User ID
-        seat_id: user.seat_id, // Seat ID
-        flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
-        user_name: user.user_name, // User name
-        email: user.email_id || null, // Optional email
-      })),
-    };
-    console.log('Data to save:', data); // Debugging
-    console.log('Original Data:', this.originalData); // Debugging
+    let data = [
+      {
+        meeting_name: this.selectedMeetings.meeting_name,
+        office_id: 1,
+        child: this.dataSource1.data.map((user) => ({
+          user_id: user.user_id,
+          seat_id: user.seat_id,
+          flg_chair: Number(user.flg_owner),
+          user_name: user.user_name,
+          email: user.email || null,
+          mobile: user.mobile || null,
+        })),
+      },
+    ];
     // Check if data has changed before saving
-    let compare = this.commonsvr.checkJsonEquality(this.originalData, data);
-    console.log("Compare", compare);
-     // Compare with the original data before saving
-  if (compare === true)  {
-    console.log("Compare", this.originalData, data);
-    console.log("No changes detected. Skipping save.");
-    return;
-  }
+    if (this.isEditing) {
+      // Ensure both are defined and are arrays
+    if (!this.originalData) {
+      this.originalData = [];
+    }
+
+    if (!Array.isArray(this.originalData) || !Array.isArray(data)) {
+      console.error("Error: Data to compare must be arrays");
+      return;
+    }
+      console.log('Original Data:', this.originalData);
+      console.log('Current Data:', data);
+      let compare = this.commonsvr.checkJsonEquality(this.originalData, data);
+      console.log('Compare', compare);
+      if (!compare) {
+        console.log('error', 'No changes detected!');
+        return;
+      }
+    }
     // console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
     this.commonsvr
@@ -198,7 +211,7 @@ export class CreateMeetingsComponent implements OnInit {
           this.isEditable = true;
         }
         this.isEditing = false; // Change button label back to "Edit"
-        this.dataSource1.data = []; // ✅ Clear child data
+        this.dataSource1.data = []; // Clear child data
         this.fetch_meetings(); // Refresh data after saving
         this.clearSelectedMeetings(); // Clear form fields
       });
@@ -270,16 +283,17 @@ export class CreateMeetingsComponent implements OnInit {
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
+        // Merge API data when row is clicked
+        // this.originalData = JSON.stringify(this.mergeMeetingsAndMembers([e], response), null, 2);
+        // this.originalData = this.mergeMeetingsAndMembers([e], response);
+        this.originalData = this.mergeMeetingsAndMembers([e], response) || [];
+        console.log('Merged Data:', this.originalData);
         // console.log('Meeting Child Data:', response);
-        // Store original fetched data for comparison
-        this.originalData = JSON.parse(JSON.stringify(response));
-        console.log('Original Data:', this.originalData);
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
         this.dataSource1.data = this.dataSource1.data.map((item) => ({
           ...item,
           flg_owner: Boolean(item.flg_chair), //  Convert flg_chair to boolean
         }));
-        console.log('Meeting Child Data:', this.dataSource1.data);
         this.dataSource1.paginator = this.paginator1;
         //  Assign meeting details
         this.selectedMeetings = {
@@ -298,6 +312,23 @@ export class CreateMeetingsComponent implements OnInit {
     this.isEditable = true; // The form starts in view mode
     this.isReadOnly = true; // Disable form fields
     this.isAddMode = false; // Disable Add Mode
+  }
+
+  mergeMeetingsAndMembers(meetings: any[], members: any[]) {
+    return meetings.map((meeting) => ({
+      meeting_name: meeting.meeting_name,
+      office_id: 1,
+      child: members
+        .filter((member) => member.meeting_id === meeting.meeting_id)
+        .map((member) => ({
+          user_id: member.user_id,
+          seat_id: member.seat_id,
+          flg_chair: Number(member.flg_chair), // Ensure number type
+          user_name: member.user_name,
+          email: member.email || null, // Instead of email_id
+          mobile: member.mobile || null,
+        })),
+    }));
   }
 
   // apply filter based on search box entry

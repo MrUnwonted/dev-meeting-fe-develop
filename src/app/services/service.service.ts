@@ -136,6 +136,7 @@ checkJsonEquality(json_1:any,json_2:any) {
 
 
 compareJsonObjects(obj1: any, obj2: any): boolean {
+  if (!obj1 || !obj2) return false; // Prevent error when one of them is null
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
 
