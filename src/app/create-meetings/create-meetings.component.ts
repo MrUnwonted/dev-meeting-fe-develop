@@ -8,7 +8,6 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
@@ -33,7 +32,6 @@ export class CreateMeetingsComponent implements OnInit {
     meeting_name: '',
     meeting_name_ln: '',
   };
-
   // Variable to track whether the form is in edit mode
   isEditable: boolean = false; // Controls the Edit button and form state
   isReadOnly: boolean = false; // Controls form field interactivity
@@ -50,7 +48,7 @@ export class CreateMeetingsComponent implements OnInit {
     'select',
     'delete',
   ];
-  dataSource: any;
+  dataSource = new MatTableDataSource<any>([]);
   selectedRow: any;
   primary_id: any;
   deactive: any; //to activate/ deactivate primary subject
@@ -58,10 +56,8 @@ export class CreateMeetingsComponent implements OnInit {
   language: any; // check the bilingual whether true/false
   showError: boolean = false; // for handle the vlidation errr message
   msg: string = ''; // to store validation messages
-
   // Active class for table row when clicks
   activeRowIndex: number | null = null; // Track the active row index
-
   selected_user = {
     seat_name: '',
     seat_id: '',
@@ -86,7 +82,7 @@ export class CreateMeetingsComponent implements OnInit {
 
   @ViewChild('paginator1') paginator1!: MatPaginator;
   @ViewChild('paginator2') paginator2!: MatPaginator;
-  @ViewChild('sort1') sort!: MatSort;
+  @ViewChild('sort') sort!: MatSort;
 
   constructor(
     private commonsvr: ServiceService,
@@ -104,11 +100,14 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator1; // ✅ Assign first table paginator
-    this.dataSource.sort = this.sort;
-
-    this.dataSource1.paginator = this.paginator2; // ✅ Assign second table paginator
-    this.dataSource1.sort = this.sort;
+    setTimeout(() => {
+      if (this.paginator1) {
+        this.dataSource1.paginator = this.paginator1;
+      }
+      if (this.paginator2) {
+        this.dataSource.paginator = this.paginator2;
+      }
+    });
   }
 
   // Handle "Add New" button click
@@ -120,29 +119,15 @@ export class CreateMeetingsComponent implements OnInit {
     this.isAddMode = true; // Set to Add New mode
     this.showError = false; // Hide error message
     this.deactive = false;
-
-    // Clear the form fields for adding a new subject
-    this.selectedMeetings = {
-      meeting_id: '',
-      meeting_code: '',
-      meeting_name: '',
-      meeting_name_ln: '',
-    };
-
     // ✅ Clear the table data source
     this.dataSource1.data = [];
   }
 
   // Handle "Edit" button click
   editSubject() {
-    // this.isAddMode = false; // Set to Edit mode
     this.isReadOnly = false; // Enable form fields
     this.isEditable = false; // Switch from "Edit" to "Save" button
     this.isEditing = true; // Change button label to "Save"
-    // // Ensure "actions" column is included when editing
-    // if (!this.displayedColumns1.includes('actions')) {
-    //   this.displayedColumns1.push('actions');
-    // }
   }
 
   // Handle "Cancel" button click
@@ -152,19 +137,12 @@ export class CreateMeetingsComponent implements OnInit {
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
     if (this.isAddMode) {
-      // Clear form in Add New mode
-      this.selectedMeetings = {
-        meeting_id: '',
-        meeting_code: '',
-        meeting_name: '',
-        meeting_name_ln: '',
-      };
+      this.clearSelectedMeetings();
       this.isEditable = false;
       this.isAddMode = false;
     }
-
     this.dataSource1.data = []; // ✅ Update MatTable data
-    this.dataSource1.paginator = this.paginator2;
+    this.dataSource1.paginator = this.paginator1;
     this.showError = false;
   }
 
@@ -174,12 +152,10 @@ export class CreateMeetingsComponent implements OnInit {
       console.log(this.msg); // Display error message if validation fails
       return;
     }
-
     let data: {
       meeting_name: string;
       office_id: number;
       child: any[];
-      id?: number; // Optional property for meeting ID
     } = {
       meeting_name: this.selectedMeetings.meeting_name, // Meeting name
       office_id: 1, // Default office ID
@@ -191,25 +167,16 @@ export class CreateMeetingsComponent implements OnInit {
           user_name: user.user_name, // User name
           email: user.email_id, // Email
         };
-
         return childObj;
       }),
     };
-
-    // **Include meeting_id if editing an existing meeting**
-    if (this.primary_id) {
-      data.id = this.primary_id; // Send ID for updating
-    }
-    console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
-
+    // console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
     this.commonsvr.postservice('api/v0/save_meetings', data).subscribe(
       (response: any) => {
-        console.log(response);
-
+        // console.log(response);
         if (response && response.msg === 'Success') {
           this.openCustomSnackbar('success', 'Saved Successfully');
-
           // **Fix: Check if response.data exists before accessing primary_id**
           if (response.data && response.data.primary_id) {
             this.primary_id = response.data.primary_id; // Store meeting ID
@@ -225,18 +192,18 @@ export class CreateMeetingsComponent implements OnInit {
         } else {
           this.openCustomSnackbar('error', 'Failed to save');
         }
-
         this.isReadOnly = true; // Make form read-only again
         this.isEditable = true; // Show "Edit" button again
         this.isEditing = false; // Change button label back to "Edit"
+        this.dataSource1.data = []; // ✅ Clear child data
         this.fetch_meetings(); // Refresh data after saving
+        this.clearSelectedMeetings(); // Clear form fields
       },
       (error) => {
         console.error('Error saving meeting:', error);
         this.openCustomSnackbar('error', 'Server error while saving');
       }
     );
-
     this.isAddMode = false; // Reset mode after saving
   }
 
@@ -245,7 +212,6 @@ export class CreateMeetingsComponent implements OnInit {
     // Clear error messages before validation
     this.msg = '';
     this.showError = false;
-
     // Check if  Subject Code is empty or undefined
     // if (this.selectedMeetings.meeting_code == '' || this.selectedMeetings.meeting_code.trim().length === 0) {
     //   this.msg = "Enter Primary Subject Code!";
@@ -292,27 +258,26 @@ export class CreateMeetingsComponent implements OnInit {
         this.subject_data = res;
         this.dataSource = new MatTableDataSource(this.subject_data);
         this.is_loading = false;
-        this.dataSource.paginator = this.paginator1;
+        this.dataSource.paginator = this.paginator2;
       });
   }
 
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
-    console.log('e:', e);
+    // console.log('e:', e);
     this.activeRowIndex = index + 1;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
-
     let param = {
       meeting_id: this.activeRowIndex,
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
-        console.log('Meeting Child Data:', response);
+        // console.log('Meeting Child Data:', response);
         // ✅ Correct way to assign data to MatTableDataSource
         this.flg_owner = e.flg_chair === 1;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
-        this.dataSource1.paginator = this.paginator2;
+        this.dataSource1.paginator = this.paginator1;
         // ✅ Assign meeting details
         this.selectedMeetings = {
           meeting_id: e.meeting_id,
@@ -326,7 +291,6 @@ export class CreateMeetingsComponent implements OnInit {
         // Handle errors (e.g., show a message to the user)
       }
     );
-
     this.showError = false;
     this.isEditable = true; // The form starts in view mode
     this.isReadOnly = true; // Disable form fields
@@ -337,7 +301,7 @@ export class CreateMeetingsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.paginator = this.paginator1;
+    this.dataSource.paginator = this.paginator2;
   }
 
   // Success toast
@@ -348,6 +312,16 @@ export class CreateMeetingsComponent implements OnInit {
     this.showError = false;
   }
 
+  clearSelectedMeetings() {
+    // Clear the form fields for adding a new subject
+    this.selectedMeetings = {
+      meeting_id: '',
+      meeting_code: '',
+      meeting_name: '',
+      meeting_name_ln: '',
+    };
+  }
+
   //to navigate to sub subject component
   navigate(row: any) {}
 
@@ -356,13 +330,11 @@ export class CreateMeetingsComponent implements OnInit {
   restrictAllEntry(e: any) {}
 
   add_user_tolist() {
-    console.log('Before Adding:', this.selected_user);
-
+    // console.log('Before Adding:', this.selected_user);
     if (!this.selected_user || !this.selected_user.seat_name) {
       alert('Please select a user before adding.');
       return;
     }
-
     const newUser = {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
@@ -372,33 +344,28 @@ export class CreateMeetingsComponent implements OnInit {
       user_id: this.selected_user.user_id,
       flg_owner: this.flg_owner, // ✅ Keep owner flag
     };
-
+    // Ensure addedUsers contains the current data
+    const currentUsers = this.dataSource1.data;
     if (this.editingIndex !== undefined && this.editingIndex !== null) {
       // If editing, update the existing row
-      this.addedUsers[this.editingIndex] = newUser;
+      currentUsers[this.editingIndex] = newUser;
       this.editingIndex = null; // Reset editing index
     } else {
       // If adding a new user, prevent duplicates
-      if (this.addedUsers.some((user) => user.seat_id === newUser.seat_id)) {
+      if (currentUsers.some((user) => user.seat_id === newUser.seat_id)) {
         alert('User already added!');
         return;
       }
-      this.addedUsers.push(newUser);
+      currentUsers.push(newUser); // Add new user
     }
-
-    // Update table
-    this.dataSource1 = new MatTableDataSource([...this.addedUsers]);
-    this.dataSource1.paginator = this.paginator2;
-
-    console.log('After Adding:', this.dataSource1);
-
+    this.dataSource1.data = [...currentUsers];
+    this.dataSource1.paginator = this.paginator1;
     // Clear fields after adding
     this.clear_user_details();
   }
 
   onClickEdit(element: any, index: number) {
-    console.log('EditRow:', element);
-
+    // console.log('EditRow:', element);
     // Bind selected row's data to the form fields
     this.selected_user = {
       seat_name: element.seat_name,
@@ -408,25 +375,22 @@ export class CreateMeetingsComponent implements OnInit {
       user_mob: element.mobile,
       user_id: element.user_id,
     };
-
     // Set the owner flag
     this.flg_owner = element.flg_owner;
-
     // Store index to update the correct row later when user clicks "Add"
     this.editingIndex = index;
   }
 
   onClickDelete(element: any, index: number) {
-    console.log('DeleteRow:', element);
+    // console.log('DeleteRow:', element);
     // ✅ Find the correct index inside addedUsers (using user_id)
     const userIndex = this.addedUsers.findIndex(
       (user) => user.user_id === element.user_id
     );
-
     if (userIndex !== -1) {
       this.addedUsers.splice(userIndex, 1); // Remove user
       this.dataSource1.data = [...this.addedUsers]; // ✅ Update table
-      this.dataSource1.paginator = this.paginator2;
+      this.dataSource1.paginator = this.paginator1;
     }
   }
 
@@ -443,7 +407,7 @@ export class CreateMeetingsComponent implements OnInit {
     if (this.flg_owner) {
       this.flg_owner = false;
     }
-    console.log('Cleared user details', this.selected_user);
+    // console.log('Cleared user details', this.selected_user);
   }
 
   // Open user search dialog from modal
@@ -451,13 +415,10 @@ export class CreateMeetingsComponent implements OnInit {
     const dialogRef = this.dialog.open(SearchUserComponent, {
       width: '1130px',
     });
-
     dialogRef?.afterClosed().subscribe((response: any) => {
       // console.log('Modal Response:', response); // 🔍 Debugging
-
       if (response && response.data) {
         const userData = response.data;
-
         // ✅ Map response keys to match selected_user structure
         this.selected_user = {
           seat_name: userData.seat_name || '', // From `CS-FED001`
@@ -467,7 +428,6 @@ export class CreateMeetingsComponent implements OnInit {
           user_mob: userData.mobile || '', // From `8551265956`
           user_id: userData.user_id || '', // From `3`
         };
-
         this.flg_owner = false; // ✅ Keep it unchecked initially
       }
       // console.log('Selected User:', this.selected_user); // 🔍 Debugging
