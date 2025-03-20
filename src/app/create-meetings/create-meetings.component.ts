@@ -197,18 +197,24 @@ export class CreateMeetingsComponent implements OnInit {
     console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
 
     this.is_loading = true;
-    this.commonsvr
-      .postservice('api/v0/save_meetings', data)
-      .subscribe((response: any) => {
+    this.commonsvr.postservice('api/v0/save_meetings', data).subscribe(
+      (response: any) => {
         console.log(response);
-        if (response.data || response.msg === 'Success') {
+
+        if (response && response.msg === 'Success') {
           this.openCustomSnackbar('success', 'Saved Successfully');
-          this.primary_id = response.data.primary_id;
+
+          // **Fix: Check if response.data exists before accessing primary_id**
+          if (response.data && response.data.primary_id) {
+            this.primary_id = response.data.primary_id; // Store meeting ID
+          } else if (response.id) {
+            this.primary_id = response.id; // Fallback: Use response.id if available
+          }
         } else if (
           response.msg === 'Fail' &&
           response.reason === 'Duplicate Code'
         ) {
-          this.msg = 'This Primary Subject Code is already in the list.!';
+          this.msg = 'This Primary Subject Code is already in the list!';
           this.showError = true;
         } else {
           this.openCustomSnackbar('error', 'Failed to save');
@@ -218,7 +224,12 @@ export class CreateMeetingsComponent implements OnInit {
         this.isEditable = true; // Show "Edit" button again
         this.isEditing = false; // Change button label back to "Edit"
         this.fetch_meetings(); // Refresh data after saving
-      });
+      },
+      (error) => {
+        console.error('Error saving meeting:', error);
+        this.openCustomSnackbar('error', 'Server error while saving');
+      }
+    );
 
     this.isAddMode = false; // Reset mode after saving
   }
