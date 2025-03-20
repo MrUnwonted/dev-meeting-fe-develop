@@ -128,7 +128,11 @@ addNewSubject() {
   editSubject() {
     this.isEditable = true;
     this.isAddMode = false; // Set to Edit mode
-    // this.saveMeeting();
+
+    // Ensure "actions" column is included when editing
+    if (!this.displayedColumns1.includes('actions')) {
+      this.displayedColumns1.push('actions');
+    }
   }
 
   // Handle "Cancel" button click
@@ -137,6 +141,7 @@ addNewSubject() {
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
     this.paginator.firstPage();
+    this.displayedColumns1 = this.displayedColumns1.filter(col => col !== 'actions');
     if (this.isAddMode) {
       // Clear form in Add New mode
       this.selectedMeetings = {
