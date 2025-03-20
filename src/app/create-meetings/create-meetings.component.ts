@@ -119,6 +119,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.isAddMode = true; // Set to Add New mode
     this.showError = false; // Hide error message
     this.deactive = false;
+    this.clearSelectedMeetings(); // Clear form fields
     // ✅ Clear the table data source
     this.dataSource1.data = [];
   }
@@ -279,8 +280,12 @@ export class CreateMeetingsComponent implements OnInit {
       (response: any) => {
         // console.log('Meeting Child Data:', response);
         // ✅ Correct way to assign data to MatTableDataSource
-        this.flg_owner = e.flg_chair === 1;
+        this.flg_owner = e.flg_chair === 1?true:false;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
+        this.dataSource1.data = this.dataSource1.data.map(item => ({
+          ...item,
+          flg_owner: item.flg_chair === 1 ? true : false
+        }));
         console.log('Meeting Child Data:', this.dataSource1.data);
         this.dataSource1.paginator = this.paginator1;
         // ✅ Assign meeting details
