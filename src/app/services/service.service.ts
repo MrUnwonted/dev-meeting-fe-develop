@@ -11,21 +11,6 @@ export class ServiceService {
   constructor(private http: HttpClient) { }
   apihost = '';
 
-  //  // Save Meeting
-  //  saveMeeting(data: any): Observable<any> {
-  //   return this.postservice('api/v0/save_meetings', data);
-  // }
-
-  // // Get Meetings
-  // getMeetings(officeId: number): Observable<any> {
-  //   return this.getService('api/v0/get_meetings', { officeId });
-  // }
-
-  // Get Meeting Child
-  getMeetingChild(meetingId: number): Observable<any> {
-    return this.getService('api/v0/get_meeting_child', { meeting_id: meetingId });
-  }
-
   // GET METHOD
   getService(methodName: string, params: any = null) {
     if (params) {
@@ -139,6 +124,52 @@ public get_cache_data(key:string): any {
 public clear_cache(key:string): void {
   localStorage.removeItem(key);
   localStorage.removeItem(key+"_exp");
+}
+
+
+checkJsonEquality(json_1:any,json_2:any) {
+  let result: boolean = false;
+
+ result = this.compareJsonArrays(json_1, json_2);
+ return result;
+}
+
+
+compareJsonObjects(obj1: any, obj2: any): boolean {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+
+  if (keys1.length !== keys2.length || !keys1.every(key => keys2.includes(key)) || !keys2.every(key => keys1.includes(key))) {
+    return false;
+  }
+
+
+  for (let key of keys1) {
+    if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+      if (!this.compareJsonObjects(obj1[key], obj2[key])) {
+        return false;
+      }
+    } else if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+compareJsonArrays(arr1: any[], arr2: any[]): boolean {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (!this.compareJsonObjects(arr1[i], arr2[i])) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 
