@@ -26,7 +26,6 @@ export class CreateMeetingsComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
     this.expandToggled.emit();
   }
-
   // Form model to store selected values
   selectedMeetings = {
     meeting_id: '',
@@ -170,7 +169,12 @@ export class CreateMeetingsComponent implements OnInit {
       return;
     }
 
-    let data = {
+    let data: {
+      meeting_name: string;
+      office_id: number;
+      child: any[];
+      id?: number; // Optional property for meeting ID
+    } = {
       meeting_name: this.selectedMeetings.meeting_name, // Meeting name
       office_id: 1, // Default office ID
       child: this.addedUsers.map((user) => {
@@ -186,6 +190,10 @@ export class CreateMeetingsComponent implements OnInit {
       }),
     };
 
+    // **Include meeting_id if editing an existing meeting**
+    if (this.primary_id) {
+      data.id = this.primary_id; // Send ID for updating
+    }
     console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
 
     this.is_loading = true;
@@ -193,7 +201,7 @@ export class CreateMeetingsComponent implements OnInit {
       .postservice('api/v0/save_meetings', data)
       .subscribe((response: any) => {
         console.log(response);
-        if (response.data) {
+        if (response.data || response.msg === 'Success') {
           this.openCustomSnackbar('success', 'Saved Successfully');
           this.primary_id = response.data.primary_id;
         } else if (
@@ -209,7 +217,7 @@ export class CreateMeetingsComponent implements OnInit {
         this.isReadOnly = true; // Make form read-only again
         this.isEditable = true; // Show "Edit" button again
         this.isEditing = false; // Change button label back to "Edit"
-        this.fetch_meetings();
+        this.fetch_meetings(); // Refresh data after saving
       });
 
     this.isAddMode = false; // Reset mode after saving
