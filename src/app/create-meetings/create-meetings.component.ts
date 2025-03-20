@@ -156,13 +156,12 @@ export class CreateMeetingsComponent implements OnInit {
     let data = {
       meeting_name: this.selectedMeetings.meeting_name, // Meeting name
       office_id: 1, // Default office ID
-      child: this.addedUsers.map((user) => ({
+      child: this.dataSource1.data.map((user) => ({
         user_id: user.user_id, // User ID
         seat_id: user.seat_id, // Seat ID
         flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
         user_name: user.user_name, // User name
-        email: user.user_email || null, // Optional email
-        mobile: user.user_mob || null, // Optional mobile number
+        email: user.email_id || null, // Optional email
       })),
     };
     // console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
@@ -175,11 +174,7 @@ export class CreateMeetingsComponent implements OnInit {
           this.openCustomSnackbar('success', 'Saved Successfully');
           this.primary_id = data.data.primary_id;
           // this.isReadOnly = true; // Make form read-only again
-          // this.isEditable = true; // Show "Edit" button again
-          this.isEditing = false; // Change button label back to "Edit"
-          this.dataSource1.data = []; // ✅ Clear child data
-          this.fetch_meetings(); // Refresh data after saving
-          this.clearSelectedMeetings(); // Clear form fields
+          // this.isEditable = true; // Show "Edit" button again\
           this.isAddMode = false; // Reset mode after saving
         } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
           this.msg = 'This Primary Subject Code is already in the list.!';
@@ -190,6 +185,10 @@ export class CreateMeetingsComponent implements OnInit {
         if (this.primary_id) {
           this.isEditable = true;
         }
+        this.isEditing = false; // Change button label back to "Edit"
+        this.dataSource1.data = []; // ✅ Clear child data
+        this.fetch_meetings(); // Refresh data after saving
+        this.clearSelectedMeetings(); // Clear form fields
       });
   }
 
@@ -260,8 +259,6 @@ export class CreateMeetingsComponent implements OnInit {
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
         // console.log('Meeting Child Data:', response);
-        // ✅ Correct way to assign data to MatTableDataSource
-        this.flg_owner = e.flg_chair === 1 ? true : false;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
         this.dataSource1.data = this.dataSource1.data.map((item) => ({
           ...item,
