@@ -170,11 +170,15 @@ export class CreateMeetingsComponent implements OnInit {
         return childObj;
       }),
     };
+    console.log("Data:", data);
     // console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
+    if (this.addedUsers.length === 0) {
+      alert("No Data") // Add meeting ID if exists
+    }
     this.commonsvr.postservice('api/v0/save_meetings', data).subscribe(
       (response: any) => {
-        // console.log(response);
+        console.log(response);
         if (response && response.msg === 'Success') {
           this.openCustomSnackbar('success', 'Saved Successfully');
           // **Fix: Check if response.data exists before accessing primary_id**
@@ -277,6 +281,7 @@ export class CreateMeetingsComponent implements OnInit {
         // ✅ Correct way to assign data to MatTableDataSource
         this.flg_owner = e.flg_chair === 1;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
+        console.log('Meeting Child Data:', this.dataSource1.data);
         this.dataSource1.paginator = this.paginator1;
         // ✅ Assign meeting details
         this.selectedMeetings = {
