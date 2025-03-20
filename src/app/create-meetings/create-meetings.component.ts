@@ -79,6 +79,7 @@ export class CreateMeetingsComponent implements OnInit {
     'owner',
     'actions',
   ];
+  originalData: any; // Store original fetched data for comparison
 
   @ViewChild('paginator1') paginator1!: MatPaginator;
   @ViewChild('paginator2') paginator2!: MatPaginator;
@@ -164,6 +165,17 @@ export class CreateMeetingsComponent implements OnInit {
         email: user.email_id || null, // Optional email
       })),
     };
+    console.log('Data to save:', data); // Debugging
+    console.log('Original Data:', this.originalData); // Debugging
+    // Check if data has changed before saving
+    let compare = this.commonsvr.checkJsonEquality(this.originalData, data);
+    console.log("Compare", compare);
+     // Compare with the original data before saving
+  if (compare === true)  {
+    console.log("Compare", this.originalData, data);
+    console.log("No changes detected. Skipping save.");
+    return;
+  }
     // console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
     this.commonsvr
@@ -259,14 +271,17 @@ export class CreateMeetingsComponent implements OnInit {
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
         // console.log('Meeting Child Data:', response);
+        // Store original fetched data for comparison
+        this.originalData = JSON.parse(JSON.stringify(response));
+        console.log('Original Data:', this.originalData);
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
         this.dataSource1.data = this.dataSource1.data.map((item) => ({
           ...item,
-          flg_owner: item.flg_chair === 1 ? true : false,
+          flg_owner: Boolean(item.flg_chair), //  Convert flg_chair to boolean
         }));
         console.log('Meeting Child Data:', this.dataSource1.data);
         this.dataSource1.paginator = this.paginator1;
-        // ✅ Assign meeting details
+        //  Assign meeting details
         this.selectedMeetings = {
           meeting_id: e.meeting_id,
           meeting_code: e.meeting_code,
