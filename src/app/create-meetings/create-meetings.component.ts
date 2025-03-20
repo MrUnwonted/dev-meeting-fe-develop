@@ -79,7 +79,7 @@ export class CreateMeetingsComponent implements OnInit {
     'email',
     'mobile',
     'owner',
-    'delete',
+    'actions',
   ];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -93,35 +93,41 @@ export class CreateMeetingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.language = environment.lang;
-    console.log(this.language);
+    // console.log(this.language);
     this.bilingual = environment.bilingual;
-    console.log(this.bilingual);
+    // console.log(this.bilingual);
     this.fetch_meetings(); //to fetch all primary subjects
   }
 
-  // Handle "Add New" button click
-  addNewSubject() {
-    this.primary_id = null; //Reset to save new subject
-    this.activeRowIndex = null;
-    this.isEditable = false;
-    this.isAddMode = true; // Set to Add New mode
-    this.showError = false; //to hide err msg
-    this.deactive = false;
-    // Clear the form fields for adding a new subject
-    this.selectedMeetings = {
-      meeting_id: '',
-      meeting_code: '',
-      meeting_name: '',
-      meeting_name_ln: '',
-    };
-    this.paginator.firstPage();
-  }
+ // Handle "Add New" button click
+addNewSubject() {
+  this.primary_id = null; // Reset to save new subject
+  this.activeRowIndex = null;
+  this.isEditable = false;
+  this.isAddMode = true; // Set to Add New mode
+  this.showError = false; // Hide error message
+  this.deactive = false;
+
+  // Clear the form fields for adding a new subject
+  this.selectedMeetings = {
+    meeting_id: '',
+    meeting_code: '',
+    meeting_name: '',
+    meeting_name_ln: '',
+  };
+
+  // ✅ Clear the table data source
+  this.dataSource1.data = [];
+
+  this.paginator.firstPage();
+}
+
 
   // Handle "Edit" button click
   editSubject() {
     this.isEditable = true;
     this.isAddMode = false; // Set to Edit mode
-    this.saveMeeting();
+    // this.saveMeeting();
   }
 
   // Handle "Cancel" button click
@@ -160,11 +166,8 @@ export class CreateMeetingsComponent implements OnInit {
           seat_id: user.seat_id, // Seat ID
           flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
           user_name: user.user_name, // User name
+          email: user.email_id, // Email
         };
-
-        // ✅ Only add email & mobile if they exist
-        if (user.email) childObj.email = user.email;
-        if (user.mobile) childObj.mobile = user.mobile;
 
         return childObj;
       })
@@ -348,6 +351,12 @@ export class CreateMeetingsComponent implements OnInit {
     this.flg_owner = false;
   }
 
+  onClickEdit(element: any, index: number) {
+    console.log('EditRow:', element);
+    // ✅ Find the correct index inside addedUsers (using user_id)
+    const userIndex = this.addedUsers.findIndex((user) => user.user_id === element.user_id);
+    
+  }
 
 
   onClickDelete(element: any, index: number) {
