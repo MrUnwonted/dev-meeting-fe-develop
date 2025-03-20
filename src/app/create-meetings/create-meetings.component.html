@@ -87,6 +87,7 @@
                             class="form-control xs"
                             [(ngModel)]="selectedMeetings.meeting_name"
                             (input)="clear_msg()"
+                            [readonly]="isReadOnly"
                           />
                         </div>
                       </div>
@@ -123,6 +124,7 @@
                             class="form-control xs"
                             name="sel_user"
                             id="sel_user"
+                            [readonly]="isReadOnly"
                           />
                         </div>
                       </div>
@@ -226,12 +228,14 @@
                               ><i
                                 class="icon icon-edit"
                                 (click)="onClickEdit(element, i)"
+                                *ngIf="!isReadOnly"
                               ></i>
                               </a>
                               <a role="button"
                               ><i
                                 class="icon icon-delete"
                                 (click)="onClickDelete(element, i)"
+                                *ngIf="!isReadOnly"
                               ></i>
                               </a>
                             </td>
@@ -272,6 +276,7 @@
                 <div class="form-footer">
                   <div class="button-wrap">
                     <!-- Conditional rendering of buttons based on the edit state -->
+                     <!-- Show "Save" and "Clear" when in Edit mode -->
                     <button
                       *ngIf="!isEditable"
                       class="sm btn btn-primary-90 save-btn"
@@ -287,13 +292,13 @@
                       {{ "Clear" | translate }}
                     </button>
 
-                    <!-- Show Add New or Edit button when form is not editable -->
+                     <!-- Show "Edit" and "Add New" when NOT in Edit mode -->
                     <button
-                      *ngIf="isEditable && !isAddMode"
+                      *ngIf="isEditable"
                       class="sm btn btn-primary-90 add-btn"
                       (click)="editSubject()"
                     >
-                      {{ "Edit" | translate }}
+                      {{ isEditing ? "Save" : "Edit" | translate }}
                     </button>
                     <button
                       *ngIf="isEditable && !isAddMode"

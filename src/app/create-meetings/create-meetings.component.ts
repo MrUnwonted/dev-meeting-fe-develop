@@ -38,6 +38,7 @@ export class CreateMeetingsComponent implements OnInit {
   // Variable to track whether the form is in edit mode
   isEditable: boolean = false; // Controls the Edit button and form state
   isReadOnly: boolean = false; // Controls form field interactivity
+  isEditing: boolean = false; // Track whether editing is in progress
   is_loading: boolean = false; // handle loader
   // Track whether the form is in Add New mode or Edit mode
   isAddMode: boolean = false;
@@ -97,6 +98,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.language = environment.lang;
     // console.log(this.language);
     this.bilingual = environment.bilingual;
+    this.isReadOnly = false; // Enable form at first load
     // console.log(this.bilingual);
     this.fetch_meetings(); //to fetch all primary subjects
   }
@@ -106,6 +108,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.primary_id = null; // Reset to save new subject
     this.activeRowIndex = null;
     this.isEditable = false;
+    this.isEditing = false;
     this.isAddMode = true; // Set to Add New mode
     this.showError = false; // Hide error message
     this.deactive = false;
@@ -126,9 +129,10 @@ export class CreateMeetingsComponent implements OnInit {
 
   // Handle "Edit" button click
   editSubject() {
-    this.isEditable = true;
-    this.isAddMode = false; // Set to Edit mode
-
+    // this.isAddMode = false; // Set to Edit mode
+    this.isReadOnly = false; // Enable form fields
+    this.isEditable = false; // Switch from "Edit" to "Save" button
+    this.isEditing = true; // Change button label to "Save"
     // // Ensure "actions" column is included when editing
     // if (!this.displayedColumns1.includes('actions')) {
     //   this.displayedColumns1.push('actions');
@@ -138,6 +142,7 @@ export class CreateMeetingsComponent implements OnInit {
   // Handle "Cancel" button click
   cancelEdit() {
     this.isEditable = true; // Exit edit mode
+    this.isEditing = false; // Change button label back to "Edit
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
     this.paginator.firstPage();
@@ -201,9 +206,9 @@ export class CreateMeetingsComponent implements OnInit {
           this.openCustomSnackbar('error', 'Failed to save');
         }
 
-        if (this.primary_id) {
-          this.isEditable = true;
-        }
+        this.isReadOnly = true; // Make form read-only again
+        this.isEditable = true; // Show "Edit" button again
+        this.isEditing = false; // Change button label back to "Edit"
         this.fetch_meetings();
       });
 
@@ -298,6 +303,7 @@ export class CreateMeetingsComponent implements OnInit {
 
     this.showError = false;
     this.isEditable = true; // The form starts in view mode
+    this.isReadOnly = true; // Disable form fields
     this.isAddMode = false; // Disable Add Mode
   }
 
