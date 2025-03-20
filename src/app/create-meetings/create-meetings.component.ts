@@ -153,63 +153,44 @@ export class CreateMeetingsComponent implements OnInit {
       console.log(this.msg); // Display error message if validation fails
       return;
     }
-    let data: {
-      meeting_name: string;
-      office_id: number;
-      child: any[];
-    } = {
+    let data = {
       meeting_name: this.selectedMeetings.meeting_name, // Meeting name
       office_id: 1, // Default office ID
-      child: this.addedUsers.map((user) => {
-        let childObj: any = {
-          user_id: user.user_id, // User ID
-          seat_id: user.seat_id, // Seat ID
-          flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
-          user_name: user.user_name, // User name
-          email: user.email_id, // Email
-        };
-        return childObj;
-      }),
+      child: this.addedUsers.map((user) => ({
+        user_id: user.user_id, // User ID
+        seat_id: user.seat_id, // Seat ID
+        flg_chair: user.flg_owner ? 1 : 0, // Flag if chairperson
+        user_name: user.user_name, // User name
+        email: user.user_email || null, // Optional email
+        mobile: user.user_mob || null, // Optional mobile number
+      })),
     };
-    console.log("Data:", data);
-    // console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
+    // console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
     this.is_loading = true;
-    if (this.addedUsers.length === 0) {
-      alert("No Data") // Add meeting ID if exists
-    }
-    this.commonsvr.postservice('api/v0/save_meetings', data).subscribe(
-      (response: any) => {
-        console.log(response);
-        if (response && response.msg === 'Success') {
+    this.commonsvr
+      .postservice('api/v0/save_meetings', data)
+      .subscribe((data: any) => {
+        console.log(data);
+        if (data.data) {
           this.openCustomSnackbar('success', 'Saved Successfully');
-          // **Fix: Check if response.data exists before accessing primary_id**
-          if (response.data && response.data.primary_id) {
-            this.primary_id = response.data.primary_id; // Store meeting ID
-          } else if (response.id) {
-            this.primary_id = response.id; // Fallback: Use response.id if available
-          }
-        } else if (
-          response.msg === 'Fail' &&
-          response.reason === 'Duplicate Code'
-        ) {
-          this.msg = 'This Primary Subject Code is already in the list!';
+          this.primary_id = data.data.primary_id;
+          // this.isReadOnly = true; // Make form read-only again
+          // this.isEditable = true; // Show "Edit" button again
+          this.isEditing = false; // Change button label back to "Edit"
+          this.dataSource1.data = []; // ✅ Clear child data
+          this.fetch_meetings(); // Refresh data after saving
+          this.clearSelectedMeetings(); // Clear form fields
+          this.isAddMode = false; // Reset mode after saving
+        } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
+          this.msg = 'This Primary Subject Code is already in the list.!';
           this.showError = true;
         } else {
           this.openCustomSnackbar('error', 'Failed to save');
         }
-        this.isReadOnly = true; // Make form read-only again
-        this.isEditable = true; // Show "Edit" button again
-        this.isEditing = false; // Change button label back to "Edit"
-        this.dataSource1.data = []; // ✅ Clear child data
-        this.fetch_meetings(); // Refresh data after saving
-        this.clearSelectedMeetings(); // Clear form fields
-      },
-      (error) => {
-        console.error('Error saving meeting:', error);
-        this.openCustomSnackbar('error', 'Server error while saving');
-      }
-    );
-    this.isAddMode = false; // Reset mode after saving
+        if (this.primary_id) {
+          this.isEditable = true;
+        }
+      });
   }
 
   // check if all data entry are valid
@@ -280,11 +261,11 @@ export class CreateMeetingsComponent implements OnInit {
       (response: any) => {
         // console.log('Meeting Child Data:', response);
         // ✅ Correct way to assign data to MatTableDataSource
-        this.flg_owner = e.flg_chair === 1?true:false;
+        this.flg_owner = e.flg_chair === 1 ? true : false;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
-        this.dataSource1.data = this.dataSource1.data.map(item => ({
+        this.dataSource1.data = this.dataSource1.data.map((item) => ({
           ...item,
-          flg_owner: item.flg_chair === 1 ? true : false
+          flg_owner: item.flg_chair === 1 ? true : false,
         }));
         console.log('Meeting Child Data:', this.dataSource1.data);
         this.dataSource1.paginator = this.paginator1;
