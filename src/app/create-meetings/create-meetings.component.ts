@@ -72,6 +72,7 @@ export class CreateMeetingsComponent implements OnInit {
   flg_owner: boolean = false;
   addedUsers: any[] = []; // Stores added users
   dataSource1 = new MatTableDataSource<any>([]);
+  editingIndex: any; // Index of the row being edited
   displayedColumns1: string[] = [
     'slNo',
     'seat_name',
@@ -311,7 +312,7 @@ addNewSubject() {
   restrictAllEntry(e: any) {}
 
   add_user_tolist() {
-    console.log('Before Adding:', this.selected_user); // 🔍 Debugging
+    console.log('Before Adding:', this.selected_user);
 
     if (!this.selected_user || !this.selected_user.seat_name) {
       alert('Please select a user before adding.');
@@ -321,42 +322,56 @@ addNewSubject() {
     const newUser = {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
-      user_name: this.selected_user.user_name, // ✅ Ensure correct property name
-      email_id: this.selected_user.email_id, // ✅ Fix typo
+      user_name: this.selected_user.user_name,
+      email_id: this.selected_user.email_id,
       mobile: this.selected_user.user_mob,
       user_id: this.selected_user.user_id,
-      flg_owner: this.flg_owner, // ✅ Add owner flag
+      flg_owner: this.flg_owner, // ✅ Keep owner flag
     };
 
-    // Prevent duplicate users
-    if (this.addedUsers.some(user => user.seat_id === newUser.seat_id)) {
-      alert('User already added!');
-      return;
+    if (this.editingIndex !== undefined && this.editingIndex !== null) {
+      // If editing, update the existing row
+      this.addedUsers[this.editingIndex] = newUser;
+      this.editingIndex = null; // Reset editing index
+    } else {
+      // If adding a new user, prevent duplicates
+      if (this.addedUsers.some(user => user.seat_id === newUser.seat_id)) {
+        alert('User already added!');
+        return;
+      }
+      this.addedUsers.push(newUser);
     }
 
-    this.addedUsers.push(newUser);
-    this.dataSource1 = new MatTableDataSource([...this.addedUsers]); // ✅ Update table
+    // Update table
+    this.dataSource1 = new MatTableDataSource([...this.addedUsers]);
 
-    console.log('After Adding:', this.dataSource1); // 🔍 Debugging
+    console.log('After Adding:', this.dataSource1);
 
     // Clear fields after adding
-    this.selected_user = {
-      seat_name: '',
-      seat_id: '',
-      user_name: '',
-      email_id: '',
-      user_mob: '',
-      user_id: '',
-    };
-    this.flg_owner = false;
+    this.clear_user_details();
   }
+
 
   onClickEdit(element: any, index: number) {
     console.log('EditRow:', element);
-    // ✅ Find the correct index inside addedUsers (using user_id)
-    const userIndex = this.addedUsers.findIndex((user) => user.user_id === element.user_id);
-    
+
+    // Bind selected row's data to the form fields
+    this.selected_user = {
+      seat_name: element.seat_name,
+      seat_id: element.seat_id,
+      user_name: element.user_name,
+      email_id: element.email_id,
+      user_mob: element.mobile,
+      user_id: element.user_id,
+    };
+
+    // Set the owner flag
+    this.flg_owner = element.flg_owner;
+
+    // Store index to update the correct row later when user clicks "Add"
+    this.editingIndex = index;
   }
+
 
 
   onClickDelete(element: any, index: number) {
@@ -381,6 +396,9 @@ addNewSubject() {
       user_mob: '',
       user_id: '',
     };
+    if (this.flg_owner) {
+      this.flg_owner = false;
+    }
     console.log('Cleared user details', this.selected_user);
   }
 
