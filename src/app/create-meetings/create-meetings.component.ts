@@ -36,7 +36,8 @@ export class CreateMeetingsComponent implements OnInit {
   };
 
   // Variable to track whether the form is in edit mode
-  isEditable: boolean = false;
+  isEditable: boolean = false; // Controls the Edit button and form state
+  isReadOnly: boolean = false; // Controls form field interactivity
   is_loading: boolean = false; // handle loader
   // Track whether the form is in Add New mode or Edit mode
   isAddMode: boolean = false;
@@ -100,39 +101,38 @@ export class CreateMeetingsComponent implements OnInit {
     this.fetch_meetings(); //to fetch all primary subjects
   }
 
- // Handle "Add New" button click
-addNewSubject() {
-  this.primary_id = null; // Reset to save new subject
-  this.activeRowIndex = null;
-  this.isEditable = false;
-  this.isAddMode = true; // Set to Add New mode
-  this.showError = false; // Hide error message
-  this.deactive = false;
+  // Handle "Add New" button click
+  addNewSubject() {
+    this.primary_id = null; // Reset to save new subject
+    this.activeRowIndex = null;
+    this.isEditable = false;
+    this.isAddMode = true; // Set to Add New mode
+    this.showError = false; // Hide error message
+    this.deactive = false;
 
-  // Clear the form fields for adding a new subject
-  this.selectedMeetings = {
-    meeting_id: '',
-    meeting_code: '',
-    meeting_name: '',
-    meeting_name_ln: '',
-  };
+    // Clear the form fields for adding a new subject
+    this.selectedMeetings = {
+      meeting_id: '',
+      meeting_code: '',
+      meeting_name: '',
+      meeting_name_ln: '',
+    };
 
-  // ✅ Clear the table data source
-  this.dataSource1.data = [];
+    // ✅ Clear the table data source
+    this.dataSource1.data = [];
 
-  this.paginator.firstPage();
-}
-
+    this.paginator.firstPage();
+  }
 
   // Handle "Edit" button click
   editSubject() {
     this.isEditable = true;
     this.isAddMode = false; // Set to Edit mode
 
-    // Ensure "actions" column is included when editing
-    if (!this.displayedColumns1.includes('actions')) {
-      this.displayedColumns1.push('actions');
-    }
+    // // Ensure "actions" column is included when editing
+    // if (!this.displayedColumns1.includes('actions')) {
+    //   this.displayedColumns1.push('actions');
+    // }
   }
 
   // Handle "Cancel" button click
@@ -141,7 +141,6 @@ addNewSubject() {
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
     this.paginator.firstPage();
-    this.displayedColumns1 = this.displayedColumns1.filter(col => col !== 'actions');
     if (this.isAddMode) {
       // Clear form in Add New mode
       this.selectedMeetings = {
@@ -153,6 +152,9 @@ addNewSubject() {
       this.isEditable = false;
       this.isAddMode = false;
     }
+    // ✅ Clear table data
+    this.addedUsers = []; // Empty the array
+    this.dataSource1.data = [...this.addedUsers]; // ✅ Update MatTable data
     this.showError = false;
   }
 
@@ -166,7 +168,7 @@ addNewSubject() {
     let data = {
       meeting_name: this.selectedMeetings.meeting_name, // Meeting name
       office_id: 1, // Default office ID
-      child: this.addedUsers.map(user => {
+      child: this.addedUsers.map((user) => {
         let childObj: any = {
           user_id: user.user_id, // User ID
           seat_id: user.seat_id, // Seat ID
@@ -176,19 +178,23 @@ addNewSubject() {
         };
 
         return childObj;
-      })
+      }),
     };
 
-    console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
+    console.log('🚀 Posting Data:', JSON.stringify(data, null, 2)); // Debugging
 
     this.is_loading = true;
-    this.commonsvr.postservice('api/v0/save_meetings', data)
+    this.commonsvr
+      .postservice('api/v0/save_meetings', data)
       .subscribe((response: any) => {
         console.log(response);
         if (response.data) {
           this.openCustomSnackbar('success', 'Saved Successfully');
           this.primary_id = response.data.primary_id;
-        } else if (response.msg === 'Fail' && response.reason === 'Duplicate Code') {
+        } else if (
+          response.msg === 'Fail' &&
+          response.reason === 'Duplicate Code'
+        ) {
           this.msg = 'This Primary Subject Code is already in the list.!';
           this.showError = true;
         } else {
@@ -203,7 +209,6 @@ addNewSubject() {
 
     this.isAddMode = false; // Reset mode after saving
   }
-
 
   // check if all data entry are valid
   validate_meeting() {
@@ -264,25 +269,26 @@ addNewSubject() {
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
     console.log('e:', e);
-    this.activeRowIndex = index+1;
+    this.activeRowIndex = index + 1;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
 
     let param = {
-      meeting_id:  this.activeRowIndex,
+      meeting_id: this.activeRowIndex,
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
-          console.log('Meeting Child Data:', response);
-          // ✅ Correct way to assign data to MatTableDataSource
-          this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
-          // ✅ Assign meeting details
-          this.selectedMeetings = {
-            meeting_id: e.meeting_id,
-            meeting_code: e.meeting_code,
-            meeting_name: e.meeting_name,
-            meeting_name_ln: e.meeting_name_ln,
-          };
+        console.log('Meeting Child Data:', response);
+        // ✅ Correct way to assign data to MatTableDataSource
+        this.flg_owner = e.flg_chair === 1;
+        this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
+        // ✅ Assign meeting details
+        this.selectedMeetings = {
+          meeting_id: e.meeting_id,
+          meeting_code: e.meeting_code,
+          meeting_name: e.meeting_name,
+          meeting_name_ln: e.meeting_name_ln,
+        };
       },
       (error) => {
         console.error('Error fetching meeting child data:', error);
@@ -340,7 +346,7 @@ addNewSubject() {
       this.editingIndex = null; // Reset editing index
     } else {
       // If adding a new user, prevent duplicates
-      if (this.addedUsers.some(user => user.seat_id === newUser.seat_id)) {
+      if (this.addedUsers.some((user) => user.seat_id === newUser.seat_id)) {
         alert('User already added!');
         return;
       }
@@ -355,7 +361,6 @@ addNewSubject() {
     // Clear fields after adding
     this.clear_user_details();
   }
-
 
   onClickEdit(element: any, index: number) {
     console.log('EditRow:', element);
@@ -377,12 +382,12 @@ addNewSubject() {
     this.editingIndex = index;
   }
 
-
-
   onClickDelete(element: any, index: number) {
     console.log('DeleteRow:', element);
     // ✅ Find the correct index inside addedUsers (using user_id)
-    const userIndex = this.addedUsers.findIndex((user) => user.user_id === element.user_id);
+    const userIndex = this.addedUsers.findIndex(
+      (user) => user.user_id === element.user_id
+    );
 
     if (userIndex !== -1) {
       this.addedUsers.splice(userIndex, 1); // Remove user
@@ -390,10 +395,9 @@ addNewSubject() {
     }
   }
 
-
   clear_user_details() {
-     // Clear input fields
-     this.selected_user = {
+    // Clear input fields
+    this.selected_user = {
       seat_id: '',
       seat_name: '',
       user_name: '',
@@ -421,12 +425,12 @@ addNewSubject() {
 
         // ✅ Map response keys to match selected_user structure
         this.selected_user = {
-          seat_name: userData.seat_name || '',  // From `CS-FED001`
-          seat_id: userData.seat_id || '',      // From `7`
-          user_name: userData.title || '',      // From `Malachi Punith`
-          email_id: userData.email || '',     // From `punith@kvgbank.com`
-          user_mob: userData.mobile || '',      // From `8551265956`
-          user_id: userData.user_id || '',      // From `3`
+          seat_name: userData.seat_name || '', // From `CS-FED001`
+          seat_id: userData.seat_id || '', // From `7`
+          user_name: userData.title || '', // From `Malachi Punith`
+          email_id: userData.email || '', // From `punith@kvgbank.com`
+          user_mob: userData.mobile || '', // From `8551265956`
+          user_id: userData.user_id || '', // From `3`
         };
 
         this.flg_owner = false; // ✅ Keep it unchecked initially
@@ -434,8 +438,4 @@ addNewSubject() {
       // console.log('Selected User:', this.selected_user); // 🔍 Debugging
     });
   }
-
-
-
-
 }
