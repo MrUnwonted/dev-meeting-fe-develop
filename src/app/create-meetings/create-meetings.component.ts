@@ -84,12 +84,13 @@ export class CreateMeetingsComponent implements OnInit {
     'actions',
   ];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('paginator1') paginator1!: MatPaginator;
+  @ViewChild('paginator2') paginator2!: MatPaginator;
+  @ViewChild('sort1') sort!: MatSort;
 
   constructor(
     private commonsvr: ServiceService,
-    private router: Router,
+    // private router: Router,
     private dialog: MatDialog
   ) {}
 
@@ -100,6 +101,14 @@ export class CreateMeetingsComponent implements OnInit {
     this.isReadOnly = false; // Enable form at first load
     // console.log(this.bilingual);
     this.fetch_meetings(); //to fetch all primary subjects
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator1; // ✅ Assign first table paginator
+    this.dataSource.sort = this.sort;
+
+    this.dataSource1.paginator = this.paginator2; // ✅ Assign second table paginator
+    this.dataSource1.sort = this.sort;
   }
 
   // Handle "Add New" button click
@@ -122,8 +131,6 @@ export class CreateMeetingsComponent implements OnInit {
 
     // ✅ Clear the table data source
     this.dataSource1.data = [];
-
-    this.paginator.firstPage();
   }
 
   // Handle "Edit" button click
@@ -144,7 +151,6 @@ export class CreateMeetingsComponent implements OnInit {
     this.isEditing = false; // Change button label back to "Edit
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
-    this.paginator.firstPage();
     if (this.isAddMode) {
       // Clear form in Add New mode
       this.selectedMeetings = {
@@ -156,9 +162,9 @@ export class CreateMeetingsComponent implements OnInit {
       this.isEditable = false;
       this.isAddMode = false;
     }
-    // ✅ Clear table data
-    this.addedUsers = []; // Empty the array
-    this.dataSource1.data = [...this.addedUsers]; // ✅ Update MatTable data
+
+    this.dataSource1.data = []; // ✅ Update MatTable data
+    this.dataSource1.paginator = this.paginator2;
     this.showError = false;
   }
 
@@ -286,7 +292,7 @@ export class CreateMeetingsComponent implements OnInit {
         this.subject_data = res;
         this.dataSource = new MatTableDataSource(this.subject_data);
         this.is_loading = false;
-        this.dataSource.paginator = this.paginator;
+        this.dataSource.paginator = this.paginator1;
       });
   }
 
@@ -306,6 +312,7 @@ export class CreateMeetingsComponent implements OnInit {
         // ✅ Correct way to assign data to MatTableDataSource
         this.flg_owner = e.flg_chair === 1;
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
+        this.dataSource1.paginator = this.paginator2;
         // ✅ Assign meeting details
         this.selectedMeetings = {
           meeting_id: e.meeting_id,
@@ -330,6 +337,7 @@ export class CreateMeetingsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.paginator = this.paginator1;
   }
 
   // Success toast
@@ -380,6 +388,7 @@ export class CreateMeetingsComponent implements OnInit {
 
     // Update table
     this.dataSource1 = new MatTableDataSource([...this.addedUsers]);
+    this.dataSource1.paginator = this.paginator2;
 
     console.log('After Adding:', this.dataSource1);
 
@@ -417,6 +426,7 @@ export class CreateMeetingsComponent implements OnInit {
     if (userIndex !== -1) {
       this.addedUsers.splice(userIndex, 1); // Remove user
       this.dataSource1.data = [...this.addedUsers]; // ✅ Update table
+      this.dataSource1.paginator = this.paginator2;
     }
   }
 

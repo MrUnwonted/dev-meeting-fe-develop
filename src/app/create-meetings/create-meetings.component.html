@@ -254,7 +254,7 @@
                       </div>
 
                       <!-- MatPaginator for Pagination -->
-                      <mat-paginator
+                      <mat-paginator #paginator1
                         [pageSizeOptions]="[5, 10, 25, 100]"
                         showFirstLastButtons
                       ></mat-paginator>
@@ -342,7 +342,7 @@
                         {{
                           element +
                             1 +
-                            this.paginator.pageIndex * this.paginator.pageSize
+                            this.paginator1.pageIndex * this.paginator1.pageSize
                         }}
                       </td>
                     </ng-container>
@@ -435,7 +435,7 @@
                 </div>
 
                 <!-- MatPaginator for Pagination -->
-                <mat-paginator
+                <mat-paginator #paginator2
                   [pageSizeOptions]="[5, 10, 25, 100]"
                   showFirstLastButtons
                   [pageSize]="10"
