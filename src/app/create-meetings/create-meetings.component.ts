@@ -80,6 +80,7 @@ export class CreateMeetingsComponent implements OnInit {
     'actions',
   ];
   originalData: any; // Store original fetched data for comparison
+  saveData: any; // Store the JSON when saving
   // fetchMeeting: any; //Store the JSON when fetching
 
   @ViewChild('paginator1') paginator1!: MatPaginator;
@@ -152,17 +153,18 @@ export class CreateMeetingsComponent implements OnInit {
   // Handle "Save" button click
   saveMeeting() {
     if (!this.validate_meeting()) {
-      console.log(this.msg); // Display error message if validation fails
+      console.error('Meeting validation failed:', this.msg);
       return;
     }
-    let data = [
+    this.saveData = [
       {
         meeting_name: this.selectedMeetings.meeting_name,
         office_id: 1,
         child: this.dataSource1.data.map((user) => ({
           user_id: user.user_id,
           seat_id: user.seat_id,
-          flg_chair: Number(user.flg_owner),
+          // flg_chair: Number(user.flg_owner),
+          flg_chair: user.flg_owner ? Number(user.flg_owner) : 0, // Default to 0 if undefined
           user_name: user.user_name,
           email: user.email || null,
           mobile: user.mobile || null,
@@ -171,28 +173,25 @@ export class CreateMeetingsComponent implements OnInit {
     ];
     // Check if data has changed before saving
     if (this.isEditing) {
-      // Ensure both are defined and are arrays
-    if (!this.originalData) {
-      this.originalData = [];
-    }
-
-    if (!Array.isArray(this.originalData) || !Array.isArray(data)) {
-      console.error("Error: Data to compare must be arrays");
-      return;
-    }
-      console.log('Original Data:', this.originalData);
-      console.log('Current Data:', data);
-      let compare = this.commonsvr.checkJsonEquality(this.originalData, data);
-      console.log('Compare', compare);
-      if (!compare) {
-        console.log('error', 'No changes detected!');
-        return;
+      let result = this.compareJson(this.originalData, this.saveData);
+      if (!result) {
+        // console.log('Triggered to save data');
+        this.saveMeetingFunction();
+        this.is_loading = true;
+      } else {
+        alert('No changes detected!');
       }
+    } else {
+      // console.log('Triggered to save data');
+      this.saveMeetingFunction();
+      this.is_loading = true;
     }
-    // console.log("🚀 Posting Data:", JSON.stringify(data, null, 2)); // Debugging
-    this.is_loading = true;
+  }
+
+  saveMeetingFunction() {
+    console.log('Save Data:', this.saveData);
     this.commonsvr
-      .postservice('api/v0/save_meetings', data)
+      .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
         console.log(data);
         if (data.data) {
@@ -201,9 +200,9 @@ export class CreateMeetingsComponent implements OnInit {
           // this.isReadOnly = true; // Make form read-only again
           // this.isEditable = true; // Show "Edit" button again\
           this.isAddMode = false; // Reset mode after saving
-        } else if (data.msg === 'Fail' && data.reason === 'Duplicate Code') {
-          this.msg = 'This Primary Subject Code is already in the list.!';
-          this.showError = true;
+          this.dataSource1.data = []; // Clear child data
+          this.fetch_meetings(); // Refresh data after saving
+          this.clearSelectedMeetings(); // Clear form fields
         } else {
           this.openCustomSnackbar('error', 'Failed to save');
         }
@@ -211,11 +210,40 @@ export class CreateMeetingsComponent implements OnInit {
           this.isEditable = true;
         }
         this.isEditing = false; // Change button label back to "Edit"
-        this.dataSource1.data = []; // Clear child data
-        this.fetch_meetings(); // Refresh data after saving
-        this.clearSelectedMeetings(); // Clear form fields
       });
   }
+
+  compareJson(obj1: any, obj2: any) {
+    if (!obj1) {
+      obj1 = [];
+    }
+
+    try {
+      // Ensure obj1 is an object (in case it's stored as a JSON string)
+      if (typeof obj1 === "string") {
+        obj1 = JSON.parse(obj1);
+      }
+      if (typeof obj2 === "string") {
+        obj2 = JSON.parse(obj2);
+      }
+
+      // Ensure both are JSON strings before comparison
+      let compData1 = JSON.stringify(obj1, null, 2);
+      let compData2 = JSON.stringify(obj2, null, 2);
+
+      console.log("Object 1:", compData1);
+      console.log("Object 2:", compData2);
+
+      let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
+      console.log("Comparison Result:", compare);
+
+      return compare;
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return false;
+    }
+  }
+
 
   // check if all data entry are valid
   validate_meeting() {
@@ -284,11 +312,11 @@ export class CreateMeetingsComponent implements OnInit {
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
         // Merge API data when row is clicked
-        // this.originalData = JSON.stringify(this.mergeMeetingsAndMembers([e], response), null, 2);
-        // this.originalData = this.mergeMeetingsAndMembers([e], response);
-        this.originalData = this.mergeMeetingsAndMembers([e], response) || [];
-        console.log('Merged Data:', this.originalData);
-        // console.log('Meeting Child Data:', response);
+        this.originalData = JSON.stringify(
+          this.mergeMeetingsAndMembers([e], response),
+          null,
+          2
+        );
         this.dataSource1 = new MatTableDataSource<any>(response as any[]); // Use `dataSource1` to store the child data
         this.dataSource1.data = this.dataSource1.data.map((item) => ({
           ...item,

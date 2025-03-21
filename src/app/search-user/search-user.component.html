@@ -1,163 +1,169 @@
+<div class="loader" *ngIf="data_filled">
+    <mat-spinner [diameter]="50"></mat-spinner>
+</div>
+
+  
 <app-common-modals [title]="'UserList'" [buttons]="modalButtons" class="admin-modal admin-layout">
-  <div class="search-flex-outer">
-      <div class="left-side">
-          <div class="search-wrap">
-              <div class="input-wrap">
-                  <input type="text" name="search" id="search01" placeholder="Search by EmpCode"
-                      class="form-control md" (keypress)="alphaNumeric($event)" [(ngModel)]="emp_code" (change)="go()">
-                  <button class="btn btn-primary-80 sm search-btn" (click)="go()"> Go </button>
-                  <div>
-                      <p style="color: red;" *ngIf="is_message"> No Matching found</p>
-                  </div>
 
-              </div>
-          </div>
-      </div>
-      <div class="right-side">
-          <div class="filter-btn">
-              <button class="btn btn-none filter-btn-search sm" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#advsearch" aria-expanded="false" aria-controls="advsearch">
-                  <i class="icon icon-filter-search xl"></i>
-                  Show Advance Search
-              </button>
-          </div>
-      </div>
-  </div>
+    <div class="search-flex-outer">
 
-  <!-- adv search collapse -->
-  <div class="collapse advanced-search" id="advsearch">
-      <app-cards [cardClass]="'card widget-card'">
-          <div card-body>
-              <div class="filter-wrap">
-                  <div class="row gy-3">
+        <div class="left-side">
+            <div class="search-wrap">
+                <div class="input-wrap">
+                    <input type="text" name="search" id="search01" placeholder="Search by EmpCode"
+                        class="form-control md" (keypress)="alphaNumeric($event)" [(ngModel)]="emp_code"
+                        (change)="go()">
+                    <button class="btn btn-primary-80 sm search-btn" (click)="go()"> Go </button>
+                    <div>
+                        <p style="color: red;" *ngIf="is_message"> No Matching found</p>
+                    </div>
 
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="subj" class="form-label">Department</label>
-                              <select name="subj" id="subj" class="form-select md" [(ngModel)]="department" (click)="department_data()">
-                                  <option value="" hidden></option>
-                                  <option *ngFor="let department of department_list" [ngValue]="department">
-                                      {{ department.dept_name }}
-                                  </option>
-                              </select>
-                          </div>
-                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="filter-btn">
+                <button class="btn btn-none filter-btn-search sm" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#advsearch" aria-expanded="false" aria-controls="advsearch">
+                    <i class="icon icon-filter-search xl"></i>
+                    Show Advance Search
+                </button>
+            </div>
+        </div>
+    </div>
 
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="subj2" class="form-label">Choose Section</label>
-                              <select name="subj2" id="subj2" class="form-select md" [(ngModel)]="section" (click)="get_seat()">
-                                  <option value="" hidden></option>
-                                  <option *ngFor="let section of section_list" [ngValue]="section">
-                                      {{ section.section_name }}
-                                  </option>
-                              </select>
-                          </div>
-                      </div>
+    <!-- adv search collapse -->
+    <div class="collapse advanced-search" id="advsearch">
+        <app-cards [cardClass]="'card widget-card'">
+            <div card-body>
+                <div class="filter-wrap">
+                    <div class="row gy-3">
 
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="subj3" class="form-label">Seat</label>
-                              <select name="subj3" id="subj3" class="form-select md" [(ngModel)]="seat">
-                                  <option value="" hidden></option>
-                                  <option *ngFor="let seat of Seat_list" [ngValue]="seat">
-                                      {{ seat.section_name }}
-                                  </option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row gy-3">
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="subj" class="form-label">Employee Name</label>
-                              <input type="text" name="search" id="search02" placeholder="Type emp.Name"
-                                  class="form-control md" [(ngModel)]="emp_name" minlength="3" required
-                                  #empNameRef="ngModel">
-                          </div>
-                      </div>
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="subj" class="form-label">Mobile No</label>
-                              <input type="text" name="search" id="search03" placeholder="Type Mobile No."
-                                  class="form-control md" minlength="10" maxlength="10"
-                                  (keypress)="numberOnly($event)" [(ngModel)]="phone_num">
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-group">
-                              <label for="subj" class="form-label">Email</label>
-                              <input type="text" name="search" id="search04" placeholder="Type email"
-                                  class="form-control md" [(ngModel)]="email"
-                                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #emailref="ngModel">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subj" class="form-label">Department</label>
+                                <select name="subj" id="subj" class="form-select md" [(ngModel)]="department"
+                                    (click)="section_data()">
+                                    <option value="" hidden></option>
+                                    <option *ngFor="let department of department_list" [ngValue]="department">
+                                        {{ department.dept_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
-                              <p *ngIf="emailref.errors?.['pattern'] && (emailref.touched || emailref.dirty)"
-                                  style="color: red">
-                                  Invalid Email
-                              </p>
-                          </div>
-                      </div>
-                      <div class="col-md-1">
-                          <label for="subj" class="form-label"> </label>
-                          <button class="btn btn-primary-80 sm search-btn" (click)="save()"
-                              [disabled]="isButtonDisabled(emailref)"> Search </button>
-                      </div>
-                  </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subj2" class="form-label">Choose Section</label>
+                                <select name="subj2" id="subj2" class="form-select md" [(ngModel)]="section"
+                                    (click)="seat_data()">
+                                    <option value="" hidden></option>
+                                    <option *ngFor="let section of section_list" [ngValue]="section">
+                                        {{ section.section_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subj3" class="form-label">Seat</label>
+                                <select name="subj3" id="subj3" class="form-select md" [(ngModel)]="seat">
+                                    <option value="" hidden></option>
+                                    <option *ngFor="let seat of Seat_list" [ngValue]="seat">
+                                        {{ seat.section_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gy-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subj" class="form-label">Employee Name</label>
+                                <input type="text" name="search" id="search02" placeholder="Type emp.Name"
+                                    class="form-control md" [(ngModel)]="emp_name" minlength="3" required
+                                    #empNameRef="ngModel">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="subj" class="form-label">Mobile No</label>
+                                <input type="text" name="search" id="search03" placeholder="Type Mobile No."
+                                    class="form-control md" minlength="10" maxlength="10"
+                                    (keypress)="numberOnly($event)" [(ngModel)]="phone_num">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="subj" class="form-label">Email</label>
+                                <input type="text" name="search" id="search04" placeholder="Type email"
+                                    class="form-control md" [(ngModel)]="email"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" #emailref="ngModel">
 
-              </div>
-          </div>
-      </app-cards>
-  </div>
-
-  <!-- content full wrap inside modal body -->
-  <div class="body-outer-wrap">
+                                <p *ngIf="emailref.errors?.['pattern'] && (emailref.touched || emailref.dirty)"
+                                    style="color: red">
+                                    Invalid Email
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="subj" class="form-label"> </label>
+                            <button class="btn btn-primary-80 sm search-btn" (click)="save()"
+                                [disabled]="isButtonDisabled(emailref)"> Search </button>
+                        </div>
+                    </div>
 
 
+                </div>
+            </div>
+        </app-cards>
+    </div>
 
-      <!-- applicant list wrap -->
-      <div class="applicant-card-list-wrap list-wrap">
-          <div class="table-wrap">
-              <table>
-                  <thead>
+    <!-- content full wrap inside modal body -->
+    <div class="body-outer-wrap">
+
+
+
+        <!-- applicant list wrap -->
+        <div class="applicant-card-list-wrap list-wrap">
+            <div class="table-wrap">
+                <table>
+                    <thead>
                       <tr>
-                          <th>Name</th>
-                          <th>Designation</th>
-                          <th>Seat</th>
-                          <th>Email ID</th>
-                          <th>Phone</th>
-                          <th></th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Seat</th>
+                        <th>Email ID</th>
+                        <th>Phone</th>
+                        <th></th>
                       </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let item of user_list; let i = index" (click)="rowActive(item, i)">
-                          <td>
-                              <div class="profile-wrap">
-                                  <img src="../../../../../../assets/public/image/png/dummy-avatar.png" alt=""
-                                      class="profile-image">
-                                  <h6 class="name">{{item.title}} ({{item.emp_code}}) </h6>
-                              </div>
-                          </td>
-                          <td>
-                              {{item.designation}}
-                          </td>
-                          <td>
-                              {{item.seat_name}} ({{item.seat_code}})
-                          </td>
-                          <td>
-                              {{item.email}}
-                          </td>
-                          <td>
-                              {{item.mobile}}
-                          </td>
-                          <td>
-                              <a href="#"><i class="icon icon-more-3"></i></a>
-                          </td>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of user_list; let i = index"
+                          (click)="rowActive(item, i)"
+                          [ngClass]="{'active-row': activeRowIndex === i}" 
+                          (dblclick)="select_row()">
+                        <td>
+                          <div class="profile-wrap">
+                            <img src="../../../../../../assets/public/image/png/dummy-avatar.png" alt="" class="profile-image">
+                            <h6 class="name">{{item.title}} ({{item.emp_code}})</h6>
+                          </div>
+                        </td>
+                        <td>{{item.designation}}</td>
+                        <td>{{item.seat_name}} ({{item.seat_code}})</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>
+                          <a href="#"><i class="icon icon-more-3"></i></a>
+                        </td>
                       </tr>
+                    </tbody>
+                  </table>
+                  
+            </div>
+        </div>
+    </div>
 
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
+ 
 </app-common-modals>

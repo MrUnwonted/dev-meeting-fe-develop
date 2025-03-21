@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 import { ServiceService } from '../services/service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search-user',
@@ -22,51 +22,54 @@ export class SearchUserComponent implements OnInit {
   section: any
   seat: any
   department_list: any[] = [];
-  office_id : any
-  section_list : any [] = []
-  Seat_list : any [] = []
-  res_data_sections:  any [] = []
-  res_data_seats:  any [] = []
+  office_id: any
+  section_list: any[] = []
+  Seat_list: any[] = []
+  res_data_sections: any[] = []
+  res_data_seats: any[] = []
   is_message: boolean = true;
-  employee_data: any [] = []
+  employee_data: any[] = []
   selected_data: any
-
-
-
+  data_filled: Boolean = false;
+  rowColors: string[] = [];
 
   activeRowIndex: number | null = null;
+  
 
   // Modal footer buttons
   modalButtons = [
 
-    { text: 'Cancel',
+    {
+      text: 'Cancel',
       className: 'btn btn-outline-primary-90 xs',
       action: this.closeModal.bind(this)
     },
-    { text: 'Select',
+    {
+      text: 'Select',
       className: 'btn btn-primary-90 xs',
       action: this.select_row.bind(this)
-     },
+    },
   ];
 
   constructor(
     private dialogRef: MatDialogRef<any>,
     private svr: ServiceService,
-    @Inject(MAT_DIALOG_DATA) public data : any
+    @Inject(MAT_DIALOG_DATA) public data: any
 
   ) { }
 
   ngOnInit(): void {
-    this.get_departments()
     this.is_message = false;
+    this.get_departments()
     this.get_sections()
     this.get_seat()
   }
 
-  rowActive(row: any,index: number) {
+  rowActive(row: any, index: number) {
     this.activeRowIndex = index;
-    this.selected_data =  row;
-
+    this.selected_data = row;
+    this.rowColors = this.rowColors.map(() => '');
+    this.rowColors[index] = '#ff0000';
   }
 
   closeModal(): void {
@@ -104,13 +107,12 @@ export class SearchUserComponent implements OnInit {
   }
 
   go() {
-    this.clean_up()
+    this.user_list = []
     let param = {
       "emp_code": this.emp_code
     }
     this.svr.postservice("api/v0/get_userby_empcode", param).subscribe((res: any) => {
       if (res.length !== 0) {
-        // console.log("  test ");
         this.is_message = false;
         this.user_list = res
       } else {
@@ -121,7 +123,9 @@ export class SearchUserComponent implements OnInit {
   }
 
   save() {
-    this.clean_up()
+    this.user_list = []
+    this.is_message = false;
+    this.emp_code = null
     let param = {
 
       "dept_id": this.department?.dept_id,
@@ -133,7 +137,7 @@ export class SearchUserComponent implements OnInit {
     }
 
     this.svr.postservice("api/v0/get_emp_list", param).subscribe((res: any) => {
-      // console.log(JSON.stringify(res, null, 2));
+      console.log(JSON.stringify(res, null, 2));
 
       if (res.length !== 0) {
         this.is_message = false;
@@ -159,53 +163,93 @@ export class SearchUserComponent implements OnInit {
   get_departments() {
     this.svr.getService("api/v0/get_departments").subscribe((res: any) => {
         this.department_list = res;
-    });
-}
+        this.data_filled = false
+      },(error) =>{
+        this.data_filled = true
+      }
+    );
+  }
+  
+  section_data() {
 
-department_data() {
-    this.get_sections();
-}
+    if(this.department !== undefined) {
+    this.section = undefined
+    this.section_list = this.res_data_sections.filter((sectiondata: { dept_id: any }) => sectiondata.dept_id === this.department.dept_id);
+    this.seat_data()
+   }
+  }
 
-get_sections() {
-    // console.log("Testing if it's working or not");
-
+  get_sections() {
     let param = {
-        "office_id": 1
+      "office_id": 1
     };
 
     this.svr.postservice("api/v0/get_sections", param).subscribe((res: any) => {
-        this.res_data_sections = res;
-        if (this.department === undefined) {
-            this.section_list = res;
-        } else {
-            this.section_list = this.res_data_sections.filter((sectiondata: { dept_id: any }) => sectiondata.dept_id === this.department.dept_id);
-        }
+      this.res_data_sections = res;
+      this.section_list = res;
+      this.data_filled = false
+    },(error) =>{ 
+      this.data_filled = true
     });
-}
+  }
 
-get_seat() {
+  seat_data() {
+    this.seat = null
+    if (this.department !== undefined && this.section === undefined) {
+      this.Seat_list = [];
+      const filteredSections = this.section_list.filter(section =>section.dept_id === this.department.dept_id);
+      const sectionIds = filteredSections.map(section =>section.section_id);
+      const filteredSeats = this.res_data_seats.filter(seat =>sectionIds.includes(seat.section_id));
+      this.Seat_list = filteredSeats;
+    }
+
+    if(this.section !== undefined ) {
+      this.Seat_list = this.res_data_seats.filter((seatdata: { section_id: any }) => seatdata.section_id === this.section.section_id);
+    }
+
+  }
+
+  get_seat() {
     let param = {
-        "office_id": 1,
-        "section_id": this.section?.section_id
+      "office_id": 1,
+      "section_id": this.section?.section_id
     };
 
     this.svr.postservice("api/v0/get_seats_details_by_office_id", param).subscribe((res: any) => {
-        this.res_data_seats = res;
-        if (this.section === undefined) {
-            this.Seat_list = res;
-        } else {
-            this.Seat_list = this.res_data_seats.filter((seatdata: { section_id: any }) => seatdata.section_id === this.section.section_id);
-        }
-    });
-}
+      this.res_data_seats = res;
+      this.Seat_list = res;
+      this.data_filled = false
+    },(error) =>{
+        this.data_filled = true
+      });
+  }
 
   select_row() {
-    if(this.selected_data) {
-      this.dialogRef.close({result: "selected data", "data": this.selected_data})
+
+    if (this.selected_data) {
+      this.dialogRef.close({ result: "selected data", "data": this.selected_data })
+    }else{
+
+      if(this.user_list.length === 0 &&  this.is_message === false){
+        Swal.fire({
+          icon: "error",
+          title: "Please Search The Employee ",
+        });
+      } else if(this.user_list.length === 0 &&  this.is_message === true){
+        Swal.fire({
+          icon: "error",
+          title: "No Matching Records Found",
+        });
+      } else{
+        Swal.fire({
+          icon: "error",
+          title: "Please Select The Record",
+        });
+      }
+
+
     }
   }
 
-  clean_up(){
-    this.user_list = []
-  }
+
 }

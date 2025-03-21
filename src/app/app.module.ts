@@ -31,7 +31,10 @@ import { AdminComponent } from './shared/layout/admin/admin.component';
 import { AdminHeaderComponent } from './shared/layout/admin/admin-header/admin-header.component';
 import { AdminSidebarComponent } from './shared/layout/admin/admin-sidebar/admin-sidebar.component';
 import { AdminTabMenuComponent } from './shared/layout/admin/admin-tab-menu/admin-tab-menu.component';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -57,7 +60,8 @@ export function createTranslateLoader(http: HttpClient) {
         AdminSidebarComponent,
         AdminTabMenuComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+     imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
@@ -67,6 +71,11 @@ export function createTranslateLoader(http: HttpClient) {
         MatSortModule,
         TranslateModule,
         MainModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatProgressSpinnerModule,
+
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
