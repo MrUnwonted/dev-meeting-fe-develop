@@ -111,12 +111,12 @@ export class CreateMeetingsComponent implements OnInit {
     });
 
     // Force refresh paginator when data changes
-    this.dataSource1.data = [...this.dataSource1.data]; // Ensure data change detection
-    this.paginator1?.page.next({
-      pageIndex: this.paginator1.pageIndex,
-      pageSize: this.paginator1.pageSize,
-      length: this.paginator1.length,
-    }); // Trigger a page event to refresh
+    // this.dataSource1.data = [...this.dataSource1.data]; // Ensure data change detection
+    // this.paginator1?.page.next({
+    //   pageIndex: this.paginator1.pageIndex,
+    //   pageSize: this.paginator1.pageSize,
+    //   length: this.paginator1.length,
+    // }); // Trigger a page event to refresh
   }
 
   customizePaginator(paginator: MatPaginator) {
@@ -355,11 +355,11 @@ export class CreateMeetingsComponent implements OnInit {
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
     // console.log('e:', e);
-    this.activeRowIndex = index + 1;
+    this.activeRowIndex = index;
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
     let param = {
-      meeting_id: this.activeRowIndex,
+      meeting_id: index+1,
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
@@ -383,6 +383,10 @@ export class CreateMeetingsComponent implements OnInit {
           meeting_name: e.meeting_name,
           meeting_name_ln: e.meeting_name_ln,
         };
+        this.isEditable = true; // Enable Edit button
+        this.isReadOnly = true; // Disable form fields
+        this.isEditing = false; // Change button label back to "Edit"
+        this.isAddMode = false; // Disable Add Mode
       },
       (error) => {
         console.error('Error fetching meeting child data:', error);
