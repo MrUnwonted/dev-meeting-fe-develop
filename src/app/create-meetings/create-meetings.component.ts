@@ -40,11 +40,7 @@ export class CreateMeetingsComponent implements OnInit {
   // Track whether the form is in Add New mode or Edit mode
   isAddMode: boolean = false;
   subject_data: any = [];
-  displayedColumns: string[] = [
-    'slNo',
-    'meeting_name',
-    'Actions',
-  ];
+  displayedColumns: string[] = ['slNo', 'meeting_name', 'Actions'];
   dataSource = new MatTableDataSource<any>([]);
   selectedRow: any;
   primary_id: any;
@@ -154,19 +150,15 @@ export class CreateMeetingsComponent implements OnInit {
       return;
     }
     this.saveData = {
-        meeting_name: this.selectedMeetings.meeting_name,
-        office_id: 1,
-        child: this.dataSource1.data.map((user) => ({
-          user_id: user.user_id,
-          seat_id: user.seat_id,
-          // flg_chair: Number(user.flg_owner),
-          flg_chair: user.flg_owner ? Number(user.flg_owner) : 0, // Default to 0 if undefined
-          user_name: user.user_name,
-          email: user.email || null,
-          mobile: user.mobile || null,
-        })),
-      };
-    console.log('Save Data before saving:', this.saveData);
+      meeting_name: this.selectedMeetings.meeting_name,
+      office_id: 1,
+      child: this.dataSource1.data.map((user) => ({
+        user_id: user.user_id,
+        seat_id: user.seat_id,
+        flg_chair: user.flg_owner ? Number(user.flg_owner) : 0, // Default to 0 if undefined
+        user_name: user.user_name,
+      })),
+    };
     // Check if data has changed before saving
     if (this.isEditing) {
       let result = this.compareJson(this.originalData, this.saveData);
@@ -188,7 +180,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.commonsvr
       .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
-        console.log(data);
+        console.log('Full Response:', data);
         if (data.data) {
           this.openCustomSnackbar('success', 'Saved Successfully');
           this.primary_id = data.data.primary_id;
@@ -215,22 +207,22 @@ export class CreateMeetingsComponent implements OnInit {
 
     try {
       // Ensure obj1 is an object (in case it's stored as a JSON string)
-      if (typeof obj1 === "string") {
+      if (typeof obj1 === 'string') {
         obj1 = JSON.parse(obj1);
       }
-      if (typeof obj2 === "string") {
+      if (typeof obj2 === 'string') {
         obj2 = JSON.parse(obj2);
       }
       // Ensure both are JSON strings before comparison
       let compData1 = JSON.stringify(obj1, null, 2);
       let compData2 = JSON.stringify(obj2, null, 2);
-      console.log("Object 1:", compData1);
-      console.log("Object 2:", compData2);
+      console.log('Object 1:', compData1);
+      console.log('Object 2:', compData2);
       let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
-      console.log("Comparison Result:", compare);
+      console.log('Comparison Result:', compare);
       return compare;
     } catch (error) {
-      console.error("Error parsing JSON:", error);
+      console.error('Error parsing JSON:', error);
       return false;
     }
   }
@@ -356,7 +348,24 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   // Success toast
-  openCustomSnackbar(type: any, msg: any) {}
+  openCustomSnackbar(type: any, msg: any) {
+    const snackbar = document.createElement('div');
+    snackbar.className = `custom-snackbar ${type}`;
+    snackbar.innerText = msg;
+
+    document.body.appendChild(snackbar);
+
+    setTimeout(() => {
+      snackbar.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+      snackbar.classList.remove('show');
+      setTimeout(() => {
+        document.body.removeChild(snackbar);
+      }, 300);
+    }, 3000);
+  }
 
   // clear error message
   clear_msg() {
@@ -435,14 +444,11 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   onClickDelete(element: any, index: number) {
-    // console.log('DeleteRow:', element);
-    // ✅ Find the correct index inside addedUsers (using user_id)
-    const userIndex = this.addedUsers.findIndex(
+    const userIndex = this.dataSource1.data.findIndex(
       (user) => user.user_id === element.user_id
     );
     if (userIndex !== -1) {
-      this.addedUsers.splice(userIndex, 1); // Remove user
-      this.dataSource1.data = [...this.addedUsers]; // ✅ Update table
+      this.dataSource1.data.splice(userIndex, 1); // Remove user
       this.dataSource1.paginator = this.paginator1;
     }
   }

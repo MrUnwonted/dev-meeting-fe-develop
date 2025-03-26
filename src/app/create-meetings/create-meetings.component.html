@@ -148,6 +148,7 @@
                           <button
                             (click)="add_user_tolist()"
                             class="btn-primary-90 sm"
+                            [disabled]="isReadOnly"
 
                           >
                             Add <i class="icon icon-add"></i>
@@ -155,6 +156,7 @@
                           <button
                             (click)="clear_user_details()"
                             class="btn-outline-primary-90 sm mx-2"
+                            [disabled]="isReadOnly"
                           >
                             Clear
                           </button>
