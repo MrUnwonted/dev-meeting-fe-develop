@@ -9,17 +9,17 @@
                                 <div class="text-wrap">
                                     <h6>Accounts Head</h6>
                                 </div>
-            
+
                             </div>
-            
+
                             <!--header right side -->
                             <div class="right-side">
-            
+
                                 <!-- button-wrap -->
                                 <div class="button-wrap">
                                     <a role="button"><i class="icon icon-expand-form"></i></a>
                                 </div>
-                                
+
                             </div>
                        </div>
                     </div>
@@ -28,14 +28,14 @@
                         <div class="form-wrap table-form-wrap">
                             <div class="form-body">
                                 <div class="row form-row">
-                            
+
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <div class="row form-inner-row">
                                                 <div class="col-3 left-side">
-                                                    <label for="s-sub" class="form-label">Parent Head</label>
+                                                    <label for="s-sub" class="form-label">Secondary Head</label>
                                                 </div>
-                        
+
                                                 <div class="col-9 right-side">
                                                    <div class="input-group right xs">
                                                     <input  type="text" name="s-sub" id="s-sub"  class="form-control xs">
@@ -43,10 +43,10 @@
                                                    </div>
                                                 </div>
                                             </div>
-                                
+
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <div class="row form-inner-row">
@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                     <!-- Head -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -73,7 +73,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                     <!-- Short Description -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -87,7 +87,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                     <!-- Primary -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -101,7 +101,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                     <!-- Secondary -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -115,7 +115,7 @@
                                             </div>
                                         </div>
                                     </div>
-                            
+
                                     <!-- Type (Select dropdown) -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
@@ -134,8 +134,8 @@
                                             </div>
                                         </div>
                                     </div>
-                        
-                                    <div class="col-lg-12">
+
+                                    <!-- <div class="col-lg-12">
                                         <div class="gradient-box">
                                             <div class="gradient-box-inner">
                                                 <div class="heading-wrap end">
@@ -146,12 +146,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                  
+                                    </div> -->
+
+
                                 </div>
                             </div>
-                        
+
                             <div class="form-footer">
                                 <div class="button-wrap">
                                     <button  class="sm btn btn-outline-primary-90 cancel-btn" >Clear</button>
@@ -170,21 +170,21 @@
                                 <div class="text-wrap">
                                     <h6>Secondary Head</h6>
                                 </div>
-            
+
                             </div>
-            
+
                             <!--header right side -->
                             <div class="right-side">
-            
+
                                 <!-- search -->
                                 <div class="search-wrap">
                                     <div class="input-group xs">
                                         <span class="input-group-text"><i class="icon icon-search-gray"></i></span>
                                         <input type="text" name="search" id="search" placeholder="Search" class="form-control xs">
-                
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                        </div>
                     </div>
@@ -193,35 +193,35 @@
                         <div class="table-outer-wrap">
                             <div class="table-wrap file-box-wrap pagination-included">
                                 <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
-                              
+
                                     <!-- Module Column -->
                                     <ng-container matColumnDef="type">
                                         <th mat-header-cell *matHeaderCellDef> Type </th>
                                         <td mat-cell *matCellDef="let element"> <span class="badge bg-gray-15 code-badge xs">{{element.type}}</span></td>
                                     </ng-container>
-                              
+
                                     <!-- Code -->
                                     <ng-container matColumnDef="code">
                                         <th mat-header-cell *matHeaderCellDef> Code </th>
                                         <td mat-cell *matCellDef="let element">{{element.code}} </td>
                                     </ng-container>
-                              
+
                                     <!--  Head -->
                                     <ng-container matColumnDef="head">
                                         <th mat-header-cell *matHeaderCellDef> Head </th>
                                         <td mat-cell *matCellDef="let element"> {{element.head}} </td>
                                     </ng-container>
-                              
-                              
+
+
                                     <!-- Header and Row Definitions -->
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
                               </div>
-                              
+
                                 <!-- MatPaginator for Pagination -->
                                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-                              
+
                         </div>
                     </div>
 
