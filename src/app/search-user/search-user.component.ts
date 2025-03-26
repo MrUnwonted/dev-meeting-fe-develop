@@ -171,7 +171,8 @@ export class SearchUserComponent implements OnInit {
   }
   
   section_data() {
-
+    this.section = null
+    this.seat = null
     if(this.department !== undefined) {
     this.section = undefined
     this.section_list = this.res_data_sections.filter((sectiondata: { dept_id: any }) => sectiondata.dept_id === this.department.dept_id);
@@ -194,19 +195,32 @@ export class SearchUserComponent implements OnInit {
   }
 
   seat_data() {
-    this.seat = null
-    if (this.department !== undefined && this.section === undefined) {
-      this.Seat_list = [];
-      const filteredSections = this.section_list.filter(section =>section.dept_id === this.department.dept_id);
-      const sectionIds = filteredSections.map(section =>section.section_id);
-      const filteredSeats = this.res_data_seats.filter(seat =>sectionIds.includes(seat.section_id));
-      this.Seat_list = filteredSeats;
+    // this.seat = null;
+  
+    if (this.department) {
+     
+      this.section_list = this.res_data_sections.filter(
+        (section) => section.dept_id === this.department.dept_id
+      );
+  
+     
+      if (!this.section) {
+        const sectionIds = this.section_list.map((s) => s.section_id);
+        this.Seat_list = this.res_data_seats.filter((seat) =>
+          sectionIds.includes(seat.section_id)
+        );
+      }
     }
+  
 
-    if(this.section !== undefined ) {
-      this.Seat_list = this.res_data_seats.filter((seatdata: { section_id: any }) => seatdata.section_id === this.section.section_id);
+    if (this.section) {
+      this.Seat_list = this.res_data_seats.filter(
+        (seat) => seat.section_id === this.section.section_id
+      );
     }
-
+  
+  
+    this.Seat_list.sort((a, b) => a.section_id - b.section_id);
   }
 
   get_seat() {

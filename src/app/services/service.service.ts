@@ -126,25 +126,19 @@ public clear_cache(key:string): void {
   localStorage.removeItem(key+"_exp");
 }
 
-
-checkJsonEquality(json_1:any,json_2:any) {
+checkJsonEquality(json_1: any, json_2: any): boolean {
   let result: boolean = false;
-
- result = this.compareJsonArrays(json_1, json_2);
- return result;
+  result = this.compareJson(json_1, json_2);  
+  return result;
 }
 
-
 compareJsonObjects(obj1: any, obj2: any): boolean {
-  if (!obj1 || !obj2) return false; // Prevent error when one of them is null
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
-
 
   if (keys1.length !== keys2.length || !keys1.every(key => keys2.includes(key)) || !keys2.every(key => keys1.includes(key))) {
     return false;
   }
-
 
   for (let key of keys1) {
     if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
@@ -160,6 +154,10 @@ compareJsonObjects(obj1: any, obj2: any): boolean {
 }
 
 compareJsonArrays(arr1: any[], arr2: any[]): boolean {
+  if (arr1 == null || arr2 == null) {
+    return arr1 === arr2; // If either is null or undefined, compare directly
+  }
+
   if (arr1.length !== arr2.length) {
     return false;
   }
@@ -174,6 +172,37 @@ compareJsonArrays(arr1: any[], arr2: any[]): boolean {
 }
 
 
+compareJson(value1: any, value2: any): boolean {
+  if (value1 === null || value2 === null || value1 === undefined || value2 === undefined) {
+    return value1 === value2;
+  }
+
+  if (typeof value1 !== 'object' && typeof value2 !== 'object') {
+   
+    if (typeof value1 === 'string' && typeof value2 === 'string') {
+      return value1.trim() === value2.trim();
+    }
+    return value1 === value2;
+  }
+
+  if (Array.isArray(value1) && Array.isArray(value2)) {
+    if (value1.length !== value2.length) return false;
+    return value1.every((item, index) => this.compareJson(item, value2[index]));
+  }
+
+  if (typeof value1 === 'object' && typeof value2 === 'object') {
+    const keys1 = Object.keys(value1);
+    const keys2 = Object.keys(value2);
+
+    if (keys1.length !== keys2.length || !keys1.every(key => keys2.includes(key))) {
+      return false;
+    }
+
+    return keys1.every(key => this.compareJson(value1[key], value2[key]));
+  }
+
+  return false;
+}
 
 
 }
