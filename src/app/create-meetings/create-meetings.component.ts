@@ -12,6 +12,9 @@ import { ServiceService } from '../services/service.service';
 import { environment } from 'src/environments/environment';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchUserComponent } from '../search-user/search-user.component';
+import { HttpClient } from '@angular/common/http';
+
+declare var bootstrap: any; // Required for Bootstrap modal
 
 @Component({
   selector: 'app-create-meetings',
@@ -82,6 +85,7 @@ export class CreateMeetingsComponent implements OnInit {
   constructor(
     private commonsvr: ServiceService,
     // private router: Router,
+    private http: HttpClient,
     private dialog: MatDialog
   ) {}
 
@@ -98,11 +102,43 @@ export class CreateMeetingsComponent implements OnInit {
     setTimeout(() => {
       if (this.paginator1) {
         this.dataSource1.paginator = this.paginator1;
+        this.customizePaginator(this.paginator1);
       }
       if (this.paginator2) {
         this.dataSource.paginator = this.paginator2;
+        this.customizePaginator(this.paginator2);
       }
     });
+
+    // Force refresh paginator when data changes
+    this.dataSource1.data = [...this.dataSource1.data]; // Ensure data change detection
+    this.paginator1?.page.next({
+      pageIndex: this.paginator1.pageIndex,
+      pageSize: this.paginator1.pageSize,
+      length: this.paginator1.length,
+    }); // Trigger a page event to refresh
+  }
+
+
+  customizePaginator(paginator: MatPaginator) {
+    paginator._intl.itemsPerPageLabel = 'Items per page:';
+
+    paginator._intl.getRangeLabel = (
+      page: number,
+      pageSize: number,
+      length: number
+    ) => {
+      if (length === 0 || pageSize === 0) {
+        return `0 of ${length}`;
+      }
+
+      const startIndex = page * pageSize + 1; // Ensure starting index is correct
+      const endIndex = Math.min((page + 1) * pageSize, length); // Avoid exceeding total count
+
+      return `${startIndex} - ${endIndex} of ${length}`;
+    };
+
+    paginator._intl.changes.next(); // Refresh paginator label
   }
 
   // Handle "Add New" button click
@@ -110,7 +146,8 @@ export class CreateMeetingsComponent implements OnInit {
     this.primary_id = null; // Reset to save new subject
     this.activeRowIndex = null;
     this.isEditable = false;
-    this.isEditing = false;
+    this.isEditing = true;
+    this.isReadOnly = false; // Enable
     this.isAddMode = true; // Set to Add New mode
     this.showError = false; // Hide error message
     this.deactive = false;
@@ -168,7 +205,13 @@ export class CreateMeetingsComponent implements OnInit {
         this.saveMeetingFunction();
         this.is_loading = true;
       } else {
-        alert('No changes detected!');
+        // alert('No changes detected!');
+        // this.openCustomSnackbar('info', 'Saved Successfully');
+        // Show Bootstrap Modal on Success
+        this.showSuccessModal();
+        this.dataSource1.data = []; // Clear child data
+        this.fetch_meetings(); // Refresh data after saving
+        this.clearSelectedMeetings(); // Clear form fields
       }
     } else {
       // console.log('Triggered to save data');
@@ -181,10 +224,12 @@ export class CreateMeetingsComponent implements OnInit {
     this.commonsvr
       .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
-        console.log('Save Response:', data);
+        // console.log('Save Response:', data);
         if (data.msg === 'Success') {
-          console.log('Full Response:', data);
+          // console.log('Full Response:', data);
           this.openCustomSnackbar('success', 'Saved Successfully');
+          // Show Bootstrap Modal on Success
+          this.showSuccessModal();
           // this.isReadOnly = true; // Make form read-only again
           // this.isEditable = true; // Show "Edit" button again\
           this.isAddMode = false; // Reset mode after saving
@@ -196,6 +241,12 @@ export class CreateMeetingsComponent implements OnInit {
         }
         this.isEditing = false; // Change button label back to "Edit"
       });
+  }
+  showSuccessModal() {
+    let modal = new bootstrap.Modal(
+      document.getElementById('saveSuccessModal')
+    );
+    modal.show();
   }
 
   compareJson(obj1: any, obj2: any) {
@@ -246,20 +297,19 @@ export class CreateMeetingsComponent implements OnInit {
       this.selectedMeetings.meeting_name == '' ||
       this.selectedMeetings.meeting_name.trim().length === 0
     ) {
-      this.msg = 'Enter Meeting Name!';
-      this.showError = true;
+      this.showValidationError('Enter Meeting Name!');
       return false;
     }
     // Check if user is present in the table or not
-    if(this.dataSource1.data.length == 0){
+    if (this.dataSource1.data.length == 0) {
       this.msg = 'Add at least one user!';
-      this.showError = true;
+      this.showValidationError('Add at least one user!');
       return false;
     }
     //  Check if at least one owner exists in the dataSource1
     if (!this.isOwnerExists) {
       this.msg = 'At least one owner must be selected!';
-      this.showError = true;
+      this.showValidationError('Add at least one user!');
       return false;
     }
 
@@ -274,6 +324,17 @@ export class CreateMeetingsComponent implements OnInit {
     return true;
   }
 
+  // Method to show error and clear it after some time
+  showValidationError(message: string) {
+    this.msg = message;
+    this.showError = true;
+
+    // Hide the error message after 3 seconds
+    setTimeout(() => {
+      this.showError = false;
+      this.msg = '';
+    }, 3000);
+  }
   // function to  fetch all subjects
   fetch_meetings() {
     let param = {
@@ -404,8 +465,7 @@ export class CreateMeetingsComponent implements OnInit {
     // console.log('Before Adding:', this.selected_user);
     if (!this.selected_user || !this.selected_user.seat_name) {
       // alert('Please select a user before adding.');
-      this.msg = 'Please select a user before adding.';
-      this.showError = true;
+      this.showValidationError('Please select a user before adding.');
       return;
     }
     const newUser = {
@@ -426,7 +486,9 @@ export class CreateMeetingsComponent implements OnInit {
     } else {
       // If adding a new user, prevent duplicates
       if (currentUsers.some((user) => user.seat_id === newUser.seat_id)) {
-        alert('User already added!');
+        // alert('User already added!');
+        this.msg = 'User already added!';
+        this.showValidationError('User already added!');
         return;
       }
       currentUsers.push(newUser); // Add new user
