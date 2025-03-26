@@ -174,20 +174,17 @@ export class CreateMeetingsComponent implements OnInit {
       // console.log('Triggered to save data');
       this.saveMeetingFunction();
       this.is_loading = true;
-      this.fetch_meetings(); // Refresh data after saving
-      this.clearSelectedMeetings(); // Clear form fields
     }
   }
 
   saveMeetingFunction() {
-    console.log('Before Saving:', this.dataSource1.data);
     this.commonsvr
       .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
-        console.log('Full Response:', data);
-        if (data.data) {
+        console.log('Save Response:', data);
+        if (data.msg === 'Success') {
+          console.log('Full Response:', data);
           this.openCustomSnackbar('success', 'Saved Successfully');
-          this.primary_id = data.data.primary_id;
           // this.isReadOnly = true; // Make form read-only again
           // this.isEditable = true; // Show "Edit" button again\
           this.isAddMode = false; // Reset mode after saving
@@ -196,9 +193,6 @@ export class CreateMeetingsComponent implements OnInit {
           this.clearSelectedMeetings(); // Clear form fields
         } else {
           this.openCustomSnackbar('error', 'Failed to save');
-        }
-        if (this.primary_id) {
-          this.isEditable = true;
         }
         this.isEditing = false; // Change button label back to "Edit"
       });
