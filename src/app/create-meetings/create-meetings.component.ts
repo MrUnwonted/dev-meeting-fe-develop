@@ -42,11 +42,8 @@ export class CreateMeetingsComponent implements OnInit {
   subject_data: any = [];
   displayedColumns: string[] = [
     'slNo',
-    'meeting_code',
     'meeting_name',
-    'status',
-    'select',
-    'delete',
+    'Actions',
   ];
   dataSource = new MatTableDataSource<any>([]);
   selectedRow: any;
@@ -156,8 +153,7 @@ export class CreateMeetingsComponent implements OnInit {
       console.error('Meeting validation failed:', this.msg);
       return;
     }
-    this.saveData = [
-      {
+    this.saveData = {
         meeting_name: this.selectedMeetings.meeting_name,
         office_id: 1,
         child: this.dataSource1.data.map((user) => ({
@@ -169,8 +165,8 @@ export class CreateMeetingsComponent implements OnInit {
           email: user.email || null,
           mobile: user.mobile || null,
         })),
-      },
-    ];
+      };
+    console.log('Save Data before saving:', this.saveData);
     // Check if data has changed before saving
     if (this.isEditing) {
       let result = this.compareJson(this.originalData, this.saveData);
@@ -189,7 +185,6 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   saveMeetingFunction() {
-    console.log('Save Data:', this.saveData);
     this.commonsvr
       .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
@@ -226,24 +221,19 @@ export class CreateMeetingsComponent implements OnInit {
       if (typeof obj2 === "string") {
         obj2 = JSON.parse(obj2);
       }
-
       // Ensure both are JSON strings before comparison
       let compData1 = JSON.stringify(obj1, null, 2);
       let compData2 = JSON.stringify(obj2, null, 2);
-
       console.log("Object 1:", compData1);
       console.log("Object 2:", compData2);
-
       let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
       console.log("Comparison Result:", compare);
-
       return compare;
     } catch (error) {
       console.error("Error parsing JSON:", error);
       return false;
     }
   }
-
 
   // check if all data entry are valid
   validate_meeting() {
@@ -267,7 +257,7 @@ export class CreateMeetingsComponent implements OnInit {
       this.selectedMeetings.meeting_name == '' ||
       this.selectedMeetings.meeting_name.trim().length === 0
     ) {
-      this.msg = 'Enter Primary Subject Name!';
+      this.msg = 'Enter Meeting Name!';
       this.showError = true;
       return false;
     }
@@ -278,7 +268,6 @@ export class CreateMeetingsComponent implements OnInit {
     //     return false;
     //   }
     // }
-
     // If all checks pass
     return true;
   }
@@ -394,7 +383,9 @@ export class CreateMeetingsComponent implements OnInit {
   add_user_tolist() {
     // console.log('Before Adding:', this.selected_user);
     if (!this.selected_user || !this.selected_user.seat_name) {
-      alert('Please select a user before adding.');
+      // alert('Please select a user before adding.');
+      this.msg = 'Please select a user before adding.';
+      this.showError = true;
       return;
     }
     const newUser = {
