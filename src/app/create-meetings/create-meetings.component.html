@@ -141,6 +141,7 @@
                           id="flg_owner"
                           class="form-group form-check"
                           [(ngModel)]="flg_owner"
+                          [disabled]="isOwnerExists && !flg_owner"
                         />
                       </div>
                       <div class="col-lg-4 text-start">

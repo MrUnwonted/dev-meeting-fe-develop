@@ -174,6 +174,8 @@ export class CreateMeetingsComponent implements OnInit {
       // console.log('Triggered to save data');
       this.saveMeetingFunction();
       this.is_loading = true;
+      this.fetch_meetings(); // Refresh data after saving
+      this.clearSelectedMeetings(); // Clear form fields
     }
   }
 
@@ -427,6 +429,10 @@ export class CreateMeetingsComponent implements OnInit {
     this.dataSource1.paginator = this.paginator1;
     // Clear fields after adding
     this.clear_user_details();
+  }
+
+  get isOwnerExists(): boolean {
+    return this.dataSource1.data.some((user) => user.flg_owner);
   }
 
   onClickEdit(element: any, index: number) {
