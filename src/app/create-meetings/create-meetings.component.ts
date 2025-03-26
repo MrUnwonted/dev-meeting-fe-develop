@@ -56,11 +56,10 @@ export class CreateMeetingsComponent implements OnInit {
     seat_id: '',
     user_name: '',
     email_id: '',
-    user_mob: '',
+    mobile: '',
     user_id: '',
   };
   flg_owner: boolean = false;
-  addedUsers: any[] = []; // Stores added users
   dataSource1 = new MatTableDataSource<any>([]);
   editingIndex: any; // Index of the row being edited
   displayedColumns1: string[] = [
@@ -157,6 +156,8 @@ export class CreateMeetingsComponent implements OnInit {
         seat_id: user.seat_id,
         flg_chair: user.flg_owner ? Number(user.flg_owner) : 0, // Default to 0 if undefined
         user_name: user.user_name,
+        email: user.email_id || null, // ✅ Ensure email is included
+        mobile: user.mobile || null, // ✅ Ensure mobile is included
       })),
     };
     // Check if data has changed before saving
@@ -177,6 +178,7 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   saveMeetingFunction() {
+    console.log('Before Saving:', this.dataSource1.data);
     this.commonsvr
       .postservice('api/v0/save_meetings', this.saveData)
       .subscribe((data: any) => {
@@ -292,6 +294,7 @@ export class CreateMeetingsComponent implements OnInit {
     };
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
+        console.log('Child Data:', response);
         // Merge API data when row is clicked
         this.originalData = JSON.stringify(
           this.mergeMeetingsAndMembers([e], response),
@@ -402,7 +405,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_id: this.selected_user.seat_id,
       user_name: this.selected_user.user_name,
       email_id: this.selected_user.email_id,
-      mobile: this.selected_user.user_mob,
+      mobile: this.selected_user.mobile,
       user_id: this.selected_user.user_id,
       flg_owner: this.flg_owner, // ✅ Keep owner flag
     };
@@ -434,7 +437,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_id: element.seat_id,
       user_name: element.user_name,
       email_id: element.email_id,
-      user_mob: element.mobile,
+      mobile: element.mobile,
       user_id: element.user_id,
     };
     // Set the owner flag
@@ -460,7 +463,7 @@ export class CreateMeetingsComponent implements OnInit {
       seat_name: '',
       user_name: '',
       email_id: '',
-      user_mob: '',
+      mobile: '',
       user_id: '',
     };
     if (this.flg_owner) {
@@ -484,7 +487,7 @@ export class CreateMeetingsComponent implements OnInit {
           seat_id: userData.seat_id || '', // From `7`
           user_name: userData.title || '', // From `Malachi Punith`
           email_id: userData.email || '', // From `punith@kvgbank.com`
-          user_mob: userData.mobile || '', // From `8551265956`
+          mobile: userData.mobile || '', // From `8551265956`
           user_id: userData.user_id || '', // From `3`
         };
         this.flg_owner = false; // ✅ Keep it unchecked initially
