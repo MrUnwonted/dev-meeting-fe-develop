@@ -119,7 +119,7 @@
                           >
 
                           <input
-                            [readonly]="isReadOnly"
+                            [disabled]="isReadOnly"
                             (click)="openUserSearch()"
                             (keydown)="restrictAllEntry($event)"
                             [(ngModel)]="selected_user.user_name"

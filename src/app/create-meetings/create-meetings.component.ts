@@ -211,7 +211,7 @@ export class CreateMeetingsComponent implements OnInit {
 
     // 🔹 Normalize null values
     const normalize = (data: any) =>
-      JSON.stringify(data, (key, value) => (value === null ? "" : value));
+      JSON.stringify(data, (key, value) => (value === null ? '' : value));
 
     let compData1 = normalize(obj1);
     let compData2 = normalize(obj2);
@@ -223,8 +223,6 @@ export class CreateMeetingsComponent implements OnInit {
     console.log('Comparison Result:', compare);
     return compare;
   }
-
-
 
   // check if all data entry are valid
   validate_meeting() {
@@ -252,6 +250,19 @@ export class CreateMeetingsComponent implements OnInit {
       this.showError = true;
       return false;
     }
+    // Check if user is present in the table or not
+    if(this.dataSource1.data.length == 0){
+      this.msg = 'Add at least one user!';
+      this.showError = true;
+      return false;
+    }
+    //  Check if at least one owner exists in the dataSource1
+    if (!this.isOwnerExists) {
+      this.msg = 'At least one owner must be selected!';
+      this.showError = true;
+      return false;
+    }
+
     // if (this.bilingual) {
     //   if (!this.selectedMeetings.meeting_name || this.selectedMeetings.meeting_name.trim().length === 0) {
     //     this.showError = true;
