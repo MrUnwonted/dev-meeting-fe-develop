@@ -168,6 +168,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.isEditing = false; // Change button label back to "Edit
     this.isAddMode = true; // Exit edit mode
     this.primary_id = null;
+    this.clear_user_details();
     if (this.isAddMode) {
       this.clearSelectedMeetings();
       this.isEditable = false;
