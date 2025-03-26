@@ -119,7 +119,6 @@ export class CreateMeetingsComponent implements OnInit {
     }); // Trigger a page event to refresh
   }
 
-
   customizePaginator(paginator: MatPaginator) {
     paginator._intl.itemsPerPageLabel = 'Items per page:';
 
@@ -468,6 +467,10 @@ export class CreateMeetingsComponent implements OnInit {
       this.showValidationError('Please select a user before adding.');
       return;
     }
+    // If flg_owner is set to true, reset all others to false
+    if (this.flg_owner) {
+      this.dataSource1.data.forEach((user) => (user.flg_owner = false));
+    }
     const newUser = {
       seat_name: this.selected_user.seat_name,
       seat_id: this.selected_user.seat_id,
@@ -497,6 +500,11 @@ export class CreateMeetingsComponent implements OnInit {
     this.dataSource1.paginator = this.paginator1;
     // Clear fields after adding
     this.clear_user_details();
+  }
+  updateOwnerStatus() {
+    if (this.flg_owner) {
+      this.dataSource1.data.forEach((user) => (user.flg_owner = false));
+    }
   }
 
   get isOwnerExists(): boolean {
