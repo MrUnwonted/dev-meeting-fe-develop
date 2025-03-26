@@ -205,31 +205,32 @@ export class CreateMeetingsComponent implements OnInit {
   }
 
   compareJson(obj1: any, obj2: any) {
-    if (!obj1) {
-      obj1 = [];
-    }
+    if (!obj1) obj1 = [];
+    if (!obj2) obj2 = [];
 
-    try {
-      // Ensure obj1 is an object (in case it's stored as a JSON string)
-      if (typeof obj1 === 'string') {
-        obj1 = JSON.parse(obj1);
-      }
-      if (typeof obj2 === 'string') {
-        obj2 = JSON.parse(obj2);
-      }
-      // Ensure both are JSON strings before comparison
-      let compData1 = JSON.stringify(obj1, null, 2);
-      let compData2 = JSON.stringify(obj2, null, 2);
-      console.log('Object 1:', compData1);
-      console.log('Object 2:', compData2);
-      let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
-      console.log('Comparison Result:', compare);
-      return compare;
-    } catch (error) {
-      console.error('Error parsing JSON:', error);
-      return false;
-    }
+    if (typeof obj1 === 'string') obj1 = JSON.parse(obj1);
+    if (typeof obj2 === 'string') obj2 = JSON.parse(obj2);
+
+    // 🔹 Ensure both are arrays or both are objects
+    if (!Array.isArray(obj1)) obj1 = [obj1];
+    if (!Array.isArray(obj2)) obj2 = [obj2];
+
+    // 🔹 Normalize null values
+    const normalize = (data: any) =>
+      JSON.stringify(data, (key, value) => (value === null ? "" : value));
+
+    let compData1 = normalize(obj1);
+    let compData2 = normalize(obj2);
+
+    console.log('Normalized Object 1:', compData1);
+    console.log('Normalized Object 2:', compData2);
+
+    let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
+    console.log('Comparison Result:', compare);
+    return compare;
   }
+
+
 
   // check if all data entry are valid
   validate_meeting() {
@@ -339,7 +340,7 @@ export class CreateMeetingsComponent implements OnInit {
           seat_id: member.seat_id,
           flg_chair: Number(member.flg_chair), // Ensure number type
           user_name: member.user_name,
-          email: member.email || null, // Instead of email_id
+          email: member.email_id || null, // Instead of email_id
           mobile: member.mobile || null,
         })),
     }));
