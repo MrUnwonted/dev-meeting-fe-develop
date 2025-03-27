@@ -34,7 +34,7 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['type', 'code', 'head'];
+  displayedColumns: string[] = [ 'head', 'code', 'type', 'primary'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}

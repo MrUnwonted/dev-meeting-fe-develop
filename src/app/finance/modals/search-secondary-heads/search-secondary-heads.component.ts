@@ -18,7 +18,7 @@ export class SearchSecondaryHeadsComponent {
   rowColors: string[] = [];
   head_list: any = [];
   is_message: boolean = true;
-  displayedColumns: string[] = ['type', 'code', 'head'];
+  displayedColumns: string[] = [ 'head', 'code', 'type', 'primary'];
   dataSource = new MatTableDataSource<any>();
 
   // Modal footer buttons
