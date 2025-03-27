@@ -15,7 +15,13 @@
               <div class="right-side">
                 <!-- button-wrap -->
                 <div class="button-wrap">
-                  <a role="button"><i class="icon icon-expand-form"></i></a>
+                  <a
+                    (click)="toggleExpand()"
+                    role="button"
+                    class="expand-btn"
+                    [ngClass]="{ expanded: isExpanded }"
+                    ><i class="icon icon-expand-form"></i
+                  ></a>
                 </div>
               </div>
             </div>
@@ -42,6 +48,7 @@
                               id="s-sub"
                               class="form-control xs"
                               (click)="open_heads()"
+                              [(ngModel)]="selected_acc_head.parent_head"
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -167,13 +174,18 @@
                           <label for="type" class="form-label">Type</label>
                         </div>
                         <div class="col-9 right-side">
-                          <select name="type" id="type" class="form-select xs" [(ngModel)]="type">
+                          <select
+                            name="type"
+                            id="type"
+                            class="form-select xs"
+                            [(ngModel)]="this.selected_acc_head.type"
+                          >
                             <option value="">Select Type</option>
-                            <option value="type1">Type 1</option>
-                            <option value="type2">Type 2</option>
-                            <option value="type3">Type 3</option>
+                            <option value="Incode">Incode</option>
+                            <option value="Expenditure">Expenditure</option>
+                            <option value="Liability">Liability</option>
+                            <option value="Asset">Asset</option>
                           </select>
-
                         </div>
                       </div>
                     </div>
@@ -198,10 +210,30 @@
 
               <div class="form-footer">
                 <div class="button-wrap">
-                  <button class="sm btn btn-outline-primary-90 cancel-btn">
+                  <!-- Show "Save" and "Clear" when NOT in edit mode -->
+                  <button
+                    *ngIf="!isEditing"
+                    class="sm btn btn-primary-90 save-btn"
+                    (click)="save()"
+                  >
+                    Save
+                  </button>
+                  <button
+                    *ngIf="!isEditing"
+                    class="sm btn btn-outline-primary-90 cancel-btn"
+                    (click)="clear()"
+                  >
                     Clear
                   </button>
-                  <button class="sm btn btn-primary-90 add-btn">Save</button>
+
+                  <!-- Show "Edit" and "Add New" when in edit mode -->
+                  <button
+                    *ngIf="isEditing"
+                    class="sm btn btn-primary-90 add-btn"
+                    (click)="editSubject()"
+                  >
+                    {{ isEditing ? "Save" : "Edit" }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -232,6 +264,8 @@
                       id="search"
                       placeholder="Search"
                       class="form-control xs"
+                      (keyup)="applyFilter($event)"
+                      #input
                     />
                   </div>
                 </div>
@@ -252,7 +286,7 @@
                     <th mat-header-cell *matHeaderCellDef>Type</th>
                     <td mat-cell *matCellDef="let element">
                       <span class="badge bg-gray-15 code-badge xs">{{
-                        element.tny_type
+                        element.vch_type || ""
                       }}</span>
                     </td>
                   </ng-container>
@@ -277,7 +311,13 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr
                     mat-row
-                    *matRowDef="let row; columns: displayedColumns"
+                    *matRowDef="
+                      let row;
+                      let i = index;
+                      columns: displayedColumns
+                    "
+                    (dblclick)="rowActive(row, i)"
+                    [ngClass]="{ 'active-row': activeRowIndex === i }"
                   ></tr>
                 </table>
               </div>
@@ -292,7 +332,11 @@
 
           <div class="card-footer">
             <div class="card-action-wrap">
-              <button type="button" class="btn btn-primary-90 sm">
+              <button
+                type="button"
+                class="btn btn-primary-90 sm"
+                (click)="addNew()"
+              >
                 Add New
               </button>
             </div>

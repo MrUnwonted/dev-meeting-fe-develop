@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,6 +11,12 @@ import { ServiceService } from 'src/app/services/service.service';
   styleUrls: ['./create-account-heads.component.scss'],
 })
 export class CreateAccountHeadsComponent implements OnInit {
+   @Output() expandToggled = new EventEmitter<void>();
+    isExpanded = false;
+    toggleExpand() {
+      this.isExpanded = !this.isExpanded;
+      this.expandToggled.emit();
+    }
   selected_acc_head = {
     parent_head: '',
     head_code: '',
@@ -18,9 +24,13 @@ export class CreateAccountHeadsComponent implements OnInit {
     short_description: '',
     primary: '',
     secondary: '',
+    type: '',
   };
-  type: any;
   head_list: any = [];
+  isEditing: boolean = false;
+  isReadOnly: boolean = false; // Controls form field interactivity
+  activeRowIndex: number | null = null;
+  rowColors: string[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -32,6 +42,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   ngOnInit(): void {
     // Initialize paginator
     this.fetch_heads();
+    this.isReadOnly = false;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -43,16 +54,45 @@ export class CreateAccountHeadsComponent implements OnInit {
       if (response && response.data) {
         const userData = response.data;
         this.selected_acc_head = {
-          parent_head: userData.vch_primary_head,  // Map to vch_primary_head
+          parent_head: userData.vch_secondary_head,  // Map to vch_secondary_head
           head_code: userData.vch_secondary_code,  // Map to vch_secondary_code
-          head: userData.vch_secondary_head,       // Map to vch_secondary_head
+          head: userData.vch_primary_head,       // Map to vch_primary_head
           short_description: "",                   // No equivalent in API, set as empty
           primary: userData.int_primary_id,        // Map to int_primary_id
           secondary: userData.int_secondary_id,    // Map to int_secondary_id
+          type: userData.vch_type,    // Map to int_secondary_id
         };
-        console.log('Selected Acc Head:', this.selected_acc_head);
+        // console.log('Selected Acc Head:', this.selected_acc_head);
+        this.isEditing = true;
+        console.log('Is Editing:', this.isEditing);
       }
     });
+  }
+
+  save() {}
+
+  editSubject() {}
+
+  addNew(){
+    this.isEditing = false;
+    this.clear();
+  }
+
+  rowActive(row: any, index: number) {
+    this.activeRowIndex = index;
+    this.selected_acc_head = {
+      parent_head: row.vch_secondary_head,  // Map to vch_secondary_head
+      head_code: row.vch_secondary_code,    // Map to vch_secondary_code
+      head: row.vch_primary_head,           // Map to vch_primary_head
+      short_description: "",                 // No equivalent, set as empty
+      primary: row.int_primary_id,          // Map to int_primary_id
+      secondary: row.int_secondary_id,      // Map to int_secondary_id
+      type: row.vch_type,                    // Map to vch_type
+    };
+    console.log('Selected Data:', this.selected_acc_head);
+    // Highlight the selected row
+    this.rowColors = this.rowColors.map(() => '');
+    this.rowColors[index] = '#ff0000';
   }
 
 
@@ -74,4 +114,23 @@ export class CreateAccountHeadsComponent implements OnInit {
         console.log('Loaded from API');
       });
   }
+
+  clear() {
+    this.selected_acc_head = {
+      parent_head: '',
+      head_code: '',
+      head: '',
+      short_description: '',
+      primary: '',
+      secondary: '',
+      type: '',
+    };
+  }
+
+  // for filter while search
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 }

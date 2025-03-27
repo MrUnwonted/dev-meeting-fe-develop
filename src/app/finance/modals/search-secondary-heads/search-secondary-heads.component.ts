@@ -54,7 +54,7 @@ export class SearchSecondaryHeadsComponent {
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_data = row;
-    console.log('Selected Data:', this.selected_data);
+    // console.log('Selected Data:', this.selected_data);
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
   }
@@ -64,7 +64,7 @@ export class SearchSecondaryHeadsComponent {
         icon: 'info',
         title: 'Selected Record',
         html: `
-          <p><strong>Type:</strong> ${this.selected_data.tny_type}</p>
+          <p><strong>Type:</strong> ${this.selected_data.vch_type}</p>
           <p><strong>Code:</strong> ${this.selected_data.vch_secondary_code}</p>
           <p><strong>Head:</strong> ${this.selected_data.vch_secondary_head}</p>
         `,
@@ -88,7 +88,7 @@ export class SearchSecondaryHeadsComponent {
     if (this.head_list.length > 0) {
       this.dataSource = new MatTableDataSource(this.head_list);
       this.dataSource.paginator = this.paginator;
-      console.log('Loaded from cache');
+      // console.log('Loaded from cache');
       return;
     }
     this.svr
@@ -97,7 +97,7 @@ export class SearchSecondaryHeadsComponent {
         this.head_list = res;
         this.dataSource = new MatTableDataSource(this.head_list);
         this.dataSource.paginator = this.paginator;
-        console.log('Loaded from API');
+        // console.log('Loaded from API');
       });
   }
 
