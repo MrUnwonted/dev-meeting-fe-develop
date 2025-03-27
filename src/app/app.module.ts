@@ -82,7 +82,8 @@ export function createTranslateLoader(http: HttpClient) {
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
-        })], providers: [
+        })],
+         providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },
         { provide: MAT_DIALOG_DATA, useValue: {} },

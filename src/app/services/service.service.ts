@@ -205,4 +205,42 @@ compareJson(value1: any, value2: any): boolean {
 }
 
 
+
+fin_getService(methodName: string, params: any = null) {
+  if (params) {
+    let i = 0;
+    let parmsdet = '';
+    let paramvariable = '';
+
+    for (const key in params) {
+      paramvariable = '';
+      if (i > 0) {
+        paramvariable = '&' + key + '=' + params[key];
+      } else {
+        paramvariable = '?' + key + '=' + params[key];
+      }
+      parmsdet = parmsdet + paramvariable;
+      i++;
+    }
+    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName + parmsdet);
+  }else{
+    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName);
+  }
+}
+
+
+// POST METHOD
+fin_postservice(methodName: string, params: any = null) {
+  //console.log(params);
+  var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  // JSON.stringify(data)
+  return this.http
+    .post<any>(`http://103.177.225.135:9092/` + this.apihost + methodName, params, { headers: reqHeader });
+
+  // return this.http
+  // .post<any>(`${environment.serviceUrl}/` + this.apihost + methodName, params);
+}
+
+
 }

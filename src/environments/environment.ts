@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   lang:'മലയാളം',
   bilingual:true,
-  serviceUrl:"http://192.168.1.41:9092",
-  ssoUrl:"http://192.168.1.41:9091",
+  serviceUrl:"http://192.168.1.34:9093",
+  ssoUrl:"http://192.168.1.34:9091",
 };
 
 /*

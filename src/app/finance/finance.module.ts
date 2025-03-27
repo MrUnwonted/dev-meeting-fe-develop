@@ -6,18 +6,24 @@ import { CreateAccountHeadsComponent } from './create-account-heads/create-accou
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { SearchSecondaryHeadsComponent } from './modals/search-secondary-heads/search-secondary-heads.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModalComponent } from './modals/common-modal/common-modal.component';
 
 
 @NgModule({
   declarations: [
-    CreateAccountHeadsComponent
+    CreateAccountHeadsComponent,
+    SearchSecondaryHeadsComponent,
+    CommonModalComponent
   ],
   imports: [
     CommonModule,
     FinanceRoutingModule,
-     MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    FormsModule,
   ]
 })
 export class FinanceModule { }
