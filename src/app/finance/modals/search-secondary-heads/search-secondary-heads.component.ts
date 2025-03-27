@@ -60,19 +60,9 @@ export class SearchSecondaryHeadsComponent {
   }
   select_row() {
     if (this.selected_data) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Selected Record',
-        html: `
-          <p><strong>Type:</strong> ${this.selected_data.vch_type}</p>
-          <p><strong>Code:</strong> ${this.selected_data.vch_secondary_code}</p>
-          <p><strong>Head:</strong> ${this.selected_data.vch_secondary_head}</p>
-        `,
-      }).then(() => {
-        this.dialogRef.close({
-          result: 'selected data',
-          data: this.selected_data,
-        });
+      this.dialogRef.close({
+        result: 'selected data',
+        data: this.selected_data,
       });
     } else {
       Swal.fire({

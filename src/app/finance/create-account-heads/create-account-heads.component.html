@@ -36,7 +36,7 @@
                       <div class="row form-inner-row">
                         <div class="col-3 left-side">
                           <label for="s-sub" class="form-label"
-                            >Parent Head</label
+                            >Secondary Head</label
                           >
                         </div>
 
@@ -47,8 +47,9 @@
                               name="s-sub"
                               id="s-sub"
                               class="form-control xs"
-                              (click)="open_heads()"
+                              (dblclick)="open_heads()"
                               [(ngModel)]="selected_acc_head.parent_head"
+                              readonly
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -74,6 +75,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.head_code"
                             name="headCode"
+                            readonly
                           />
                         </div>
                       </div>
@@ -94,6 +96,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.head"
                             name="head"
+                            [readOnly]="isReadOnly"
                           />
                         </div>
                       </div>
@@ -116,6 +119,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.short_description"
                             name="shortDesc"
+                            [readOnly]="isReadOnly"
                           />
                         </div>
                       </div>
@@ -138,6 +142,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.primary"
                             name="primary"
+                            readonly
                           />
                         </div>
                       </div>
@@ -145,7 +150,7 @@
                   </div>
 
                   <!-- Secondary -->
-                  <div class="col-lg-12">
+                  <!-- <div class="col-lg-12">
                     <div class="form-group">
                       <div class="row form-inner-row">
                         <div class="col-3 left-side">
@@ -164,7 +169,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- Type (Select dropdown) -->
                   <div class="col-lg-12">
@@ -174,18 +179,14 @@
                           <label for="type" class="form-label">Type</label>
                         </div>
                         <div class="col-9 right-side">
-                          <select
-                            name="type"
-                            id="type"
-                            class="form-select xs"
-                            [(ngModel)]="this.selected_acc_head.type"
-                          >
-                            <option value="">Select Type</option>
-                            <option value="Incode">Incode</option>
-                            <option value="Expenditure">Expenditure</option>
-                            <option value="Liability">Liability</option>
-                            <option value="Asset">Asset</option>
-                          </select>
+                          <input
+                          type="text"
+                          id="type"
+                          name="type"
+                          class="form-control xs"
+                          [(ngModel)]="selected_acc_head.type"
+                          readonly
+                        />
                         </div>
                       </div>
                     </div>
@@ -210,30 +211,30 @@
 
               <div class="form-footer">
                 <div class="button-wrap">
-                  <!-- Show "Save" and "Clear" when NOT in edit mode -->
+                  <!-- Conditional rendering of buttons based on the edit state -->
+                  <!-- Show "Save" and "Clear" when in Edit mode -->
                   <button
                     *ngIf="!isEditing"
                     class="sm btn btn-primary-90 save-btn"
                     (click)="save()"
                   >
-                    Save
+                    {{ "Save" }}
                   </button>
-                  <button
-                    *ngIf="!isEditing"
-                    class="sm btn btn-outline-primary-90 cancel-btn"
-                    (click)="clear()"
-                  >
-                    Clear
-                  </button>
-
-                  <!-- Show "Edit" and "Add New" when in edit mode -->
+                  <!-- Show "Edit" and "Add New" when NOT in Edit mode -->
                   <button
                     *ngIf="isEditing"
                     class="sm btn btn-primary-90 add-btn"
                     (click)="editSubject()"
                   >
-                    {{ isEditing ? "Save" : "Edit" }}
+                    {{ isEditing ? "Edit" : "Save" }}
                   </button>
+                  <button
+                  class="sm btn btn-outline-primary-90 cancel-btn"
+                  (click)="init()"
+                >
+                  {{ "Clear" }}
+                </button>
+
                 </div>
               </div>
             </div>
