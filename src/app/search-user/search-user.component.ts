@@ -195,15 +195,12 @@ export class SearchUserComponent implements OnInit {
   }
 
   seat_data() {
-    // this.seat = null;
-  
+    this.seat = null
     if (this.department) {
-     
       this.section_list = this.res_data_sections.filter(
         (section) => section.dept_id === this.department.dept_id
       );
   
-     
       if (!this.section) {
         const sectionIds = this.section_list.map((s) => s.section_id);
         this.Seat_list = this.res_data_seats.filter((seat) =>
@@ -212,13 +209,11 @@ export class SearchUserComponent implements OnInit {
       }
     }
   
-
     if (this.section) {
       this.Seat_list = this.res_data_seats.filter(
         (seat) => seat.section_id === this.section.section_id
       );
     }
-  
   
     this.Seat_list.sort((a, b) => a.section_id - b.section_id);
   }
@@ -264,6 +259,4 @@ export class SearchUserComponent implements OnInit {
 
     }
   }
-
-
 }

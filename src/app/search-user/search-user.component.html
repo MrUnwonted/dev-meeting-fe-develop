@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label for="subj" class="form-label">Department</label>
                                 <select name="subj" id="subj" class="form-select md" [(ngModel)]="department"
-                                    (click)="section_data()">
+                                    (change)="section_data()">
                                     <option value="" hidden></option>
                                     <option *ngFor="let department of department_list" [ngValue]="department">
                                         {{ department.dept_name }}
@@ -56,7 +56,7 @@
                             <div class="form-group">
                                 <label for="subj2" class="form-label">Choose Section</label>
                                 <select name="subj2" id="subj2" class="form-select md" [(ngModel)]="section"
-                                    (click)="seat_data()">
+                                    (change)="seat_data()">
                                     <option value="" hidden></option>
                                     <option *ngFor="let section of section_list" [ngValue]="section">
                                         {{ section.section_name }}
@@ -71,7 +71,7 @@
                                 <select name="subj3" id="subj3" class="form-select md" [(ngModel)]="seat">
                                     <option value="" hidden></option>
                                     <option *ngFor="let seat of Seat_list" [ngValue]="seat">
-                                        {{ seat.section_name }}
+                                        {{ seat.vch_seat }}
                                     </option>
                                 </select>
                             </div>
