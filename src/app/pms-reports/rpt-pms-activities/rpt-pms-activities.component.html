@@ -1,0 +1,125 @@
+<div class="admin-container">
+    <div class="card widget-card table-card admin-card">
+        <div class="card-header">
+            <div class="header-wrap-outer">
+                <div class="header-wrap">
+                    <div class="text-wrap">
+                        <h6>{{ "Report Generating Activity"}}</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="loading-tp-spinner-overlay">
+            <div class="tp-spinner"></div>
+        </div>
+        <div class="card-body">
+            <div class="card-body-content">
+                <div class="primary-subject-content">
+                    <div class="row gy-3 gx-0 main-row">
+
+                        <div class="left-column">
+
+                            <div class="form-wrap table-form-wrap">
+
+                                <div class="form-body">
+                                    <div class="row ">
+
+                                        <div class="row g-1 align-items-center">
+
+                                            <!-- Select Employee -->
+                                            <div class="col empName">
+                                                <input type="text" class="form-control form-control-xs " id="empName" placeholder="Select Employee" [(ngModel)]="emp_name" (dblclick)="selectUser()" />
+                                            </div>
+                                        
+                                            <!-- Date Range: From Date -->
+                                            <div class="col">
+                                                <mat-form-field appearance="outline" class="w-100  date" floatLabel="always">
+                                                    <mat-label>From</mat-label>
+                                                    <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dt_from">
+                                                    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                                                    <mat-datepicker #pickerFrom></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        
+                                            <!-- Date Range: To Date -->
+                                            <div class="col">
+                                                <mat-form-field appearance="outline" class="w-100  date" floatLabel="always">
+                                                    <mat-label>To</mat-label>
+                                                    <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dt_to">
+                                                    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                                                    <mat-datepicker #pickerTo></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        
+                                            <!-- Action Button -->
+                                            <div class="col">
+                                                <button class="btn btn-primary go-button"  [disabled]="isButtonDisabled()" (click)="go()">GO</button>
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="left-column col-md-12">
+                                            <div class="table-wrap file-box-wrap pagination-included" style="height: calc(70vh - 20rem)">
+                                              <table class="w-100 admin-table file-table">
+                                                
+                                                <!-- Table Header -->
+                                                <thead>
+                                                  <tr>
+                                                    <th>Sl No</th>
+                                                    <th>Project ID</th>
+                                                    <th>Emp Code</th>
+                                                    <th>Task Name</th>
+                                                    <th>Sub Task</th>
+                                                    <th>Activity</th>
+                                                    <th>Estimated Hours</th>
+                                                    <th>Actual Hours</th>
+                                                    <th>Total Daily Hours</th>
+                                                  </tr>
+                                                </thead>
+                                                
+                                                <!-- Table Body -->
+                                                <tbody>
+                                                  <tr *ngFor="let element of emp_report; let i = index">
+                                                    <td><span class="badge bg-gray-15 code-badge xs">{{ i + 1 }}</span></td>
+                                                    <td>{{ element.project_id }}</td>
+                                                    <td>{{ element.emp_code }}</td>
+                                                    <td>{{ element.task_name }}</td>
+                                                    <td>{{ element.sub_task_name }}</td>
+                                                    <td>{{ element.activity_with_hours }}</td>
+                                                    <td>{{ element.estimated_hours }}</td>
+                                                    <td>{{ element.actual_hours }}</td>
+                                                    <td>{{ element.total_daily_hours }}</td>
+                                                  </tr>
+                                                </tbody>
+                                          
+                                              </table>
+                                            </div>
+                                          </div>
+                                          
+                                          
+                                          
+
+
+                                    </div>
+                                </div>
+
+                                <div class="form-footer">
+                                    <div class="button-wrap">
+
+                                        <!-- <button class="sm btn btn-primary-90 save-btn">
+                        {{ "Save" }}
+                      </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

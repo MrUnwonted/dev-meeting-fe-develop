@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   lang:'മലയാളം',
   bilingual:true,
-  serviceUrl:"http://192.168.1.34:9093",
+  serviceUrl:"http://192.168.1.50:9048",
   ssoUrl:"http://192.168.1.34:9091",
 };
 

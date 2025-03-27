@@ -9,13 +9,18 @@ import { MatSortModule } from '@angular/material/sort';
 import { SearchSecondaryHeadsComponent } from './modals/search-secondary-heads/search-secondary-heads.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModalComponent } from './modals/common-modal/common-modal.component';
+import { BanksComponent } from './banks/banks.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { SearchOfficeComponent } from './modals/search-office/search-office.component';
 
 
 @NgModule({
   declarations: [
     CreateAccountHeadsComponent,
     SearchSecondaryHeadsComponent,
-    CommonModalComponent
+    CommonModalComponent,
+    BanksComponent,
+    SearchOfficeComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +29,7 @@ import { CommonModalComponent } from './modals/common-modal/common-modal.compone
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
+    MatTabsModule    
   ]
 })
 export class FinanceModule { }

@@ -35,6 +35,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { RptPmsActivitiesComponent } from './pms-reports/rpt-pms-activities/rpt-pms-activities.component';
+import {MatInputModule} from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
+
+
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
@@ -58,7 +68,11 @@ export function createTranslateLoader(http: HttpClient) {
         AdminComponent,
         AdminHeaderComponent,
         AdminSidebarComponent,
-        AdminTabMenuComponent
+        AdminTabMenuComponent,
+        RptPmsActivitiesComponent,
+   
+      
+      
     ],
     bootstrap: [AppComponent],
      imports: [BrowserModule,
@@ -75,6 +89,10 @@ export function createTranslateLoader(http: HttpClient) {
         MatSelectModule,
         MatIconModule,
         MatProgressSpinnerModule,
+        MatDatepickerModule,
+        MatInputModule,
+        MatNativeDateModule,
+        
 
         TranslateModule.forRoot({
             loader: {
