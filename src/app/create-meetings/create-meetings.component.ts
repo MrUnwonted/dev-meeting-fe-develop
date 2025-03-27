@@ -75,7 +75,6 @@ export class CreateMeetingsComponent implements OnInit {
     'actions',
   ];
   originalData: any; // Store original fetched data for comparison
-  saveData: any; // Store the JSON when saving
   // fetchMeeting: any; //Store the JSON when fetching
 
   @ViewChild('paginator1') paginator1!: MatPaginator;
@@ -109,19 +108,10 @@ export class CreateMeetingsComponent implements OnInit {
         this.customizePaginator(this.paginator2);
       }
     });
-
-    // Force refresh paginator when data changes
-    // this.dataSource1.data = [...this.dataSource1.data]; // Ensure data change detection
-    // this.paginator1?.page.next({
-    //   pageIndex: this.paginator1.pageIndex,
-    //   pageSize: this.paginator1.pageSize,
-    //   length: this.paginator1.length,
-    // }); // Trigger a page event to refresh
   }
 
   customizePaginator(paginator: MatPaginator) {
     paginator._intl.itemsPerPageLabel = 'Items per page:';
-
     paginator._intl.getRangeLabel = (
       page: number,
       pageSize: number,
@@ -130,13 +120,10 @@ export class CreateMeetingsComponent implements OnInit {
       if (length === 0 || pageSize === 0) {
         return `0 of ${length}`;
       }
-
       const startIndex = page * pageSize + 1; // Ensure starting index is correct
       const endIndex = Math.min((page + 1) * pageSize, length); // Avoid exceeding total count
-
       return `${startIndex} - ${endIndex} of ${length}`;
     };
-
     paginator._intl.changes.next(); // Refresh paginator label
   }
 
@@ -185,7 +172,7 @@ export class CreateMeetingsComponent implements OnInit {
       console.error('Meeting validation failed:', this.msg);
       return;
     }
-    this.saveData = {
+    let data = {
       meeting_name: this.selectedMeetings.meeting_name,
       office_id: 1,
       child: this.dataSource1.data.map((user) => ({
@@ -199,10 +186,10 @@ export class CreateMeetingsComponent implements OnInit {
     };
     // Check if data has changed before saving
     if (this.isEditing) {
-      let result = this.compareJson(this.originalData, this.saveData);
+      let result = this.compareJson(this.originalData, data);
       if (!result) {
         // console.log('Triggered to save data');
-        this.saveMeetingFunction();
+        this.saveMeetingFunction(data);
         this.is_loading = true;
       } else {
         // alert('No changes detected!');
@@ -215,19 +202,20 @@ export class CreateMeetingsComponent implements OnInit {
       }
     } else {
       // console.log('Triggered to save data');
-      this.saveMeetingFunction();
+      this.saveMeetingFunction(data);
       this.is_loading = true;
     }
   }
 
-  saveMeetingFunction() {
+  saveMeetingFunction(data: any) {
+    console.log('Data to Save:', data);
     this.commonsvr
-      .postservice('api/v0/save_meetings', this.saveData)
+      .postservice('api/v0/save_meetings', data)
       .subscribe((data: any) => {
         // console.log('Save Response:', data);
         if (data.msg === 'Success') {
           // console.log('Full Response:', data);
-          this.openCustomSnackbar('success', 'Saved Successfully');
+          // this.openCustomSnackbar('success', 'Saved Successfully');
           // Show Bootstrap Modal on Success
           this.showSuccessModal();
           // this.isReadOnly = true; // Make form read-only again
@@ -242,6 +230,8 @@ export class CreateMeetingsComponent implements OnInit {
         this.isEditing = false; // Change button label back to "Edit"
       });
   }
+
+  // Modal to show success message
   showSuccessModal() {
     let modal = new bootstrap.Modal(
       document.getElementById('saveSuccessModal')
@@ -252,26 +242,20 @@ export class CreateMeetingsComponent implements OnInit {
   compareJson(obj1: any, obj2: any) {
     if (!obj1) obj1 = [];
     if (!obj2) obj2 = [];
-
     if (typeof obj1 === 'string') obj1 = JSON.parse(obj1);
     if (typeof obj2 === 'string') obj2 = JSON.parse(obj2);
-
     // 🔹 Ensure both are arrays or both are objects
     if (!Array.isArray(obj1)) obj1 = [obj1];
     if (!Array.isArray(obj2)) obj2 = [obj2];
-
     // 🔹 Normalize null values
     const normalize = (data: any) =>
       JSON.stringify(data, (key, value) => (value === null ? '' : value));
-
     let compData1 = normalize(obj1);
     let compData2 = normalize(obj2);
-
-    console.log('Normalized Object 1:', compData1);
-    console.log('Normalized Object 2:', compData2);
-
+    // console.log('Normalized Object 1:', compData1);
+    // console.log('Normalized Object 2:', compData2);
     let compare = this.commonsvr.checkJsonEquality(compData1, compData2);
-    console.log('Comparison Result:', compare);
+    // console.log('Comparison Result:', compare);
     return compare;
   }
 
@@ -302,17 +286,14 @@ export class CreateMeetingsComponent implements OnInit {
     }
     // Check if user is present in the table or not
     if (this.dataSource1.data.length == 0) {
-      this.msg = 'Add at least one user!';
       this.showValidationError('Add at least one user!');
       return false;
     }
     //  Check if at least one owner exists in the dataSource1
     if (!this.isOwnerExists) {
-      this.msg = 'At least one owner must be selected!';
-      this.showValidationError('Add at least one user!');
+      this.showValidationError('At least one owner must be selected!');
       return false;
     }
-
     // if (this.bilingual) {
     //   if (!this.selectedMeetings.meeting_name || this.selectedMeetings.meeting_name.trim().length === 0) {
     //     this.showError = true;
@@ -328,13 +309,13 @@ export class CreateMeetingsComponent implements OnInit {
   showValidationError(message: string) {
     this.msg = message;
     this.showError = true;
-
     // Hide the error message after 3 seconds
     setTimeout(() => {
       this.showError = false;
       this.msg = '';
     }, 3000);
   }
+
   // function to  fetch all subjects
   fetch_meetings() {
     let param = {
@@ -354,13 +335,18 @@ export class CreateMeetingsComponent implements OnInit {
 
   //to get data from table to edit subject
   onRowClick(e: any, index: number): void {
-    // console.log('e:', e);
-    this.activeRowIndex = index;
+    const pageIndex = this.paginator2?.pageIndex || 0; // Get current page index
+    const pageSize = this.paginator2?.pageSize || 10; // Get page size
+    const actualIndex = index + pageIndex * pageSize; // Calculate actual row index
+    this.originalData = ''; // Clear original data
+    this.activeRowIndex = actualIndex; // Use the correct index
     this.primary_id = e.primary_id;
     this.deactive = e.active == 9 ? true : false;
     let param = {
-      meeting_id: index+1,
+      meeting_id: actualIndex + 1, // Use corrected index
     };
+    // console.log('Index:', index);
+    // console.log('Param:', param);
     this.commonsvr.getService('api/v0/get_meeting_child', param).subscribe(
       (response: any) => {
         console.log('Child Data:', response);
@@ -425,22 +411,19 @@ export class CreateMeetingsComponent implements OnInit {
 
   // Success toast
   openCustomSnackbar(type: any, msg: any) {
-    const snackbar = document.createElement('div');
-    snackbar.className = `custom-snackbar ${type}`;
-    snackbar.innerText = msg;
-
-    document.body.appendChild(snackbar);
-
-    setTimeout(() => {
-      snackbar.classList.add('show');
-    }, 100);
-
-    setTimeout(() => {
-      snackbar.classList.remove('show');
-      setTimeout(() => {
-        document.body.removeChild(snackbar);
-      }, 300);
-    }, 3000);
+    // const snackbar = document.createElement('div');
+    // snackbar.className = `custom-snackbar ${type}`;
+    // snackbar.innerText = msg;
+    // document.body.appendChild(snackbar);
+    // setTimeout(() => {
+    //   snackbar.classList.add('show');
+    // }, 100);
+    // setTimeout(() => {
+    //   snackbar.classList.remove('show');
+    //   setTimeout(() => {
+    //     document.body.removeChild(snackbar);
+    //   }, 300);
+    // }, 3000);
   }
 
   // clear error message
@@ -506,16 +489,20 @@ export class CreateMeetingsComponent implements OnInit {
     // Clear fields after adding
     this.clear_user_details();
   }
+
+  // Update owner status when checkbox enabled and add button is clicked
   updateOwnerStatus() {
     if (this.flg_owner) {
       this.dataSource1.data.forEach((user) => (user.flg_owner = false));
     }
   }
 
+  // Check if at least one owner exists in the dataSource1
   get isOwnerExists(): boolean {
     return this.dataSource1.data.some((user) => user.flg_owner);
   }
 
+  // Handle row actions
   onClickEdit(element: any, index: number) {
     // console.log('EditRow:', element);
     // Bind selected row's data to the form fields
@@ -533,6 +520,7 @@ export class CreateMeetingsComponent implements OnInit {
     this.editingIndex = index;
   }
 
+  // Handle row actions
   onClickDelete(element: any, index: number) {
     const userIndex = this.dataSource1.data.findIndex(
       (user) => user.user_id === element.user_id
@@ -543,6 +531,7 @@ export class CreateMeetingsComponent implements OnInit {
     }
   }
 
+  // Clear user details
   clear_user_details() {
     // Clear input fields
     this.selected_user = {
