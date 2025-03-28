@@ -102,7 +102,6 @@ export class CreateAccountHeadsComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.selected_acc_head.head_code = res;
-          // Display success message
         }
       },
       (error) => {
@@ -207,7 +206,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
     };
-    console.log('Selected Data:', this.selected_acc_head);
+    // console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
     this.isReadOnly = true;
     // Highlight the selected row

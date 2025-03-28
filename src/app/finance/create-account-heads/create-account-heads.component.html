@@ -75,7 +75,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.head_code"
                             name="headCode"
-                            readonly
+                           readonly
                           />
                         </div>
                       </div>
@@ -180,13 +180,13 @@
                         </div>
                         <div class="col-9 right-side">
                           <input
-                          type="text"
-                          id="type"
-                          name="type"
-                          class="form-control xs"
-                          [(ngModel)]="selected_acc_head.type"
-                          readonly
-                        />
+                            type="text"
+                            id="type"
+                            name="type"
+                            class="form-control xs"
+                            [(ngModel)]="selected_acc_head.type"
+                            readonly
+                          />
                         </div>
                       </div>
                     </div>
@@ -196,7 +196,9 @@
                     <div class="form-group">
                       <div class="row form-inner-row">
                         <div class="col-3 left-side">
-                          <label for="deactivate" class="form-label">Deactivate</label>
+                          <label for="deactivate" class="form-label"
+                            >Deactivate</label
+                          >
                         </div>
                         <div class="col-4 right-side">
                           <div class="form-check">
@@ -213,7 +215,6 @@
                     </div>
                   </div>
 
-
                   <!-- <div class="col-lg-4">
                     <div class="gradient-box">
                       <div class="gradient-box-inner">
@@ -228,7 +229,6 @@
                       </div>
                     </div>
                   </div> -->
-
                 </div>
               </div>
 
@@ -252,12 +252,11 @@
                     {{ isEditing ? "Edit" : "Save" }}
                   </button>
                   <button
-                  class="sm btn btn-outline-primary-90 cancel-btn"
-                  (click)="init()"
-                >
-                  {{ "Clear" }}
-                </button>
-
+                    class="sm btn btn-outline-primary-90 cancel-btn"
+                    (click)="init()"
+                  >
+                    {{ "Clear" }}
+                  </button>
                 </div>
               </div>
             </div>
@@ -305,22 +304,21 @@
                   [dataSource]="dataSource"
                   class="w-100 admin-table file-table"
                 >
+                  <!--  Head -->
+                  <ng-container matColumnDef="head_id">
+                    <th mat-header-cell *matHeaderCellDef>Head Id</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.int_head_id }}
+                    </td>
+                  </ng-container>
 
-                <!--  Head -->
-                <ng-container matColumnDef="head_id">
-                  <th mat-header-cell *matHeaderCellDef>Head Id</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.int_head_id }}
-                  </td>
-                </ng-container>
-
-                <!--  Head -->
-                <ng-container matColumnDef="head">
-                  <th mat-header-cell *matHeaderCellDef>Head</th>
-                  <td mat-cell *matCellDef="let element">
-                    {{ element.vch_secondary_head }}
-                  </td>
-                </ng-container>
+                  <!--  Head -->
+                  <ng-container matColumnDef="head">
+                    <th mat-header-cell *matHeaderCellDef>Head</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.vch_secondary_head }}
+                    </td>
+                  </ng-container>
 
                   <!-- Code -->
                   <ng-container matColumnDef="code">
@@ -330,25 +328,25 @@
                     </td>
                   </ng-container>
 
-                    <!-- Module Column -->
-                    <ng-container matColumnDef="type">
-                      <th mat-header-cell *matHeaderCellDef>Type</th>
-                      <td mat-cell *matCellDef="let element">
-                        <span class="badge bg-gray-15 code-badge xs">{{
-                          element.vch_type || ""
-                        }}</span>
-                      </td>
-                    </ng-container>
+                  <!-- Module Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                    <td mat-cell *matCellDef="let element">
+                      <span class="badge bg-gray-15 code-badge xs">{{
+                        element.vch_type || ""
+                      }}</span>
+                    </td>
+                  </ng-container>
 
-                     <!-- Module Column -->
-                     <ng-container matColumnDef="primary_head">
-                      <th mat-header-cell *matHeaderCellDef>Primary</th>
-                      <td mat-cell *matCellDef="let element">
-                        <span class="badge bg-gray-15 code-badge xs">{{
-                          element.vch_primary_head || ""
-                        }}</span>
-                      </td>
-                    </ng-container>
+                  <!-- Module Column -->
+                  <ng-container matColumnDef="primary_head">
+                    <th mat-header-cell *matHeaderCellDef>Primary</th>
+                    <td mat-cell *matCellDef="let element">
+                      <span class="badge bg-gray-15 code-badge xs">{{
+                        element.vch_primary_head || ""
+                      }}</span>
+                    </td>
+                  </ng-container>
 
                   <!-- Header and Row Definitions -->
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
