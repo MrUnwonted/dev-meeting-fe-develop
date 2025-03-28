@@ -24,15 +24,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
     this.expandToggled.emit();
   }
-  selected_acc_head: any = {
-    // parent_head: '',
-    // head_code: '',
-    // head: '',
-    // short_description: '',
-    // primary: '',
-    // secondary: '',
-    // type: '',
-  };
+  selected_acc_head: any = {};
   head_list: any = [];
   isEditing: boolean = false;
   isAdding: boolean = false;
