@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,13 +17,13 @@ import { ServiceService } from 'src/app/services/service.service';
   styleUrls: ['./create-account-heads.component.scss'],
 })
 export class CreateAccountHeadsComponent implements OnInit {
-   @Output() expandToggled = new EventEmitter<void>();
-    isExpanded = false;
-    toggleExpand() {
-      this.isExpanded = !this.isExpanded;
-      this.expandToggled.emit();
-    }
-  selected_acc_head : any = {
+  @Output() expandToggled = new EventEmitter<void>();
+  isExpanded = false;
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
+    this.expandToggled.emit();
+  }
+  selected_acc_head: any = {
     // parent_head: '',
     // head_code: '',
     // head: '',
@@ -28,13 +34,14 @@ export class CreateAccountHeadsComponent implements OnInit {
   };
   head_list: any = [];
   isEditing: boolean = false;
+  isAdding: boolean = false;
   isReadOnly: boolean = true; // Controls form field interactivity
   activeRowIndex: number | null = null;
   rowColors: string[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = [ 'head', 'code', 'type', 'primary'];
+  displayedColumns: string[] = ['head', 'code', 'type', 'primary'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
@@ -48,6 +55,7 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   init() {
     this.isReadOnly = false;
+    this.isAdding = true;
     this.isEditing = false;
     this.selected_acc_head = {
       parent_head: '',
@@ -61,6 +69,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   }
 
   open_heads() {
+    if (this.isAdding) {
     const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
       width: '1130px',
     });
@@ -68,44 +77,46 @@ export class CreateAccountHeadsComponent implements OnInit {
       if (response && response.data) {
         const userData = response.data;
         this.selected_acc_head = {
-          parent_head: userData.vch_secondary_head,  // Map to vch_secondary_head
-          head_code: userData.vch_secondary_code,  // Map to vch_secondary_code
-          head: userData.vch_secondary_head,       // Map to vch_primary_head
-          short_description: "",                   // No equivalent in API, set as empty
-          primary: userData.vch_primary_head,        // Map to int_primary_id
-          secondary: userData.int_secondary_id,    // Map to int_secondary_id
-          type: userData.vch_type,    // Map to int_secondary_id
+          parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
+          head_code: userData.vch_secondary_code, // Map to vch_secondary_code
+          head: userData.vch_secondary_head, // Map to vch_primary_head
+          short_description: '', // No equivalent in API, set as empty
+          primary: userData.vch_primary_head, // Map to int_primary_id
+          secondary: userData.int_secondary_id, // Map to int_secondary_id
+          type: userData.vch_type, // Map to int_secondary_id
         };
         // console.log('Selected Acc Head:', this.selected_acc_head);
         this.isEditing = true;
         this.isReadOnly = true;
         console.log('Is Editing:', this.isEditing);
       }
-    });
+    });}
   }
 
   save() {}
 
   editSubject() {
-    this.isEditing=false;
+    this.isEditing = false;
     this.isReadOnly = false;
+    this.isAdding = false;
   }
 
-  addNew(){
+  addNew() {
     this.isEditing = false;
+    window.location.reload();
     this.init();
   }
 
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_acc_head = {
-      parent_head: row.vch_secondary_head,  // Map to vch_secondary_head
-      head_code: row.vch_secondary_code,    // Map to vch_secondary_code
-      head: row.vch_secondary_head,           // Map to vch_primary_head
-      short_description: "",                 // No equivalent, set as empty
-      primary: row.vch_primary_head,          // Map to int_primary_id
-      secondary: row.int_secondary_id,      // Map to int_secondary_id
-      type: row.vch_type,                    // Map to vch_type
+      parent_head: row.vch_secondary_head, // Map to vch_secondary_head
+      head_code: row.vch_secondary_code, // Map to vch_secondary_code
+      head: row.vch_secondary_head, // Map to vch_primary_head
+      short_description: '', // No equivalent, set as empty
+      primary: row.vch_primary_head, // Map to int_primary_id
+      secondary: row.int_secondary_id, // Map to int_secondary_id
+      type: row.vch_type, // Map to vch_type
     };
     console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
@@ -114,7 +125,6 @@ export class CreateAccountHeadsComponent implements OnInit {
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
   }
-
 
   // Fetch data from API
   fetch_heads() {
@@ -140,5 +150,4 @@ export class CreateAccountHeadsComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }
