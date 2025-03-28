@@ -73,7 +73,7 @@ export class CreateAccountHeadsComponent implements OnInit {
             parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
             head: userData.vch_secondary_head, // Map to vch_primary_head
             primary_id: userData.int_primary_id, // 1
-            primary_code: userData.vch_primary_code ?? "", // Ensure safe assignment
+            primary_code: userData.vch_primary_code ?? '', // Ensure safe assignment
             primary_head: userData.vch_primary_head, // Tax Revenue
             secondary_id: userData.int_secondary_id, // 1
             secondary_code: userData.vch_secondary_code, // 110010000
@@ -82,7 +82,7 @@ export class CreateAccountHeadsComponent implements OnInit {
             system: userData.tny_system ?? null, // Mapping system field
             head_code: '',
             unit_id: null, // Keeping null as per the API response
-            flag: "A", // Since it's adding a new record
+            flag: 'A', // Since it's adding a new record
 
             secondary: userData.int_secondary_id, // Map to int_secondary_id
             type: userData.vch_type, // Map to int_secondary_id
@@ -100,30 +100,30 @@ export class CreateAccountHeadsComponent implements OnInit {
   getNewHeadCode(sec_id: number) {
     this.svr.fin_getService('api/v0/get_new_head_code', { sec_id }).subscribe(
       (res: any) => {
-      if (res) {
-        this.selected_acc_head.head_code = res;
-        // Display success message
-      }
+        if (res) {
+          this.selected_acc_head.head_code = res;
+          // Display success message
+        }
       },
       (error) => {
-      console.error('Error fetching head code:', error);
-      // Display error message
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to fetch head code. Please try again.',
-      });
+        console.error('Error fetching head code:', error);
+        // Display error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch head code. Please try again.',
+        });
       }
     );
   }
 
   save() {
     if (!this.selected_acc_head.head || !this.selected_acc_head.head_code) {
-      console.error("Head and Head Code are required!");
+      console.error('Head and Head Code are required!');
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: "Head and Head Code are required!",
+        text: 'Head and Head Code are required!',
       });
       return;
     }
@@ -142,11 +142,11 @@ export class CreateAccountHeadsComponent implements OnInit {
       secondary_head: this.selected_acc_head.secondary_head, // Mapped from vch_secondary_head
       system: this.selected_acc_head.system, // Mapped from tny_system
       unit_id: this.selected_acc_head.unit_id, // Mapped from int_unit_id
-      short_desc: this.selected_acc_head.short_description ?? "", // Default empty string if null
-      flag: this.isEditing ? "E" : "A", // "E" for edit, "A" for add
+      short_desc: this.selected_acc_head.short_description ?? '', // Default empty string if null
+      flag: this.isEditing ? 'E' : 'A', // "E" for edit, "A" for add
     };
     if (this.isEditing && this.selected_acc_head.head_id) {
-      payload.head_id = this.selected_acc_head.head_id;  // Include only in Edit mode
+      payload.head_id = this.selected_acc_head.head_id; // Include only in Edit mode
     }
     // console.log("Saving Account Head:", payload);
     // Call API
@@ -159,14 +159,14 @@ export class CreateAccountHeadsComponent implements OnInit {
           // text: `New head code: ${res}`,
           timer: 2000,
           showConfirmButton: true,
-          });
+        });
         // Refresh the table
         this.fetch_heads();
         // Reset form after saving
         this.init();
       },
       (error) => {
-        console.error("Error saving Account Head:", error);
+        console.error('Error saving Account Head:', error);
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -175,7 +175,6 @@ export class CreateAccountHeadsComponent implements OnInit {
       }
     );
   }
-
 
   editSubject() {
     this.isEditing = false;
@@ -192,14 +191,23 @@ export class CreateAccountHeadsComponent implements OnInit {
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_acc_head = {
-      parent_head: row.vch_head, // Map to vch_secondary_head
-      head_code: row.vch_head_code, // Map to vch_secondary_code
-      head: row.vch_secondary_head, // Map to vch_primary_head
-      short_description: row.vch_short_desc, // No equivalent, set as empty
-      primary_head: row.vch_primary_head, // Map to int_primary_id
+      parent_head: row.vch_secondary_head, // Correct mapping from vch_secondary_head
+      head: row.vch_secondary_head, // Correct mapping from vch_secondary_head
+      head_code: row.vch_head_code, // Correct mapping from vch_head_code
+      short_description: row.vch_short_desc ?? '', // Ensure it's always a string
+      primary_id: row.int_primary_id, // Correct mapping from int_primary_id
+      primary_code: row.vch_primary_code ?? '', // Ensure safe assignment
+      primary_head: row.vch_primary_head, // Correct mapping from vch_primary_head
+      secondary_id: row.int_secondary_id, // Correct mapping from int_secondary_id
+      secondary_code: row.vch_secondary_code, // Correct mapping from vch_secondary_code
+      secondary_head: row.vch_secondary_head, // Correct mapping from vch_secondary_head
+      tny_type: row.tny_type, // Ensure type is mapped correctly
+      system: row.tny_system ?? null, // Ensure safe assignment
+      unit_id: row.int_unit_id ?? null, // Ensure safe assignment
+      flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
     };
-    // console.log('Selected Data:', this.selected_acc_head);
+    console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
     this.isReadOnly = true;
     // Highlight the selected row
