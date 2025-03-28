@@ -41,7 +41,7 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['head', 'code', 'type', 'primary'];
+  displayedColumns: string[] = ['code', 'head', 'primary'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
@@ -70,27 +70,44 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   open_heads() {
     if (this.isAdding) {
-    const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
-      width: '1130px',
-    });
-    dialogRef?.afterClosed().subscribe((response: any) => {
-      if (response && response.data) {
-        const userData = response.data;
-        this.selected_acc_head = {
-          parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
-          head_code: userData.vch_secondary_code, // Map to vch_secondary_code
-          head: userData.vch_secondary_head, // Map to vch_primary_head
-          short_description: '', // No equivalent in API, set as empty
-          primary: userData.vch_primary_head, // Map to int_primary_id
-          secondary: userData.int_secondary_id, // Map to int_secondary_id
-          type: userData.vch_type, // Map to int_secondary_id
-        };
-        // console.log('Selected Acc Head:', this.selected_acc_head);
-        this.isEditing = true;
-        this.isReadOnly = true;
-        console.log('Is Editing:', this.isEditing);
+      const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
+        width: '1130px',
+      });
+      dialogRef?.afterClosed().subscribe((response: any) => {
+        if (response && response.data) {
+          const userData = response.data;
+          this.selected_acc_head = {
+            parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
+            head: userData.vch_secondary_head, // Map to vch_primary_head
+            primary: userData.vch_primary_head, // Map to int_primary_id
+            secondary: userData.int_secondary_id, // Map to int_secondary_id
+            type: userData.vch_type, // Map to int_secondary_id
+            head_code: '',
+          };
+          // Fetch new head code
+          this.getNewHeadCode(userData.int_secondary_id);
+          // console.log('Selected Acc Head:', this.selected_acc_head);
+          this.isEditing = true;
+          this.isReadOnly = true;
+        }
+      });
+    }
+  }
+
+  getNewHeadCode(sec_id: number) {
+    console.log("int sec_id:",sec_id)
+    this.svr.fin_getService('api/v0/get_new_head_code', { sec_id }).subscribe(
+      (res: any) => {
+        console.log("res",res)
+        if (res ) {
+          this.selected_acc_head.head_code = res;
+          console.log("head code",this.selected_acc_head.head_code)
+        }
+      },
+      (error) => {
+        console.error('Error fetching head code:', error);
       }
-    });}
+    );
   }
 
   save() {}
@@ -110,12 +127,11 @@ export class CreateAccountHeadsComponent implements OnInit {
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_acc_head = {
-      parent_head: row.vch_secondary_head, // Map to vch_secondary_head
-      head_code: row.vch_secondary_code, // Map to vch_secondary_code
+      parent_head: row.vch_head, // Map to vch_secondary_head
+      head_code: row.vch_head_code, // Map to vch_secondary_code
       head: row.vch_secondary_head, // Map to vch_primary_head
-      short_description: '', // No equivalent, set as empty
+      short_description: row.vch_short_desc, // No equivalent, set as empty
       primary: row.vch_primary_head, // Map to int_primary_id
-      secondary: row.int_secondary_id, // Map to int_secondary_id
       type: row.vch_type, // Map to vch_type
     };
     console.log('Selected Data:', this.selected_acc_head);
@@ -135,14 +151,12 @@ export class CreateAccountHeadsComponent implements OnInit {
       console.log('Loaded from cache');
       return;
     }
-    this.svr
-      .fin_getService('api/v0/get_secondary_heads')
-      .subscribe((res: any) => {
-        this.head_list = res;
-        this.dataSource = new MatTableDataSource(this.head_list);
-        this.dataSource.paginator = this.paginator;
-        console.log('Loaded from API');
-      });
+    this.svr.fin_postservice('api/v0/get_heads').subscribe((res: any) => {
+      this.head_list = res;
+      this.dataSource = new MatTableDataSource(this.head_list);
+      this.dataSource.paginator = this.paginator;
+      console.log('Loaded from API');
+    });
   }
 
   // for filter while search

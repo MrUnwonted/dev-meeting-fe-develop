@@ -270,7 +270,7 @@
             <div class="header-wrap-outer">
               <div class="header-wrap">
                 <div class="text-wrap">
-                  <h6>Secondary Head</h6>
+                  <h6>Accounts Head</h6>
                 </div>
               </div>
 
@@ -305,6 +305,14 @@
                   [dataSource]="dataSource"
                   class="w-100 admin-table file-table"
                 >
+
+                <!--  Head -->
+                <ng-container matColumnDef="head_id">
+                  <th mat-header-cell *matHeaderCellDef>Head Id</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.int_head_id }}
+                  </td>
+                </ng-container>
 
                 <!--  Head -->
                 <ng-container matColumnDef="head">
