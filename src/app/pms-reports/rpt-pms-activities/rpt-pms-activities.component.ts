@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ServiceService } from 'src/app/services/service.service';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
 
 
 
@@ -129,11 +132,14 @@ export class RptPmsActivitiesComponent {
 
  emp_id: any;
  emp_name : any;
- dt_from: Date = new Date();
+ dt_from: any  = null
  dt_to: any  = null
- emp_report: any[] = [];
+ emp_report =  new MatTableDataSource<any>();
  formattedDateFrom: string = '';
-  
+ displayedColumns: string[] = ['index', 'project_id', 'emp_code', 'task_name', 'sub_task_name', 'activity_with_hours','estimated_hours','actual_hours','total_daily_hours'];
+ @ViewChild(MatPaginator) paginator!: MatPaginator;
+ print:boolean=false;
+ show_details_table:boolean=false; 
 
   constructor(
      private svr: ServiceService,
@@ -141,7 +147,7 @@ export class RptPmsActivitiesComponent {
   ) { }
 
   ngOnInit() {
-
+    this.emp_report.paginator = this.paginator;
   }
 
   selectUser() {
@@ -153,7 +159,8 @@ export class RptPmsActivitiesComponent {
   }
 
   go() {
-    this.emp_report = [];
+    this.emp_report.data = [];
+    this.show_details_table = false;
     if (this.validation()) {
       
       let param = {
@@ -163,7 +170,12 @@ export class RptPmsActivitiesComponent {
       };
 
       this.svr.postservice("api/v0/get_activity_report_resource_wise",param).subscribe((res: any) => {
-        this.emp_report = res
+        if (res && res.length !== 0) {
+          this.show_details_table = true;
+          this.emp_report = new MatTableDataSource(res);
+          this.emp_report.paginator = this.paginator;
+        }
+        
         
       })
     }
@@ -216,13 +228,8 @@ export class RptPmsActivitiesComponent {
   }
   
   isButtonDisabled(): boolean {
-    // Check if employee name exists
     const isEmpValid = !!this.emp_name?.trim();
-  
-    // Check if either from date or to date exists
     const isDateRangeValid = !!this.dt_from || !!this.dt_to;
-  
-    // Button is disabled if emp_name is missing or both dates are missing
     return !(isEmpValid && isDateRangeValid);
   }
   
@@ -231,6 +238,58 @@ export class RptPmsActivitiesComponent {
     const d = new Date(date);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.emp_report.filter = filterValue.trim().toLowerCase();
+  }
+
+
+
+  exportToExcel() {
+    // Create a formatted Excel data structure
+    const data = this.emp_report.data.map((item, index) => {
+      return {
+        'S.No': index + 1,
+        'Project Name': item.project_name || '',
+        'Employee Code': item.emp_code || '',
+        'Task Name': item.task_name || '',
+        'Sub Task Name': item.sub_task_name || '',
+        'Activity with Hours': item.activity_with_hours || '',
+        'Estimated Hours': item.estimated_hours || 0,
+        'Actual Hours': item.actual_hours || 0,
+        'Total Daily Hours': item.total_daily_hours || 0
+      };
+    });
+  
+    // Create worksheet and workbook
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Activity Report');
+  
+    // Customize column widths for better readability
+    ws['!cols'] = [
+      { wch: 5 },   // S.No
+      { wch: 12 },  // Project ID
+      { wch: 15 },  // Employee Code
+      { wch: 25 },  // Task Name
+      { wch: 25 },  // Sub Task Name
+      { wch: 20 },  // Activity with Hours
+      { wch: 15 },  // Estimated Hours
+      { wch: 15 },  // Actual Hours
+      { wch: 20 }   // Total Daily Hours
+    ];
+  
+    // Save the Excel file
+    XLSX.writeFile(wb, 'Activity_Report.xlsx');
+  }
+  
+  printing(){
+    this.print=true;
+  }
+
 
 
 }

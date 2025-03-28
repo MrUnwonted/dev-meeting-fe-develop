@@ -125,12 +125,18 @@ export class CreateAccountHeadsComponent implements OnInit {
       });
       return;
     }
+    console.log("Selected ACC Head",this.selected_acc_head)
     // Prepare the payload
-    const payload: any = {
+    const payload = {
+      head_id:  this.selected_acc_head.head_id ,
       head: this.selected_acc_head.head,
       head_code: this.selected_acc_head.head_code,
-      short_desc: this.selected_acc_head.short_description || "",
-      flag: this.isEditing ? "E" : "A",  // 'E' for Edit, 'A' for Add
+      type: this.selected_acc_head.type,
+      primary_id: this.selected_acc_head.primary,
+      secondary_id: this.selected_acc_head.secondary,
+      short_desc: this.selected_acc_head.short_description,
+      unit_id: 1, // Change this if the unit_id is dynamic
+      flag: this.isEditing ? "E" : "A",
     };
     if (this.isEditing && this.selected_acc_head.head_id) {
       payload.head_id = this.selected_acc_head.head_id;  // Include only in Edit mode

@@ -39,6 +39,13 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { RptPmsActivitiesComponent } from './pms-reports/rpt-pms-activities/rpt-pms-activities.component';
 import {MatInputModule} from '@angular/material/input';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+import { NgxPrintModule } from 'ngx-print';
+import { MatButtonModule } from '@angular/material/button';
+
+
+
+
+
 
 
 
@@ -94,6 +101,9 @@ export function createTranslateLoader(http: HttpClient) {
         MatDatepickerModule,
         MatInputModule,
         MatNativeDateModule,
+        NgxPrintModule,
+        MatButtonModule,
+        
         
 
         TranslateModule.forRoot({

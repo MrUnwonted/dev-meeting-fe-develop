@@ -128,7 +128,7 @@ public clear_cache(key:string): void {
 
 checkJsonEquality(json_1: any, json_2: any): boolean {
   let result: boolean = false;
-  result = this.compareJson(json_1, json_2);  
+  result = this.compareJson(json_1, json_2);
   return result;
 }
 
@@ -178,7 +178,7 @@ compareJson(value1: any, value2: any): boolean {
   }
 
   if (typeof value1 !== 'object' && typeof value2 !== 'object') {
-   
+
     if (typeof value1 === 'string' && typeof value2 === 'string') {
       return value1.trim() === value2.trim();
     }
@@ -222,9 +222,11 @@ fin_getService(methodName: string, params: any = null) {
       parmsdet = parmsdet + paramvariable;
       i++;
     }
-    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName + parmsdet);
+    // return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName + parmsdet);
+    return this.http.get(`http://192.168.1.45:9093/` + this.apihost + methodName + parmsdet);
   }else{
-    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName);
+    // return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName);
+    return this.http.get(`http://192.168.1.45:9093/` + this.apihost + methodName);
   }
 }
 
@@ -236,7 +238,8 @@ fin_postservice(methodName: string, params: any = null) {
 
   // JSON.stringify(data)
   return this.http
-    .post<any>(`http://103.177.225.135:9092/` + this.apihost + methodName, params, { headers: reqHeader });
+    // .post<any>(`http://103.177.225.135:9092/` + this.apihost + methodName, params, { headers: reqHeader });
+    .post<any>(`http://192.168.1.45:9093/` + this.apihost + methodName, params, { headers: reqHeader });
 
   // return this.http
   // .post<any>(`${environment.serviceUrl}/` + this.apihost + methodName, params);
