@@ -140,7 +140,7 @@
                             type="text"
                             id="primary"
                             class="form-control xs"
-                            [(ngModel)]="selected_acc_head.primary"
+                            [(ngModel)]="selected_acc_head.primary_head"
                             name="primary"
                             readonly
                           />
@@ -341,7 +341,7 @@
                     </ng-container>
 
                      <!-- Module Column -->
-                     <ng-container matColumnDef="primary">
+                     <ng-container matColumnDef="primary_head">
                       <th mat-header-cell *matHeaderCellDef>Primary</th>
                       <td mat-cell *matCellDef="let element">
                         <span class="badge bg-gray-15 code-badge xs">{{

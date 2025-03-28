@@ -18,7 +18,7 @@ export class SearchSecondaryHeadsComponent {
   rowColors: string[] = [];
   head_list: any = [];
   is_message: boolean = true;
-  displayedColumns: string[] = [ 'code','head','type', 'primary'];
+  displayedColumns: string[] = [ 'code','head','type', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
 
   // Modal footer buttons
@@ -54,7 +54,7 @@ export class SearchSecondaryHeadsComponent {
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_data = row;
-    // console.log('Selected Data:', this.selected_data);
+    console.log('Selected Data:', this.selected_data);
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
   }

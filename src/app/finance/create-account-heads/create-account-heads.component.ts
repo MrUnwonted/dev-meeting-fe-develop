@@ -34,7 +34,7 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['code', 'head', 'primary'];
+  displayedColumns: string[] = ['code', 'head', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
@@ -55,7 +55,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       head_code: '',
       head: '',
       short_description: '',
-      primary: '',
+      primary_head: '',
       secondary: '',
       type: '',
     };
@@ -72,16 +72,26 @@ export class CreateAccountHeadsComponent implements OnInit {
           this.selected_acc_head = {
             parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
             head: userData.vch_secondary_head, // Map to vch_primary_head
-            primary: userData.vch_primary_head, // Map to int_primary_id
+            primary_id: userData.int_primary_id, // 1
+            primary_code: userData.vch_primary_code ?? "", // Ensure safe assignment
+            primary_head: userData.vch_primary_head, // Tax Revenue
+            secondary_id: userData.int_secondary_id, // 1
+            secondary_code: userData.vch_secondary_code, // 110010000
+            secondary_head: userData.vch_secondary_head, // Property Tax (for General Purpose)
+            tny_type: userData.tny_type, // 1 (Ensuring type is mapped correctly)
+            system: userData.tny_system ?? null, // Mapping system field
+            head_code: '',
+            unit_id: null, // Keeping null as per the API response
+            flag: "A", // Since it's adding a new record
+
             secondary: userData.int_secondary_id, // Map to int_secondary_id
             type: userData.vch_type, // Map to int_secondary_id
-            head_code: '',
           };
           // Fetch new head code
           this.getNewHeadCode(userData.int_secondary_id);
           // console.log('Selected Acc Head:', this.selected_acc_head);
-          this.isEditing = true;
-          this.isReadOnly = true;
+          // this.isEditing = true;
+          // this.isReadOnly = true;
         }
       });
     }
@@ -117,28 +127,32 @@ export class CreateAccountHeadsComponent implements OnInit {
       });
       return;
     }
-    console.log("Selected ACC Head",this.selected_acc_head)
+    // console.log("Selected ACC Head",this.selected_acc_head)
     // Prepare the payload
     const payload = {
-      head_id:  this.selected_acc_head.head_id ,
-      head: this.selected_acc_head.head,
-      head_code: this.selected_acc_head.head_code,
-      type: this.selected_acc_head.type,
-      primary_id: this.selected_acc_head.primary,
-      secondary_id: this.selected_acc_head.secondary,
-      short_desc: this.selected_acc_head.short_description,
-      unit_id: 1, // Change this if the unit_id is dynamic
-      flag: this.isEditing ? "E" : "A",
+      head_id: this.isEditing ? this.selected_acc_head.head_id : null, // Null if adding
+      head: this.selected_acc_head.head, // Mapped from vch_secondary_head
+      head_code: String(this.selected_acc_head.head_code), // Ensure it's a string
+      type: this.selected_acc_head.tny_type, // Mapped from tny_type
+      primary_id: this.selected_acc_head.primary_id, // Mapped from int_primary_id
+      primary_code: this.selected_acc_head.primary_code, // Mapped from vch_primary_code
+      primary_head: this.selected_acc_head.primary_head, // Mapped from vch_primary_head
+      secondary_id: this.selected_acc_head.secondary_id, // Mapped from int_secondary_id
+      secondary_code: this.selected_acc_head.secondary_code, // Mapped from vch_secondary_code
+      secondary_head: this.selected_acc_head.secondary_head, // Mapped from vch_secondary_head
+      system: this.selected_acc_head.system, // Mapped from tny_system
+      unit_id: this.selected_acc_head.unit_id, // Mapped from int_unit_id
+      short_desc: this.selected_acc_head.short_description ?? "", // Default empty string if null
+      flag: this.isEditing ? "E" : "A", // "E" for edit, "A" for add
     };
     if (this.isEditing && this.selected_acc_head.head_id) {
       payload.head_id = this.selected_acc_head.head_id;  // Include only in Edit mode
     }
-    console.log("Saving Account Head:", payload);
+    // console.log("Saving Account Head:", payload);
     // Call API
     this.svr.fin_postservice('api/v0/save_head', payload).subscribe(
       (res: any) => {
-        console.log("Save Response:", res);
-        alert("Account Head saved successfully!");
+        // console.log("Save Response:", res);
         Swal.fire({
           icon: 'success',
           title: 'Saved',
@@ -182,10 +196,10 @@ export class CreateAccountHeadsComponent implements OnInit {
       head_code: row.vch_head_code, // Map to vch_secondary_code
       head: row.vch_secondary_head, // Map to vch_primary_head
       short_description: row.vch_short_desc, // No equivalent, set as empty
-      primary: row.vch_primary_head, // Map to int_primary_id
+      primary_head: row.vch_primary_head, // Map to int_primary_id
       type: row.vch_type, // Map to vch_type
     };
-    console.log('Selected Data:', this.selected_acc_head);
+    // console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
     this.isReadOnly = true;
     // Highlight the selected row
@@ -199,14 +213,14 @@ export class CreateAccountHeadsComponent implements OnInit {
     if (this.head_list.length > 0) {
       this.dataSource = new MatTableDataSource(this.head_list);
       this.dataSource.paginator = this.paginator;
-      console.log('Loaded from cache');
+      // console.log('Loaded from cache');
       return;
     }
     this.svr.fin_postservice('api/v0/get_heads').subscribe((res: any) => {
       this.head_list = res;
       this.dataSource = new MatTableDataSource(this.head_list);
       this.dataSource.paginator = this.paginator;
-      console.log('Loaded from API');
+      // console.log('Loaded from API');
     });
   }
 
