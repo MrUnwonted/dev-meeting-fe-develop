@@ -38,7 +38,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { RptPmsActivitiesComponent } from './pms-reports/rpt-pms-activities/rpt-pms-activities.component';
 import {MatInputModule} from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 
@@ -106,6 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
         { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
+
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule { }

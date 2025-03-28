@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import Swal from 'sweetalert2';
 
+
+
 @Component({
   selector: 'app-rpt-pms-activities',
   templateUrl: './rpt-pms-activities.component.html',
@@ -127,13 +129,15 @@ export class RptPmsActivitiesComponent {
 
  emp_id: any;
  emp_name : any;
- dt_from: any = null
+ dt_from: Date = new Date();
  dt_to: any  = null
  emp_report: any[] = [];
+ formattedDateFrom: string = '';
   
 
   constructor(
      private svr: ServiceService,
+   
   ) { }
 
   ngOnInit() {
@@ -227,7 +231,6 @@ export class RptPmsActivitiesComponent {
     const d = new Date(date);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
   }
-  
-  
+
 
 }

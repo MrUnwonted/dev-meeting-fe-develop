@@ -25,28 +25,29 @@
                                 <div class="form-body">
                                     <div class="row ">
 
-                                        <div class="row g-1 align-items-center">
+                                        <div class="row g-1 ">
 
-                                            <!-- Select Employee -->
+                                          
                                             <div class="col empName">
                                                 <input type="text" class="form-control form-control-xs " id="empName" placeholder="Select Employee" [(ngModel)]="emp_name" (dblclick)="selectUser()" />
                                             </div>
                                         
-                                            <!-- Date Range: From Date -->
+                                            
                                             <div class="col">
-                                                <mat-form-field appearance="outline" class="w-100  date" floatLabel="always">
-                                                    <mat-label>From</mat-label>
-                                                    <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dt_from">
-                                                    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                                                    <mat-datepicker #pickerFrom></mat-datepicker>
+                                                <mat-form-field appearance="outline" class="w-100 date" floatLabel="always">
+                                                  <mat-label>From</mat-label>
+                                                  <input matInput [matDatepicker]="pickerFrom"  [(ngModel)]="dt_from" hidden> {{ dt_from |  date: 'dd-MM-yyyy' }}
+                                                  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                                                  <mat-datepicker #pickerFrom></mat-datepicker>
                                                 </mat-form-field>
-                                            </div>
+                                              </div>
+                                              
                                         
                                             <!-- Date Range: To Date -->
                                             <div class="col">
-                                                <mat-form-field appearance="outline" class="w-100  date" floatLabel="always">
+                                                <mat-form-field appearance="outline" class="w-100" floatLabel="always">
                                                     <mat-label>To</mat-label>
-                                                    <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dt_to">
+                                                    <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dt_to" hidden> {{ dt_to |  date: 'dd-MM-yyyy' }}
                                                     <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
                                                     <mat-datepicker #pickerTo></mat-datepicker>
                                                 </mat-form-field>
@@ -54,56 +55,76 @@
                                         
                                             <!-- Action Button -->
                                             <div class="col">
-                                                <button class="btn btn-primary go-button"  [disabled]="isButtonDisabled()" (click)="go()">GO</button>
+                                                <button class="btn btn-primary go-button"  [disabled]="isButtonDisabled()" (click)="go()" >GO</button>
+                                            
                                             </div>
+
+                                           
+
+                                            
+                                            
                                         
                                         </div>
                                         
                                         
-                                        
-                                        <div class="left-column col-md-12">
-                                            <div class="table-wrap file-box-wrap pagination-included" style="height: calc(70vh - 20rem)">
-                                              <table class="w-100 admin-table file-table">
-                                                
-                                                <!-- Table Header -->
-                                                <thead>
-                                                  <tr>
-                                                    <th>Sl No</th>
-                                                    <th>Project ID</th>
-                                                    <th>Emp Code</th>
-                                                    <th>Task Name</th>
-                                                    <th>Sub Task</th>
-                                                    <th>Activity</th>
-                                                    <th>Estimated Hours</th>
-                                                    <th>Actual Hours</th>
-                                                    <th>Total Daily Hours</th>
-                                                  </tr>
-                                                </thead>
-                                                
-                                                <!-- Table Body -->
-                                                <tbody>
-                                                  <tr *ngFor="let element of emp_report; let i = index">
-                                                    <td><span class="badge bg-gray-15 code-badge xs">{{ i + 1 }}</span></td>
-                                                    <td>{{ element.project_id }}</td>
-                                                    <td>{{ element.emp_code }}</td>
-                                                    <td>{{ element.task_name }}</td>
-                                                    <td>{{ element.sub_task_name }}</td>
-                                                    <td>{{ element.activity_with_hours }}</td>
-                                                    <td>{{ element.estimated_hours }}</td>
-                                                    <td>{{ element.actual_hours }}</td>
-                                                    <td>{{ element.total_daily_hours }}</td>
-                                                  </tr>
-                                                </tbody>
-                                          
-                                              </table>
-                                            </div>
-                                          </div>
-                                          
-                                          
-                                          
-
-
+                                  
                                     </div>
+                                          
+                                    <div class="left-column col-md-12">
+                                        <div class="table-wrap file-box-wrap pagination-included" style="height: calc(70vh - 20rem)">
+                                            <div style="overflow-x: auto;">
+                                                <div style="overflow-x: auto;">
+                                                    <table class="w-100 admin-table file-table">
+                                                      <!-- Table Header -->
+                                                      <thead>
+                                                        <tr>
+                                                          <th>Sl No</th>
+                                                          <th>Project ID</th>
+                                                          <th>Emp Code</th>
+                                                          <th>Task Name</th>
+                                                          <th>Sub Task</th>
+                                                          <th>Activity</th>
+                                                          <th>Est. Hours</th>
+                                                          <th>Act. Hours</th>
+                                                          <th>Daily Hours</th>
+                                                        </tr>
+                                                      </thead>
+                                                  
+                                                      <!-- Table Body -->
+                                                      <tbody>
+                                                        <tr *ngFor="let element of emp_report; let i = index">
+                                                          <td><span class="badge bg-gray-15 code-badge xs">{{ i + 1 }}</span></td>
+                                                          <td>{{ element.project_id }}</td>
+                                                          <td style="width: max-content; text-align: center;">
+                                                            {{ element.emp_code }}
+                                                        </td>
+                                                          <td style="white-space: normal; word-break: break-word;">{{ element.task_name }}</td>
+                                                          <td style="white-space: normal; word-break: break-word;">{{ element.sub_task_name }}</td>
+                                                  
+                                                          <!-- Activity Column: Allow content wrapping -->
+                                                          <td style="white-space: normal; word-break: break-word;">
+                                                            {{ element.activity_with_hours }}
+                                                          </td>
+                                                  
+                                                          <!-- Flexible Hour Columns -->
+                                                          <td style="width: max-content; text-align: center;">
+                                                            {{ element.estimated_hours }}
+                                                          </td>
+                                                          <td style="width: max-content; text-align: center;">
+                                                            {{ element.actual_hours }}
+                                                          </td>
+                                                          <td style="width: max-content; text-align: center;">
+                                                            {{ element.total_daily_hours }}
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                                                  
+                                              </div>
+                                              
+                                        </div>
+                                      </div>
                                 </div>
 
                                 <div class="form-footer">
