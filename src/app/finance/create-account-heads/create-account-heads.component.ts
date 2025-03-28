@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchSecondaryHeadsComponent } from '../modals/search-secondary-heads/search-secondary-heads.component';
 import { ServiceService } from 'src/app/services/service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-account-heads',
@@ -95,22 +96,74 @@ export class CreateAccountHeadsComponent implements OnInit {
   }
 
   getNewHeadCode(sec_id: number) {
-    console.log("int sec_id:",sec_id)
     this.svr.fin_getService('api/v0/get_new_head_code', { sec_id }).subscribe(
       (res: any) => {
-        console.log("res",res)
-        if (res ) {
-          this.selected_acc_head.head_code = res;
-          console.log("head code",this.selected_acc_head.head_code)
-        }
+      if (res) {
+        this.selected_acc_head.head_code = res;
+        // Display success message
+      }
       },
       (error) => {
-        console.error('Error fetching head code:', error);
+      console.error('Error fetching head code:', error);
+      // Display error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to fetch head code. Please try again.',
+      });
       }
     );
   }
 
-  save() {}
+  save() {
+    if (!this.selected_acc_head.head || !this.selected_acc_head.head_code) {
+      console.error("Head and Head Code are required!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "Head and Head Code are required!",
+      });
+      return;
+    }
+    // Prepare the payload
+    const payload: any = {
+      head: this.selected_acc_head.head,
+      head_code: this.selected_acc_head.head_code,
+      short_desc: this.selected_acc_head.short_description || "",
+      flag: this.isEditing ? "E" : "A",  // 'E' for Edit, 'A' for Add
+    };
+    if (this.isEditing && this.selected_acc_head.head_id) {
+      payload.head_id = this.selected_acc_head.head_id;  // Include only in Edit mode
+    }
+    console.log("Saving Account Head:", payload);
+    // Call API
+    this.svr.fin_postservice('api/v0/save_head', payload).subscribe(
+      (res: any) => {
+        console.log("Save Response:", res);
+        alert("Account Head saved successfully!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Saved',
+          // text: `New head code: ${res}`,
+          timer: 2000,
+          showConfirmButton: true,
+          });
+        // Refresh the table
+        this.fetch_heads();
+        // Reset form after saving
+        this.init();
+      },
+      (error) => {
+        console.error("Error saving Account Head:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error saving Account Head',
+        });
+      }
+    );
+  }
+
 
   editSubject() {
     this.isEditing = false;
