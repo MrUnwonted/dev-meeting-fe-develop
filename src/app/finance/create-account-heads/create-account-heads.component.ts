@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   OnInit,
   Output,
@@ -36,6 +37,8 @@ export class CreateAccountHeadsComponent implements OnInit {
   headCodeInvalid: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('headCodeInput', { static: false })
+  headCodeInput!: ElementRef<HTMLInputElement>;
 
   displayedColumns: string[] = ['code', 'head', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
@@ -106,7 +109,9 @@ export class CreateAccountHeadsComponent implements OnInit {
         if (res) {
           this.selected_acc_head.head_code = res;
           this.originalHeadCode = res; // Store the original head code
-          console.log('Fetched Original Head Code:', this.originalHeadCode);
+          // console.log('Fetched Original Head Code:', this.originalHeadCode);
+          // Reset validation states
+          this.resetHeadCodeValidation();
         }
       },
       (error) => {
@@ -121,29 +126,11 @@ export class CreateAccountHeadsComponent implements OnInit {
     );
   }
 
-  //  validateHeadCode(event: FocusEvent): boolean  {
-  //   if (!(event.target instanceof HTMLInputElement)) {
-  //     console.error('Event target is not an input element.');
-  //     return false;
-  //   }
-  //   const inputElement = event.target as HTMLInputElement;
-  //   const headCode = inputElement.value.trim(); //  Ensure clean user input
-  //   // Convert originalHeadCode to string safely before trimming
-  //   const originalCode = this.originalHeadCode ? String(this.originalHeadCode).trim() : '';
-  //   console.log('Original Head Code:', `"${originalCode}"`);
-  //   console.log('User-Entered Head Code:', `"${headCode}"`);
-  //   if (!headCode) {
-  //     console.error('Head Code is required.');
-  //     return false;
-  //   }
-  //   const isValid = headCode === originalCode;
-  //   console.log(isValid ? '✅ Valid head code.' : '⚠️ Head code modified!');
-  //   return isValid; // Or emit an event for parent handling
-  // }
   validateHeadCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
     this.headCodeInvalid = false; // Reset validation state
+    this.errorMessage = '';
     // Ensure originalHeadCode is treated as a string and trimmed
     const originalHeadCode = this.originalHeadCode
       ? String(this.originalHeadCode).trim()
@@ -284,6 +271,10 @@ export class CreateAccountHeadsComponent implements OnInit {
       flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
     };
+    // Store the original head code for validation
+    this.originalHeadCode = row.vch_head_code;
+    // Reset validation states
+    this.resetHeadCodeValidation();
     // console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
     this.isReadOnly = true;
@@ -313,5 +304,13 @@ export class CreateAccountHeadsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  resetHeadCodeValidation(): void {
+    this.headCodeInvalid = false;
+    this.errorMessage = '';
+    if (this.headCodeInput) {
+      this.headCodeInput.nativeElement.classList.remove('is-invalid');
+    }
   }
 }
