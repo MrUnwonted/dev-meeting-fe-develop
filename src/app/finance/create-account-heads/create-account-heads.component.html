@@ -75,8 +75,15 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.head_code"
                             name="headCode"
-                           readonly
+                            [readOnly]="isReadOnly"
+                            (input)="validateHeadCode($event)"
+                            maxlength="9"
+                            (keypress)="allowOnlyNumbers($event)"
+                            [class.is-invalid]="headCodeInvalid"
                           />
+                          <div *ngIf="headCodeInvalid" class="invalid-feedback">
+                            {{ errorMessage }}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -240,6 +247,7 @@
                     *ngIf="!isEditing"
                     class="sm btn btn-primary-90 save-btn"
                     (click)="save()"
+                    [disabled]="headCodeInvalid"
                   >
                     {{ "Save" }}
                   </button>

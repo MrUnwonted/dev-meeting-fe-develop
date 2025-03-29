@@ -31,6 +31,9 @@ export class CreateAccountHeadsComponent implements OnInit {
   isReadOnly: boolean = true; // Controls form field interactivity
   activeRowIndex: number | null = null;
   rowColors: string[] = [];
+  originalHeadCode: string = ''; // Store the fetched head code
+  errorMessage: string = '';
+  headCodeInvalid: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -102,6 +105,8 @@ export class CreateAccountHeadsComponent implements OnInit {
       (res: any) => {
         if (res) {
           this.selected_acc_head.head_code = res;
+          this.originalHeadCode = res; // Store the original head code
+          console.log('Fetched Original Head Code:', this.originalHeadCode);
         }
       },
       (error) => {
@@ -114,6 +119,79 @@ export class CreateAccountHeadsComponent implements OnInit {
         });
       }
     );
+  }
+
+  //  validateHeadCode(event: FocusEvent): boolean  {
+  //   if (!(event.target instanceof HTMLInputElement)) {
+  //     console.error('Event target is not an input element.');
+  //     return false;
+  //   }
+  //   const inputElement = event.target as HTMLInputElement;
+  //   const headCode = inputElement.value.trim(); //  Ensure clean user input
+  //   // Convert originalHeadCode to string safely before trimming
+  //   const originalCode = this.originalHeadCode ? String(this.originalHeadCode).trim() : '';
+  //   console.log('Original Head Code:', `"${originalCode}"`);
+  //   console.log('User-Entered Head Code:', `"${headCode}"`);
+  //   if (!headCode) {
+  //     console.error('Head Code is required.');
+  //     return false;
+  //   }
+  //   const isValid = headCode === originalCode;
+  //   console.log(isValid ? '✅ Valid head code.' : '⚠️ Head code modified!');
+  //   return isValid; // Or emit an event for parent handling
+  // }
+  validateHeadCode(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const userInput = inputElement.value.trim();
+    this.headCodeInvalid = false; // Reset validation state
+    // Ensure originalHeadCode is treated as a string and trimmed
+    const originalHeadCode = this.originalHeadCode
+      ? String(this.originalHeadCode).trim()
+      : '';
+    console.log('Original:', originalHeadCode, '| Entered:', userInput);
+    // Case 1: Empty input → Error
+    if (!userInput) {
+      this.headCodeInvalid = true;
+      this.errorMessage = 'Head Code is required.';
+      return;
+    }
+    // Case 2: Unchanged → Valid
+    if (userInput === originalHeadCode) {
+      console.log('✅ Head Code matches original.');
+      return;
+    }
+    // Case 3: Modified → Strict checks
+    // Check 1: Must be a 9-digit number
+    if (!/^\d{9}$/.test(userInput)) {
+      this.headCodeInvalid = true;
+      this.errorMessage = 'Head Code must be a 9-digit number.';
+      return;
+    }
+    // Check 2: First 5 digits must match original
+    if (
+      originalHeadCode.length >= 5 &&
+      userInput.substring(0, 5) !== originalHeadCode.substring(0, 5)
+    ) {
+      this.headCodeInvalid = true;
+      this.errorMessage = 'First 5 digits must match the original Head Code.';
+      return;
+    }
+    // Check 3: Only last 4 digits can differ
+    if (
+      originalHeadCode.length === 9 &&
+      userInput.substring(0, 5) !== originalHeadCode.substring(0, 5)
+    ) {
+      this.headCodeInvalid = true;
+      this.errorMessage = 'Only the last 4 digits can be modified.';
+      return;
+    }
+    // If all checks pass
+    console.log('⚠️ Head Code modified, but valid.');
+    inputElement.classList.remove('is-invalid');
+  }
+
+  allowOnlyNumbers(event: KeyboardEvent): boolean {
+    return /[0-9]/.test(event.key);
   }
 
   save() {
