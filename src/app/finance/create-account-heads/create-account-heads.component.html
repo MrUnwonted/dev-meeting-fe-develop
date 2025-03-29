@@ -313,19 +313,12 @@
                   [dataSource]="dataSource"
                   class="w-100 admin-table file-table"
                 >
-                  <!--  Head -->
-                  <ng-container matColumnDef="head_id">
-                    <th mat-header-cell *matHeaderCellDef>Head Id</th>
-                    <td mat-cell *matCellDef="let element">
-                      {{ element.int_head_id }}
-                    </td>
-                  </ng-container>
-
+                 
                   <!--  Head -->
                   <ng-container matColumnDef="head">
                     <th mat-header-cell *matHeaderCellDef>Head</th>
                     <td mat-cell *matCellDef="let element">
-                      {{ element.vch_secondary_head }}
+                      {{ element.vch_head }}
                     </td>
                   </ng-container>
 
@@ -333,7 +326,15 @@
                   <ng-container matColumnDef="code">
                     <th mat-header-cell *matHeaderCellDef>Code</th>
                     <td mat-cell *matCellDef="let element">
-                      {{ element.vch_secondary_code }}
+                      {{ element.vch_head_code }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Code -->
+                  <ng-container matColumnDef="secondary">
+                    <th mat-header-cell *matHeaderCellDef>Secondary Head</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.vch_secondary_head + element.vch_secondary_code}}
                     </td>
                   </ng-container>
 

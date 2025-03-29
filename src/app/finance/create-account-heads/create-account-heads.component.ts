@@ -40,7 +40,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   @ViewChild('headCodeInput', { static: false })
   headCodeInput!: ElementRef<HTMLInputElement>;
 
-  displayedColumns: string[] = ['code', 'head', 'primary_head'];
+  displayedColumns: string[] = ['code', 'head', 'secondary', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
@@ -88,7 +88,7 @@ export class CreateAccountHeadsComponent implements OnInit {
             system: userData.tny_system ?? null, // Mapping system field
             head_code: '',
             unit_id: null, // Keeping null as per the API response
-            flag: 'A', // Since it's adding a new record
+            flag: 0, // Since it's adding a new record
 
             secondary: userData.int_secondary_id, // Map to int_secondary_id
             type: userData.vch_type, // Map to int_secondary_id
@@ -117,11 +117,11 @@ export class CreateAccountHeadsComponent implements OnInit {
       (error) => {
         console.error('Error fetching head code:', error);
         // Display error message
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Failed to fetch head code. Please try again.',
-        });
+        this.showNotification(
+          'error',
+          'Error',
+          'Failed to fetch head code. Please try again.'
+        );
       }
     );
   }
@@ -182,19 +182,14 @@ export class CreateAccountHeadsComponent implements OnInit {
   }
 
   save() {
-    if (!this.selected_acc_head.head || !this.selected_acc_head.head_code) {
-      console.error('Head and Head Code are required!');
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Head and Head Code are required!',
-      });
+    if (!this.validateSave()) {
       return;
     }
+    console.log("Selected head id",this.selected_acc_head.id)
     // console.log("Selected ACC Head",this.selected_acc_head)
     // Prepare the payload
     const payload = {
-      head_id: this.isEditing ? this.selected_acc_head.head_id : null, // Null if adding
+      head_id: this.selected_acc_head.id? this.selected_acc_head.id : null, // Null if adding
       head: this.selected_acc_head.head, // Mapped from vch_secondary_head
       head_code: String(this.selected_acc_head.head_code), // Ensure it's a string
       type: this.selected_acc_head.tny_type, // Mapped from tny_type
@@ -207,23 +202,16 @@ export class CreateAccountHeadsComponent implements OnInit {
       system: this.selected_acc_head.system, // Mapped from tny_system
       unit_id: this.selected_acc_head.unit_id, // Mapped from int_unit_id
       short_desc: this.selected_acc_head.short_description ?? '', // Default empty string if null
-      flag: this.isEditing ? 'E' : 'A', // "E" for edit, "A" for add
+      flag: this.isEditing ? 1 : 0, // "1" for edit, "0" for add
     };
-    if (this.isEditing && this.selected_acc_head.head_id) {
-      payload.head_id = this.selected_acc_head.head_id; // Include only in Edit mode
-    }
-    // console.log("Saving Account Head:", payload);
+    console.log("payload",payload.head_id)
+    console.log("Saving Account Head:", payload);
+    if(!payload.head_id) return;
     // Call API
     this.svr.fin_postservice('api/v0/save_head', payload).subscribe(
       (res: any) => {
         // console.log("Save Response:", res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Saved',
-          // text: `New head code: ${res}`,
-          timer: 2000,
-          showConfirmButton: true,
-        });
+        this.showNotification('success', 'Saved', undefined, 2000);
         // Refresh the table
         this.fetch_heads();
         // Reset form after saving
@@ -231,13 +219,59 @@ export class CreateAccountHeadsComponent implements OnInit {
       },
       (error) => {
         console.error('Error saving Account Head:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error saving Account Head',
-        });
+        this.showNotification('error', 'Error', 'Error saving Account Head');
       }
     );
+  }
+
+  validateSave(): boolean {
+    if (!this.selected_acc_head.head || !this.selected_acc_head.head_code) {
+      this.showNotification(
+        'error',
+        'Error',
+        'Head and Head Code are Required!'
+      );
+      return false;
+    } else if (!this.selected_acc_head.parent_head) {
+      this.showNotification('error', 'Error', 'Parent Head Not Present!');
+      return false;
+    } else if (
+      !this.selected_acc_head.secondary_id ||
+      !this.selected_acc_head.secondary_code ||
+      !this.selected_acc_head.secondary_head
+    ) {
+      this.showNotification(
+        'error',
+        'Error',
+        'Secondary id, code and head details are Required'
+      );
+      return false;
+    } else if (
+      !this.selected_acc_head.short_description ||
+      this.selected_acc_head.short_description.trim() === ''
+    ) {
+      this.showNotification(
+        'error',
+        'Error',
+        'Short Description cannot be empty!'
+      );
+      return false;
+    } else if (this.selected_acc_head.short_description.length < 4){
+      this.showNotification(
+        'error',
+        'Error',
+        'Too short description! Minimum 4 characters required.'
+      );
+      return false;
+    } else if (this.selected_acc_head.short_description.length > 25){
+      this.showNotification(
+        'error',
+        'Error',
+        'Description too long! Maximum 25 characters allowed.'
+      );
+      return false;
+    }
+    else return true;
   }
 
   editSubject() {
@@ -248,15 +282,16 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   addNew() {
     this.isEditing = false;
-    window.location.reload();
+    this.isAdding =true;
     this.init();
   }
 
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_acc_head = {
-      parent_head: row.vch_secondary_head, // Correct mapping from vch_secondary_head
-      head: row.vch_secondary_head, // Correct mapping from vch_secondary_head
+      id:row.int_head_id, //!Important Head ID
+      parent_head: row.vch_head_code, // Correct mapping from vch_head_code
+      head: row.vch_head, // Correct mapping from vch_head
       head_code: row.vch_head_code, // Correct mapping from vch_head_code
       short_description: row.vch_short_desc ?? '', // Ensure it's always a string
       primary_id: row.int_primary_id, // Correct mapping from int_primary_id
@@ -271,6 +306,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
     };
+    console.log("Selected Row", this.selected_acc_head)
     // Store the original head code for validation
     this.originalHeadCode = row.vch_head_code;
     // Reset validation states
@@ -278,6 +314,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     // console.log('Selected Data:', this.selected_acc_head);
     this.isEditing = true;
     this.isReadOnly = true;
+    this.isAdding = false;
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
@@ -286,17 +323,11 @@ export class CreateAccountHeadsComponent implements OnInit {
   // Fetch data from API
   fetch_heads() {
     // Check if data is available in cache
-    if (this.head_list.length > 0) {
-      this.dataSource = new MatTableDataSource(this.head_list);
-      this.dataSource.paginator = this.paginator;
-      // console.log('Loaded from cache');
-      return;
-    }
     this.svr.fin_postservice('api/v0/get_heads').subscribe((res: any) => {
       this.head_list = res;
       this.dataSource = new MatTableDataSource(this.head_list);
       this.dataSource.paginator = this.paginator;
-      // console.log('Loaded from API');
+      console.log('Loaded from API');
     });
   }
 
@@ -312,5 +343,21 @@ export class CreateAccountHeadsComponent implements OnInit {
     if (this.headCodeInput) {
       this.headCodeInput.nativeElement.classList.remove('is-invalid');
     }
+  }
+
+  showNotification(
+    icon: 'success' | 'error' | 'warning' | 'info' | 'question',
+    title: string,
+    text?: string,
+    timer?: number,
+    showConfirmButton: boolean = true
+  ) {
+    return Swal.fire({
+      icon,
+      title,
+      text,
+      timer,
+      showConfirmButton,
+    });
   }
 }
