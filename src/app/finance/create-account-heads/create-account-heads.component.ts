@@ -115,7 +115,7 @@ export class CreateAccountHeadsComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error fetching head code:', error);
+        // console.error('Error fetching head code:', error);
         // Display error message
         this.showNotification(
           'error',
@@ -135,7 +135,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     const originalHeadCode = this.originalHeadCode
       ? String(this.originalHeadCode).trim()
       : '';
-    console.log('Original:', originalHeadCode, '| Entered:', userInput);
+    // console.log('Original:', originalHeadCode, '| Entered:', userInput);
     // Case 1: Empty input → Error
     if (!userInput) {
       this.headCodeInvalid = true;
@@ -144,7 +144,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     }
     // Case 2: Unchanged → Valid
     if (userInput === originalHeadCode) {
-      console.log('✅ Head Code matches original.');
+      // console.log('✅ Head Code matches original.');
       return;
     }
     // Case 3: Modified → Strict checks
@@ -173,7 +173,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       return;
     }
     // If all checks pass
-    console.log('⚠️ Head Code modified, but valid.');
+    // console.log('⚠️ Head Code modified, but valid.');
     inputElement.classList.remove('is-invalid');
   }
 
@@ -185,7 +185,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     if (!this.validateSave()) {
       return;
     }
-    console.log("Selected head id",this.selected_acc_head.id)
+    // console.log("Selected head id",this.selected_acc_head.id)
     // console.log("Selected ACC Head",this.selected_acc_head)
     // Prepare the payload
     const payload = {
@@ -204,8 +204,8 @@ export class CreateAccountHeadsComponent implements OnInit {
       short_desc: this.selected_acc_head.short_description ?? '', // Default empty string if null
       flag: this.isEditing ? 1 : 0, // "1" for edit, "0" for add
     };
-    console.log("payload",payload.head_id)
-    console.log("Saving Account Head:", payload);
+    // console.log("payload",payload.head_id)
+    // console.log("Saving Account Head:", payload);
     if(!payload.head_id) return;
     // Call API
     this.svr.fin_postservice('api/v0/save_head', payload).subscribe(
@@ -218,7 +218,7 @@ export class CreateAccountHeadsComponent implements OnInit {
         this.init();
       },
       (error) => {
-        console.error('Error saving Account Head:', error);
+        // console.error('Error saving Account Head:', error);
         this.showNotification('error', 'Error', 'Error saving Account Head');
       }
     );
@@ -306,7 +306,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
     };
-    console.log("Selected Row", this.selected_acc_head)
+    // console.log("Selected Row", this.selected_acc_head)
     // Store the original head code for validation
     this.originalHeadCode = row.vch_head_code;
     // Reset validation states
@@ -327,7 +327,7 @@ export class CreateAccountHeadsComponent implements OnInit {
       this.head_list = res;
       this.dataSource = new MatTableDataSource(this.head_list);
       this.dataSource.paginator = this.paginator;
-      console.log('Loaded from API');
+      // console.log('Loaded from API');
     });
   }
 

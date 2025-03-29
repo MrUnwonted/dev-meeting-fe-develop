@@ -5,7 +5,7 @@ import { SearchOfficeComponent } from '../modals/search-office/search-office.com
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-banks', 
+  selector: 'app-banks',
   templateUrl: './banks.component.html',
   styleUrl: './banks.component.scss'
 })
@@ -13,7 +13,7 @@ export class BanksComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['code', 'bank', 'accountno'];
+  displayedColumns: string[] = ['bank','accountno', 'code', 'head' ];
   dataSource = new MatTableDataSource<any>;
 
   data_list:any;
@@ -23,7 +23,7 @@ export class BanksComponent {
   }
 
   ngOnInit(): void {
-   
+
     this.fetch_records();
   }
 
@@ -35,7 +35,7 @@ export class BanksComponent {
       { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036'},
       { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036'},
       { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036'},
-      
+
     ];
 
     this.dataSource = new MatTableDataSource(this.data_list);
@@ -49,7 +49,7 @@ export class BanksComponent {
               width: '1130px',
             });
             dialogRef?.afterClosed().subscribe((response: any) => {
-    
+
             });
   }
 }

@@ -84,10 +84,18 @@ export class SearchSecondaryHeadsComponent {
     this.svr
       .fin_getService('api/v0/get_secondary_heads')
       .subscribe((res: any) => {
+        if(res){
         this.head_list = res;
         this.dataSource = new MatTableDataSource(this.head_list);
         this.dataSource.paginator = this.paginator;
         // console.log('Loaded from API');
+        }else{
+          Swal.fire({
+            icon: 'info',
+            title: 'Infor',
+            text: 'Failed to fetch Data. Please try again.',
+          });
+        }
       });
   }
 
