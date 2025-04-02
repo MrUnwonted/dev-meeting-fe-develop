@@ -36,7 +36,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   originalHeadCode: string = ''; // Store the fetched head code
   errorMessage: string = '';
   headCodeInvalid: boolean = false;
-  hasDeactivatedRows: any
+  hasDeactivatedRows: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('headCodeInput', { static: false })
@@ -178,9 +178,23 @@ export class CreateAccountHeadsComponent implements OnInit {
       this.errorMessage = 'Only the last 4 digits can be modified.';
       return;
     }
+    // Case 4: Check if Head Code already exists in head_list
+    const headExists = this.head_list.some(
+      (head: any) => head.vch_head_code === userInput
+    );
+    if (headExists) {
+      this.headExists();
+      return;
+    }
     // If all checks pass
     // console.log('⚠️ Head Code modified, but valid.');
     inputElement.classList.remove('is-invalid');
+  }
+
+  headExists(){
+    this.headCodeInvalid = true;
+    this.errorMessage = 'This Head Code already exists.';
+    
   }
 
   allowOnlyNumbers(event: KeyboardEvent): boolean {

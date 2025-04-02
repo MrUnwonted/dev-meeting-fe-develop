@@ -14,7 +14,7 @@ export class SearchOfficeComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = [ 'code', 'unit'];
+  displayedColumns: string[] = [  'code', 'unit'];
   dataSource = new MatTableDataSource<any>;
   head_list: any;
 
@@ -64,7 +64,7 @@ export class SearchOfficeComponent {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
     }
-  
+
 
 
 }
