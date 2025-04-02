@@ -128,6 +128,8 @@
                             [(ngModel)]="selected_acc_head.short_description"
                             name="shortDesc"
                             [readOnly]="isReadOnly"
+                            maxlength="30"
+                            minlength="2"
                           />
                         </div>
                       </div>
@@ -281,6 +283,10 @@
                   <h6>Accounts Head</h6>
                 </div>
               </div>
+              <!-- <div *ngIf="hasDeactivatedRows" class="info-message">
+                <span class="text-danger">* Some account heads are
+                deactivated and shown in red.</span>
+              </div> -->
 
               <!--header right side -->
               <div class="right-side">
@@ -313,7 +319,6 @@
                   [dataSource]="dataSource"
                   class="w-100 admin-table file-table"
                 >
-                 
                   <!--  Head -->
                   <ng-container matColumnDef="head">
                     <th mat-header-cell *matHeaderCellDef>Head</th>
@@ -334,7 +339,9 @@
                   <ng-container matColumnDef="secondary">
                     <th mat-header-cell *matHeaderCellDef>Secondary Head</th>
                     <td mat-cell *matCellDef="let element">
-                      {{ element.vch_secondary_head + element.vch_secondary_code}}
+                      {{
+                        element.vch_secondary_head + element.vch_secondary_code
+                      }}
                     </td>
                   </ng-container>
 
@@ -369,6 +376,9 @@
                     "
                     (dblclick)="rowActive(row, i)"
                     [ngClass]="{ 'active-row': activeRowIndex === i }"
+                    [style.backgroundColor]="
+                      row.tny_flag === 2 ? '#f5d7d5' : 'transparent'
+                    "
                   ></tr>
                 </table>
               </div>

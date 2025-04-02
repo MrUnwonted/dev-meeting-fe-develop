@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -35,6 +36,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   originalHeadCode: string = ''; // Store the fetched head code
   errorMessage: string = '';
   headCodeInvalid: boolean = false;
+  hasDeactivatedRows: any
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('headCodeInput', { static: false })
@@ -43,7 +45,11 @@ export class CreateAccountHeadsComponent implements OnInit {
   displayedColumns: string[] = ['code', 'head', 'secondary', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(private dialog: MatDialog, private svr: ServiceService) {}
+  constructor(
+    private dialog: MatDialog,
+    private svr: ServiceService,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     // Initialize paginator
@@ -189,7 +195,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     // console.log("Selected ACC Head",this.selected_acc_head)
     // Prepare the payload
     const payload = {
-      head_id: this.selected_acc_head.id? this.selected_acc_head.id : null, // Null if adding
+      head_id: this.selected_acc_head.id ? this.selected_acc_head.id : null, // Null if adding
       head: this.selected_acc_head.head, // Mapped from vch_secondary_head
       head_code: String(this.selected_acc_head.head_code), // Ensure it's a string
       type: this.selected_acc_head.tny_type, // Mapped from tny_type
@@ -202,11 +208,9 @@ export class CreateAccountHeadsComponent implements OnInit {
       system: this.selected_acc_head.system, // Mapped from tny_system
       unit_id: this.selected_acc_head.unit_id, // Mapped from int_unit_id
       short_desc: this.selected_acc_head.short_description ?? '', // Default empty string if null
-      flag: this.isEditing ? 1 : 0, // "1" for edit, "0" for add
+      flag: this.selected_acc_head.deactivate ? 2 : 0,
     };
-    // console.log("payload",payload.head_id)
-    // console.log("Saving Account Head:", payload);
-    if(!payload.head_id) return;
+    console.log('Saving Account Head:', payload);
     // Call API
     this.svr.fin_postservice('api/v0/save_head', payload).subscribe(
       (res: any) => {
@@ -214,11 +218,12 @@ export class CreateAccountHeadsComponent implements OnInit {
         this.showNotification('success', 'Saved', undefined, 2000);
         // Refresh the table
         this.fetch_heads();
+        setTimeout(() => this.cdRef.detectChanges(), 100);
         // Reset form after saving
         this.init();
       },
       (error) => {
-        // console.error('Error saving Account Head:', error);
+        console.error('Error saving Account Head:', error);
         this.showNotification('error', 'Error', 'Error saving Account Head');
       }
     );
@@ -256,22 +261,21 @@ export class CreateAccountHeadsComponent implements OnInit {
         'Short Description cannot be empty!'
       );
       return false;
-    } else if (this.selected_acc_head.short_description.length < 4){
+    } else if (this.selected_acc_head.short_description.length < 3) {
       this.showNotification(
         'error',
         'Error',
-        'Too short description! Minimum 4 characters required.'
+        'Too short description! Minimum 3 characters required.'
       );
       return false;
-    } else if (this.selected_acc_head.short_description.length > 25){
+    } else if (this.selected_acc_head.short_description.length > 25) {
       this.showNotification(
         'error',
         'Error',
         'Description too long! Maximum 25 characters allowed.'
       );
       return false;
-    }
-    else return true;
+    } else return true;
   }
 
   editSubject() {
@@ -282,15 +286,15 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   addNew() {
     this.isEditing = false;
-    this.isAdding =true;
+    this.isAdding = true;
     this.init();
   }
 
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_acc_head = {
-      id:row.int_head_id, //!Important Head ID
-      parent_head: row.vch_head_code, // Correct mapping from vch_head_code
+      id: row.int_head_id, //!Important Head ID
+      parent_head: row.vch_secondary_head, // Correct mapping from vch_head_code
       head: row.vch_head, // Correct mapping from vch_head
       head_code: row.vch_head_code, // Correct mapping from vch_head_code
       short_description: row.vch_short_desc ?? '', // Ensure it's always a string
@@ -305,8 +309,10 @@ export class CreateAccountHeadsComponent implements OnInit {
       unit_id: row.int_unit_id ?? null, // Ensure safe assignment
       flag: 'E', // Since it's an edit action
       type: row.vch_type, // Map to vch_type
+      tny_flag: row.tny_flag ?? 0, // Default to 0 if null
+      deactivate: row.tny_flag === 2, // Set checkbox state
     };
-    // console.log("Selected Row", this.selected_acc_head)
+    console.log('Selected Row', this.selected_acc_head);
     // Store the original head code for validation
     this.originalHeadCode = row.vch_head_code;
     // Reset validation states
@@ -322,13 +328,22 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   // Fetch data from API
   fetch_heads() {
+    let param = {
+      filter: 'all',
+      id: 1,
+    };
     // Check if data is available in cache
-    this.svr.fin_postservice('api/v0/get_heads').subscribe((res: any) => {
-      this.head_list = res;
-      this.dataSource = new MatTableDataSource(this.head_list);
-      this.dataSource.paginator = this.paginator;
-      // console.log('Loaded from API');
-    });
+    this.svr
+      .fin_postservice('api/v0/get_heads', param)
+      .subscribe((res: any) => {
+        this.head_list = res;
+        this.dataSource = new MatTableDataSource(this.head_list);
+        this.dataSource.paginator = this.paginator;
+        // Check if any row is deactivated (tny_flag === 2)
+        this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
+
+        // console.log('Loaded from API');
+      });
   }
 
   // for filter while search
