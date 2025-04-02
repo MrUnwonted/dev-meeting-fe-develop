@@ -14,6 +14,8 @@ import { SearchSecondaryHeadsComponent } from '../modals/search-secondary-heads/
 import { ServiceService } from 'src/app/services/service.service';
 import Swal from 'sweetalert2';
 
+declare var bootstrap: any; // Ensure Bootstrap is accessible for modal handling
+
 @Component({
   selector: 'app-create-account-heads',
   templateUrl: './create-account-heads.component.html',
@@ -37,9 +39,10 @@ export class CreateAccountHeadsComponent implements OnInit {
   errorMessage: string = '';
   headCodeInvalid: boolean = false;
   hasDeactivatedRows: any;
+  selectedExistingHead: any = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('headCodeInput', { static: false })
+  @ViewChild('headCodeInput', { static: false }) editModal!: ElementRef;
   headCodeInput!: ElementRef<HTMLInputElement>;
 
   displayedColumns: string[] = ['code', 'head', 'secondary', 'primary_head'];
@@ -179,11 +182,13 @@ export class CreateAccountHeadsComponent implements OnInit {
       return;
     }
     // Case 4: Check if Head Code already exists in head_list
-    const headExists = this.head_list.some(
+    const existingHead = this.head_list.find(
       (head: any) => head.vch_head_code === userInput
     );
-    if (headExists) {
-      this.headExists();
+    if (existingHead) {
+      this.selectedExistingHead = existingHead;
+      this.headCodeInvalid=true
+      this.showEditConfirmationModal();
       return;
     }
     // If all checks pass
@@ -191,11 +196,46 @@ export class CreateAccountHeadsComponent implements OnInit {
     inputElement.classList.remove('is-invalid');
   }
 
-  headExists(){
-    this.headCodeInvalid = true;
-    this.errorMessage = 'This Head Code already exists.';
-    
+
+  showEditConfirmationModal(): void {
+    let modalElement = document.getElementById('editConfirmationModal');
+    if (modalElement) {
+      let modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
+
+  confirmEdit(): void {
+    if (this.selectedExistingHead) {
+      this.rowActive(
+        this.selectedExistingHead,
+        this.head_list.indexOf(this.selectedExistingHead)
+      );
+      this.headCodeInvalid=false
+    }
+    //  else{
+    //   this.headCodeInvalid = false
+    // }
+    let modalElement = document.getElementById('editConfirmationModal');
+    if (modalElement) {
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
+    }
+  }
+
+  // headExists(existingHead: any) {
+  //   // this.headCodeInvalid = true;
+  //   // this.errorMessage = 'This Head Code already exists.';
+  //   if (existingHead) {
+  //     if (confirm('This Head Code already exists. Do you want to edit it?')) {
+  //       this.rowActive(existingHead, this.head_list.indexOf(existingHead)); // Activate row for editing
+  //     } else {
+  //       this.headCodeInvalid = true;
+  //       this.errorMessage = 'Choose a different Head Code.';
+  //     }
+  //     return;
+  //   }
+  // }
 
   allowOnlyNumbers(event: KeyboardEvent): boolean {
     return /[0-9]/.test(event.key);
@@ -355,9 +395,16 @@ export class CreateAccountHeadsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         // Check if any row is deactivated (tny_flag === 2)
         this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
+      },
+      (error) => {
+        console.error('Error saving Account Head:', error);
+        this.showNotification('error', 'Error', 'Error fetching Table');
+      });
+          // console.error('Error fetching head code:', error);
+          // Display error message
 
         // console.log('Loaded from API');
-      });
+
   }
 
   // for filter while search
