@@ -449,5 +449,5 @@ export class CreateAccountHeadsComponent implements OnInit {
       showConfirmButton,
     });
   }
-  
+
 }

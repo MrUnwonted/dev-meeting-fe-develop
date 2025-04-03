@@ -41,6 +41,7 @@ export class BanksComponent {
   head_list: any = [];
   selected_acc_head: any = {};
   bank_details: any = {};
+  save_bank: any = {};
 
   data_list: any;
 
@@ -341,9 +342,78 @@ export class BanksComponent {
       }
     );
   }
+  validateCode(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const userInput = inputElement.value.trim();
 
+    // Check if input is a valid number
+    if (!/^\d*$/.test(userInput)) {
+      this.showNotification(
+        'error',
+        'Invalid Input',
+        'Only numbers are allowed!'
+      );
+      inputElement.value = ''; // Clear the input field
+      return;
+    }
+    // // Ensure it's at least 4 digits long by padding with zeros
+    // if (userInput.length < 4) {
+    //   inputElement.value = userInput.padStart(4, '0');
+    // }
 
-  save() {}
+  }
+
+  save() {
+    let payload = {
+      bank_id: this.selected_bank?.bank_id, // Bank ID if editing, otherwise null
+      unit_id: this.selected_unit?.id, // Selected unit ID
+      secondary_head_id: this.selected_bank_type?.secondary_id, // Secondary Head ID
+
+      bank_code: this.selected_acc_head?.head_code || '', // Bank Code (Mapped from selected account head)
+      bank: this.bank_details?.bank_name || '', // Bank Name
+      short_desc: this.bank_details?.short_name || '', // Short Description
+      acc_no: this.bank_details?.account_no || '', // Account Number
+      ifsc: this.bank_details?.ifsc || '', // IFSC Code
+      branch: this.bank_details?.branch || '', // Branch (Ensure you have this in bank_details)
+      mobile: this.bank_details?.mobile || '', // Mobile Number
+      email: this.bank_details?.email || '', // Email
+      passbook_ob: this.bank_details?.passbook_ob || 0, // Passbook Opening Balance (Ensure it's present)
+      address_id: this.bank_details?.address_id || null, // Address ID (if available)
+      listing: this.bank_details?.listing || 1, // Default listing status
+
+      // Address Details
+      building: this.bank_details?.building || '',
+      street: this.bank_details?.street_name || '',
+      place: this.bank_details?.place || '',
+      main_place: this.bank_details?.main_place || '',
+      state_id: this.bank_details?.state_id || null, // State ID
+      state: this.bank_details?.state || '',
+      dist_id: this.bank_details?.dist_id || null, // District ID
+      district: this.bank_details?.district || '',
+      post: this.bank_details?.post || '',
+      pin: this.bank_details?.pin || '',
+
+      group_id: 8,
+    };
+    console.log('Payload to save:', payload);
+
+    if (payload) return;
+
+    this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
+      (response) => {
+        if (response && response.success) {
+          Swal.fire('Success', 'Bank details saved successfully!', 'success');
+          this.fetch_records(); // Refresh the table after saving
+        } else {
+          Swal.fire('Error', 'Failed to save bank details', 'error');
+        }
+      },
+      (error) => {
+        console.error('Error saving bank details:', error);
+        Swal.fire('Error', 'Error saving bank details. Try again!', 'error');
+      }
+    );
+  }
 
   editSubject() {}
 

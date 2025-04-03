@@ -92,6 +92,28 @@
                       </div>
                     </div>
                   </div>
+
+                   <!-- Need clarification -->
+                   <div class="col-lg-12">
+                    <div class="form-group">
+                      <div class="row form-inner-row">
+                        <div class="col-3 left-side">
+                          <label for="code" class="form-label">Code</label>
+                        </div>
+                        <div class="col-9 right-side">
+                          <input
+                            type="text"
+                            name="code"
+                            id="code"
+                            class="form-control xs"
+                            maxlength="4"
+                            (input)="validateCode($event)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="col-lg-12">
                     <div class="form-check" *ngIf="isReadOnly && isEnabled">
                       <input
@@ -105,25 +127,6 @@
                       >
                     </div>
                   </div>
-
-                  <!-- Need clarification -->
-                  <!-- <div class="col-lg-12">
-                    <div class="form-group">
-                      <div class="row form-inner-row">
-                        <div class="col-3 left-side">
-                          <label for="code" class="form-label">Code</label>
-                        </div>
-                        <div class="col-9 right-side">
-                          <input
-                            type="text"
-                            name="code"
-                            id="code"
-                            class="form-control xs"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
 
                   <div class="col-lg-12">
                     <div class="tabs-wrap-outer full-width-tab">

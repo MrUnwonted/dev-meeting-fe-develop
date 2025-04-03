@@ -88,12 +88,8 @@ export class SearchAccountHeadsComponent {
       filter: 'secondary', // Match the filter from BanksComponent
       id: this.data.filterParam, // Use the passed filterParam as id
     };
-
-    console.log('#Fetching Data with Param:', param);
-
     this.svr.fin_postservice('api/v0/get_heads', param).subscribe(
       (res: any) => {
-        console.log('##res',res)
         if (res) {
           this.head_list = res;
           this.dataSource = new MatTableDataSource(this.head_list);
