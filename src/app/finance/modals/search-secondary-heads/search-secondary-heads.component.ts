@@ -78,19 +78,15 @@ export class SearchSecondaryHeadsComponent {
       .fin_getService('api/v0/get_secondary_heads')
       .subscribe((res: any) => {
         if (res && Array.isArray(res)) {
-          // Filter records where vch_secondary_code is "450100000"
-          // this.head_list = res.filter(item => item.vch_secondary_code === "450100000");
           // Filter records where vch_secondary_code starts with "450" and head is NOT "Cash"
           this.head_list = res.filter(
             (item) =>
               item.vch_secondary_code.startsWith('450') &&
               item.vch_secondary_head !== 'Cash'
           );
-
           this.dataSource = new MatTableDataSource(this.head_list);
           this.dataSource.paginator = this.paginator;
-
-          console.log('Filtered Head List:', this.head_list);
+          // console.log('Filtered Head List:', this.head_list);
         } else {
           Swal.fire({
             icon: 'info',

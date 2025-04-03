@@ -121,6 +121,19 @@ export class BanksComponent {
       post: '',
       pin: '',
     };
+    this.selected_acc_head = {
+      id: '',
+      parent_head: '',
+      head: '',
+      head_code: '',
+      short_description: '',
+      primary_id: '',
+      primary_code: '',
+      primary_head: '',
+      secondary_id: '',
+      secondary_code: '',
+      secondary_head: '',
+    };
   }
 
   addNew() {
@@ -131,7 +144,7 @@ export class BanksComponent {
     this.init();
   }
 
-  open_units() {
+  open_unit() {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchOfficeComponent, {
         width: '1130px',
