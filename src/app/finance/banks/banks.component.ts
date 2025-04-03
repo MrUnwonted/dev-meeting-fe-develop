@@ -232,30 +232,33 @@ export class BanksComponent {
         secondary_head: row.vch_secondary_head,
       },
       acc_head: { head_code: row.vch_head_code },
-      details: {
-        code: row.code, // Include code from row
-        bank_name: row.vch_bank,
-        short_name: row.vch_short_desc,
-        ifsc: row.vch_ifsc,
-        account_no: row.vch_acc_no,
-        email: row.vch_email,
-        mobile: row.vch_mobile,
-        building: row.vch_building,
-        street_name: row.vch_street,
-        place: row.vch_place,
-        main_place: row.vch_main_place,
-        district: row.vch_district,
-        post: row.vch_post,
-        pin: row.vch_pin,
-        branch: row.vch_branch || '',
-        passbook_ob: row.passbook_ob || 0,
-        address_id: row.address_id || null,
-        listing: row.listing || 1,
-        state_id: row.state_id || null,
-        dist_id: row.dist_id || null,
-      },
     };
-    console.log('Selected Row', this.selected_bank);
+    // Ensure details object exists before API response
+    if (!this.selected_bank.details) {
+      console.log('Enterd into details intialisation');
+      this.selected_bank.details = {
+        code: '',
+        bank_name: '',
+        short_name: '',
+        ifsc: '',
+        account_no: '',
+        email: '',
+        mobile: '',
+        building: '',
+        street_name: '',
+        place: '',
+        main_place: '',
+        district: '',
+        post: '',
+        pin: '',
+        state_id: null,
+        dist_id: null,
+        passbook_ob: 0,
+        address_id: null,
+        listing: 1,
+      };
+    }
+    // console.log('Selected Row', this.selected_bank);
     // console.log('Selected Bank Details', this.bank_details);
     // Reset validation states
     // console.log('Selected Data:', this.selected_acc_head);
