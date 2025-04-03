@@ -40,6 +40,7 @@
                               id="units"
                               class="form-control xs"
                               (dblclick)="open_units()"
+                              [(ngModel)]="selected_unit.unit"
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -64,6 +65,8 @@
                             name="bank"
                             id="p-bank"
                             class="form-control xs"
+                            (dblclick)="callOpenBankType()"
+                            [(ngModel)]="selected_bank_type.secondary_code"
                           />
                         </div>
                       </div>
@@ -90,7 +93,8 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-12">
+                  <!-- Need clarification -->
+                  <!-- <div class="col-lg-12">
                     <div class="form-group">
                       <div class="row form-inner-row">
                         <div class="col-3 left-side">
@@ -106,7 +110,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="col-lg-12">
                     <div class="tabs-wrap-outer full-width-tab">
@@ -419,10 +423,28 @@
 
               <div class="form-footer">
                 <div class="button-wrap">
-                  <button class="sm btn btn-outline-primary-90 cancel-btn">
-                    Clear
-                  </button>
-                  <button class="sm btn btn-primary-90 add-btn">Save</button>
+                  <button
+                  *ngIf="!isEditing"
+                  class="sm btn btn-primary-90 add-btn"
+                  (click)="save()"
+                  [disabled]="headCodeInvalid"
+                >
+                  {{ "Save" }}
+                </button>
+                <!-- Show "Edit" and "Add New" when NOT in Edit mode -->
+                <button
+                  *ngIf="isEditing"
+                  class="sm btn btn-primary-90 add-btn"
+                  (click)="editSubject()"
+                >
+                  {{ isEditing ? "Edit" : "Save" }}
+                </button>
+                <button
+                  class="sm btn btn-outline-primary-90 cancel-btn"
+                  (click)="init()"
+                >
+                  {{ "Clear" }}
+                </button>
                 </div>
               </div>
             </div>
