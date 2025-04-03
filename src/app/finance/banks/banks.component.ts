@@ -70,6 +70,7 @@ export class BanksComponent {
     this.isEditing = false;
     this.selected_bank = {
       unit: { id: '', code: '', unit: '' },
+      bank_id: { bank_id: '' },
       bank_type: { secondary_id: '', secondary_code: '', secondary_head: '' },
       acc_head: { head_code: '' },
       details: {
@@ -328,21 +329,63 @@ export class BanksComponent {
   }
 
   save() {
-    // Force change detection
-    this.errors = { ...this.errors };
-    if (!this.validateForm()) {
+    this.validateForm(); // Run validation only when Save is clicked
+
+    if (Object.keys(this.errors).length > 0) {
       console.error('Form has validation errors:', this.errors);
       this.showNotification(
         'warning',
         'Warning',
         'Please fix the form errors before saving.'
       );
-      return; // Stop saving if validation fails
+      return;
     }
-    let payload = { ...this.selected_bank.details };
+    // let payload = {
+    //   ...this.selected_bank,
+    //   // bank_id: {
+    //   //   bank_id: this.isEditing ? this.selected_bank.bank_id.bank_id : '' },
+    // };
+    let payload: any = {};
+
+    // Only add `bank_id` if `isEditing` is true and it has a value
+    if (this.isEditing && this.selected_bank.bank_id?.bank_id) {
+      payload.bank_id = this.selected_bank.bank_id.bank_id;
+    }
+    payload = {
+      ...payload, // Spread existing values
+      unit_id: this.selected_bank.unit?.code || '',
+      secondary_head_id: this.selected_bank.bank_type?.secondary_code || '',
+      bank_code: this.selected_bank.details?.code || '',
+      bank: this.selected_bank.details?.bank_name || '',
+      short_desc: this.selected_bank.details?.short_name || '',
+      acc_no: this.selected_bank.details?.account_no || '',
+      ifsc: this.selected_bank.details?.ifsc || '',
+      branch: this.selected_bank.details?.branch || '',
+      // passbook_ob: this.selected_bank.details?.passbook_ob || "",
+      // address_id: this.selected_bank.details?.address_id || "",
+      listing: this.selected_bank.details?.listing || 1,
+      building: this.selected_bank.details?.building || '',
+      street: this.selected_bank.details?.street_name || '',
+      place: this.selected_bank.details?.place || '',
+      main_place: this.selected_bank.details?.main_place || '',
+      // state_id: this.selected_bank.details?.state_id || "",
+      // state: this.selected_bank.details?.state || "", // If available
+      // dist_id: this.selected_bank.details?.dist_id || "",
+      district: this.selected_bank.details?.district || '',
+      post: this.selected_bank.details?.post || '',
+      pin: this.selected_bank.details?.pin || '',
+      mobile: this.selected_bank.details?.mobile || '',
+      email: this.selected_bank.details?.email || '',
+      group_id: 8, // Static value, change if needed
+      address_id: 1,
+      dist_id: '1',
+      passbook_ob: '',
+      state: 27,
+      state_id: 'Kerala',
+    };
     console.log('Payload to save:', payload);
 
-    if (payload) return;
+    // if (payload) return;
 
     this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
       (response) => {

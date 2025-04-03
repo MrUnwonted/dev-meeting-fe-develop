@@ -157,7 +157,6 @@
                                       [(ngModel)]="
                                         selected_bank.details.bank_name
                                       "
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -189,7 +188,6 @@
                                       [(ngModel)]="
                                         selected_bank.details.short_name
                                       "
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -219,7 +217,6 @@
                                       id="ifsc"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.ifsc"
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -248,7 +245,6 @@
                                       [(ngModel)]="
                                         selected_bank.details.account_no
                                       "
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -275,7 +271,6 @@
                                       id="email"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.email"
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -302,7 +297,6 @@
                                       id="mobile"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.mobile"
-                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -480,7 +474,6 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.pin"
                                       [readOnly]="isReadOnly && isEnabled"
-                                      (ngModelChange)="validateForm()"
                                       maxlength="6"
                                     />
                                   </div>
