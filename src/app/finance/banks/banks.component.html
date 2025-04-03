@@ -40,7 +40,7 @@
                               id="unit"
                               class="form-control xs"
                               (dblclick)="open_unit()"
-                              [(ngModel)]="selected_unit.unit"
+                              [(ngModel)]="selected_bank?.unit.unit"
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -64,7 +64,7 @@
                             id="p-bank"
                             class="form-control xs"
                             (dblclick)="callOpenBankType()"
-                            [(ngModel)]="selected_bank_type.secondary_head"
+                            [(ngModel)]="selected_bank?.bank_type.secondary_head"
                           />
                         </div>
                       </div>
@@ -86,7 +86,7 @@
                             id="a-head"
                             class="form-control xs"
                             (dblclick)="callOpenAccountHeads()"
-                            [(ngModel)]="selected_acc_head.head"
+                            [(ngModel)]="selected_bank?.acc_head.head_code"
                           />
                         </div>
                       </div>
@@ -108,6 +108,7 @@
                             class="form-control xs"
                             maxlength="4"
                             (input)="validateCode($event)"
+                            [(ngModel)]="selected_bank.details.code"
                           />
                         </div>
                       </div>
@@ -149,7 +150,7 @@
                                       name="bank-name"
                                       id="bank-name"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.bank_name"
+                                      [(ngModel)]="selected_bank.details.bank_name"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -172,7 +173,7 @@
                                       name="short-name"
                                       id="short-name"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.short_name"
+                                      [(ngModel)]="selected_bank.details.short_name"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -195,7 +196,7 @@
                                       name="ifsc"
                                       id="ifsc"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.ifsc"
+                                      [(ngModel)]="selected_bank.details.ifsc"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -218,7 +219,7 @@
                                       name="account-no"
                                       id="account-no"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.account_no"
+                                      [(ngModel)]="selected_bank.details.account_no"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -241,7 +242,7 @@
                                       name="email"
                                       id="email"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.email"
+                                      [(ngModel)]="selected_bank.details.email"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -264,7 +265,7 @@
                                       name="mobile"
                                       id="mobile"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.mobile"
+                                      [(ngModel)]="selected_bank.details.mobile"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -292,7 +293,7 @@
                                       name="building"
                                       id="building"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.building"
+                                      [(ngModel)]="selected_bank.details.building"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -315,7 +316,7 @@
                                       name="street-name"
                                       id="street-name"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.street_name"
+                                      [(ngModel)]="selected_bank.details.street_name"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -338,7 +339,7 @@
                                       name="place"
                                       id="place"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.place"
+                                      [(ngModel)]="selected_bank.details.place"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -361,7 +362,7 @@
                                       name="main-place"
                                       id="main-place"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.main_place"
+                                      [(ngModel)]="selected_bank.details.main_place"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -384,7 +385,7 @@
                                       name="district"
                                       id="district"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.district"
+                                      [(ngModel)]="selected_bank.details.district"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -407,7 +408,7 @@
                                       name="post"
                                       id="post"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.post"
+                                      [(ngModel)]="selected_bank.details.post"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -430,7 +431,7 @@
                                       name="pin"
                                       id="pin"
                                       class="form-control xs"
-                                      [(ngModel)]="bank_details.pin"
+                                      [(ngModel)]="selected_bank.details.pin"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>

@@ -34,14 +34,8 @@ export class BanksComponent {
   errorMessage: string = '';
   headCodeInvalid: boolean = false;
   hasDeactivatedRows: any;
-  selectedExistingHead: any = null;
-  selected_bank: any = {};
-  selected_bank_type: any = {};
-  selected_unit: any = {};
   head_list: any = [];
-  selected_acc_head: any = {};
-  bank_details: any = {};
-  save_bank: any = {};
+  selected_bank: any = {}; // **Unified object**
 
   data_list: any;
 
@@ -75,10 +69,6 @@ export class BanksComponent {
         this.showNotification('error', 'Error', 'Error fetching Table');
       }
     );
-    // console.error('Error fetching head code:', error);
-    // Display error message
-
-    // console.log('Loaded from API');
   }
 
   init() {
@@ -86,63 +76,39 @@ export class BanksComponent {
     this.isAdding = true;
     this.isEditing = false;
     this.selected_bank = {
-      parent_head: '',
-      head: '',
-      primary_id: '',
-      primary_code: '',
-      primary_head: '',
-      secondary_id: '',
-      secondary_code: '',
-      secondary_head: '',
-      tny_type: '',
-      system: '',
-      head_code: '',
-      unit_id: '',
-      flag: '',
-      secondary: '',
-      type: '',
-    };
-    this.selected_unit = {
-      id: '',
-      code: '',
-      unit: ' ',
-    };
-    this.bank_details = {
-      bank_name: '',
-      short_name: '',
-      ifsc: '',
-      account_no: '',
-      email: '',
-      mobile: '',
-      building: '',
-      street_name: '',
-      place: '',
-      main_place: '',
-      district: '',
-      post: '',
-      pin: '',
-    };
-    this.selected_acc_head = {
-      id: '',
-      parent_head: '',
-      head: '',
-      head_code: '',
-      short_description: '',
-      primary_id: '',
-      primary_code: '',
-      primary_head: '',
-      secondary_id: '',
-      secondary_code: '',
-      secondary_head: '',
+      unit: { id: '', code: '', unit: '' },
+      bank_type: { secondary_id: '', secondary_code: '', secondary_head: '' },
+      acc_head: { head_code: '' },
+      details: {
+        code: '',
+        bank_name: '',
+        short_name: '',
+        ifsc: '',
+        account_no: '',
+        email: '',
+        mobile: '',
+        building: '',
+        street_name: '',
+        place: '',
+        main_place: '',
+        district: '',
+        post: '',
+        pin: '',
+        state_id: null,
+        dist_id: null,
+        passbook_ob: 0,
+        address_id: null,
+        listing: 1,
+      },
     };
   }
 
   addNew() {
+    this.init();
     this.isEditing = false;
     this.isAdding = true;
     this.isReadOnly = false;
     this.isEnabled = true;
-    this.init();
   }
 
   open_unit() {
@@ -154,11 +120,15 @@ export class BanksComponent {
         if (response && response.data) {
         }
         const userData = response.data;
-        this.selected_unit = {
-          id: userData.id, // Map
-          code: userData.code, // Map
-          unit: userData.unit, // Map
+        this.selected_bank = {
+          ...this.selected_bank, // Preserve existing values
+          unit: {
+            id: userData.id,
+            code: userData.code,
+            unit: userData.unit,
+          },
         };
+        console.log('Unit Selected', this.selected_bank);
       });
     }
   }
@@ -166,9 +136,9 @@ export class BanksComponent {
   callOpenBankType() {
     // Ensure unit is selected properly
     if (
-      !this.selected_unit ||
-      !this.selected_unit.id ||
-      !this.selected_unit.code?.toString().trim()
+      !this.selected_bank.unit ||
+      !this.selected_bank.unit.id ||
+      !this.selected_bank.unit.code?.toString().trim()
     ) {
       this.showNotification('info', 'Info', 'Select Unit First');
       return;
@@ -185,27 +155,19 @@ export class BanksComponent {
       dialogRef?.afterClosed().subscribe((response: any) => {
         if (response && response.data) {
           const userData = response.data;
-          this.selected_bank_type = {
-            primary_id: userData.int_primary_id, // 1
-            primary_code: userData.vch_primary_code ?? '', // Ensure safe assignment
-            primary_head: userData.vch_primary_head, // Tax Revenue
-            secondary_id: userData.int_secondary_id, // 1
-            secondary_code: userData.vch_secondary_code, // 110010000
-            secondary_head: userData.vch_secondary_head, // Property Tax (for General Purpose)
-            tny_type: userData.tny_type, // 1 (Ensuring type is mapped correctly)
-            system: userData.tny_system ?? null, // Mapping system field
-            head_code: '',
-            unit_id: null, // Keeping null as per the API response
-            flag: 0, // Since it's adding a new record
-
-            secondary: userData.int_secondary_id, // Map to int_secondary_id
-            type: userData.vch_type, // Map to int_secondary_id
+          this.selected_bank = {
+            ...this.selected_bank, // Preserve existing values
+            bank_type: {
+              secondary_id: userData.int_secondary_id,
+              secondary_code: userData.vch_secondary_code,
+              secondary_head: userData.vch_secondary_head,
+            },
           };
           // Only fetch heads if secondary_code is set
-          if (this.selected_bank_type.secondary_code) {
+          if (this.selected_bank.bank_type.secondary_code) {
             console.log(
               'Fetching heads for:',
-              this.selected_bank_type.secondary_code
+              this.selected_bank.bank_type.secondary_code
             );
             // this.fetch_heads();
           }
@@ -216,19 +178,20 @@ export class BanksComponent {
       });
     }
   }
+
   callOpenAccountHeads() {
     // Ensure unit is selected properly
     if (
-      !this.selected_unit ||
-      !this.selected_unit.id ||
-      !this.selected_unit.code?.toString().trim()
+      !this.selected_bank.unit ||
+      !this.selected_bank.unit.id ||
+      !this.selected_bank.unit.code?.toString().trim()
     ) {
       this.showNotification('info', 'Info', 'Select Unit First');
       return;
     } else if (
-      !this.selected_bank_type ||
-      !this.selected_bank_type.secondary_head ||
-      !this.selected_bank_type.secondary_code?.toString().trim()
+      !this.selected_bank.bank_type ||
+      !this.selected_bank.bank_type.secondary_head ||
+      !this.selected_bank.bank_type.secondary_code?.toString().trim()
     ) {
       this.showNotification('info', 'Info', 'Select Bank Type');
       return;
@@ -241,23 +204,14 @@ export class BanksComponent {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
         width: '1130px',
-        data: { filterParam: this.selected_bank_type.secondary_id },
+        data: { filterParam: this.selected_bank?.bank_type.secondary_id },
       });
       dialogRef?.afterClosed().subscribe((response: any) => {
         if (response && response.data) {
           const userData = response.data;
-          this.selected_acc_head = {
-            id: userData.int_head_id, //!Important Head ID
-            parent_head: userData.vch_secondary_head, // Correct mapping from vch_head_code
-            head: userData.vch_head, // Correct mapping from vch_head
-            head_code: userData.vch_head_code, // Correct mapping from vch_head_code
-            short_description: userData.vch_short_desc ?? '', // Ensure it's always a string
-            primary_id: userData.int_primary_id, // Correct mapping from int_primary_id
-            primary_code: userData.vch_primary_code ?? '', // Ensure safe assignment
-            primary_head: userData.vch_primary_head, // Correct mapping from vch_primary_head
-            secondary_id: userData.int_secondary_id, // Correct mapping from int_secondary_id
-            secondary_code: userData.vch_secondary_code, // Correct mapping from vch_secondary_code
-            secondary_head: userData.vch_secondary_head, // Correct mapping from vch_secondary_head
+          this.selected_bank = {
+            ...this.selected_bank,
+            acc_head: { head_code: userData.vch_head_code },
           };
           // console.log('Selected Row', this.selected_acc_head);
         }
@@ -270,29 +224,38 @@ export class BanksComponent {
     const bank_id = row.int_bank_id; // Extract the bank ID
     // Call API to fetch bank details using the extracted bank ID
     this.fetch_bank_details(bank_id);
-    // Binding account head details
-    this.selected_acc_head = {
-      id: row.int_head_id, //!Important Head ID
-      parent_head: row.vch_bank_code, // Assuming this maps correctly
-      head: row.vch_bank, // Bank Name
-      head_code: row.vch_head_code, // Head Code
-      short_description: row.vch_short_desc ?? '', // Short Name
-      primary_id: '', // No direct mapping in API response
-      primary_code: '', // No direct mapping in API response
-      primary_head: '', // No direct mapping in API response
-      secondary_id: '', // No direct mapping in API response
-      secondary_code: '', // No direct mapping in API response
-      secondary_head: '', // No direct mapping in API response
-      tny_type: '', // No direct mapping in API response
-      system: '', // No direct mapping in API response
-      unit_id: row.int_unit_id ?? null, // Unit ID
-      flag: 'E', // Since it's an edit action
-      type: '', // No direct mapping in API response
-      tny_flag: row.tny_listing ?? 0, // Default to 0 if null
-      deactivate: row.tny_listing === 2, // Set checkbox state
+    this.selected_bank = {
+      unit: { id: row.id, code: row.code, unit: row.unit },
+      bank_type: {
+        secondary_id: row.int_secondary_id,
+        secondary_code: row.vch_secondary_code,
+        secondary_head: row.vch_secondary_head,
+      },
+      acc_head: { head_code: row.vch_head_code },
+      details: {
+        code: row.code, // Include code from row
+        bank_name: row.vch_bank,
+        short_name: row.vch_short_desc,
+        ifsc: row.vch_ifsc,
+        account_no: row.vch_acc_no,
+        email: row.vch_email,
+        mobile: row.vch_mobile,
+        building: row.vch_building,
+        street_name: row.vch_street,
+        place: row.vch_place,
+        main_place: row.vch_main_place,
+        district: row.vch_district,
+        post: row.vch_post,
+        pin: row.vch_pin,
+        branch: row.vch_branch || '',
+        passbook_ob: row.passbook_ob || 0,
+        address_id: row.address_id || null,
+        listing: row.listing || 1,
+        state_id: row.state_id || null,
+        dist_id: row.dist_id || null,
+      },
     };
-
-    console.log('Selected Row', this.selected_acc_head);
+    console.log('Selected Row', this.selected_bank);
     // console.log('Selected Bank Details', this.bank_details);
     // Reset validation states
     // console.log('Selected Data:', this.selected_acc_head);
@@ -310,31 +273,36 @@ export class BanksComponent {
       console.error('Invalid bank ID');
       return;
     }
-
     let param = { bank_id: bank_id };
-
     this.svr.fin_getService('api/v0/get_bank_details', param).subscribe(
       (res: any) => {
-        console.log('Bank Details:', res);
-
+        // console.log('Bank Details:', res);
         // Populate bank_details from API response
-        this.bank_details = {
-          bank_name: res.vch_bank ?? '', // Bank Name
-          short_name: res.vch_short_desc ?? '', // Short Name
-          ifsc: res.vch_ifsc ?? '', // IFSC Code
-          account_no: res.vch_acc_no ?? '', // Account Number
-          email: res.vch_email ?? '', // Email
-          mobile: res.vch_mobile ?? '', // Mobile
-          building: res.vch_building ?? '', // Building
-          street_name: res.vch_street ?? '', // Street Name
-          place: res.vch_place ?? '', // Place
-          main_place: res.vch_main_place ?? '', // Main Place
-          district: res.vch_district ?? '', // District
-          post: res.vch_post ?? '', // Post
-          pin: res.vch_pin ?? '', // PIN Code
+        this.selected_bank = {
+          ...this.selected_bank, // Preserve existing values
+          details: {
+            code: res.code ?? '', // Ensure code is included
+            bank_name: res.vch_bank ?? '', // Bank Name
+            short_name: res.vch_short_desc ?? '', // Short Name
+            ifsc: res.vch_ifsc ?? '', // IFSC Code
+            account_no: res.vch_acc_no ?? '', // Account Number
+            email: res.vch_email ?? '', // Email
+            mobile: res.vch_mobile ?? '', // Mobile
+            building: res.vch_building ?? '', // Building
+            street_name: res.vch_street ?? '', // Street Name
+            place: res.vch_place ?? '', // Place
+            main_place: res.vch_main_place ?? '', // Main Place
+            district: res.vch_district ?? '', // District
+            post: res.vch_post ?? '', // Post
+            pin: res.vch_pin ?? '', // PIN Code
+            branch: res.vch_branch ?? '',
+            passbook_ob: res.passbook_ob ?? 0,
+            address_id: res.address_id ?? null,
+            listing: res.listing ?? 1,
+            state_id: res.state_id ?? null,
+            dist_id: res.dist_id ?? null,
+          },
         };
-
-        console.log('Updated Bank Details:', this.bank_details);
       },
       (error) => {
         console.error('Error fetching bank details:', error);
@@ -342,10 +310,10 @@ export class BanksComponent {
       }
     );
   }
+
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
-
     // Check if input is a valid number
     if (!/^\d*$/.test(userInput)) {
       this.showNotification(
@@ -359,40 +327,33 @@ export class BanksComponent {
     // // Ensure it's at least 4 digits long by padding with zeros
     // if (userInput.length < 4) {
     //   inputElement.value = userInput.padStart(4, '0');
+    // this.selected_bank.acc_head.head_code = inputElement.value; // **Update the model**
     // }
-
   }
 
   save() {
     let payload = {
-      bank_id: this.selected_bank?.bank_id, // Bank ID if editing, otherwise null
-      unit_id: this.selected_unit?.id, // Selected unit ID
-      secondary_head_id: this.selected_bank_type?.secondary_id, // Secondary Head ID
-
-      bank_code: this.selected_acc_head?.head_code || '', // Bank Code (Mapped from selected account head)
-      bank: this.bank_details?.bank_name || '', // Bank Name
-      short_desc: this.bank_details?.short_name || '', // Short Description
-      acc_no: this.bank_details?.account_no || '', // Account Number
-      ifsc: this.bank_details?.ifsc || '', // IFSC Code
-      branch: this.bank_details?.branch || '', // Branch (Ensure you have this in bank_details)
-      mobile: this.bank_details?.mobile || '', // Mobile Number
-      email: this.bank_details?.email || '', // Email
-      passbook_ob: this.bank_details?.passbook_ob || 0, // Passbook Opening Balance (Ensure it's present)
-      address_id: this.bank_details?.address_id || null, // Address ID (if available)
-      listing: this.bank_details?.listing || 1, // Default listing status
-
-      // Address Details
-      building: this.bank_details?.building || '',
-      street: this.bank_details?.street_name || '',
-      place: this.bank_details?.place || '',
-      main_place: this.bank_details?.main_place || '',
-      state_id: this.bank_details?.state_id || null, // State ID
-      state: this.bank_details?.state || '',
-      dist_id: this.bank_details?.dist_id || null, // District ID
-      district: this.bank_details?.district || '',
-      post: this.bank_details?.post || '',
-      pin: this.bank_details?.pin || '',
-
+      unit_id: this.selected_bank.unit.id,
+      secondary_head_id: this.selected_bank.bank_type.secondary_id,
+      bank_code: this.selected_bank.acc_head.head_code,
+      bank: this.selected_bank.details.bank_name,
+      short_desc: this.selected_bank.details.short_name,
+      acc_no: this.selected_bank.details.account_no,
+      ifsc: this.selected_bank.details.ifsc,
+      branch: this.selected_bank.details.branch, // Now always exists
+      mobile: this.selected_bank.details.mobile,
+      email: this.selected_bank.details.email,
+      passbook_ob: this.selected_bank.details.passbook_ob, // Now always exists
+      address_id: this.selected_bank.details.address_id, // Now always exists
+      listing: this.selected_bank.details.listing, // Now always exists
+      building: this.selected_bank.details.building,
+      street: this.selected_bank.details.street_name,
+      place: this.selected_bank.details.place,
+      main_place: this.selected_bank.details.main_place,
+      state_id: this.selected_bank.details.state_id,
+      district: this.selected_bank.details.district, // Changed from dist_id for consistency
+      post: this.selected_bank.details.post,
+      pin: this.selected_bank.details.pin,
       group_id: 8,
     };
     console.log('Payload to save:', payload);
