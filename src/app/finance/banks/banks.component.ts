@@ -16,7 +16,13 @@ import { SearchAccountHeadsComponent } from '../modals/search-account-heads/sear
 export class BanksComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['bank', 'accountno', 'code', 'head'];
+  displayedColumns: string[] = [
+    'bank',
+    'accountno',
+    'code',
+    'short_description',
+    'head',
+  ];
   dataSource = new MatTableDataSource<any>();
   isEditing: boolean = false;
   isAdding: boolean = false;
@@ -34,6 +40,7 @@ export class BanksComponent {
   selected_unit: any = {};
   head_list: any = [];
   selected_acc_head: any = {};
+  bank_details: any = {};
 
   data_list: any;
 
@@ -46,18 +53,31 @@ export class BanksComponent {
   ngOnInit(): void {
     this.init();
     this.fetch_records();
+    this.addNew();
   }
 
   fetch_records() {
-    this.data_list = [
-      { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036' },
-      { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036' },
-      { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036' },
-      { code: '4002015', bank: 'ICICI', accountno: '522 000 1022 036' },
-    ];
+    let param = {
+      unit_id: 1,
+    };
+    // Check if data is available in cache
+    this.svr.fin_getService('api/v0/get_bank_list', param).subscribe(
+      (res: any) => {
+        this.data_list = res;
+        this.dataSource = new MatTableDataSource(this.data_list);
+        this.dataSource.paginator = this.paginator;
+        // Check if any row is deactivated (tny_flag === 2)
+        this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
+      },
+      (error) => {
+        console.error('Error saving Account Head:', error);
+        this.showNotification('error', 'Error', 'Error fetching Table');
+      }
+    );
+    // console.error('Error fetching head code:', error);
+    // Display error message
 
-    this.dataSource = new MatTableDataSource(this.data_list);
-    this.dataSource.paginator = this.paginator;
+    // console.log('Loaded from API');
   }
 
   init() {
@@ -86,6 +106,29 @@ export class BanksComponent {
       code: '',
       unit: ' ',
     };
+    this.bank_details = {
+      bank_name: '',
+      short_name: '',
+      ifsc: '',
+      account_no: '',
+      email: '',
+      mobile: '',
+      building: '',
+      street_name: '',
+      place: '',
+      main_place: '',
+      district: '',
+      post: '',
+      pin: '',
+    };
+  }
+
+  addNew() {
+    this.isEditing = false;
+    this.isAdding = true;
+    this.isReadOnly = false;
+    this.isEnabled = true;
+    this.init();
   }
 
   open_units() {
@@ -183,11 +226,10 @@ export class BanksComponent {
   }
 
   open_account_head() {
-    console.log('Triggered account head');
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
         width: '1130px',
-        data: { filterParam: this.selected_bank_type.secondary_code }, 
+        data: { filterParam: this.selected_bank_type.secondary_id },
       });
       dialogRef?.afterClosed().subscribe((response: any) => {
         if (response && response.data) {
@@ -205,11 +247,90 @@ export class BanksComponent {
             secondary_code: userData.vch_secondary_code, // Correct mapping from vch_secondary_code
             secondary_head: userData.vch_secondary_head, // Correct mapping from vch_secondary_head
           };
-          console.log('Selected Row', this.selected_acc_head);
+          // console.log('Selected Row', this.selected_acc_head);
         }
       });
     }
   }
+
+  rowActive(row: any, index: number) {
+    this.activeRowIndex = index;
+    const bank_id = row.int_bank_id; // Extract the bank ID
+    // Call API to fetch bank details using the extracted bank ID
+    this.fetch_bank_details(bank_id);
+    // Binding account head details
+    this.selected_acc_head = {
+      id: row.int_head_id, //!Important Head ID
+      parent_head: row.vch_bank_code, // Assuming this maps correctly
+      head: row.vch_bank, // Bank Name
+      head_code: row.vch_head_code, // Head Code
+      short_description: row.vch_short_desc ?? '', // Short Name
+      primary_id: '', // No direct mapping in API response
+      primary_code: '', // No direct mapping in API response
+      primary_head: '', // No direct mapping in API response
+      secondary_id: '', // No direct mapping in API response
+      secondary_code: '', // No direct mapping in API response
+      secondary_head: '', // No direct mapping in API response
+      tny_type: '', // No direct mapping in API response
+      system: '', // No direct mapping in API response
+      unit_id: row.int_unit_id ?? null, // Unit ID
+      flag: 'E', // Since it's an edit action
+      type: '', // No direct mapping in API response
+      tny_flag: row.tny_listing ?? 0, // Default to 0 if null
+      deactivate: row.tny_listing === 2, // Set checkbox state
+    };
+
+    console.log('Selected Row', this.selected_acc_head);
+    // console.log('Selected Bank Details', this.bank_details);
+    // Reset validation states
+    // console.log('Selected Data:', this.selected_acc_head);
+    this.isEditing = true;
+    this.isReadOnly = true;
+    this.isAdding = false;
+    this.isEnabled = true;
+    // Highlight the selected row
+    this.rowColors = this.rowColors.map(() => '');
+    this.rowColors[index] = '#ff0000';
+  }
+
+  fetch_bank_details(bank_id: number) {
+    if (!bank_id) {
+      console.error('Invalid bank ID');
+      return;
+    }
+
+    let param = { bank_id: bank_id };
+
+    this.svr.fin_getService('api/v0/get_bank_details', param).subscribe(
+      (res: any) => {
+        console.log('Bank Details:', res);
+
+        // Populate bank_details from API response
+        this.bank_details = {
+          bank_name: res.vch_bank ?? '', // Bank Name
+          short_name: res.vch_short_desc ?? '', // Short Name
+          ifsc: res.vch_ifsc ?? '', // IFSC Code
+          account_no: res.vch_acc_no ?? '', // Account Number
+          email: res.vch_email ?? '', // Email
+          mobile: res.vch_mobile ?? '', // Mobile
+          building: res.vch_building ?? '', // Building
+          street_name: res.vch_street ?? '', // Street Name
+          place: res.vch_place ?? '', // Place
+          main_place: res.vch_main_place ?? '', // Main Place
+          district: res.vch_district ?? '', // District
+          post: res.vch_post ?? '', // Post
+          pin: res.vch_pin ?? '', // PIN Code
+        };
+
+        console.log('Updated Bank Details:', this.bank_details);
+      },
+      (error) => {
+        console.error('Error fetching bank details:', error);
+        this.showNotification('error', 'Error', 'Failed to load bank details');
+      }
+    );
+  }
+
 
   save() {}
 
