@@ -60,7 +60,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     this.init();
     this.addNew();
     this.fetch_heads();
-    this.resetHeadCodeValidation()
+    this.resetHeadCodeValidation();
     this.dataSource.paginator = this.paginator;
   }
 
@@ -198,22 +198,18 @@ export class CreateAccountHeadsComponent implements OnInit {
   }
 
   onHeadCodeBlur(event: FocusEvent): void {
-    // if( !this.isEditing && !this.isReadOnly && this.isAdding
-    // //   this.isEditing = false;
-    // // this.isAdding = true;
-    // // this.isReadOnly = false;
-    // ){
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
     this.headCodeInvalid = false;
     this.errorMessage = '';
 
     if (!userInput) {
+      this.headCodeInvalid = true;
       this.errorMessage = 'Head Code is required.';
       return;
     }
-
     if (!/^\d{9}$/.test(userInput)) {
+      this.headCodeInvalid = true;
       this.errorMessage = 'Head Code must be a 9-digit number.';
       return;
     }
@@ -223,18 +219,20 @@ export class CreateAccountHeadsComponent implements OnInit {
     );
     if (existingHead && this.isAdding) {
       this.selectedExistingHead = existingHead;
-      this.headCodeInvalid=true
-      this.showEditConfirmationModal();
-      return;
-    }
-  // }
-  }
+      this.headCodeInvalid = true;
+      this.showNotification(
+        'warning',
+        'Duplicate Head Code',
+        'This Head Code already exists. Do you want to edit it?',
+        undefined,
+        true
+      ).then((result) => {
+        if (result.isConfirmed) {
+          this.confirmEdit();
+        }
+      });
 
-  showEditConfirmationModal(): void {
-    let modalElement = document.getElementById('editConfirmationModal');
-    if (modalElement) {
-      let modal = new bootstrap.Modal(modalElement);
-      modal.show();
+      return;
     }
   }
 
@@ -244,31 +242,10 @@ export class CreateAccountHeadsComponent implements OnInit {
         this.selectedExistingHead,
         this.head_list.indexOf(this.selectedExistingHead)
       );
-      this.headCodeInvalid=false
-    }
-    //  else{
-    //   this.headCodeInvalid = false
-    // }
-    let modalElement = document.getElementById('editConfirmationModal');
-    if (modalElement) {
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      modal.hide();
+      this.headCodeInvalid = false;
     }
   }
 
-  // headExists(existingHead: any) {
-  //   // this.headCodeInvalid = true;
-  //   // this.errorMessage = 'This Head Code already exists.';
-  //   if (existingHead) {
-  //     if (confirm('This Head Code already exists. Do you want to edit it?')) {
-  //       this.rowActive(existingHead, this.head_list.indexOf(existingHead)); // Activate row for editing
-  //     } else {
-  //       this.headCodeInvalid = true;
-  //       this.errorMessage = 'Choose a different Head Code.';
-  //     }
-  //     return;
-  //   }
-  // }
 
   allowOnlyNumbers(event: KeyboardEvent): boolean {
     return /[0-9]/.test(event.key);
@@ -424,9 +401,8 @@ export class CreateAccountHeadsComponent implements OnInit {
       id: 1,
     };
     // Check if data is available in cache
-    this.svr
-      .fin_postservice('api/v0/get_heads', param)
-      .subscribe((res: any) => {
+    this.svr.fin_postservice('api/v0/get_heads', param).subscribe(
+      (res: any) => {
         this.head_list = res;
         this.dataSource = new MatTableDataSource(this.head_list);
         this.dataSource.paginator = this.paginator;
@@ -436,12 +412,12 @@ export class CreateAccountHeadsComponent implements OnInit {
       (error) => {
         console.error('Error saving Account Head:', error);
         this.showNotification('error', 'Error', 'Error fetching Table');
-      });
-          // console.error('Error fetching head code:', error);
-          // Display error message
+      }
+    );
+    // console.error('Error fetching head code:', error);
+    // Display error message
 
-        // console.log('Loaded from API');
-
+    // console.log('Loaded from API');
   }
 
   // for filter while search
