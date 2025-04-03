@@ -18,8 +18,22 @@ export class SearchAccountHeadsComponent {
   rowColors: string[] = [];
   head_list: any = [];
   is_message: boolean = true;
-  displayedColumns: string[] = ['code', 'head', 'type', 'primary_head'];
+  displayedColumns: string[] = ['code', 'head', 'secondary', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
+
+  // Modal footer buttons
+  modalButtons = [
+    {
+      text: 'Cancel',
+      className: 'btn btn-outline-primary-90 xs',
+      action: this.closeModal.bind(this),
+    },
+    {
+      text: 'Select',
+      className: 'btn btn-primary-90 xs',
+      action: this.select_row.bind(this),
+    },
+  ];
 
   constructor(
     private dialogRef: MatDialogRef<any>,
@@ -71,13 +85,13 @@ export class SearchAccountHeadsComponent {
     }
 
     let param = {
-      filter: 'customFilter',
-      id: this.data.filterParam, // Use the passed value
+      filter: 'Secondary', // Match the filter from BanksComponent
+      id: this.data.filterParam, // Use the passed filterParam as id
     };
 
     console.log('Fetching Data with Param:', param);
 
-    this.svr.fin_postservice('api/v0/get_secondary_heads', param).subscribe(
+    this.svr.fin_postservice('api/v0/get_heads', param).subscribe(
       (res: any) => {
         if (res) {
           this.head_list = res;

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchSecondaryHeadsComponent } from '../modals/search-secondary-heads/search-secondary-heads.component';
 import Swal from 'sweetalert2';
 import { ServiceService } from 'src/app/services/service.service';
+import { SearchAccountHeadsComponent } from '../modals/search-account-heads/search-account-heads.component';
 
 @Component({
   selector: 'app-banks',
@@ -32,6 +33,7 @@ export class BanksComponent {
   selected_bank_type: any = {};
   selected_unit: any = {};
   head_list: any = [];
+  selected_acc_head: any = {};
 
   data_list: any;
 
@@ -150,7 +152,7 @@ export class BanksComponent {
               'Fetching heads for:',
               this.selected_bank_type.secondary_code
             );
-            this.fetch_heads();
+            // this.fetch_heads();
           }
           // console.log('Selected Acc Head:', this.selected_acc_head);
           // this.isEditing = true;
@@ -159,37 +161,59 @@ export class BanksComponent {
       });
     }
   }
+  callOpenAccountHeads() {
+    // Ensure unit is selected properly
+    if (
+      !this.selected_unit ||
+      !this.selected_unit.id ||
+      !this.selected_unit.code?.toString().trim()
+    ) {
+      this.showNotification('info', 'Info', 'Select Unit First');
+      return;
+    } else if (
+      !this.selected_bank_type ||
+      !this.selected_bank_type.secondary_head ||
+      !this.selected_bank_type.secondary_code?.toString().trim()
+    ) {
+      this.showNotification('info', 'Info', 'Select Bank Type');
+      return;
+    }
+    // console.log('Selected Unit', this.selected_unit);
+    this.open_account_head();
+  }
+
+  open_account_head() {
+    console.log('Triggered account head');
+    if (this.isAdding) {
+      const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
+        width: '1130px',
+        data: { filterParam: this.selected_bank_type.secondary_code }, 
+      });
+      dialogRef?.afterClosed().subscribe((response: any) => {
+        if (response && response.data) {
+          const userData = response.data;
+          this.selected_acc_head = {
+            id: userData.int_head_id, //!Important Head ID
+            parent_head: userData.vch_secondary_head, // Correct mapping from vch_head_code
+            head: userData.vch_head, // Correct mapping from vch_head
+            head_code: userData.vch_head_code, // Correct mapping from vch_head_code
+            short_description: userData.vch_short_desc ?? '', // Ensure it's always a string
+            primary_id: userData.int_primary_id, // Correct mapping from int_primary_id
+            primary_code: userData.vch_primary_code ?? '', // Ensure safe assignment
+            primary_head: userData.vch_primary_head, // Correct mapping from vch_primary_head
+            secondary_id: userData.int_secondary_id, // Correct mapping from int_secondary_id
+            secondary_code: userData.vch_secondary_code, // Correct mapping from vch_secondary_code
+            secondary_head: userData.vch_secondary_head, // Correct mapping from vch_secondary_head
+          };
+          console.log('Selected Row', this.selected_acc_head);
+        }
+      });
+    }
+  }
 
   save() {}
 
   editSubject() {}
-
-  // Fetch data from API
-  fetch_heads() {
-    let param = {
-      filter: 'Secondary',
-      id: this.selected_bank_type.secondary_code,
-    };
-    console.log('Fetch Heads- Param:', param);
-    // Check if data is available in cache
-    this.svr.fin_postservice('api/v0/get_heads', param).subscribe(
-      (res: any) => {
-        this.head_list = res;
-        console.log('Head List:', this.head_list);
-
-        // Check if any row is deactivated (tny_flag === 2)
-        this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
-      },
-      (error) => {
-        console.error('Error saving Account Head:', error);
-        this.showNotification('error', 'Error', 'Error fetching Table');
-      }
-    );
-    // console.error('Error fetching head code:', error);
-    // Display error message
-
-    // console.log('Loaded from API');
-  }
 
   showNotification(
     icon: 'success' | 'error' | 'warning' | 'info' | 'question',
