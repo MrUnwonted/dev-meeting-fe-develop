@@ -80,6 +80,7 @@
                             (input)="validateHeadCode($event)"
                             maxlength="9"
                             (keypress)="allowOnlyNumbers($event)"
+                            (blur)="onHeadCodeBlur($event)"
                             [class.is-invalid]="headCodeInvalid"
                           />
                           <div *ngIf="headCodeInvalid" class="invalid-feedback">
@@ -104,7 +105,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.head"
                             name="head"
-                            [readOnly]="isReadOnly"
+                            [readOnly]="isReadOnly && isEnabled"
                             maxlength="80"
                           />
                         </div>
@@ -128,7 +129,7 @@
                             class="form-control xs"
                             [(ngModel)]="selected_acc_head.short_description"
                             name="shortDesc"
-                            [readOnly]="isReadOnly"
+                            [readOnly]="isReadOnly && isEnabled"
                             maxlength="30"
                             minlength="2"
                           />
@@ -340,8 +341,8 @@
                   <ng-container matColumnDef="secondary">
                     <th mat-header-cell *matHeaderCellDef>Secondary Head</th>
                     <td mat-cell *matCellDef="let element">
-                      {{element.vch_secondary_head }} ( {{element.vch_secondary_code
-                      }} )
+                      {{ element.vch_secondary_head }} (
+                      {{ element.vch_secondary_code }} )
                     </td>
                   </ng-container>
 
@@ -419,15 +420,26 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editConfirmationLabel">Edit Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="editConfirmationLabel">
+          Edit Confirmation
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         This Head Code already exists. Do you want to edit it?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary" (click)="confirmEdit()">Yes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button type="button" class="btn btn-primary" (click)="confirmEdit()">
+          Yes
+        </button>
       </div>
     </div>
   </div>

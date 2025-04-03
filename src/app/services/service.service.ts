@@ -222,11 +222,11 @@ fin_getService(methodName: string, params: any = null) {
       parmsdet = parmsdet + paramvariable;
       i++;
     }
-    return this.http.get(`http://192.168.1.46:9093/` + this.apihost + methodName + parmsdet);
-    // return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName + parmsdet);
+    // return this.http.get(`http://192.168.1.46:9093/` + this.apihost + methodName + parmsdet);
+    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName + parmsdet);
   }else{
-    return this.http.get(`http://192.168.1.46:9093/` + this.apihost + methodName);
-    // return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName);
+    // return this.http.get(`http://192.168.1.46:9093/` + this.apihost + methodName);
+    return this.http.get(`http://103.177.225.135:9092/` + this.apihost + methodName);
   }
 }
 
@@ -238,8 +238,8 @@ fin_postservice(methodName: string, params: any = null) {
 
   // JSON.stringify(data)
   return this.http
-    .post<any>(`http://192.168.1.46:9093/` + this.apihost + methodName, params, { headers: reqHeader })
-    // .post<any>(`http://103.177.225.135:9092/` + this.apihost + methodName, params, { headers: reqHeader })
+    // .post<any>(`http://192.168.1.46:9093/` + this.apihost + methodName, params, { headers: reqHeader })
+    .post<any>(`http://103.177.225.135:9092/` + this.apihost + methodName, params, { headers: reqHeader })
 
   // return this.http
   // .post<any>(`${environment.serviceUrl}/` + this.apihost + methodName, params);

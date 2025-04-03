@@ -33,6 +33,7 @@ export class CreateAccountHeadsComponent implements OnInit {
   isEditing: boolean = false;
   isAdding: boolean = false;
   isReadOnly: boolean = true; // Controls form field interactivity
+  isEnabled: boolean = false;
   activeRowIndex: number | null = null;
   rowColors: string[] = [];
   originalHeadCode: string = ''; // Store the fetched head code
@@ -57,7 +58,9 @@ export class CreateAccountHeadsComponent implements OnInit {
   ngOnInit(): void {
     // Initialize paginator
     this.init();
+    this.addNew();
     this.fetch_heads();
+    this.resetHeadCodeValidation()
     this.dataSource.paginator = this.paginator;
   }
 
@@ -182,20 +185,50 @@ export class CreateAccountHeadsComponent implements OnInit {
       return;
     }
     // Case 4: Check if Head Code already exists in head_list
-    const existingHead = this.head_list.find(
-      (head: any) => head.vch_head_code === userInput
-    );
-    if (existingHead) {
-      this.selectedExistingHead = existingHead;
-      this.headCodeInvalid=true
-      this.showEditConfirmationModal();
-      return;
-    }
+    // const headExists = this.head_list.find(
+    //   (head: any) => head.vch_head_code === userInput
+    // );
+    // // if (headExists) {
+    // //   this.headExists(headExists);
+    // //   return;
+    // // }
     // If all checks pass
     // console.log('⚠️ Head Code modified, but valid.');
     inputElement.classList.remove('is-invalid');
   }
 
+  onHeadCodeBlur(event: FocusEvent): void {
+    // if( !this.isEditing && !this.isReadOnly && this.isAdding
+    // //   this.isEditing = false;
+    // // this.isAdding = true;
+    // // this.isReadOnly = false;
+    // ){
+    const inputElement = event.target as HTMLInputElement;
+    const userInput = inputElement.value.trim();
+    this.headCodeInvalid = false;
+    this.errorMessage = '';
+
+    if (!userInput) {
+      this.errorMessage = 'Head Code is required.';
+      return;
+    }
+
+    if (!/^\d{9}$/.test(userInput)) {
+      this.errorMessage = 'Head Code must be a 9-digit number.';
+      return;
+    }
+
+    const existingHead = this.head_list.find(
+      (head: any) => head.vch_head_code === userInput
+    );
+    if (existingHead && this.isAdding) {
+      this.selectedExistingHead = existingHead;
+      this.headCodeInvalid=true
+      this.showEditConfirmationModal();
+      return;
+    }
+  // }
+  }
 
   showEditConfirmationModal(): void {
     let modalElement = document.getElementById('editConfirmationModal');
@@ -334,13 +367,16 @@ export class CreateAccountHeadsComponent implements OnInit {
 
   editSubject() {
     this.isEditing = false;
-    this.isReadOnly = false;
+    this.isReadOnly = true;
     this.isAdding = false;
+    this.isEnabled = false;
   }
 
   addNew() {
     this.isEditing = false;
     this.isAdding = true;
+    this.isReadOnly = false;
+    this.isEnabled = true;
     this.init();
   }
 
@@ -375,6 +411,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     this.isEditing = true;
     this.isReadOnly = true;
     this.isAdding = false;
+    this.isEnabled = true;
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
