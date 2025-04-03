@@ -252,7 +252,7 @@
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
-                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                  <div class="text-danger" *ngIf="errors.account_no">
                                     {{ errors.account_no }}
                                   </div>
                                 </div>
@@ -306,7 +306,7 @@
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
-                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                  <div class="text-danger" *ngIf="errors.mobile">
                                     {{ errors.mobile }}
                                   </div>
                                 </div>
@@ -440,7 +440,7 @@
                               </div>
                             </div>
 
-                            <!-- Mobile -->
+                            <!-- Post -->
                             <div class="col-lg-12">
                               <div class="form-group">
                                 <div class="row form-inner-row">
@@ -484,7 +484,7 @@
                                       maxlength="6"
                                     />
                                   </div>
-                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                  <div class="text-danger" *ngIf="errors.pin">
                                     {{ errors.pin }}
                                   </div>
                                 </div>
