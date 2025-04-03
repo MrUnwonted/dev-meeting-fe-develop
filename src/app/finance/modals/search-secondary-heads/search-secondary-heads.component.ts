@@ -18,7 +18,7 @@ export class SearchSecondaryHeadsComponent {
   rowColors: string[] = [];
   head_list: any = [];
   is_message: boolean = true;
-  displayedColumns: string[] = [ 'code','head','type', 'primary_head'];
+  displayedColumns: string[] = ['code', 'head', 'type', 'primary_head'];
   dataSource = new MatTableDataSource<any>();
 
   // Modal footer buttons
@@ -74,26 +74,28 @@ export class SearchSecondaryHeadsComponent {
 
   // Fetch data from API
   fetch_heads() {
-    // Check if data is available in cache
-    if (this.head_list.length > 0) {
-      this.dataSource = new MatTableDataSource(this.head_list);
-      this.dataSource.paginator = this.paginator;
-      // console.log('Loaded from cache');
-      return;
-    }
     this.svr
       .fin_getService('api/v0/get_secondary_heads')
       .subscribe((res: any) => {
-        if(res){
-        this.head_list = res;
-        this.dataSource = new MatTableDataSource(this.head_list);
-        this.dataSource.paginator = this.paginator;
-        // console.log('Loaded from API');
-        }else{
+        if (res && Array.isArray(res)) {
+          // Filter records where vch_secondary_code is "450100000"
+          // this.head_list = res.filter(item => item.vch_secondary_code === "450100000");
+          // Filter records where vch_secondary_code starts with "450" and head is NOT "Cash"
+          this.head_list = res.filter(
+            (item) =>
+              item.vch_secondary_code.startsWith('450') &&
+              item.vch_secondary_head !== 'Cash'
+          );
+
+          this.dataSource = new MatTableDataSource(this.head_list);
+          this.dataSource.paginator = this.paginator;
+
+          console.log('Filtered Head List:', this.head_list);
+        } else {
           Swal.fire({
             icon: 'info',
-            title: 'Infor',
-            text: 'Failed to fetch Data. Please try again.',
+            title: 'Info',
+            text: 'Failed to fetch data. Please try again.',
           });
         }
       });

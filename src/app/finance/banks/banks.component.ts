@@ -172,8 +172,6 @@ export class BanksComponent {
         if (response && response.data) {
           const userData = response.data;
           this.selected_bank_type = {
-            parent_head: userData.vch_secondary_head, // Map to vch_secondary_head
-            head: userData.vch_secondary_head, // Map to vch_primary_head
             primary_id: userData.int_primary_id, // 1
             primary_code: userData.vch_primary_code ?? '', // Ensure safe assignment
             primary_head: userData.vch_primary_head, // Tax Revenue
