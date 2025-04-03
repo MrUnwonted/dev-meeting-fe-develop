@@ -30,20 +30,13 @@ export class BanksComponent {
   isEnabled: boolean = false;
   activeRowIndex: number | null = null;
   rowColors: string[] = [];
-  originalHeadCode: string = ''; // Store the fetched head code
-  errorMessage: string = '';
-  headCodeInvalid: boolean = false;
   hasDeactivatedRows: any;
-  head_list: any = [];
   selected_bank: any = {}; // **Unified object**
+  errors: any = {}; // Stores validation messages
 
   data_list: any;
 
-  constructor(
-    private dialog: MatDialog,
-    private svr: ServiceService,
-    private cdRef: ChangeDetectorRef
-  ) {}
+  constructor(private dialog: MatDialog, private svr: ServiceService) {}
 
   ngOnInit(): void {
     this.init();
@@ -335,30 +328,18 @@ export class BanksComponent {
   }
 
   save() {
-    let payload = {
-      unit_id: this.selected_bank.unit.id,
-      secondary_head_id: this.selected_bank.bank_type.secondary_id,
-      bank_code: this.selected_bank.acc_head.head_code,
-      bank: this.selected_bank.details.bank_name,
-      short_desc: this.selected_bank.details.short_name,
-      acc_no: this.selected_bank.details.account_no,
-      ifsc: this.selected_bank.details.ifsc,
-      branch: this.selected_bank.details.branch, // Now always exists
-      mobile: this.selected_bank.details.mobile,
-      email: this.selected_bank.details.email,
-      passbook_ob: this.selected_bank.details.passbook_ob, // Now always exists
-      address_id: this.selected_bank.details.address_id, // Now always exists
-      listing: this.selected_bank.details.listing, // Now always exists
-      building: this.selected_bank.details.building,
-      street: this.selected_bank.details.street_name,
-      place: this.selected_bank.details.place,
-      main_place: this.selected_bank.details.main_place,
-      state_id: this.selected_bank.details.state_id,
-      district: this.selected_bank.details.district, // Changed from dist_id for consistency
-      post: this.selected_bank.details.post,
-      pin: this.selected_bank.details.pin,
-      group_id: 8,
-    };
+    // Force change detection
+    this.errors = { ...this.errors };
+    if (!this.validateForm()) {
+      console.error('Form has validation errors:', this.errors);
+      this.showNotification(
+        'warning',
+        'Warning',
+        'Please fix the form errors before saving.'
+      );
+      return; // Stop saving if validation fails
+    }
+    let payload = { ...this.selected_bank.details };
     console.log('Payload to save:', payload);
 
     if (payload) return;
@@ -377,6 +358,70 @@ export class BanksComponent {
         Swal.fire('Error', 'Error saving bank details. Try again!', 'error');
       }
     );
+  }
+
+  validateForm() {
+    this.errors = {}; // Reset previous errors
+    if (!this.selected_bank.details.bank_name?.trim()) {
+      this.errors.bank_name = 'Bank Name is required.';
+    }
+    if (!this.selected_bank.details.short_name?.trim()) {
+      this.errors.short_name = 'Short Name is required.';
+    }
+    // Validate IFSC Code
+    if (!this.selected_bank.details.ifsc?.trim()) {
+      this.errors.ifsc = 'IFSC Code is required.';
+    } else if (!this.isValidIFSC(this.selected_bank.details.ifsc)) {
+      this.errors.ifsc = 'Invalid IFSC Code format.';
+    }
+    // Validate Account Number
+    if (!String(this.selected_bank.details.account_no)?.trim()) {
+      this.errors.account_no = 'Account Number is required.';
+    } else if (
+      !this.isValidAccountNumber(this.selected_bank.details.account_no)
+    ) {
+      this.errors.account_no = 'Account Number must be between 9 to 18 digits.';
+    }
+    if (
+      !this.selected_bank.details.email?.trim() ||
+      !this.isValidEmail(this.selected_bank.details.email)
+    ) {
+      this.errors.email = 'Valid Email is required.';
+    }
+    if (
+      !this.selected_bank.details.mobile?.trim() ||
+      !this.isValidMobile(this.selected_bank.details.mobile)
+    ) {
+      this.errors.mobile = 'Valid Mobile Number is required.';
+    }
+    if (
+      !this.selected_bank.details.pin?.trim() ||
+      !this.isValidPin(this.selected_bank.details.pin)
+    ) {
+      this.errors.pin = 'Valid Pin Number is required.';
+    }
+    // Force change detection
+    this.errors = { ...this.errors };
+
+    return Object.keys(this.errors).length === 0; // Return true if no errors
+  }
+  // Helper Functions for Validation
+  isValidEmail(email: string): boolean {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  }
+  isValidMobile(mobile: string): boolean {
+    return /^[0-9]{10}$/.test(mobile); // 10-digit mobile number validation
+  }
+  isValidPin(pin: string): boolean {
+    return /^[1-9][0-9]{5}$/.test(pin); // Corrected regex for Indian PIN codes
+  }
+  isValidIFSC(ifsc: string): boolean {
+    const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+    return regex.test(ifsc);
+  }
+  isValidAccountNumber(accountNo: string): boolean {
+    const regex = /^\d{9,18}$/;
+    return regex.test(accountNo);
   }
 
   editSubject() {}

@@ -41,6 +41,7 @@
                               class="form-control xs"
                               (dblclick)="open_unit()"
                               [(ngModel)]="selected_bank?.unit.unit"
+                              readonly
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -64,7 +65,10 @@
                             id="p-bank"
                             class="form-control xs"
                             (dblclick)="callOpenBankType()"
-                            [(ngModel)]="selected_bank?.bank_type.secondary_head"
+                            [(ngModel)]="
+                              selected_bank?.bank_type.secondary_head
+                            "
+                            readonly
                           />
                         </div>
                       </div>
@@ -87,13 +91,14 @@
                             class="form-control xs"
                             (dblclick)="callOpenAccountHeads()"
                             [(ngModel)]="selected_bank?.acc_head.head_code"
+                            readonly
                           />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                   <div class="col-lg-12">
+                  <div class="col-lg-12">
                     <div class="form-group">
                       <div class="row form-inner-row">
                         <div class="col-3 left-side">
@@ -149,9 +154,18 @@
                                       name="bank-name"
                                       id="bank-name"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.bank_name"
+                                      [(ngModel)]="
+                                        selected_bank.details.bank_name
+                                      "
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div
+                                    class="text-danger"
+                                    *ngIf="errors.bank_name"
+                                  >
+                                    {{ errors.bank_name }}
                                   </div>
                                 </div>
                               </div>
@@ -172,9 +186,18 @@
                                       name="short-name"
                                       id="short-name"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.short_name"
+                                      [(ngModel)]="
+                                        selected_bank.details.short_name
+                                      "
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div
+                                    class="text-danger"
+                                    *ngIf="errors.short_name"
+                                  >
+                                    {{ errors.short_name }}
                                   </div>
                                 </div>
                               </div>
@@ -196,8 +219,12 @@
                                       id="ifsc"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.ifsc"
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                    {{ errors.ifsc }}
                                   </div>
                                 </div>
                               </div>
@@ -218,9 +245,15 @@
                                       name="account-no"
                                       id="account-no"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.account_no"
+                                      [(ngModel)]="
+                                        selected_bank.details.account_no
+                                      "
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                    {{ errors.account_no }}
                                   </div>
                                 </div>
                               </div>
@@ -242,8 +275,12 @@
                                       id="email"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.email"
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.email">
+                                    {{ errors.email }}
                                   </div>
                                 </div>
                               </div>
@@ -265,13 +302,16 @@
                                       id="mobile"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.mobile"
+                                      (ngModelChange)="validateForm()"
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                    {{ errors.mobile }}
                                   </div>
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </mat-tab>
 
@@ -292,7 +332,9 @@
                                       name="building"
                                       id="building"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.building"
+                                      [(ngModel)]="
+                                        selected_bank.details.building
+                                      "
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -315,7 +357,9 @@
                                       name="street-name"
                                       id="street-name"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.street_name"
+                                      [(ngModel)]="
+                                        selected_bank.details.street_name
+                                      "
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -361,7 +405,9 @@
                                       name="main-place"
                                       id="main-place"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.main_place"
+                                      [(ngModel)]="
+                                        selected_bank.details.main_place
+                                      "
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -384,7 +430,9 @@
                                       name="district"
                                       id="district"
                                       class="form-control xs"
-                                      [(ngModel)]="selected_bank.details.district"
+                                      [(ngModel)]="
+                                        selected_bank.details.district
+                                      "
                                       [readOnly]="isReadOnly && isEnabled"
                                     />
                                   </div>
@@ -426,13 +474,18 @@
                                   </div>
                                   <div class="col-9 right-side">
                                     <input
-                                      type="pin"
+                                      type="text"
                                       name="pin"
                                       id="pin"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.pin"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      (ngModelChange)="validateForm()"
+                                      maxlength="6"
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.ifsc">
+                                    {{ errors.pin }}
                                   </div>
                                 </div>
                               </div>
@@ -451,7 +504,6 @@
                     *ngIf="!isEditing"
                     class="sm btn btn-primary-90 add-btn"
                     (click)="save()"
-                    [disabled]="headCodeInvalid"
                   >
                     {{ "Save" }}
                   </button>
