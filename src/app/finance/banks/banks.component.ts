@@ -75,9 +75,9 @@ export class BanksComponent {
       unit: { id: '', code: '', unit: '' },
       bank_id: { bank_id: '' },
       bank_type: { secondary_id: '', secondary_code: '', secondary_head: '' },
-      acc_head: { head_code: '' },
+      acc_head: { head_code: '' , head_id: ''},
       details: {
-        code: '',
+        bank_code: '',
         bank_name: '',
         short_name: '',
         ifsc: '',
@@ -214,7 +214,7 @@ export class BanksComponent {
           const userData = response.data;
           this.selected_bank = {
             ...this.selected_bank,
-            acc_head: { head_code: userData.vch_head_code },
+            acc_head: { head_code: userData.vch_head_code, head_id: userData.int_head_id },
           };
           // console.log('Selected Row', this.selected_acc_head);
         }
@@ -240,7 +240,7 @@ export class BanksComponent {
     if (!this.selected_bank.details) {
       // console.log('Enterd into details intialisation');
       this.selected_bank.details = {
-        code: '',
+        bank_code: '',
         bank_name: '',
         short_name: '',
         ifsc: '',
@@ -292,7 +292,7 @@ export class BanksComponent {
           acc_head: this.selected_bank?.acc_head || {},
           bank_id: { bank_id: bank_id },
           details: {
-            code: res.code ?? '', // Ensure code is included
+            bank_code: res.bank_code ?? '', // Ensure code is included
             bank_name: res.vch_bank ?? '', // Bank Name
             short_name: res.vch_short_desc ?? '', // Short Name
             ifsc: res.vch_ifsc ?? '', // IFSC Code
@@ -385,8 +385,12 @@ export class BanksComponent {
     payload = {
       ...payload, // Spread existing values
       unit_id: this.selected_bank.unit?.code || '',
-      secondary_head_id: this.selected_bank.bank_type?.secondary_code || '',
-      bank_code: this.selected_bank.details?.code || '',
+      secondary_head_id: this.selected_bank.bank_type?.secondary_id || '',
+      bank_code: this.selected_bank.details?.bank_code || '',
+      head_id: this.selected_bank.acc_head?.head_code || '',
+      head_code: this.selected_bank.acc_head?.head_id || '',
+      listing: this.selected_bank.details?.listing,
+
       bank: this.selected_bank.details?.bank_name || '',
       short_desc: this.selected_bank.details?.short_name || '',
       acc_no: this.selected_bank.details?.account_no || '',
@@ -394,7 +398,6 @@ export class BanksComponent {
       branch: this.selected_bank.details?.branch || 'Kazhakkoottam',
       // passbook_ob: this.selected_bank.details?.passbook_ob || "",
       // address_id: this.selected_bank.details?.address_id || "",
-      listing: this.selected_bank.details?.listing,
       building: this.selected_bank.details?.building || '',
       street: this.selected_bank.details?.street_name || '',
       place: this.selected_bank.details?.place || '',

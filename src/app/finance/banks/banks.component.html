@@ -112,7 +112,7 @@
                             class="form-control xs"
                             maxlength="4"
                             (input)="validateCode($event)"
-                            [(ngModel)]="selected_bank.details.code"
+                            [(ngModel)]="selected_bank.details.bank_code"
                           />
                         </div>
                       </div>
@@ -462,6 +462,7 @@
                                       [(ngModel)]="selectedState"
                                       name="state"
                                       (change)="onStateChange($event)"
+                                      [disabled]="isReadOnly && isEnabled"
                                     >
                                       <option value="">
                                         -- Select State --
@@ -497,6 +498,7 @@
                                       [(ngModel)]="
                                         selected_bank.details.district
                                       "
+                                      [disabled]="isReadOnly && isEnabled"
                                     >
                                       <option value="">
                                         -- Select District --
