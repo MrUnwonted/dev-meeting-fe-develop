@@ -581,6 +581,8 @@
                       id="search"
                       placeholder="Search"
                       class="form-control xs"
+                      (keyup)="applyFilter($event)"
+                      #input
                     />
                   </div>
                 </div>

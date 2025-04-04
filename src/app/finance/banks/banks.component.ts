@@ -499,6 +499,12 @@ export class BanksComponent {
     this.isEnabled = false;
   }
 
+  // for filter while search
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   showNotification(
     icon: 'success' | 'error' | 'warning' | 'info' | 'question',
     title: string,
