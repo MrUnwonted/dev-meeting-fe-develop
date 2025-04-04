@@ -79,6 +79,7 @@ export class BanksComponent {
         short_name: '',
         ifsc: '',
         account_no: '',
+        branch: '',
         email: '',
         mobile: '',
         building: '',
@@ -229,7 +230,7 @@ export class BanksComponent {
     };
     // Ensure details object exists before API response
     if (!this.selected_bank.details) {
-      console.log('Enterd into details intialisation');
+      // console.log('Enterd into details intialisation');
       this.selected_bank.details = {
         code: '',
         bank_name: '',
@@ -360,7 +361,7 @@ export class BanksComponent {
       short_desc: this.selected_bank.details?.short_name || '',
       acc_no: this.selected_bank.details?.account_no || '',
       ifsc: this.selected_bank.details?.ifsc || '',
-      branch: this.selected_bank.details?.branch || '',
+      branch: this.selected_bank.details?.branch || 'Kazhakkoottam',
       // passbook_ob: this.selected_bank.details?.passbook_ob || "",
       // address_id: this.selected_bank.details?.address_id || "",
       listing: this.selected_bank.details?.listing || 1,
@@ -377,21 +378,24 @@ export class BanksComponent {
       mobile: this.selected_bank.details?.mobile || '',
       email: this.selected_bank.details?.email || '',
       group_id: 8, // Static value, change if needed
-      address_id: 1,
+      address_id: '1',
       dist_id: '1',
       passbook_ob: '',
-      state: 27,
-      state_id: 'Kerala',
+      state_id: '27',
+      state: 'Kerala',
     };
-    console.log('Payload to save:', payload);
+    // console.log('Payload to save:', payload);
+    // console.log(JSON.stringify(payload))
 
     // if (payload) return;
 
     this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
       (response) => {
-        if (response && response.success) {
+        console.log('Save Response:', response);
+        if (response && !response.error) {
           Swal.fire('Success', 'Bank details saved successfully!', 'success');
-          this.fetch_records(); // Refresh the table after saving
+          this.addNew(); // Reset the form after saving
+          this.fetch_records();
         } else {
           Swal.fire('Error', 'Failed to save bank details', 'error');
         }
@@ -410,6 +414,9 @@ export class BanksComponent {
     }
     if (!this.selected_bank.details.short_name?.trim()) {
       this.errors.short_name = 'Short Name is required.';
+    }
+    if (!this.selected_bank.details.branch?.trim()) {
+      this.errors.branch = 'Branch is required.';
     }
     // Validate IFSC Code
     if (!this.selected_bank.details.ifsc?.trim()) {
