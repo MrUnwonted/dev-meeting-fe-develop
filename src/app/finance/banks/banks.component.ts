@@ -129,17 +129,19 @@ export class BanksComponent {
   }
 
   callOpenBankType() {
-    // Ensure unit is selected properly
-    if (
-      !this.selected_bank.unit ||
-      !this.selected_bank.unit.id ||
-      !this.selected_bank.unit.code?.toString().trim()
-    ) {
-      this.showNotification('info', 'Info', 'Select Unit First');
-      return;
+    if (this.isAdding) {
+      // Ensure unit is selected properly
+      if (
+        !this.selected_bank.unit ||
+        !this.selected_bank.unit.id ||
+        !this.selected_bank.unit.code?.toString().trim()
+      ) {
+        this.showNotification('info', 'Info', 'Select Unit First');
+        return;
+      }
+      // console.log('Selected Unit', this.selected_unit);
+      this.open_bank_type();
     }
-    // console.log('Selected Unit', this.selected_unit);
-    this.open_bank_type();
   }
 
   open_bank_type() {
@@ -175,24 +177,26 @@ export class BanksComponent {
   }
 
   callOpenAccountHeads() {
-    // Ensure unit is selected properly
-    if (
-      !this.selected_bank.unit ||
-      !this.selected_bank.unit.id ||
-      !this.selected_bank.unit.code?.toString().trim()
-    ) {
-      this.showNotification('info', 'Info', 'Select Unit First');
-      return;
-    } else if (
-      !this.selected_bank.bank_type ||
-      !this.selected_bank.bank_type.secondary_head ||
-      !this.selected_bank.bank_type.secondary_code?.toString().trim()
-    ) {
-      this.showNotification('info', 'Info', 'Select Bank Type');
-      return;
+    if (this.isAdding) {
+      // Ensure unit is selected properly
+      if (
+        !this.selected_bank.unit ||
+        !this.selected_bank.unit.id ||
+        !this.selected_bank.unit.code?.toString().trim()
+      ) {
+        this.showNotification('info', 'Info', 'Select Unit First');
+        return;
+      } else if (
+        !this.selected_bank.bank_type ||
+        !this.selected_bank.bank_type.secondary_head ||
+        !this.selected_bank.bank_type.secondary_code?.toString().trim()
+      ) {
+        this.showNotification('info', 'Info', 'Select Bank Type');
+        return;
+      }
+      // console.log('Selected Unit', this.selected_unit);
+      this.open_account_head();
     }
-    // console.log('Selected Unit', this.selected_unit);
-    this.open_account_head();
   }
 
   open_account_head() {
@@ -220,13 +224,14 @@ export class BanksComponent {
     // Call API to fetch bank details using the extracted bank ID
     this.fetch_bank_details(bank_id);
     this.selected_bank = {
-      unit: { id: row.id, code: row.code, unit: row.unit },
+      unit: { id: row.id, code: row.code, unit: row.int_unit_id },
       bank_type: {
         secondary_id: row.int_secondary_id,
         secondary_code: row.vch_secondary_code,
         secondary_head: row.vch_secondary_head,
       },
       acc_head: { head_code: row.vch_head_code },
+      bank_id: { bank_id: row.int_bank_id },
     };
     // Ensure details object exists before API response
     if (!this.selected_bank.details) {
@@ -253,7 +258,6 @@ export class BanksComponent {
         listing: 1,
       };
     }
-    // console.log('Selected Row', this.selected_bank);
     // console.log('Selected Bank Details', this.bank_details);
     // Reset validation states
     // console.log('Selected Data:', this.selected_acc_head);
@@ -267,7 +271,7 @@ export class BanksComponent {
   }
 
   fetch_bank_details(bank_id: number) {
-    if (!bank_id) {
+    if (typeof bank_id !== 'number' || bank_id <= 0) {
       console.error('Invalid bank ID');
       return;
     }
@@ -275,9 +279,15 @@ export class BanksComponent {
     this.svr.fin_getService('api/v0/get_bank_details', param).subscribe(
       (res: any) => {
         // console.log('Bank Details:', res);
+        // Update the existing object instead of creating a new one
+        this.selected_bank.bank_id.bank_id = bank_id;
         // Populate bank_details from API response
         this.selected_bank = {
           ...this.selected_bank, // Preserve existing values
+          unit: this.selected_bank?.unit || {},
+          bank_type: this.selected_bank?.bank_type || {},
+          acc_head: this.selected_bank?.acc_head || {},
+          bank_id: { bank_id: bank_id },
           details: {
             code: res.code ?? '', // Ensure code is included
             bank_name: res.vch_bank ?? '', // Bank Name
@@ -301,6 +311,7 @@ export class BanksComponent {
             dist_id: res.dist_id ?? null,
           },
         };
+        console.log('Selected Bank Details:', this.selected_bank);
       },
       (error) => {
         console.error('Error fetching bank details:', error);
@@ -349,7 +360,7 @@ export class BanksComponent {
     let payload: any = {};
 
     // Only add `bank_id` if `isEditing` is true and it has a value
-    if (this.isEditing && this.selected_bank.bank_id?.bank_id) {
+    if (!this.isEditing && this.selected_bank.bank_id?.bank_id) {
       payload.bank_id = this.selected_bank.bank_id.bank_id;
     }
     payload = {
@@ -384,7 +395,7 @@ export class BanksComponent {
       state_id: '27',
       state: 'Kerala',
     };
-    // console.log('Payload to save:', payload);
+    console.log('Payload to save:', payload);
     // console.log(JSON.stringify(payload))
 
     // if (payload) return;
@@ -474,7 +485,12 @@ export class BanksComponent {
     return regex.test(accountNo);
   }
 
-  editSubject() {}
+  editSubject() {
+    this.isEditing = false;
+    this.isReadOnly = true;
+    this.isAdding = false;
+    this.isEnabled = false;
+  }
 
   showNotification(
     icon: 'success' | 'error' | 'warning' | 'info' | 'question',
