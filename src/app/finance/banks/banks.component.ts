@@ -65,6 +65,7 @@ export class BanksComponent {
   }
 
   init() {
+    this.errors = {}; // Reset previous errors
     this.isReadOnly = false;
     this.isAdding = true;
     this.isEditing = false;
@@ -226,9 +227,8 @@ export class BanksComponent {
     this.selected_bank = {
       unit: { id: row.id, code: row.code, unit: row.int_unit_id },
       bank_type: {
-        secondary_id: row.int_secondary_id,
-        secondary_code: row.vch_secondary_code,
-        secondary_head: row.vch_secondary_head,
+        secondary_code: row.vch_parent_head_code,
+        secondary_head: row.vch_parent_head_code,
       },
       acc_head: { head_code: row.vch_head_code },
       bank_id: { bank_id: row.int_bank_id },
@@ -304,11 +304,11 @@ export class BanksComponent {
             post: res.vch_post ?? '', // Post
             pin: res.vch_pin ?? '', // PIN Code
             branch: res.vch_branch ?? '',
-            passbook_ob: res.passbook_ob ?? 0,
-            address_id: res.address_id ?? null,
-            listing: res.listing ?? 1,
-            state_id: res.state_id ?? null,
-            dist_id: res.dist_id ?? null,
+            passbook_ob: res.num_passbook_ob ?? 0,
+            address_id: res.int_address_id ?? null,
+            listing: res.tny_listing ,
+            state_id: res.int_state_id ?? null,
+            dist_id: res.int_dist_id ?? null,
           },
         };
         console.log('Selected Bank Details:', this.selected_bank);
@@ -339,6 +339,12 @@ export class BanksComponent {
     // this.selected_bank.acc_head.head_code = inputElement.value; // **Update the model**
     // }
   }
+  onDeactivateToggle(event: any): void {
+    // If checked, deactivate (set listing = 0)
+    // If unchecked, activate (set listing = 1)
+    this.selected_bank.details.listing = event.target.checked ? 0 : 1;
+     console.log('Listin:', this.selected_bank.details.listing);
+  }
 
   save() {
     this.validateForm(); // Run validation only when Save is clicked
@@ -363,6 +369,7 @@ export class BanksComponent {
     if (!this.isEditing && this.selected_bank.bank_id?.bank_id) {
       payload.bank_id = this.selected_bank.bank_id.bank_id;
     }
+    console.log('Listin:', this.selected_bank.details.listing);
     payload = {
       ...payload, // Spread existing values
       unit_id: this.selected_bank.unit?.code || '',
@@ -375,7 +382,7 @@ export class BanksComponent {
       branch: this.selected_bank.details?.branch || 'Kazhakkoottam',
       // passbook_ob: this.selected_bank.details?.passbook_ob || "",
       // address_id: this.selected_bank.details?.address_id || "",
-      listing: this.selected_bank.details?.listing || 1,
+      listing: this.selected_bank.details?.listing,
       building: this.selected_bank.details?.building || '',
       street: this.selected_bank.details?.street_name || '',
       place: this.selected_bank.details?.place || '',
