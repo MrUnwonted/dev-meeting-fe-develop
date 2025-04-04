@@ -33,6 +33,8 @@ export class BanksComponent {
   hasDeactivatedRows: any;
   selected_bank: any = {}; // **Unified object**
   errors: any = {}; // Stores validation messages
+  selectedState: string = '';
+  districts: string[] = [];
 
   data_list: any;
 
@@ -90,6 +92,7 @@ export class BanksComponent {
         district: '',
         post: '',
         pin: '',
+        state: '',
         state_id: null,
         dist_id: null,
         passbook_ob: 0,
@@ -306,7 +309,7 @@ export class BanksComponent {
             branch: res.vch_branch ?? '',
             passbook_ob: res.num_passbook_ob ?? 0,
             address_id: res.int_address_id ?? null,
-            listing: res.tny_listing ,
+            listing: res.tny_listing,
             state_id: res.int_state_id ?? null,
             dist_id: res.int_dist_id ?? null,
           },
@@ -319,6 +322,15 @@ export class BanksComponent {
       }
     );
   }
+
+  onStateChange(event: Event) {
+    const selectedStateName = (event.target as HTMLSelectElement).value;
+    const selected = this.statesWithDistricts.find(
+      (s) => s.name === selectedStateName
+    );
+    this.districts = selected ? selected.districts : [];
+  }
+
 
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
@@ -343,7 +355,7 @@ export class BanksComponent {
     // If checked, deactivate (set listing = 0)
     // If unchecked, activate (set listing = 1)
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
-     console.log('Listin:', this.selected_bank.details.listing);
+    console.log('Listin:', this.selected_bank.details.listing);
   }
 
   save() {
@@ -520,4 +532,56 @@ export class BanksComponent {
       showConfirmButton,
     });
   }
+
+  // Function to handle row click and highlight
+  statesWithDistricts = [
+    {
+      name: 'Kerala',
+      code: 'KL',
+      districts: [
+        'Thiruvananthapuram',
+        'Kollam',
+        'Pathanamthitta',
+        'Alappuzha',
+        'Kottayam',
+        'Idukki',
+        'Ernakulam',
+        'Thrissur',
+        'Palakkad',
+        'Malappuram',
+        'Kozhikode',
+        'Wayanad',
+        'Kannur',
+        'Kasaragod',
+      ],
+    },
+    {
+      name: 'Tamil Nadu',
+      code: 'TN',
+      districts: [
+        'Chennai',
+        'Coimbatore',
+        'Madurai',
+        'Tiruchirappalli',
+        'Salem',
+        'Erode',
+        'Vellore',
+        'Thanjavur',
+        'Dindigul',
+      ],
+    },
+    {
+      name: 'Karnataka',
+      code: 'KA',
+      districts: [
+        'Bengaluru',
+        'Mysuru',
+        'Mangaluru',
+        'Hubballi',
+        'Belagavi',
+        'Dharwad',
+        'Shivamogga',
+      ],
+    },
+  ];
 }
