@@ -53,7 +53,7 @@ export class SearchOfficeComponent {
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     this.selected_data = row;
-    console.log('Selected Data:', this.selected_data);
+    // console.log('Selected Data:', this.selected_data);
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
   }

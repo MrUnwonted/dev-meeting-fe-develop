@@ -33,8 +33,10 @@ export class BanksComponent {
   hasDeactivatedRows: any;
   selected_bank: any = {}; // **Unified object**
   errors: any = {}; // Stores validation messages
+  statesWithDistricts: any[] = [];
+  districts: any[] = [];
   selectedState: string = '';
-  districts: string[] = [];
+  selectedStateId: number | null = null;
 
   data_list: any;
 
@@ -44,6 +46,7 @@ export class BanksComponent {
     this.init();
     this.fetch_records();
     this.addNew();
+    this.fetch_states();
   }
 
   fetch_records() {
@@ -75,7 +78,7 @@ export class BanksComponent {
       unit: { id: '', code: '', unit: '' },
       bank_id: { bank_id: '' },
       bank_type: { secondary_id: '', secondary_code: '', secondary_head: '' },
-      acc_head: { head_code: '' , head_id: ''},
+      acc_head: { head_code: '', head_id: '' },
       details: {
         bank_code: '',
         bank_name: '',
@@ -215,7 +218,10 @@ export class BanksComponent {
           const userData = response.data;
           this.selected_bank = {
             ...this.selected_bank,
-            acc_head: { head_code: userData.vch_head_code, head_id: userData.int_head_id },
+            acc_head: {
+              head_code: userData.vch_head_code,
+              head_id: userData.int_head_id,
+            },
           };
           // console.log('Selected Row', this.selected_acc_head);
         }
@@ -315,7 +321,7 @@ export class BanksComponent {
             dist_id: res.int_dist_id ?? null,
           },
         };
-        this.hasDeactivatedRows = res.some((row: any) => row.tny_listing !== 1);
+        this.hasDeactivatedRows = res.tny_listing !== 1; // Check if listing is not 1
         console.log('Selected Bank Details:', this.selected_bank);
       },
       (error) => {
@@ -325,14 +331,38 @@ export class BanksComponent {
     );
   }
 
-  onStateChange(event: Event) {
-    const selectedStateName = (event.target as HTMLSelectElement).value;
-    const selected = this.statesWithDistricts.find(
-      (s) => s.name === selectedStateName
-    );
-    this.districts = selected ? selected.districts : [];
+  fetch_states() {
+    this.svr.fin_getService('api/v0/get_states', {}).subscribe((res: any) => {
+      this.statesWithDistricts = res.filter((state: any) => state.active === 1);
+    });
   }
 
+  fetch_districts(stateId: number) {
+    this.svr
+      .fin_getService('api/v0/get_districts', { state_id: stateId })
+      .subscribe((res: any) => {
+        this.districts = res.filter((district: any) => district.active === 1);
+        // Now districts array contains objects with both id and district properties
+      });
+  }
+
+  onStateChange(event: any) {
+    const selectedName = event.target.value;
+    const found = this.statesWithDistricts.find(
+      (s) => s.state === selectedName
+    );
+
+    if (found) {
+      this.selectedStateId = found.id;
+      this.selected_bank.details.state = selectedName;
+      this.selected_bank.details.state_id = found.id;
+      this.fetch_districts(found.id);
+    } else {
+      this.districts = [];
+      this.selected_bank.details.state = '';
+      this.selected_bank.details.state_id = null;
+    }
+  }
 
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
@@ -379,6 +409,11 @@ export class BanksComponent {
     // };
     let payload: any = {};
 
+    // Find the selected district object
+    const selectedDistrictObj = this.districts.find(
+      (d: any) => d.district === this.selected_bank.details.district
+    );
+
     // Only add `bank_id` if `isEditing` is true and it has a value
     if (!this.isEditing && this.selected_bank.bank_id?.bank_id) {
       payload.bank_id = this.selected_bank.bank_id.bank_id;
@@ -406,17 +441,20 @@ export class BanksComponent {
       // state_id: this.selected_bank.details?.state_id || "",
       // state: this.selected_bank.details?.state || "", // If available
       // dist_id: this.selected_bank.details?.dist_id || "",
-      district: this.selected_bank.details?.district || '',
       post: this.selected_bank.details?.post || '',
       pin: this.selected_bank.details?.pin || '',
       mobile: this.selected_bank.details?.mobile || '',
       email: this.selected_bank.details?.email || '',
+
+      // State and District from the selected values
+      district: this.selected_bank.details.district || '',
+      dist_id: selectedDistrictObj?.id || '',
+      state_id: this.selected_bank.details.state_id || '',
+      state: this.selected_bank.details.state || '',
+
       group_id: 8, // Static value, change if needed
       address_id: '1',
-      dist_id: '1',
       passbook_ob: '',
-      state_id: '27',
-      state: 'Kerala',
     };
     console.log('Payload to save:', payload);
     // console.log(JSON.stringify(payload))
@@ -536,56 +574,4 @@ export class BanksComponent {
       showConfirmButton,
     });
   }
-
-  // Function to handle row click and highlight
-  statesWithDistricts = [
-    {
-      name: 'Kerala',
-      code: 'KL',
-      districts: [
-        'Thiruvananthapuram',
-        'Kollam',
-        'Pathanamthitta',
-        'Alappuzha',
-        'Kottayam',
-        'Idukki',
-        'Ernakulam',
-        'Thrissur',
-        'Palakkad',
-        'Malappuram',
-        'Kozhikode',
-        'Wayanad',
-        'Kannur',
-        'Kasaragod',
-      ],
-    },
-    {
-      name: 'Tamil Nadu',
-      code: 'TN',
-      districts: [
-        'Chennai',
-        'Coimbatore',
-        'Madurai',
-        'Tiruchirappalli',
-        'Salem',
-        'Erode',
-        'Vellore',
-        'Thanjavur',
-        'Dindigul',
-      ],
-    },
-    {
-      name: 'Karnataka',
-      code: 'KA',
-      districts: [
-        'Bengaluru',
-        'Mysuru',
-        'Mangaluru',
-        'Hubballi',
-        'Belagavi',
-        'Dharwad',
-        'Shivamogga',
-      ],
-    },
-  ];
 }

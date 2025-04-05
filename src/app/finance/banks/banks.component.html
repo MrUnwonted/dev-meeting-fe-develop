@@ -459,7 +459,7 @@
                                     <select
                                       class="form-control xs"
                                       id="state"
-                                      [(ngModel)]="selectedState"
+                                      [(ngModel)]="selected_bank.details.state"
                                       name="state"
                                       (change)="onStateChange($event)"
                                       [disabled]="isReadOnly && isEnabled"
@@ -471,9 +471,9 @@
                                         *ngFor="
                                           let state of statesWithDistricts
                                         "
-                                        [value]="state.name"
+                                        [value]="state.state"
                                       >
-                                        {{ state.name }}
+                                        {{ state.state }}
                                       </option>
                                     </select>
                                   </div>
@@ -505,8 +505,9 @@
                                       </option>
                                       <option
                                         *ngFor="let district of districts"
+                                        [value]="district.district"
                                       >
-                                        {{ district }}
+                                        {{ district.district }}
                                       </option>
                                     </select>
                                   </div>
