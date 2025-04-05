@@ -498,7 +498,11 @@
                                       [(ngModel)]="
                                         selected_bank.details.district
                                       "
-                                      [disabled]="isReadOnly && isEnabled"
+                                      (change)="onDistrictChange($event)"
+                                      [disabled]="
+                                        (isReadOnly && isEnabled) ||
+                                        !districts.length
+                                      "
                                     >
                                       <option value="">
                                         -- Select District --
