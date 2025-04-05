@@ -127,7 +127,7 @@ export class BanksComponent {
             unit: userData.unit,
           },
         };
-        console.log('Unit Selected', this.selected_bank);
+        // console.log('Unit Selected', this.selected_bank);
       });
     }
   }
@@ -152,6 +152,7 @@ export class BanksComponent {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
         width: '1130px',
+        data: { source: 'bankHead' },
       });
       dialogRef?.afterClosed().subscribe((response: any) => {
         if (response && response.data) {
@@ -314,6 +315,7 @@ export class BanksComponent {
             dist_id: res.int_dist_id ?? null,
           },
         };
+        this.hasDeactivatedRows = res.some((row: any) => row.tny_listing !== 1);
         console.log('Selected Bank Details:', this.selected_bank);
       },
       (error) => {
@@ -355,7 +357,7 @@ export class BanksComponent {
     // If checked, deactivate (set listing = 0)
     // If unchecked, activate (set listing = 1)
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
-    console.log('Listin:', this.selected_bank.details.listing);
+    // console.log('Listin:', this.selected_bank.details.listing);
   }
 
   save() {
@@ -381,7 +383,6 @@ export class BanksComponent {
     if (!this.isEditing && this.selected_bank.bank_id?.bank_id) {
       payload.bank_id = this.selected_bank.bank_id.bank_id;
     }
-    console.log('Listin:', this.selected_bank.details.listing);
     payload = {
       ...payload, // Spread existing values
       unit_id: this.selected_bank.unit?.code || '',

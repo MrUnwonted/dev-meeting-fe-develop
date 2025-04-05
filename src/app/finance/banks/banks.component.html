@@ -693,6 +693,9 @@
                     "
                     (dblclick)="rowActive(row, i)"
                     [ngClass]="{ 'active-row': activeRowIndex === i }"
+                    [style.backgroundColor]="
+                      row.tny_listing != 1 ? '#f5d7d5' : 'transparent'
+                    "
                   ></tr>
                 </table>
               </div>

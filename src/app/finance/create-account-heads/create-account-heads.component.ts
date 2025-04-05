@@ -83,6 +83,7 @@ export class CreateAccountHeadsComponent implements OnInit {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
         width: '1130px',
+        data: { source: 'accountHead' },
       });
       dialogRef?.afterClosed().subscribe((response: any) => {
         if (response && response.data) {
@@ -220,19 +221,20 @@ export class CreateAccountHeadsComponent implements OnInit {
     if (existingHead && this.isAdding) {
       this.selectedExistingHead = existingHead;
       this.headCodeInvalid = true;
-      this.showNotification(
-        'warning',
-        'Duplicate Head Code',
-        'This Head Code already exists. Do you want to edit it?',
-        undefined,
-        true
-      ).then((result) => {
+      Swal.fire({
+        icon: 'info',
+        title: 'This Head Code already exists.',
+        text: 'Do you want to edit it?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      }).then((result) => {
         if (result.isConfirmed) {
-          this.confirmEdit();
+          this.confirmEdit(); // Your edit function
+        } else {
+          // Optional: do nothing or show another message
         }
       });
-
-      return;
     }
   }
 
@@ -245,7 +247,6 @@ export class CreateAccountHeadsComponent implements OnInit {
       this.headCodeInvalid = false;
     }
   }
-
 
   allowOnlyNumbers(event: KeyboardEvent): boolean {
     return /[0-9]/.test(event.key);
@@ -449,5 +450,4 @@ export class CreateAccountHeadsComponent implements OnInit {
       showConfirmButton,
     });
   }
-
 }
