@@ -459,7 +459,9 @@
                                     <select
                                       class="form-control xs"
                                       id="state"
-                                      [(ngModel)]="selected_bank.details.state"
+                                      [(ngModel)]="
+                                        selected_bank.details.state_id
+                                      "
                                       name="state"
                                       (change)="onStateChange($event)"
                                       [disabled]="isReadOnly && isEnabled"
@@ -471,7 +473,7 @@
                                         *ngFor="
                                           let state of statesWithDistricts
                                         "
-                                        [value]="state.state"
+                                        [value]="state.id"
                                       >
                                         {{ state.state }}
                                       </option>
@@ -496,7 +498,7 @@
                                       id="district"
                                       name="district"
                                       [(ngModel)]="
-                                        selected_bank.details.district
+                                        selected_bank.details.dist_id
                                       "
                                       (change)="onDistrictChange($event)"
                                       [disabled]="
@@ -509,7 +511,7 @@
                                       </option>
                                       <option
                                         *ngFor="let district of districts"
-                                        [value]="district.district"
+                                        [value]="district.id"
                                       >
                                         {{ district.district }}
                                       </option>

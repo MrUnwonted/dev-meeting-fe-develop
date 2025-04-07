@@ -275,10 +275,6 @@ export class BanksComponent {
     this.isReadOnly = true;
     this.isAdding = false;
     this.isEnabled = true;
-    // Add this after your initialization
-    if (this.selected_bank.details.state_id) {
-      this.fetch_states(); // This will trigger district load if needed
-    }
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
@@ -296,35 +292,37 @@ export class BanksComponent {
         // Update the existing object instead of creating a new one
         this.selected_bank.bank_id.bank_id = bank_id;
         // Populate bank_details from API response
-        this.selected_bank = {
-          ...this.selected_bank, // Preserve existing values
-          unit: this.selected_bank?.unit || {},
-          bank_type: this.selected_bank?.bank_type || {},
-          acc_head: this.selected_bank?.acc_head || {},
-          bank_id: { bank_id: bank_id },
-          details: {
-            bank_code: res.bank_code ?? '', // Ensure code is included
-            bank_name: res.vch_bank ?? '', // Bank Name
-            short_name: res.vch_short_desc ?? '', // Short Name
-            ifsc: res.vch_ifsc ?? '', // IFSC Code
-            account_no: res.vch_acc_no ?? '', // Account Number
-            email: res.vch_email ?? '', // Email
-            mobile: res.vch_mobile ?? '', // Mobile
-            building: res.vch_building ?? '', // Building
-            street_name: res.vch_street ?? '', // Street Name
-            place: res.vch_place ?? '', // Place
-            main_place: res.vch_main_place ?? '', // Main Place
-            district: res.vch_district ?? '', // District
-            post: res.vch_post ?? '', // Post
-            pin: res.vch_pin ?? '', // PIN Code
-            branch: res.vch_branch ?? '',
-            passbook_ob: res.num_passbook_ob ?? 0,
-            address_id: res.int_address_id ?? null,
-            listing: res.tny_listing,
-            state_id: res.int_state_id ?? null,
-            dist_id: res.int_dist_id ?? null,
-          },
+        this.selected_bank.details = {
+          // Preserve existing values
+          bank_code: res.bank_code ?? '', // Ensure code is included
+          bank_name: res.vch_bank ?? '', // Bank Name
+          short_name: res.vch_short_desc ?? '', // Short Name
+          ifsc: res.vch_ifsc ?? '', // IFSC Code
+          account_no: res.vch_acc_no ?? '', // Account Number
+          email: res.vch_email ?? '', // Email
+          mobile: res.vch_mobile ?? '', // Mobile
+          building: res.vch_building ?? '', // Building
+          street_name: res.vch_street ?? '', // Street Name
+          place: res.vch_place ?? '', // Place
+          main_place: res.vch_main_place ?? '', // Main Place
+          district: res.vch_district ?? '', // District
+          post: res.vch_post ?? '', // Post
+          pin: res.vch_pin ?? '', // PIN Code
+          branch: res.vch_branch ?? '',
+          passbook_ob: res.num_passbook_ob ?? 0,
+          address_id: res.int_address_id ?? null,
+          listing: res.tny_listing,
+          state_id: res.int_state_id ?? null,
+          dist_id: res.int_dist_id ?? null,
         };
+        if (
+          this.isEditing &&
+          this.selected_bank.details.state_id &&
+          this.districts.length === 0
+        ) {
+          this.fetch_districts(this.selected_bank.details.state_id);
+        }
+
         this.hasDeactivatedRows = res.tny_listing !== 1; // Check if listing is not 1
         console.log('Selected Bank Details:', this.selected_bank);
       },
@@ -338,13 +336,15 @@ export class BanksComponent {
   fetch_states() {
     this.svr.fin_getService('api/v0/get_states', {}).subscribe((res: any) => {
       this.statesWithDistricts = res.filter((state: any) => state.active === 1);
-      // If editing, set the state selection
+
+      // Now that states are loaded, bind state_id properly
       if (this.isEditing && this.selected_bank.details.state_id) {
         const state = this.statesWithDistricts.find(
           (s) => s.id === this.selected_bank.details.state_id
         );
         if (state) {
           this.selectedStateId = state.id;
+          // ✅ Trigger districts load after state is set
           this.fetch_districts(state.id);
         }
       }
@@ -356,29 +356,36 @@ export class BanksComponent {
       .fin_getService('api/v0/get_districts', { state_id: stateId })
       .subscribe((res: any) => {
         this.districts = res.filter((district: any) => district.active === 1);
-        // If editing, set the district selection
+
+        // Set district only after districts are fetched
         if (this.isEditing && this.selected_bank.details.dist_id) {
           const district = this.districts.find(
             (d) => d.id === this.selected_bank.details.dist_id
           );
           if (district) {
             this.selected_bank.details.district = district.district;
+
+            // Optional: re-assign dist_id to trigger change detection
+            this.selected_bank.details.dist_id = district.id;
+          } else {
+            // Reset if not found
+            this.selected_bank.details.dist_id = null;
           }
         }
       });
   }
 
   onStateChange(event: any) {
-    const selectedStateName = event.target.value;
+    const selectedStateId = +event.target.value; // Ensure it's a number
     const state = this.statesWithDistricts.find(
-      (s) => s.state === selectedStateName
+      (s) => s.id === selectedStateId
     );
 
     if (state) {
-      this.selectedStateId = state.id;
+      this.selectedStateId = selectedStateId;
       this.selected_bank.details.state = state.state;
-      this.selected_bank.details.state_id = state.id;
-      this.fetch_districts(state.id);
+      this.selected_bank.details.state_id = selectedStateId;
+      this.fetch_districts(selectedStateId);
 
       // Clear district when state changes
       this.selected_bank.details.district = '';
@@ -390,17 +397,19 @@ export class BanksComponent {
       this.districts = [];
     }
   }
-  
-  onDistrictChange(event: any) {
-    const districtName = event.target.value;
-    const district = this.districts.find(d => d.district === districtName);
 
-    if (district) {
-        this.selected_bank.details.dist_id = district.id;
-    } else {
-        this.selected_bank.details.dist_id = null;
-    }
-}
+  onDistrictChange(event: any) {
+    const selectedDistrictId = +event.target.value;
+    // const district = this.districts.find((d) => d.id === selectedDistrictId);
+    this.selected_bank.details.dist_id = selectedDistrictId;
+    // if (district) {
+    //   this.selected_bank.details.dist_id = district.id;
+    //   this.selected_bank.details.district = district.district;
+    // } else {
+    //   this.selected_bank.details.dist_id = null;
+    //   this.selected_bank.details.district = '';
+    // }
+  }
 
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
