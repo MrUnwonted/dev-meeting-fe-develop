@@ -160,6 +160,7 @@
                                         selected_bank.details.bank_name
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                   <div
@@ -191,6 +192,7 @@
                                         selected_bank.details.short_name
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="15"
                                     />
                                   </div>
                                   <div
@@ -220,6 +222,7 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.ifsc"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="11"
                                     />
                                   </div>
                                   <div class="text-danger" *ngIf="errors.ifsc">
@@ -248,6 +251,7 @@
                                         selected_bank.details.account_no
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="18"
                                     />
                                   </div>
                                   <div
@@ -277,6 +281,7 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.branch"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                   <div
@@ -367,6 +372,7 @@
                                         selected_bank.details.building
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="100"
                                     />
                                   </div>
                                 </div>
@@ -392,6 +398,7 @@
                                         selected_bank.details.street_name
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                 </div>
@@ -415,6 +422,7 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.place"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                 </div>
@@ -440,6 +448,7 @@
                                         selected_bank.details.main_place
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                 </div>
@@ -538,6 +547,7 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.post"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="50"
                                     />
                                   </div>
                                 </div>
