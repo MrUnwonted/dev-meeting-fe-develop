@@ -68,6 +68,8 @@ export class CreateAccountHeadsComponent implements OnInit {
     this.isReadOnly = false;
     this.isAdding = true;
     this.isEditing = false;
+    this.errorMessage = '';
+    this.headCodeInvalid = false; // Reset validation state
     this.selected_acc_head = {
       parent_head: '',
       head_code: '',
@@ -128,7 +130,7 @@ export class CreateAccountHeadsComponent implements OnInit {
         }
       },
       (error) => {
-        // console.error('Error fetching head code:', error);
+        console.error('Error fetching head code:', error);
         // Display error message
         this.showNotification(
           'error',
@@ -333,7 +335,7 @@ export class CreateAccountHeadsComponent implements OnInit {
         'Too short description! Minimum 3 characters required.'
       );
       return false;
-    } else if (this.selected_acc_head.short_description.length > 25) {
+    } else if (this.selected_acc_head.short_description.length > 20) {
       this.showNotification(
         'error',
         'Error',
