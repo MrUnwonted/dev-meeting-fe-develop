@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchOfficeComponent } from '../modals/search-office/search-office.component';
@@ -24,21 +24,19 @@ export class BanksComponent {
     'head',
   ];
   dataSource = new MatTableDataSource<any>();
-  isEditing: boolean = false;
-  isAdding: boolean = false;
+  isEditing: boolean = false; // Editing flag
+  isAdding: boolean = false; // Adding flag
   isReadOnly: boolean = true; // Controls form field interactivity
-  isEnabled: boolean = false;
-  activeRowIndex: number | null = null;
+  isEnabled: boolean = false; // Controls button interactivity
+  activeRowIndex: number | null = null; // Index of the active row
   rowColors: string[] = [];
-  hasDeactivatedRows: any;
+  hasDeactivatedRows: any; // Flag to check if any row is deactivated
   selected_bank: any = {}; // **Unified object**
   errors: any = {}; // Stores validation messages
   statesWithDistricts: any[] = [];
   districts: any[] = [];
   selectedState: string = '';
   selectedStateId: number | null = null;
-
-  data_list: any;
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
 
@@ -49,6 +47,7 @@ export class BanksComponent {
     this.fetch_states();
   }
 
+  // Fetch records from the server and populate the data source for the table
   fetch_records() {
     let param = {
       unit_id: 1,
@@ -56,8 +55,8 @@ export class BanksComponent {
     // Check if data is available in cache
     this.svr.fin_getService('api/v0/get_bank_list', param).subscribe(
       (res: any) => {
-        this.data_list = res;
-        this.dataSource = new MatTableDataSource(this.data_list);
+        const data_list = res;
+        this.dataSource = new MatTableDataSource(data_list);
         this.dataSource.paginator = this.paginator;
         // Check if any row is deactivated (tny_flag === 2)
         this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
@@ -69,6 +68,7 @@ export class BanksComponent {
     );
   }
 
+  // Initialize the form and reset values
   init() {
     this.errors = {}; // Reset previous errors
     this.isReadOnly = false;
@@ -113,6 +113,7 @@ export class BanksComponent {
     this.isEnabled = true;
   }
 
+  // Open the search dialog for selecting a unit
   open_unit() {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchOfficeComponent, {
@@ -151,6 +152,7 @@ export class BanksComponent {
     }
   }
 
+  // Open the search dialog for selecting a bank type
   open_bank_type() {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
@@ -177,8 +179,6 @@ export class BanksComponent {
             // this.fetch_heads();
           }
           // console.log('Selected Acc Head:', this.selected_acc_head);
-          // this.isEditing = true;
-          // this.isReadOnly = true;
         }
       });
     }
@@ -207,6 +207,7 @@ export class BanksComponent {
     }
   }
 
+  // Open the search dialog for selecting an account head
   open_account_head() {
     if (this.isAdding) {
       const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
@@ -229,6 +230,8 @@ export class BanksComponent {
     }
   }
 
+  // Select a row in the table and fetch bank details
+  // This function is called when a row is clicked in the table
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
     const bank_id = row.int_bank_id; // Extract the bank ID
@@ -237,8 +240,8 @@ export class BanksComponent {
     this.selected_bank = {
       unit: { id: row.id, code: row.code, unit: row.int_unit_id },
       bank_type: {
-        secondary_code: row.vch_parent_head_code,
-        secondary_head: row.vch_parent_head_code,
+        secondary_code: row.vch_secondary_head_code,
+        secondary_head: row.int_secondary_head_id,
       },
       acc_head: { head_code: row.vch_head_code },
       bank_id: { bank_id: row.int_bank_id },
@@ -269,8 +272,7 @@ export class BanksComponent {
       };
     }
     // console.log('Selected Bank Details', this.bank_details);
-    // Reset validation states
-    // console.log('Selected Data:', this.selected_acc_head);
+    // Set the flags for editing
     this.isEditing = true;
     this.isReadOnly = true;
     this.isAdding = false;
@@ -294,7 +296,7 @@ export class BanksComponent {
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
-          bank_code: res.bank_code ?? '', // Ensure code is included
+          bank_code: res.vch_bank_code ?? '', // Ensure code is included
           bank_name: res.vch_bank ?? '', // Bank Name
           short_name: res.vch_short_desc ?? '', // Short Name
           ifsc: res.vch_ifsc ?? '', // IFSC Code
@@ -315,6 +317,7 @@ export class BanksComponent {
           state_id: res.int_state_id ?? null,
           dist_id: res.int_dist_id ?? null,
         };
+        // Set state and district based on API response
         if (
           this.isEditing &&
           this.selected_bank.details.state_id &&
@@ -323,7 +326,7 @@ export class BanksComponent {
           this.fetch_districts(this.selected_bank.details.state_id);
         }
 
-        this.hasDeactivatedRows = res.tny_listing !== 1; // Check if listing is not 1
+        this.hasDeactivatedRows = res.tny_listing !== 1; // Check if listing is not 1, for marking as deactivated
         console.log('Selected Bank Details:', this.selected_bank);
       },
       (error) => {
@@ -333,6 +336,7 @@ export class BanksComponent {
     );
   }
 
+  // Fetch states from the server
   fetch_states() {
     this.svr.fin_getService('api/v0/get_states', {}).subscribe((res: any) => {
       this.statesWithDistricts = res.filter((state: any) => state.active === 1);
@@ -351,6 +355,7 @@ export class BanksComponent {
     });
   }
 
+  // Fetch districts based on selected state
   fetch_districts(stateId: number) {
     this.svr
       .fin_getService('api/v0/get_districts', { state_id: stateId })
@@ -375,6 +380,7 @@ export class BanksComponent {
       });
   }
 
+  // Handle state change event
   onStateChange(event: any) {
     const selectedStateId = +event.target.value; // Ensure it's a number
     const state = this.statesWithDistricts.find(
@@ -386,7 +392,6 @@ export class BanksComponent {
       this.selected_bank.details.state = state.state;
       this.selected_bank.details.state_id = selectedStateId;
       this.fetch_districts(selectedStateId);
-
       // Clear district when state changes
       this.selected_bank.details.district = '';
       this.selected_bank.details.dist_id = null;
@@ -398,19 +403,14 @@ export class BanksComponent {
     }
   }
 
+  // Handle district change event
   onDistrictChange(event: any) {
     const selectedDistrictId = +event.target.value;
     // const district = this.districts.find((d) => d.id === selectedDistrictId);
     this.selected_bank.details.dist_id = selectedDistrictId;
-    // if (district) {
-    //   this.selected_bank.details.dist_id = district.id;
-    //   this.selected_bank.details.district = district.district;
-    // } else {
-    //   this.selected_bank.details.dist_id = null;
-    //   this.selected_bank.details.district = '';
-    // }
   }
 
+  // Handle input validation for Bank Code
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
@@ -424,22 +424,16 @@ export class BanksComponent {
       inputElement.value = ''; // Clear the input field
       return;
     }
-    // // Ensure it's at least 4 digits long by padding with zeros
-    // if (userInput.length < 4) {
-    //   inputElement.value = userInput.padStart(4, '0');
-    // this.selected_bank.acc_head.head_code = inputElement.value; // **Update the model**
-    // }
-  }
-  onDeactivateToggle(event: any): void {
-    // If checked, deactivate (set listing = 0)
-    // If unchecked, activate (set listing = 1)
-    this.selected_bank.details.listing = event.target.checked ? 0 : 1;
-    // console.log('Listin:', this.selected_bank.details.listing);
   }
 
+  // Handle toggle for deactivation
+  onDeactivateToggle(event: any): void {
+    this.selected_bank.details.listing = event.target.checked ? 0 : 1;
+  }
+
+  // Handle save action
   save() {
     this.validateForm(); // Run validation only when Save is clicked
-
     if (Object.keys(this.errors).length > 0) {
       console.error('Form has validation errors:', this.errors);
       this.showNotification(
@@ -449,26 +443,20 @@ export class BanksComponent {
       );
       return;
     }
-    // let payload = {
-    //   ...this.selected_bank,
-    //   // bank_id: {
-    //   //   bank_id: this.isEditing ? this.selected_bank.bank_id.bank_id : '' },
-    // };
     let payload: any = {};
-
     // Find the selected district object
     const selectedDistrictObj = this.districts.find(
       (d: any) => d.district === this.selected_bank.details.district
     );
-
     // Only add `bank_id` if `isEditing` is true and it has a value
     if (!this.isEditing && this.selected_bank.bank_id?.bank_id) {
       payload.bank_id = this.selected_bank.bank_id.bank_id;
     }
     payload = {
       ...payload, // Spread existing values
-      unit_id: this.selected_bank.unit?.code || '',
-      secondary_head_id: this.selected_bank.bank_type?.secondary_id || '',
+      unit_id: 1, // Need to integrate actual unit_id from the sessions
+      secondary_id: this.selected_bank.bank_type?.secondary_id || '',
+      secondary_code: this.selected_bank.bank_type?.secondary_code || '',
       bank_code: this.selected_bank.details?.bank_code || '',
       head_id: this.selected_bank.acc_head?.head_code || '',
       head_code: this.selected_bank.acc_head?.head_id || '',
@@ -479,15 +467,10 @@ export class BanksComponent {
       acc_no: this.selected_bank.details?.account_no || '',
       ifsc: this.selected_bank.details?.ifsc || '',
       branch: this.selected_bank.details?.branch || '',
-      // passbook_ob: this.selected_bank.details?.passbook_ob || "",
-      // address_id: this.selected_bank.details?.address_id || "",
       building: this.selected_bank.details?.building || '',
       street: this.selected_bank.details?.street_name || '',
       place: this.selected_bank.details?.place || '',
       main_place: this.selected_bank.details?.main_place || '',
-      // state_id: this.selected_bank.details?.state_id || "",
-      // state: this.selected_bank.details?.state || "", // If available
-      // dist_id: this.selected_bank.details?.dist_id || "",
       post: this.selected_bank.details?.post || '',
       pin: this.selected_bank.details?.pin || '',
       mobile: this.selected_bank.details?.mobile || '',
@@ -501,13 +484,10 @@ export class BanksComponent {
 
       group_id: 8, // Static value, change if needed
       address_id: '1',
-      passbook_ob: '',
+      passbook_ob: '0.00',
     };
     console.log('Payload to save:', payload);
-    // console.log(JSON.stringify(payload))
-
-    // if (payload) return;
-
+    // Call the save API
     this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
       (response) => {
         console.log('Save Response:', response);
@@ -526,6 +506,7 @@ export class BanksComponent {
     );
   }
 
+  //  Handle validation before save
   validateForm() {
     this.errors = {}; // Reset previous errors
     if (!this.selected_bank.details.bank_name?.trim()) {
@@ -569,6 +550,11 @@ export class BanksComponent {
     ) {
       this.errors.pin = 'Valid Pin Number is required.';
     }
+    if (this.selected_bank.bank_code) {
+      // // Ensure it's at least 4 digits long by padding with zeros
+      //   inputElement.value = userInput.padStart(4, '0');
+      // this.selected_bank.acc_head.head_code = inputElement.value; // **Update the model**
+    }
     // Force change detection
     this.errors = { ...this.errors };
 
@@ -579,7 +565,7 @@ export class BanksComponent {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   }
   isValidMobile(mobile: string): boolean {
-    return /^[0-9]{10}$/.test(mobile); // 10-digit mobile number validation
+    return /^[0-9]{10}$/.test(mobile); // Ensures the mobile number contains exactly 10 digits
   }
   isValidPin(pin: string): boolean {
     return /^[1-9][0-9]{5}$/.test(pin); // Corrected regex for Indian PIN codes
@@ -593,6 +579,7 @@ export class BanksComponent {
     return regex.test(accountNo);
   }
 
+  // Handle Edit functionality
   editSubject() {
     this.isEditing = false;
     this.isReadOnly = true;
@@ -606,6 +593,7 @@ export class BanksComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  // Helper function for Swal
   showNotification(
     icon: 'success' | 'error' | 'warning' | 'info' | 'question',
     title: string,

@@ -66,7 +66,7 @@
                             class="form-control xs"
                             (dblclick)="callOpenBankType()"
                             [(ngModel)]="
-                              selected_bank?.bank_type.secondary_head
+                              selected_bank?.bank_type.secondary_code
                             "
                             readonly
                           />
@@ -331,12 +331,13 @@
                                   </div>
                                   <div class="col-9 right-side">
                                     <input
-                                      type="tel"
+                                      type="text"
                                       name="mobile"
                                       id="mobile"
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.mobile"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      maxlength="10"
                                     />
                                   </div>
                                   <div
