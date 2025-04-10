@@ -294,6 +294,7 @@ export class BanksComponent {
         // console.log('Bank Details:', res);
         // Update the existing object instead of creating a new one
         this.selected_bank.bank_id.bank_id = bank_id;
+        this.selected_bank.unit.unit = res.vch_unit; // unit_id
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
@@ -455,9 +456,8 @@ export class BanksComponent {
     }
     payload = {
       ...payload, // Spread existing values
-      unit_id: 1, // Need to integrate actual unit_id from the sessions
-      secondary_id: this.selected_bank.bank_type?.secondary_id || '',
-      secondary_code: this.selected_bank.bank_type?.secondary_code || '',
+      unit_id:  this.selected_bank.unit?.code || '', // Need to integrate actual unit_id from the sessions
+      secondary_head_id: this.selected_bank.bank_type?.secondary_id || '',
       bank_code: this.selected_bank.details?.bank_code || '',
       head_id: this.selected_bank.acc_head?.head_id || '',
       head_code: this.selected_bank.acc_head?.head_code || '',
