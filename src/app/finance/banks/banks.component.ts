@@ -178,7 +178,7 @@ export class BanksComponent {
             );
             // this.fetch_heads();
           }
-          // console.log('Selected Acc Head:', this.selected_acc_head);
+          console.log('Selected Acc Head:', this.selected_bank.bank_type);
         }
       });
     }
@@ -224,7 +224,7 @@ export class BanksComponent {
               head_id: userData.int_head_id,
             },
           };
-          // console.log('Selected Row', this.selected_acc_head);
+          console.log('Selected Row', this.selected_bank.acc_head);
         }
       });
     }
@@ -241,9 +241,9 @@ export class BanksComponent {
       unit: { id: row.id, code: row.code, unit: row.int_unit_id },
       bank_type: {
         secondary_code: row.vch_secondary_head_code,
-        secondary_head: row.int_secondary_head_id,
+        secondary_id: row.int_secondary_head_id,
       },
-      acc_head: { head_code: row.vch_head_code },
+      acc_head: { head_code: row.vch_head_code, head_id: row.int_head_id },
       bank_id: { bank_id: row.int_bank_id },
     };
     // Ensure details object exists before API response
@@ -277,6 +277,7 @@ export class BanksComponent {
     this.isReadOnly = true;
     this.isAdding = false;
     this.isEnabled = true;
+    this.errors = {}; // Reset errors on row selection
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
@@ -458,8 +459,8 @@ export class BanksComponent {
       secondary_id: this.selected_bank.bank_type?.secondary_id || '',
       secondary_code: this.selected_bank.bank_type?.secondary_code || '',
       bank_code: this.selected_bank.details?.bank_code || '',
-      head_id: this.selected_bank.acc_head?.head_code || '',
-      head_code: this.selected_bank.acc_head?.head_id || '',
+      head_id: this.selected_bank.acc_head?.head_id || '',
+      head_code: this.selected_bank.acc_head?.head_code || '',
       listing: this.selected_bank.details?.listing,
 
       bank: this.selected_bank.details?.bank_name || '',
