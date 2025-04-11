@@ -131,7 +131,7 @@ export class BanksComponent {
             unit: userData.unit,
           },
         };
-        // console.log('Unit Selected', this.selected_bank);
+        // console.log('Unit Selected', this.selected_bank.unit);
       });
     }
   }
@@ -178,7 +178,7 @@ export class BanksComponent {
             );
             // this.fetch_heads();
           }
-          console.log('Selected Acc Head:', this.selected_bank.bank_type);
+          // console.log('Selected Acc Head:', this.selected_bank.bank_type);
         }
       });
     }
@@ -224,7 +224,7 @@ export class BanksComponent {
               head_id: userData.int_head_id,
             },
           };
-          console.log('Selected Row', this.selected_bank.acc_head);
+          // console.log('Selected Row', this.selected_bank.acc_head);
         }
       });
     }
@@ -471,7 +471,7 @@ export class BanksComponent {
     }
     payload = {
       ...payload, // Spread existing values
-      unit_id: 1, // Need to integrate actual unit_id from the sessions
+      unit_id: this.selected_bank?.unit.id || 1, // Need to integrate actual unit_id from the sessions
       secondary_id: this.selected_bank.bank_type?.secondary_id || null,
       secondary_code: this.selected_bank.bank_type?.secondary_code || null,
       bank_code: this.selected_bank.details?.bank_code || null,
@@ -501,10 +501,9 @@ export class BanksComponent {
 
       group_id: 8, // Static value, change if needed
       address_id: 1,
-      passbook_ob: '0.00',
+      passbook_ob: "0.00",
     };
     console.log('Payload to save:', payload);
-    console.log('Final payload:', JSON.parse(JSON.stringify(payload)));
     // Call the save API
     this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
       (response) => {
@@ -516,10 +515,6 @@ export class BanksComponent {
           this.fetch_records();
         } else {
           Swal.fire('Error', 'Failed to save bank details', 'error');
-        }
-        if (response?.updateCount === 0) {
-          // Check if backend reports no updates
-          console.error('Backend reported zero rows updated');
         }
       },
       (error) => {
