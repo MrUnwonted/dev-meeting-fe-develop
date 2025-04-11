@@ -13,6 +13,11 @@ import { BanksComponent } from './banks/banks.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SearchOfficeComponent } from './modals/search-office/search-office.component';
 import { SearchAccountHeadsComponent } from './modals/search-account-heads/search-account-heads.component';
+import { DemandsComponent } from './demands/demands.component';
+import {  MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -23,6 +28,7 @@ import { SearchAccountHeadsComponent } from './modals/search-account-heads/searc
     BanksComponent,
     SearchOfficeComponent,
     SearchAccountHeadsComponent,
+    DemandsComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +37,12 @@ import { SearchAccountHeadsComponent } from './modals/search-account-heads/searc
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
+
   ]
 })
 export class FinanceModule { }

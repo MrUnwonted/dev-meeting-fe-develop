@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FinanceComponent } from '../shared/layout/finance/finance.component';
 import { CreateAccountHeadsComponent } from './create-account-heads/create-account-heads.component';
 import { BanksComponent } from './banks/banks.component';
+import { DemandsComponent } from './demands/demands.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,10 @@ const routes: Routes = [
         {
           path: "banks",
           component: BanksComponent
+        },
+        {
+          path: "demand",
+          component: DemandsComponent
         },
       ]
     },

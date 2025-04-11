@@ -294,7 +294,7 @@ export class BanksComponent {
         // console.log('Bank Details:', res);
         // Update the existing object instead of creating a new one
         this.selected_bank.bank_id.bank_id = bank_id;
-        this.selected_bank.unit.unit = res.vch_unit; // unit_id
+        this.selected_bank.unit.unit = res.int_unit_id; // unit_id
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
@@ -428,6 +428,21 @@ export class BanksComponent {
     }
   }
 
+  // Handle padding for Bank Code
+  padBankCode(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const userInput = inputElement.value.trim();
+
+    if (userInput) {
+      // Pad with leading zeros to make it 4 digits
+      const paddedValue = userInput.padStart(4, '0');
+
+      // Update both the input field and the model
+      inputElement.value = paddedValue;
+      this.selected_bank.details.bank_code = paddedValue;
+    }
+  }
+
   // Handle toggle for deactivation
   onDeactivateToggle(event: any): void {
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
@@ -456,26 +471,27 @@ export class BanksComponent {
     }
     payload = {
       ...payload, // Spread existing values
-      unit_id:  this.selected_bank.unit?.code || '', // Need to integrate actual unit_id from the sessions
-      secondary_head_id: this.selected_bank.bank_type?.secondary_id || '',
-      bank_code: this.selected_bank.details?.bank_code || '',
-      head_id: this.selected_bank.acc_head?.head_id || '',
-      head_code: this.selected_bank.acc_head?.head_code || '',
+      unit_id:  this.selected_bank.unit?.code || null, // Need to integrate actual unit_id from the sessions
+      secondary_id: this.selected_bank.bank_type?.secondary_id || null,
+      secondary_code: this.selected_bank.bank_type?.secondary_code || null,
+      bank_code: this.selected_bank.details?.bank_code || null,
+      head_id: this.selected_bank.acc_head?.head_id || null,
+      head_code: this.selected_bank.acc_head?.head_code || null,
       listing: this.selected_bank.details?.listing,
 
-      bank: this.selected_bank.details?.bank_name || '',
-      short_desc: this.selected_bank.details?.short_name || '',
-      acc_no: this.selected_bank.details?.account_no || '',
-      ifsc: this.selected_bank.details?.ifsc || '',
-      branch: this.selected_bank.details?.branch || '',
-      building: this.selected_bank.details?.building || '',
-      street: this.selected_bank.details?.street_name || '',
-      place: this.selected_bank.details?.place || '',
-      main_place: this.selected_bank.details?.main_place || '',
-      post: this.selected_bank.details?.post || '',
-      pin: this.selected_bank.details?.pin || '',
-      mobile: this.selected_bank.details?.mobile || '',
-      email: this.selected_bank.details?.email || '',
+      bank: this.selected_bank.details?.bank_name || null,
+      short_desc: this.selected_bank.details?.short_name || null,
+      acc_no: this.selected_bank.details?.account_no || null,
+      ifsc: this.selected_bank.details?.ifsc || null,
+      branch: this.selected_bank.details?.branch || null,
+      building: this.selected_bank.details?.building || null,
+      street: this.selected_bank.details?.street_name || null,
+      place: this.selected_bank.details?.place || null,
+      main_place: this.selected_bank.details?.main_place || null,
+      post: this.selected_bank.details?.post || null,
+      pin: this.selected_bank.details?.pin || null,
+      mobile: this.selected_bank.details?.mobile || null,
+      email: this.selected_bank.details?.email || null,
 
       // State and District from the selected values
       state: this.selected_bank.details.state,
@@ -493,6 +509,8 @@ export class BanksComponent {
       (response) => {
         console.log('Save Response:', response);
         if (response && !response.error) {
+          console.log("Response:", response);
+
           Swal.fire('Success', 'Bank details saved successfully!', 'success');
           this.addNew(); // Reset the form after saving
           this.fetch_records();

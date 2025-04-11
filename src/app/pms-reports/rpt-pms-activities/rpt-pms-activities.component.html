@@ -97,82 +97,85 @@
                     </div>
                   </div>
                   <div class="left-column col-md-12">
+                    <div class="table-wrap file-box-wrap pagination-included" style="height: calc(85vh - 20rem)" >
 
-
-                    <div class="table-wrap file-box-wrap pagination-included" style="height: calc(70vh - 20rem)">
-
-                      <div style="overflow-x: auto;">
-                        <div style="overflow-x: auto;" id="print">
-                          <table mat-table [dataSource]="emp_report" class="mat-elevation-z8">
-
-                            <!-- Index Column -->
-                            <ng-container matColumnDef="index">
-                              <th mat-header-cell *matHeaderCellDef>Sl No</th>
-                              <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-                            </ng-container>
-                          
-                            <!-- Project ID Column -->
-                            <ng-container matColumnDef="project_id">
-                              <th mat-header-cell *matHeaderCellDef>Project ID</th>
-                              <td mat-cell *matCellDef="let element">{{ element.project_name }}</td>
-                            </ng-container>
-                          
-                            <!-- Employee Code Column -->
-                            <ng-container matColumnDef="emp_code">
-                              <th mat-header-cell *matHeaderCellDef>Employee Code</th>
-                              <td mat-cell *matCellDef="let element">{{ element.emp_code }}</td>
-                            </ng-container>
-                          
-                            <!-- Task Name Column -->
-                            <ng-container matColumnDef="task_name">
-                              <th mat-header-cell *matHeaderCellDef>Task Name</th>
-                              <td mat-cell *matCellDef="let element" class="wrap-text">{{ element.task_name }}</td>
-                            </ng-container>
-                          
-                            <!-- Sub Task Name Column -->
-                            <ng-container matColumnDef="sub_task_name">
-                              <th mat-header-cell *matHeaderCellDef>Sub Task</th>
-                              <td mat-cell *matCellDef="let element" class="wrap-text">{{ element.sub_task_name }}</td>
-                            </ng-container>
-                          
-                            <!-- Activity with Hours Column -->
-                            <ng-container matColumnDef="activity_with_hours">
-                              <th mat-header-cell *matHeaderCellDef>Activity (Hours)</th>
-                              <td mat-cell *matCellDef="let element" class="wrap-text">{{ element.activity_with_hours }}</td>
-                            </ng-container>
-                          
-                            <!-- Estimated Hours Column -->
-                            <ng-container matColumnDef="estimated_hours">
-                              <th mat-header-cell *matHeaderCellDef>Estimated Hours</th>
-                              <td mat-cell *matCellDef="let element">{{ element.estimated_hours }}</td>
-                            </ng-container>
-                          
-                            <!-- Actual Hours Column -->
-                            <ng-container matColumnDef="actual_hours">
-                              <th mat-header-cell *matHeaderCellDef>Actual Hours</th>
-                              <td mat-cell *matCellDef="let element">{{ element.actual_hours }}</td>
-                            </ng-container>
-                          
-                            <!-- Total Daily Hours Column -->
-                            <ng-container matColumnDef="total_daily_hours">
-                              <th mat-header-cell *matHeaderCellDef>Total Daily Hours</th>
-                              <td mat-cell *matCellDef="let element">{{ element.total_daily_hours }}</td>
-                            </ng-container>
-                          
-                            <!-- Table Header & Row Render -->
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                          
+                      <div class="scroll">
+                        <div id="print">
+                          <table mat-table [dataSource]="emp_report" class="mat-elevation-z8 fixed-table">
+                      
+                            <!-- Table Header -->
+                            <thead class="table-header">
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            </thead>
+                      
+                            <!-- Table Body -->
+                            <tbody class="table-body">
+                              
+                              <!-- Index Column -->
+                              <ng-container matColumnDef="index">
+                                <th mat-header-cell *matHeaderCellDef>Sl No</th>
+                                <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+                              </ng-container>
+                      
+                              <!-- Project ID Column -->
+                              <ng-container matColumnDef="project_name">
+                                <th mat-header-cell *matHeaderCellDef>Project Name</th>
+                                <td mat-cell *matCellDef="let element">{{ element.project_name }}</td>
+                              </ng-container>
+                      
+                              <!-- Employee Code Column -->
+                              <ng-container matColumnDef="emp_code">
+                                <th mat-header-cell *matHeaderCellDef>Employee Code</th>
+                                <td mat-cell *matCellDef="let element">{{ element.emp_code }}</td>
+                              </ng-container>
+                      
+                              <!-- Task Name Column -->
+                              <ng-container matColumnDef="task_name">
+                                <th mat-header-cell *matHeaderCellDef>Task Name</th>
+                                <td mat-cell *matCellDef="let element">{{ element.task_name }}</td>
+                              </ng-container>
+                      
+                              <!-- Sub Task Name Column -->
+                              <ng-container matColumnDef="sub_task_name">
+                                <th mat-header-cell *matHeaderCellDef>Sub Task</th>
+                                <td mat-cell *matCellDef="let element">{{ element.sub_task_name }}</td>
+                              </ng-container>
+                      
+                              <!-- Activity with Hours Column -->
+                              <ng-container matColumnDef="activity_with_hours">
+                                <th mat-header-cell *matHeaderCellDef>Activity (Hours)</th>
+                                <td mat-cell *matCellDef="let element">{{ element.activity_with_hours }}</td>
+                              </ng-container>
+                      
+                              <!-- Estimated Hours Column -->
+                              <ng-container matColumnDef="estimated_hours">
+                                <th mat-header-cell *matHeaderCellDef>Estimated Hours</th>
+                                <td mat-cell *matCellDef="let element">{{ element.estimated_hours }}</td>
+                              </ng-container>
+                      
+                              <!-- Actual Hours Column -->
+                              <ng-container matColumnDef="actual_hours">
+                                <th mat-header-cell *matHeaderCellDef>Actual Hours</th>
+                                <td mat-cell *matCellDef="let element">{{ element.actual_hours }}</td>
+                              </ng-container>
+                      
+                              <!-- Total Daily Hours Column -->
+                              <ng-container matColumnDef="total_daily_hours">
+                                <th mat-header-cell *matHeaderCellDef>Total Daily Hours</th>
+                                <td mat-cell *matCellDef="let element">{{ element.total_daily_hours }}</td>
+                              </ng-container>
+                      
+                              <!-- Row Renderer -->
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      
+                            </tbody>
                           </table>
-
-                          <mat-paginator
-                          [pageSizeOptions]="[5, 10, 25, 100]"
-                          showFirstLastButtons
-                        ></mat-paginator>
+                      
+                          <!-- Paginator -->
+                          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                         </div>
-
                       </div>
-
+                      
                     </div>
                   </div>
                 </div>

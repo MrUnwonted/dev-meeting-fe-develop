@@ -112,6 +112,7 @@
                             class="form-control xs"
                             maxlength="4"
                             (input)="validateCode($event)"
+                            (blur)="padBankCode($event)"
                             [(ngModel)]="selected_bank.details.bank_code"
                           />
                         </div>

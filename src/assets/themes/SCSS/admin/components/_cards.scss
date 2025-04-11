@@ -117,7 +117,7 @@
             .button-wrap{
                 @include flex(flex, center, normal);
                 gap: 1rem;
-                .add-btn{
+                .add-btn,.btn{
                     @include curve(.25rem);
                     gap: .125rem !important;
                     @include padding(.5rem !important, .75rem !important, .5rem !important, .5rem !important);

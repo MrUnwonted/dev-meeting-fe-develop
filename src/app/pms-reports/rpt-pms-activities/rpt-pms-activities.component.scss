@@ -14,6 +14,30 @@
     
 }
 
+/* Scrolling container */
+.scroll {
+    max-height: 50vh; /* Adjust based on your preference */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Fixed header */
+.fixed-table {
+    width: 100%;
+    border-collapse: collapse; 
+}
+
+.table-header {
+    position: sticky;
+    top: 0; /* Fixes the header to the top */
+    background: white; /* Ensures the header is visible */
+    z-index: 2; /* Keeps the header above other content */
+}
+
+.table-body {
+    overflow-y: auto; /* Enables body scrolling */
+}
+
+
 
 
 

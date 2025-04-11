@@ -136,7 +136,7 @@ export class RptPmsActivitiesComponent {
  dt_to: any  = null
  emp_report =  new MatTableDataSource<any>();
  formattedDateFrom: string = '';
- displayedColumns: string[] = ['index', 'project_id', 'emp_code', 'task_name', 'sub_task_name', 'activity_with_hours','estimated_hours','actual_hours','total_daily_hours'];
+ displayedColumns: string[] = ['index', 'project_name', 'emp_code', 'task_name', 'sub_task_name', 'activity_with_hours','estimated_hours','actual_hours','total_daily_hours'];
  @ViewChild(MatPaginator) paginator!: MatPaginator;
  print:boolean=false;
  show_details_table:boolean=false; 
