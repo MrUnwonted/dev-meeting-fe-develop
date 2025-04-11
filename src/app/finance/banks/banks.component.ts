@@ -99,7 +99,7 @@ export class BanksComponent {
         state_id: null,
         dist_id: null,
         passbook_ob: 0,
-        address_id: null,
+        address_id: 1,
         listing: 1,
       },
     };
@@ -471,7 +471,7 @@ export class BanksComponent {
     }
     payload = {
       ...payload, // Spread existing values
-      unit_id:  this.selected_bank.unit?.code || null, // Need to integrate actual unit_id from the sessions
+      unit_id: 1, // Need to integrate actual unit_id from the sessions
       secondary_id: this.selected_bank.bank_type?.secondary_id || null,
       secondary_code: this.selected_bank.bank_type?.secondary_code || null,
       bank_code: this.selected_bank.details?.bank_code || null,
@@ -494,28 +494,32 @@ export class BanksComponent {
       email: this.selected_bank.details?.email || null,
 
       // State and District from the selected values
-      state: this.selected_bank.details.state,
+      // state: this.selected_bank.details.state,
       state_id: this.selected_bank.details.state_id,
-      district: this.selected_bank.details.district,
+      // district: this.selected_bank.details.district,
       dist_id: this.selected_bank.details.dist_id,
 
       group_id: 8, // Static value, change if needed
-      address_id: '1',
+      address_id: 1,
       passbook_ob: '0.00',
     };
     console.log('Payload to save:', payload);
+    console.log('Final payload:', JSON.parse(JSON.stringify(payload)));
     // Call the save API
     this.svr.fin_postservice('api/v0/save_bank', payload).subscribe(
       (response) => {
-        console.log('Save Response:', response);
         if (response && !response.error) {
-          console.log("Response:", response);
+          console.log('Response:', response);
 
           Swal.fire('Success', 'Bank details saved successfully!', 'success');
           this.addNew(); // Reset the form after saving
           this.fetch_records();
         } else {
           Swal.fire('Error', 'Failed to save bank details', 'error');
+        }
+        if (response?.updateCount === 0) {
+          // Check if backend reports no updates
+          console.error('Backend reported zero rows updated');
         }
       },
       (error) => {
