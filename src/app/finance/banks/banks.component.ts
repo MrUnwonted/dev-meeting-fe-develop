@@ -149,7 +149,7 @@ export class BanksComponent {
     this.selected_bank.acc_head = {
       head_code: '',
       head_id: '',
-    }
+    };
     // }
   }
 
@@ -414,10 +414,12 @@ export class BanksComponent {
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
+
+    //  Function to check uniqness of the code
     // Check if input is a valid number
     if (!/^\d*$/.test(userInput)) {
       this.showNotification(
-        'error',
+        'info',
         'Invalid Input',
         'Only numbers are allowed!'
       );
@@ -445,17 +447,30 @@ export class BanksComponent {
   onDeactivateToggle(event: any): void {
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
   }
+  validateAllFields(): void {
+    this.validateField('bank_name', this.selected_bank.details.bank_name);
+    this.validateField('short_name', this.selected_bank.details.short_name);
+    this.validateField('branch', this.selected_bank.details.branch);
+    this.validateField('ifsc', this.selected_bank.details.ifsc);
+    this.validateField('account_no', this.selected_bank.details.account_no);
+    this.validateField('email', this.selected_bank.details.email);
+    this.validateField('mobile', this.selected_bank.details.mobile);
+    this.validateField('pin', this.selected_bank.details.pin);
+  }
 
   // Handle save action
   save() {
-    this.validateForm(); // Run validation only when Save is clicked
+    // this.validateForm(); // Run validation only when Save is clicked
+    // Validate all fields (optional - if you want to ensure all fields are validated before save)
+    this.validateAllFields();
+
     if (Object.keys(this.errors).length > 0) {
       console.error('Form has validation errors:', this.errors);
-      this.showNotification(
-        'warning',
-        'Warning',
-        'Please fix the form errors before saving.'
-      );
+      // this.showNotification(
+      //   'warning',
+      //   'Warning',
+      //   'Please fix the form errors before saving.'
+      // );
       return;
     }
     let payload: any = {};
@@ -521,78 +536,105 @@ export class BanksComponent {
       }
     );
   }
+  validateField(fieldName: string, value: any): void {
+    this.errors[fieldName] = ''; // Clear previous error
 
-  //  Handle validation before save
-  validateForm() {
-    this.errors = {}; // Reset previous errors
-    if (!this.selected_bank.details.bank_name?.trim()) {
-      this.errors.bank_name = 'Bank Name is required.';
+    switch (fieldName) {
+      case 'bank_name':
+        if (!value?.trim()) {
+          this.errors.bank_name = 'Bank Name is required.';
+        }
+        break;
+
+      case 'short_name':
+        if (!value?.trim()) {
+          this.errors.short_name = 'Short Name is required.';
+        }
+        break;
+
+      case 'branch':
+        if (!value?.trim()) {
+          this.errors.branch = 'Branch is required.';
+        }
+        break;
+
+      case 'ifsc':
+        if (!value?.trim()) {
+          this.errors.ifsc = 'IFSC Code is required.';
+        } else if (!this.isValidIFSC(value)) {
+          this.errors.ifsc = 'Invalid IFSC Code format.';
+        }
+        break;
+
+      case 'account_no':
+        if (!String(value)?.trim()) {
+          this.errors.account_no = 'Account Number is required.';
+        } else if (!this.isValidAccountNumber(value)) {
+          this.errors.account_no =
+            'Account Number must be between 9 to 18 digits.';
+        }
+        break;
+
+      case 'email':
+        if (!value?.trim() || !this.isValidEmail(value)) {
+          this.errors.email = 'Valid Email is required.';
+        }
+        break;
+
+      case 'mobile':
+        if (!value?.trim() || !this.isValidMobile(value)) {
+          this.errors.mobile = 'Valid Mobile Number is required.';
+        }
+        break;
+
+      case 'post':
+        if (!value?.trim() || !this.isValidPin(value)) {
+          this.errors.pin = 'Post is required.';
+        }
+        break;
+      case 'pin':
+        if (!value?.trim() || !this.isValidPin(value)) {
+          this.errors.pin = 'Valid Pin Number is required.';
+        }
+        break;
     }
-    if (!this.selected_bank.details.short_name?.trim()) {
-      this.errors.short_name = 'Short Name is required.';
-    }
-    if (!this.selected_bank.details.branch?.trim()) {
-      this.errors.branch = 'Branch is required.';
-    }
-    // Validate IFSC Code
-    if (!this.selected_bank.details.ifsc?.trim()) {
-      this.errors.ifsc = 'IFSC Code is required.';
-    } else if (!this.isValidIFSC(this.selected_bank.details.ifsc)) {
-      this.errors.ifsc = 'Invalid IFSC Code format.';
-    }
-    // Validate Account Number
-    if (!String(this.selected_bank.details.account_no)?.trim()) {
-      this.errors.account_no = 'Account Number is required.';
-    } else if (
-      !this.isValidAccountNumber(this.selected_bank.details.account_no)
-    ) {
-      this.errors.account_no = 'Account Number must be between 9 to 18 digits.';
-    }
-    if (
-      !this.selected_bank.details.email?.trim() ||
-      !this.isValidEmail(this.selected_bank.details.email)
-    ) {
-      this.errors.email = 'Valid Email is required.';
-    }
-    if (
-      !this.selected_bank.details.mobile?.trim() ||
-      !this.isValidMobile(this.selected_bank.details.mobile)
-    ) {
-      this.errors.mobile = 'Valid Mobile Number is required.';
-    }
-    if (
-      !this.selected_bank.details.pin?.trim() ||
-      !this.isValidPin(this.selected_bank.details.pin)
-    ) {
-      this.errors.pin = 'Valid Pin Number is required.';
-    }
-    if (this.selected_bank.bank_code) {
-      // // Ensure it's at least 4 digits long by padding with zeros
-      //   inputElement.value = userInput.padStart(4, '0');
-      // this.selected_bank.acc_head.head_code = inputElement.value; // **Update the model**
-    }
+
     // Force change detection
     this.errors = { ...this.errors };
-
-    return Object.keys(this.errors).length === 0; // Return true if no errors
   }
-  // Helper Functions for Validation
+
+  // Keep your existing validation helper methods
   isValidEmail(email: string): boolean {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   }
+
   isValidMobile(mobile: string): boolean {
-    return /^[0-9]{10}$/.test(mobile); // Ensures the mobile number contains exactly 10 digits
+    return /^[0-9]{10}$/.test(mobile);
   }
+
   isValidPin(pin: string): boolean {
-    return /^[1-9][0-9]{5}$/.test(pin); // Corrected regex for Indian PIN codes
+    return /^[1-9][0-9]{5}$/.test(pin);
   }
+
   isValidIFSC(ifsc: string): boolean {
     const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
     return regex.test(ifsc);
   }
+
   isValidAccountNumber(accountNo: string): boolean {
     const regex = /^\d{9,18}$/;
     return regex.test(accountNo);
+  }
+  numberOnly(event: any): boolean {
+    var regex = new RegExp('^[0-9]');
+    var key = String.fromCharCode(
+      event.charCode ? event.which : event.charCode
+    );
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 
   // Handle Edit functionality

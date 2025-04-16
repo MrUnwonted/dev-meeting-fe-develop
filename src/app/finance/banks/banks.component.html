@@ -113,6 +113,7 @@
                             maxlength="4"
                             (input)="validateCode($event)"
                             (blur)="padBankCode($event)"
+                            (keypress)="numberOnly($event)"
                             [(ngModel)]="selected_bank.details.bank_code"
                             [readonly]="isReadOnly && isEnabled"
                           />
@@ -163,6 +164,12 @@
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="50"
+                                      (blur)="
+                                        validateField(
+                                          'bank_name',
+                                          selected_bank.details.bank_name
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div
@@ -195,6 +202,12 @@
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="15"
+                                      (blur)="
+                                        validateField(
+                                          'short_name',
+                                          selected_bank.details.short_name
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div
@@ -225,6 +238,12 @@
                                       [(ngModel)]="selected_bank.details.ifsc"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="11"
+                                      (blur)="
+                                        validateField(
+                                          'ifsc',
+                                          selected_bank.details.ifsc
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div class="text-danger" *ngIf="errors.ifsc">
@@ -254,6 +273,12 @@
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="18"
+                                      (blur)="
+                                        validateField(
+                                          'account_no',
+                                          selected_bank.details.account_no
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div
@@ -284,6 +309,12 @@
                                       [(ngModel)]="selected_bank.details.branch"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="50"
+                                      (blur)="
+                                        validateField(
+                                          'branch',
+                                          selected_bank.details.branch
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div
@@ -313,6 +344,12 @@
                                       class="form-control xs"
                                       [(ngModel)]="selected_bank.details.email"
                                       [readOnly]="isReadOnly && isEnabled"
+                                      (blur)="
+                                        validateField(
+                                          'email',
+                                          selected_bank.details.email
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div class="text-danger" *ngIf="errors.email">
@@ -340,6 +377,13 @@
                                       [(ngModel)]="selected_bank.details.mobile"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="10"
+                                      (keypress)="numberOnly($event)"
+                                      (blur)="
+                                        validateField(
+                                          'mobile',
+                                          selected_bank.details.mobile
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div
@@ -551,6 +595,12 @@
                                       [(ngModel)]="selected_bank.details.post"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="50"
+                                      (blur)="
+                                        validateField(
+                                          'post',
+                                          selected_bank.details.post
+                                        )
+                                      "
                                     />
                                   </div>
                                 </div>
@@ -575,6 +625,12 @@
                                       [(ngModel)]="selected_bank.details.pin"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="6"
+                                      (blur)="
+                                        validateField(
+                                          'pin',
+                                          selected_bank.details.pin
+                                        )
+                                      "
                                     />
                                   </div>
                                   <div class="text-danger" *ngIf="errors.pin">
