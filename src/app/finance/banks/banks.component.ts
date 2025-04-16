@@ -115,119 +115,116 @@ export class BanksComponent {
 
   // Open the search dialog for selecting a unit
   open_unit() {
-    if (this.isAdding) {
-      const dialogRef = this.dialog.open(SearchOfficeComponent, {
-        width: '1130px',
-      });
-      dialogRef?.afterClosed().subscribe((response: any) => {
-        if (response && response.data) {
-        }
-        const userData = response.data;
-        this.selected_bank = {
-          ...this.selected_bank, // Preserve existing values
-          unit: {
-            id: userData.id,
-            code: userData.code,
-            unit: userData.unit,
-          },
-        };
-        // console.log('Unit Selected', this.selected_bank.unit);
-      });
-    }
+    // if (this.isAdding) {
+    const dialogRef = this.dialog.open(SearchOfficeComponent, {
+      width: '1130px',
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+      }
+      const userData = response.data;
+      this.selected_bank = {
+        ...this.selected_bank, // Preserve existing values
+        unit: {
+          id: userData.id,
+          code: userData.code,
+          unit: userData.unit,
+        },
+      };
+      // console.log('Unit Selected', this.selected_bank.unit);
+    });
+    // }
   }
 
   callOpenBankType() {
-    if (this.isAdding) {
-      // Ensure unit is selected properly
-      if (
-        !this.selected_bank.unit ||
-        !this.selected_bank.unit.id ||
-        !this.selected_bank.unit.code?.toString().trim()
-      ) {
-        this.showNotification('info', 'Info', 'Select Unit First');
-        return;
-      }
-      // console.log('Selected Unit', this.selected_unit);
-      this.open_bank_type();
+    // if (this.isAdding) {
+    // Ensure unit is selected properly
+    if (!this.selected_bank.unit.unit && !this.selected_bank.unit.id) {
+      console.log('Selected Unit', this.selected_bank.unit);
+      this.showNotification('info', 'Info', 'Select Unit First');
+      return;
     }
+    // console.log('Selected Unit', this.selected_unit);
+    this.open_bank_type();
+    this.selected_bank.acc_head = {
+      head_code: '',
+      head_id: '',
+    }
+    // }
   }
 
   // Open the search dialog for selecting a bank type
   open_bank_type() {
-    if (this.isAdding) {
-      const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
-        width: '1130px',
-        data: { source: 'bankHead' },
-      });
-      dialogRef?.afterClosed().subscribe((response: any) => {
-        if (response && response.data) {
-          const userData = response.data;
-          this.selected_bank = {
-            ...this.selected_bank, // Preserve existing values
-            bank_type: {
-              secondary_id: userData.int_secondary_id,
-              secondary_code: userData.vch_secondary_code,
-              secondary_head: userData.vch_secondary_head,
-            },
-          };
-          // Only fetch heads if secondary_code is set
-          if (this.selected_bank.bank_type.secondary_code) {
-            console.log(
-              'Fetching heads for:',
-              this.selected_bank.bank_type.secondary_code
-            );
-            // this.fetch_heads();
-          }
-          // console.log('Selected Acc Head:', this.selected_bank.bank_type);
+    // if (this.isAdding) {
+    const dialogRef = this.dialog.open(SearchSecondaryHeadsComponent, {
+      width: '1130px',
+      data: { source: 'bankHead' },
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+        const userData = response.data;
+        this.selected_bank = {
+          ...this.selected_bank, // Preserve existing values
+          bank_type: {
+            secondary_id: userData.int_secondary_id,
+            secondary_code: userData.vch_secondary_code,
+            secondary_head: userData.vch_secondary_head,
+          },
+        };
+        // Only fetch heads if secondary_code is set
+        if (this.selected_bank.bank_type.secondary_code) {
+          console.log(
+            'Fetching heads for:',
+            this.selected_bank.bank_type.secondary_code
+          );
+          // this.fetch_heads();
         }
-      });
-    }
+        // console.log('Selected Acc Head:', this.selected_bank.bank_type);
+      }
+    });
+    // }
   }
 
   callOpenAccountHeads() {
-    if (this.isAdding) {
-      // Ensure unit is selected properly
-      if (
-        !this.selected_bank.unit ||
-        !this.selected_bank.unit.id ||
-        !this.selected_bank.unit.code?.toString().trim()
-      ) {
-        this.showNotification('info', 'Info', 'Select Unit First');
-        return;
-      } else if (
-        !this.selected_bank.bank_type ||
-        !this.selected_bank.bank_type.secondary_head ||
-        !this.selected_bank.bank_type.secondary_code?.toString().trim()
-      ) {
-        this.showNotification('info', 'Info', 'Select Bank Type');
-        return;
-      }
-      // console.log('Selected Unit', this.selected_unit);
-      this.open_account_head();
+    // if (this.isAdding) {
+    // Ensure unit is selected properly
+    if (!this.selected_bank.unit.unit && !this.selected_bank.unit.id) {
+      this.showNotification('info', 'Info', 'Select Unit First');
+      return;
+    } else if (
+      !this.selected_bank.bank_type.secondary_id &&
+      !this.selected_bank.bank_type.secondary_head &&
+      !this.selected_bank.bank_type.secondary_code?.toString().trim()
+    ) {
+      this.showNotification('info', 'Info', 'Select Bank Type');
+      return;
     }
+    // console.log('Selected Unit', this.selected_unit);
+    this.open_account_head();
+    // }
   }
 
   // Open the search dialog for selecting an account head
   open_account_head() {
-    if (this.isAdding) {
-      const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
-        width: '1130px',
-        data: { filterParam: this.selected_bank?.bank_type.secondary_id },
-      });
-      dialogRef?.afterClosed().subscribe((response: any) => {
-        if (response && response.data) {
-          const userData = response.data;
-          this.selected_bank = {
-            ...this.selected_bank,
-            acc_head: {
-              head_code: userData.vch_head_code,
-              head_id: userData.int_head_id,
-            },
-          };
-          // console.log('Selected Row', this.selected_bank.acc_head);
-        }
-      });
-    }
+    // if (this.isAdding) {
+    const dialogRef = this.dialog.open(SearchAccountHeadsComponent, {
+      width: '1130px',
+      data: { filterParam: this.selected_bank?.bank_type.secondary_id },
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+        const userData = response.data;
+        this.selected_bank = {
+          ...this.selected_bank,
+          acc_head: {
+            head_code: userData.vch_head_code,
+            head_id: userData.int_head_id,
+          },
+        };
+        // console.log('Selected Row', this.selected_bank.acc_head);
+      }
+    });
+    // }
   }
 
   // Select a row in the table and fetch bank details
@@ -238,7 +235,8 @@ export class BanksComponent {
     // Call API to fetch bank details using the extracted bank ID
     this.fetch_bank_details(bank_id);
     this.selected_bank = {
-      unit: { id: row.id, code: row.code, unit: row.int_unit_id },
+      // unit: row.vch_unit
+      unit: { id: row.int_unit_id, code: row.code },
       bank_type: {
         secondary_code: row.vch_secondary_head_code,
         secondary_id: row.int_secondary_head_id,
@@ -294,7 +292,7 @@ export class BanksComponent {
         // console.log('Bank Details:', res);
         // Update the existing object instead of creating a new one
         this.selected_bank.bank_id.bank_id = bank_id;
-        this.selected_bank.unit.unit = res.int_unit_id; // unit_id
+        this.selected_bank.unit.unit = res.vch_unit;
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
@@ -501,7 +499,7 @@ export class BanksComponent {
 
       group_id: 8, // Static value, change if needed
       address_id: 1,
-      passbook_ob: "0.00",
+      passbook_ob: '0.00',
     };
     console.log('Payload to save:', payload);
     // Call the save API
