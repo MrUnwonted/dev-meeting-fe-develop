@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchOfficeComponent } from '../modals/search-office/search-office.component';
@@ -7,6 +12,7 @@ import { SearchSecondaryHeadsComponent } from '../modals/search-secondary-heads/
 import Swal from 'sweetalert2';
 import { ServiceService } from 'src/app/services/service.service';
 import { SearchAccountHeadsComponent } from '../modals/search-account-heads/search-account-heads.component';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-banks',
@@ -15,6 +21,9 @@ import { SearchAccountHeadsComponent } from '../modals/search-account-heads/sear
 })
 export class BanksComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('unitInput') unitInput!: ElementRef;
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
+  @ViewChild('bankNameInput') bankNameInput!: ElementRef;
 
   displayedColumns: string[] = [
     'bank',
@@ -22,6 +31,7 @@ export class BanksComponent {
     'code',
     'short_description',
     'head',
+    // 'unit',
   ];
   dataSource = new MatTableDataSource<any>();
   isEditing: boolean = false; // Editing flag
@@ -40,11 +50,7 @@ export class BanksComponent {
   bankTypeDisplay: string = ''; // Temporary display variable
   accountHeadDisplay: string = ''; // Temporary display variable
 
-  constructor(
-    private dialog: MatDialog,
-    private svr: ServiceService,
-    changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private dialog: MatDialog, private svr: ServiceService) {}
 
   ngOnInit(): void {
     this.init();
@@ -119,13 +125,26 @@ export class BanksComponent {
     this.isAdding = true;
     this.isReadOnly = false;
     this.isEnabled = true;
-    // Scroll to form
+    // Scroll to the Unit input field
     setTimeout(() => {
-      document.getElementById('formContainer')?.scrollIntoView({
+      this.unitInput?.nativeElement?.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
+        block: 'center',
       });
     }, 100);
+    // this.scrollToBankName(); // Scroll to the Bank Name input field
+  }
+  scrollToBankName() {
+    // Select the "Info" tab (assuming it's at index 0)
+    this.tabGroup.selectedIndex = 0;
+
+    // Wait for the tab content to render before scrolling
+    setTimeout(() => {
+      this.bankNameInput?.nativeElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 100); // Delay ensures the tab content is available
   }
 
   // Open the search dialog for selecting a unit
@@ -155,10 +174,12 @@ export class BanksComponent {
     // if (this.isAdding) {
     // Ensure unit is selected properly
     if (!this.selected_bank.unit.unit && !this.selected_bank.unit.id) {
-      console.log('Selected Unit', this.selected_bank.unit);
+      // console.log('Selected Unit', this.selected_bank.unit);
       this.showNotification('info', 'Info', 'Select Unit First');
       return;
     }
+    this.bankTypeDisplay = ''; // Reset display variable
+    this.accountHeadDisplay = ''; // Reset display variable
     // console.log('Selected Unit', this.selected_unit);
     this.open_bank_type();
     this.selected_bank.acc_head = {
@@ -296,6 +317,13 @@ export class BanksComponent {
     this.isAdding = false;
     this.isEnabled = true;
     this.errors = {}; // Reset errors on row selection
+    // Scroll to the Unit input field
+    setTimeout(() => {
+      this.unitInput?.nativeElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 100);
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
@@ -472,9 +500,13 @@ export class BanksComponent {
   }
 
   async save() {
-    this.validateAllFields();
+    const isValid = this.validateAllFields();
+    if (!isValid) {
+      console.error('Form has validation errors:', this.errors);
+      return;
+    }
 
-    const hasErrors = Object.values(this.errors).some(error => error !== '');
+    const hasErrors = Object.values(this.errors).some((error) => error !== '');
 
     if (hasErrors) {
       console.error('Form has validation errors:', this.errors);
@@ -501,19 +533,19 @@ export class BanksComponent {
       head_code: this.selected_bank.acc_head?.head_code || null,
       listing: this.selected_bank.details?.listing,
 
-      bank: this.selected_bank.details?.bank_name || null,
-      short_desc: this.selected_bank.details?.short_name || null,
-      acc_no: this.selected_bank.details?.account_no || null,
-      ifsc: this.selected_bank.details?.ifsc || null,
-      branch: this.selected_bank.details?.branch || null,
-      building: this.selected_bank.details?.building || null,
-      street: this.selected_bank.details?.street_name || null,
-      place: this.selected_bank.details?.place || null,
-      main_place: this.selected_bank.details?.main_place || null,
-      post: this.selected_bank.details?.post || null,
-      pin: this.selected_bank.details?.pin || null,
-      mobile: this.selected_bank.details?.mobile || null,
-      email: this.selected_bank.details?.email || null,
+      bank: this.selected_bank.details?.bank_name || '',
+      short_desc: this.selected_bank.details?.short_name || '',
+      acc_no: this.selected_bank.details?.account_no || '',
+      ifsc: this.selected_bank.details?.ifsc || '',
+      branch: this.selected_bank.details?.branch || '',
+      building: this.selected_bank.details?.building || '',
+      street: this.selected_bank.details?.street_name || '',
+      place: this.selected_bank.details?.place || '',
+      main_place: this.selected_bank.details?.main_place || '',
+      post: this.selected_bank.details?.post || '',
+      pin: this.selected_bank.details?.pin || '',
+      mobile: this.selected_bank.details?.mobile || '',
+      email: this.selected_bank.details?.email || '',
 
       // State and District from the selected values
       // state: this.selected_bank.details.state,
@@ -546,9 +578,25 @@ export class BanksComponent {
     );
   }
 
-  validateAllFields(): void {
+  validateAllFields(): boolean {
     // Clear previous errors
     this.errors = {};
+    if (!this.selected_bank.unit.unit) {
+      this.showNotification('info', 'Info', 'Select Unit First');
+      return false;
+    }
+    if (!this.selected_bank.bank_type.secondary_code) {
+      this.showNotification('info', 'Info', 'Select Bank Type');
+      return false;
+    }
+    if (!this.selected_bank.acc_head.head_code) {
+      this.showNotification('info', 'Info', 'Select Account Head');
+      return false;
+    }
+    if (!this.selected_bank.details.bank_code) {
+      this.showNotification('info', 'Info', 'Please Enter Bank Code');
+      return false;
+    }
     // console.log(
     //   'Data before validation:',
     //   JSON.parse(JSON.stringify(this.selected_bank.details))
@@ -562,11 +610,12 @@ export class BanksComponent {
     this.validateField('mobile', this.selected_bank.details.mobile);
     this.validateField('post', this.selected_bank.details.post);
     this.validateField('pin', this.selected_bank.details.pin);
-
     // Check for empty address only if other validations pass
     if (Object.keys(this.errors).length === 0) {
       this.validateAddress();
     }
+    // Return true only if no errors
+    return Object.values(this.errors).every((error) => error === '');
   }
 
   async validateAddress(): Promise<boolean> {
@@ -593,11 +642,6 @@ export class BanksComponent {
   validateField(fieldName: string, value: any): void {
     this.errors[fieldName] = ''; // Clear previous error
 
-    console.log(`Validating ${fieldName}:`, {
-      rawValue: value,
-      stringValue: String(value || ''),
-      trimmed: String(value || '').trim(),
-    });
     // Convert value to string and trim
     const strValue = String(value || '').trim();
 
