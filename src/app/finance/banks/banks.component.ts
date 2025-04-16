@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchOfficeComponent } from '../modals/search-office/search-office.component';
@@ -15,6 +15,7 @@ import { SearchAccountHeadsComponent } from '../modals/search-account-heads/sear
 })
 export class BanksComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('formContainer') formContainer!: ElementRef;
 
   displayedColumns: string[] = [
     'bank',
@@ -37,6 +38,8 @@ export class BanksComponent {
   districts: any[] = [];
   selectedState: string = '';
   selectedStateId: number | null = null;
+  bankTypeDisplay: string = ''; // Temporary display variable
+  accountHeadDisplay: string = ''; // Temporary display variable
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
 
@@ -111,6 +114,13 @@ export class BanksComponent {
     this.isAdding = true;
     this.isReadOnly = false;
     this.isEnabled = true;
+    // Scroll to form
+    setTimeout(() => {
+      this.formContainer.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100); // Small delay to ensure DOM updates
   }
 
   // Open the search dialog for selecting a unit
@@ -171,6 +181,8 @@ export class BanksComponent {
             secondary_head: userData.vch_secondary_head,
           },
         };
+        // Set the combined display value
+        this.bankTypeDisplay = `${userData.vch_secondary_code}-${userData.vch_secondary_head}`;
         // Only fetch heads if secondary_code is set
         if (this.selected_bank.bank_type.secondary_code) {
           console.log(
@@ -219,8 +231,11 @@ export class BanksComponent {
           acc_head: {
             head_code: userData.vch_head_code,
             head_id: userData.int_head_id,
+            head: userData.vch_head,
           },
         };
+        // Set the combined display value
+        this.accountHeadDisplay = `${userData.vch_head_code}-${userData.vch_head}`;
         // console.log('Selected Row', this.selected_bank.acc_head);
       }
     });
@@ -447,6 +462,7 @@ export class BanksComponent {
   onDeactivateToggle(event: any): void {
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
   }
+
   validateAllFields(): void {
     this.validateField('bank_name', this.selected_bank.details.bank_name);
     this.validateField('short_name', this.selected_bank.details.short_name);
@@ -456,6 +472,22 @@ export class BanksComponent {
     this.validateField('email', this.selected_bank.details.email);
     this.validateField('mobile', this.selected_bank.details.mobile);
     this.validateField('pin', this.selected_bank.details.pin);
+
+    if (
+      !this.selected_bank.details.building &&
+      !this.selected_bank.details.street_name &&
+      !this.selected_bank.details.place &&
+      !this.selected_bank.details.main_place
+    ) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Address is empty.',
+        text: 'Do you want to continue?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      });
+    }
   }
 
   // Handle save action

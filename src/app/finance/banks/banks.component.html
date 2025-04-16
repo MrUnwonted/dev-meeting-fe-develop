@@ -1,4 +1,4 @@
-<div class="finance-container">
+<div class="finance-container" #formContainer>
   <div class="fin-card">
     <div class="row gx-0 gy-0 fin-row">
       <div class="col-md-4 left-column">
@@ -65,10 +65,14 @@
                             id="p-bank"
                             class="form-control xs"
                             (dblclick)="callOpenBankType()"
+                            [value]="bankTypeDisplay"
+                            [disabled]="isReadOnly && isEnabled"
+                          />
+                          <input
+                            type="hidden"
                             [(ngModel)]="
                               selected_bank?.bank_type.secondary_code
                             "
-                            [disabled]="isReadOnly && isEnabled"
                           />
                         </div>
                       </div>
@@ -90,8 +94,12 @@
                             id="a-head"
                             class="form-control xs"
                             (dblclick)="callOpenAccountHeads()"
-                            [(ngModel)]="selected_bank?.acc_head.head_code"
+                            [value]="accountHeadDisplay"
                             [disabled]="isReadOnly && isEnabled"
+                          />
+                          <input
+                            type="hidden"
+                            [(ngModel)]="selected_bank?.acc_head.head_code"
                           />
                         </div>
                       </div>
