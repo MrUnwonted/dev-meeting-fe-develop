@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchOfficeComponent } from '../modals/search-office/search-office.component';
@@ -15,7 +15,6 @@ import { SearchAccountHeadsComponent } from '../modals/search-account-heads/sear
 })
 export class BanksComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('formContainer') formContainer!: ElementRef;
 
   displayedColumns: string[] = [
     'bank',
@@ -41,7 +40,11 @@ export class BanksComponent {
   bankTypeDisplay: string = ''; // Temporary display variable
   accountHeadDisplay: string = ''; // Temporary display variable
 
-  constructor(private dialog: MatDialog, private svr: ServiceService) {}
+  constructor(
+    private dialog: MatDialog,
+    private svr: ServiceService,
+    changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.init();
@@ -77,6 +80,8 @@ export class BanksComponent {
     this.isReadOnly = false;
     this.isAdding = true;
     this.isEditing = false;
+    this.bankTypeDisplay = ''; // Reset display variable
+    this.accountHeadDisplay = ''; // Reset display variable
     this.selected_bank = {
       unit: { id: '', code: '', unit: '' },
       bank_id: { bank_id: '' },
@@ -116,11 +121,11 @@ export class BanksComponent {
     this.isEnabled = true;
     // Scroll to form
     setTimeout(() => {
-      this.formContainer.nativeElement.scrollIntoView({
+      document.getElementById('formContainer')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
-    }, 100); // Small delay to ensure DOM updates
+    }, 100);
   }
 
   // Open the search dialog for selecting a unit
@@ -308,6 +313,9 @@ export class BanksComponent {
         // Update the existing object instead of creating a new one
         this.selected_bank.bank_id.bank_id = bank_id;
         this.selected_bank.unit.unit = res.vch_unit;
+        // Set the combined display value
+        this.bankTypeDisplay = `${this.selected_bank.bank_type.secondary_code}-${res.vch_parent_head}`;
+        this.accountHeadDisplay = `${this.selected_bank.acc_head.head_code}`;
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
@@ -463,48 +471,17 @@ export class BanksComponent {
     this.selected_bank.details.listing = event.target.checked ? 0 : 1;
   }
 
-  validateAllFields(): void {
-    this.validateField('bank_name', this.selected_bank.details.bank_name);
-    this.validateField('short_name', this.selected_bank.details.short_name);
-    this.validateField('branch', this.selected_bank.details.branch);
-    this.validateField('ifsc', this.selected_bank.details.ifsc);
-    this.validateField('account_no', this.selected_bank.details.account_no);
-    this.validateField('email', this.selected_bank.details.email);
-    this.validateField('mobile', this.selected_bank.details.mobile);
-    this.validateField('pin', this.selected_bank.details.pin);
-
-    if (
-      !this.selected_bank.details.building &&
-      !this.selected_bank.details.street_name &&
-      !this.selected_bank.details.place &&
-      !this.selected_bank.details.main_place
-    ) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Address is empty.',
-        text: 'Do you want to continue?',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-      });
-    }
-  }
-
-  // Handle save action
-  save() {
-    // this.validateForm(); // Run validation only when Save is clicked
-    // Validate all fields (optional - if you want to ensure all fields are validated before save)
+  async save() {
     this.validateAllFields();
 
-    if (Object.keys(this.errors).length > 0) {
+    const hasErrors = Object.values(this.errors).some(error => error !== '');
+
+    if (hasErrors) {
       console.error('Form has validation errors:', this.errors);
-      // this.showNotification(
-      //   'warning',
-      //   'Warning',
-      //   'Please fix the form errors before saving.'
-      // );
       return;
     }
+    const canProceed = await this.validateAddress();
+    if (!canProceed) return;
     let payload: any = {};
     // Find the selected district object
     const selectedDistrictObj = this.districts.find(
@@ -568,64 +545,122 @@ export class BanksComponent {
       }
     );
   }
+
+  validateAllFields(): void {
+    // Clear previous errors
+    this.errors = {};
+    // console.log(
+    //   'Data before validation:',
+    //   JSON.parse(JSON.stringify(this.selected_bank.details))
+    // );
+    this.validateField('bank_name', this.selected_bank.details.bank_name);
+    this.validateField('short_name', this.selected_bank.details.short_name);
+    this.validateField('branch', this.selected_bank.details.branch);
+    this.validateField('ifsc', this.selected_bank.details.ifsc);
+    this.validateField('account_no', this.selected_bank.details.account_no);
+    this.validateField('email', this.selected_bank.details.email);
+    this.validateField('mobile', this.selected_bank.details.mobile);
+    this.validateField('post', this.selected_bank.details.post);
+    this.validateField('pin', this.selected_bank.details.pin);
+
+    // Check for empty address only if other validations pass
+    if (Object.keys(this.errors).length === 0) {
+      this.validateAddress();
+    }
+  }
+
+  async validateAddress(): Promise<boolean> {
+    if (
+      !this.selected_bank.details.building &&
+      !this.selected_bank.details.street_name &&
+      !this.selected_bank.details.place &&
+      !this.selected_bank.details.main_place
+    ) {
+      const result = await Swal.fire({
+        icon: 'info',
+        title: 'Address is empty.',
+        text: 'Do you want to continue?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      });
+
+      return result.isConfirmed;
+    }
+    return true;
+  }
+
   validateField(fieldName: string, value: any): void {
     this.errors[fieldName] = ''; // Clear previous error
 
+    console.log(`Validating ${fieldName}:`, {
+      rawValue: value,
+      stringValue: String(value || ''),
+      trimmed: String(value || '').trim(),
+    });
+    // Convert value to string and trim
+    const strValue = String(value || '').trim();
+
     switch (fieldName) {
       case 'bank_name':
-        if (!value?.trim()) {
+        if (!strValue) {
+          // Changed from !value?.trim()
           this.errors.bank_name = 'Bank Name is required.';
         }
         break;
 
       case 'short_name':
-        if (!value?.trim()) {
+        if (!strValue) {
+          // Changed from !value?.trim()
           this.errors.short_name = 'Short Name is required.';
         }
         break;
 
       case 'branch':
-        if (!value?.trim()) {
+        if (!strValue) {
+          // Changed from !value?.trim()
           this.errors.branch = 'Branch is required.';
         }
         break;
 
       case 'ifsc':
-        if (!value?.trim()) {
+        if (!strValue) {
           this.errors.ifsc = 'IFSC Code is required.';
-        } else if (!this.isValidIFSC(value)) {
+        } else if (!this.isValidIFSC(strValue)) {
           this.errors.ifsc = 'Invalid IFSC Code format.';
         }
         break;
 
       case 'account_no':
-        if (!String(value)?.trim()) {
+        if (!strValue) {
           this.errors.account_no = 'Account Number is required.';
-        } else if (!this.isValidAccountNumber(value)) {
+        } else if (!this.isValidAccountNumber(strValue)) {
           this.errors.account_no =
             'Account Number must be between 9 to 18 digits.';
         }
         break;
 
       case 'email':
-        if (!value?.trim() || !this.isValidEmail(value)) {
+        if (!strValue || !this.isValidEmail(strValue)) {
           this.errors.email = 'Valid Email is required.';
         }
         break;
 
       case 'mobile':
-        if (!value?.trim() || !this.isValidMobile(value)) {
+        if (!strValue || !this.isValidMobile(strValue)) {
           this.errors.mobile = 'Valid Mobile Number is required.';
         }
         break;
 
       case 'post':
-        if (!value?.trim() || !this.isValidPin(value)) {
-          this.errors.pin = 'Post is required.';
+        if (!strValue) {
+          // Changed from !value?.trim()
+          this.errors.post = 'Post is required.';
         }
         break;
+
       case 'pin':
-        if (!value?.trim() || !this.isValidPin(value)) {
+        if (!strValue || !this.isValidPin(strValue)) {
           this.errors.pin = 'Valid Pin Number is required.';
         }
         break;

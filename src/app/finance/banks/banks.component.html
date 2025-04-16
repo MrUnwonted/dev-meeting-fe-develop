@@ -1,4 +1,4 @@
-<div class="finance-container" #formContainer>
+<div class="finance-container" id="formContainer">
   <div class="fin-card">
     <div class="row gx-0 gy-0 fin-row">
       <div class="col-md-4 left-column">
@@ -139,6 +139,7 @@
                         id="deactivate"
                         [checked]="selected_bank?.details?.listing !== 1"
                         (change)="onDeactivateToggle($event)"
+                        [disabled]="isReadOnly && isEnabled"
                       />
                       <label for="deactivate" class="form-label"
                         >Deactivate</label
@@ -610,6 +611,9 @@
                                         )
                                       "
                                     />
+                                  </div>
+                                  <div class="text-danger" *ngIf="errors.post">
+                                    {{ errors.post }}
                                   </div>
                                 </div>
                               </div>
