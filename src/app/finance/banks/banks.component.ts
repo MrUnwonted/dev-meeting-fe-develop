@@ -19,6 +19,7 @@ export class BanksComponent {
   @ViewChild('unitInput') unitInput!: ElementRef;
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
   @ViewChild('bankNameInput') bankNameInput!: ElementRef;
+  @ViewChild('input') searchInput!: ElementRef;
 
   displayedColumns: string[] = [
     'bank',
@@ -580,6 +581,8 @@ export class BanksComponent {
           );
           this.addNew(); // Reset the form after saving
           this.fetch_records();
+          this.searchInput.nativeElement.value = ''; // Clear input value
+          this.dataSource.filter = ''; // Reset the filter on the table
         } else {
           this.showNotification(
             'error',
@@ -602,30 +605,15 @@ export class BanksComponent {
   async validateAllFields(): Promise<boolean> {
     // Clear previous errors
     this.errors = {};
-    if (!this.selected_bank.unit.unit) {
-      this.errors.unit = 'Select Unit First';
-      // this.showNotification('info', 'Info', 'Select Unit First');
-      // return false;
-    }
-    if (!this.selected_bank.bank_type.secondary_code) {
-      this.errors.bankType = 'Select Bank Type';
-      // this.showNotification('info', 'Info', 'Select Bank Type');
-      // return false;
-    }
-    if (!this.selected_bank.acc_head.head_code) {
-      this.errors.accHead = 'Select Account Head';
-      // this.showNotification('info', 'Info', 'Select Account Head');
-      // return false;
-    }
-    if (!this.selected_bank.details.bank_code) {
-      this.errors.bankCode = 'Please Enter Bank Code';
-      // this.showNotification('info', 'Info', 'Please Enter Bank Code');
-      // return false;
-    }
     // console.log(
     //   'Data before validation:',
     //   JSON.parse(JSON.stringify(this.selected_bank.details))
     // );
+    this.validateField('unit', this.selected_bank.unit?.unit);
+    this.validateField('bankType', this.selected_bank.bank_type?.secondary_code);
+    this.validateField('accHead', this.selected_bank.acc_head?.head_code);
+    this.validateField('bankCode', this.selected_bank.details?.bank_code);
+
     this.validateField('bank_name', this.selected_bank.details.bank_name);
     this.validateField('short_name', this.selected_bank.details.short_name);
     this.validateField('ifsc', this.selected_bank.details.ifsc);
@@ -674,7 +662,28 @@ export class BanksComponent {
     this.errors[fieldName] = ''; // Clear previous error
     // Convert value to string and trim
     const strValue = String(value || '').trim();
+    // Check for empty string or whitespace
     switch (fieldName) {
+      case 'unit':
+        if (!this.selected_bank.unit?.unit) {
+          this.errors.unit = 'Select Unit First';
+        }
+        break;
+      case 'bankType':
+        if (!this.selected_bank.bank_type?.secondary_code) {
+          this.errors.bankType = 'Select Bank Type';
+        }
+        break;
+      case 'accHead':
+        if (!this.selected_bank.acc_head?.head_code) {
+          this.errors.accHead = 'Select Account Head';
+        }
+        break;
+      case 'bankCode':
+        if (!this.selected_bank.details?.bank_code) {
+          this.errors.bankCode = 'Please Enter Bank Code';
+        }
+        break;
       case 'bank_name':
         if (!strValue) {
           // Changed from !value?.trim()

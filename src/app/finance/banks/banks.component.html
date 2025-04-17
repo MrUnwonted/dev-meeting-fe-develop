@@ -49,6 +49,9 @@
                               ><i class="icon icon-search-gray"></i
                             ></span>
                           </div>
+                          <!-- <div class="text-danger" *ngIf="errors.unit">
+                            {{ errors.unit }}
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -67,16 +70,14 @@
                             id="p-bank"
                             class="form-control xs"
                             (dblclick)="callOpenBankType()"
+                            [(ngModel)]="selected_bank?.bank_type.bank_type"
                             [value]="bankTypeDisplay"
                             [disabled]="isReadOnly && isEnabled"
                             readonly
                           />
-                          <input
-                            type="hidden"
-                            [(ngModel)]="
-                              selected_bank?.bank_type.secondary_code
-                            "
-                          />
+                          <!-- <div class="text-danger" *ngIf="errors.bankType">
+                            {{ errors.bankType }}
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -99,12 +100,12 @@
                             (dblclick)="callOpenAccountHeads()"
                             [value]="accountHeadDisplay"
                             [disabled]="isReadOnly && isEnabled"
+                            [(ngModel)]="selected_bank?.acc_head.head_code"
                             readonly
                           />
-                          <input
-                            type="hidden"
-                            [(ngModel)]="selected_bank?.acc_head.head_code"
-                          />
+                          <!-- <div class="text-danger" *ngIf="errors.accHead">
+                            {{ errors.accHead }}
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -129,6 +130,9 @@
                             [(ngModel)]="selected_bank.details.bank_code"
                             [readonly]="isReadOnly && isEnabled"
                           />
+                          <!-- <div class="text-danger" *ngIf="errors.bankCode">
+                            {{ errors.bankCode }}
+                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -288,6 +292,7 @@
                                       "
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="18"
+                                      (keypress)="numberOnly($event)"
                                       (blur)="
                                         validateField(
                                           'account_no',
@@ -773,7 +778,7 @@
                   <ng-container matColumnDef="unit">
                     <th mat-header-cell *matHeaderCellDef>Unit</th>
                     <td mat-cell *matCellDef="let element">
-                      {{ element.vch_unit}}
+                      {{ element.vch_unit }}
                     </td>
                   </ng-container>
 
@@ -806,7 +811,7 @@
 
               <!-- MatPaginator for Pagination -->
               <mat-paginator
-                [pageSizeOptions]="[ 10, 25, 100]"
+                [pageSizeOptions]="[10, 25, 100]"
                 showFirstLastButtons
               ></mat-paginator>
             </div>
