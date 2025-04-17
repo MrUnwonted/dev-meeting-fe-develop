@@ -49,6 +49,7 @@ export class BanksComponent {
   selectedStateId: number | null = null;
   bankTypeDisplay: string = ''; // Temporary display variable
   accountHeadDisplay: string = ''; // Temporary display variable
+  editingRow: any = null; // Row being edited
 
   constructor(private dialog: MatDialog, private svr: ServiceService) {}
 
@@ -125,6 +126,7 @@ export class BanksComponent {
     this.isAdding = true;
     this.isReadOnly = false;
     this.isEnabled = true;
+    this.editingRow = null;
     // Scroll to the Unit input field
     setTimeout(() => {
       this.unitInput?.nativeElement?.scrollIntoView({
@@ -262,6 +264,7 @@ export class BanksComponent {
   // This function is called when a row is clicked in the table
   rowActive(row: any, index: number) {
     this.activeRowIndex = index;
+    this.editingRow = row; // Store the row being edited
     const bank_id = row.int_bank_id; // Extract the bank ID
     // Call API to fetch bank details using the extracted bank ID
     this.fetch_bank_details(bank_id);
@@ -472,7 +475,7 @@ export class BanksComponent {
   // Handle padding for Bank Code
   padBankCode(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    const userInput = inputElement.value.trim();
+    let userInput = inputElement.value.trim();
 
     if (userInput) {
       // Pad with leading zeros to make it 4 digits
@@ -481,6 +484,33 @@ export class BanksComponent {
       // Update both the input field and the model
       inputElement.value = paddedValue;
       this.selected_bank.details.bank_code = paddedValue;
+      userInput = paddedValue; // Update the userInput with padded value for the check
+    }
+    // Check uniqueness only if we have a selected head and code value
+    if (this.selected_bank?.acc_head?.head_id && userInput) {
+      this.checkCodeUniqueness(userInput, this.selected_bank.acc_head.head_id);
+    }
+  }
+  checkCodeUniqueness(code: string, headId: number) {
+    // Check if the code already exists for this head in the dataSource
+    const isDuplicate = this.dataSource.data.some(
+      (row: any) =>
+        row.vch_bank_code === code &&
+        row.int_head_id === headId &&
+        (!this.editingRow || row.int_bank_id !== this.editingRow.int_bank_id)
+    );
+
+    if (isDuplicate) {
+      // Show error notification
+      this.showNotification(
+        'warning',
+        'Duplicate Code',
+        'This bank code already exists for the selected account head'
+      );
+
+      // Clear or focus the field 
+      // this.selected_bank.details.bank_code = '';
+      // event.target.focus(); // if you want to focus back
     }
   }
 
