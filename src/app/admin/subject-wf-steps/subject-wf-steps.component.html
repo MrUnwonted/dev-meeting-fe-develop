@@ -1,0 +1,103 @@
+<div class="tab-content top-tabs-content" id="pills-tabContent">
+  
+    <!-- next and prev button -->
+    <div class="arrow-wrap">
+      <button class="prev btn btn-outline-primary-90 sm active"><i class="icon icon-chevron-blue"></i></button>
+      <button class="next btn btn-outline-primary-90 sm active"><i class="icon icon-chevron-blue"></i></button>
+    </div>
+  
+    <!-- inward-content -->
+    <div class="inward-card-container">
+      <div class="card widget-card table-card admin-card">
+        
+        <div card-header>
+          <div class="heading-wrap">
+            <h6 class="head semi-bold">Subject Workflow</h6>
+          </div>
+        </div>
+  
+        <div card-body class="mx-5" style="height: calc(30vh - 2rem);">
+          <div class="loading-tp-spinner-overlay" *ngIf="flg_load">
+            <div class="tp-spinner"> </div>
+          </div>
+  
+          <div class="left-column">
+            <div class="row gy-3">
+              <div class="col-md-12">
+                
+                <div class="table-outer-wrap">
+                  <!-- Search Bar (top-left) -->
+                  <div class="d-flex justify-content-end align-items-center mb-2">
+                    <div class="form-group mb-0">
+                      <input matInput type="text" placeholder="Search..." class="form-control"
+                             (keyup)="applyFilter($event)" />
+                    </div>
+                  </div>
+                  
+                  <!-- Table -->
+                  <div class="table-wrap file-box-wrap fee-details-table mt-2" style="height: calc(50vh - 2rem);">
+                    <table mat-table [dataSource]="dataSource" class="w-50 admin-table file-table">
+                      <!-- Sl No Column -->
+                      <ng-container matColumnDef="slNo">
+                        <th mat-header-cell *matHeaderCellDef> {{ "Sl No" }} </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                          {{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+                        </td>
+                      </ng-container>
+  
+                      <!-- Stage Column -->
+                      <ng-container matColumnDef="stage">
+                        <th mat-header-cell *matHeaderCellDef> {{"Stages"}} </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <small class="text" [id]="row.stage_name">
+                            {{ row.stage }}
+                          </small>
+                        </td>
+                      </ng-container>
+  
+                      <!-- Step Column -->
+                      <ng-container matColumnDef="step">
+                        <th mat-header-cell *matHeaderCellDef> {{"Step"}} </th>
+                        <td mat-cell *matCellDef="let row; let i = index">
+                          <small class="text" [id]="row.step_name">
+                            {{ row.step_name }}
+                          </small>
+                        </td>
+                      </ng-container>
+  
+                      <!-- Edit Column -->
+                      <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element; let i = index"> 
+                          <a role="button">
+                            <i class="icon icon-add-2" (click)="onRowClick(element)"></i>
+                          </a> 
+                        </td>
+                      </ng-container>
+  
+                      <!-- Table Rows -->
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+                          [class.active]="activeRowIndex === i"></tr>
+                    </table>
+                  </div>
+  
+                  <!-- Paginator -->
+                  <mat-paginator [pageSizeOptions]="[5, 10, 15, 100]" showFirstLastButtons></mat-paginator>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Card Footer -->
+        <div card-footer class="card-footer-group">
+          <div class="card-action-wrap"></div>
+        </div>
+        
+      </div>
+    </div>
+  
+  </div>
+  

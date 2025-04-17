@@ -1,6 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { SearchTranactionTypesComponent } from '../modals/search-tranaction-types/search-tranaction-types.component';
+import { SearchBanksComponent } from '../modals/search-banks/search-banks.component';
+import { SearchApplicantComponent } from '../modals/search-applicant/search-applicant.component';
+import { SearchPropertyTaxComponent } from '../modals/search-property-tax/search-property-tax.component';
 
 @Component({
   selector: 'app-demands', 
@@ -16,10 +21,7 @@ export class DemandsComponent {
   dataSource = new MatTableDataSource<any>;
   selectedDate: Date | null = null;
   selectedOption:any;
-  transaction_options = [
-    { "id": 1, label: 'Ordinary' },
-    { "id": 2, label: 'Property Tax' },
-  ];
+  
 
   selectedType:any;
   instrument_options = [
@@ -35,7 +37,11 @@ export class DemandsComponent {
 
   cash_mode: any;
   
-  constructor(){
+  constructor( 
+       private dialog: MatDialog,
+  ){
+
+    
     this.selectedOption =1;
     this.cash_mode = "1";
 
@@ -70,5 +76,52 @@ export class DemandsComponent {
     this.selectedOption = value;
     
   }
+
+  
+  open_transactions() {
+    const dialogRef = this.dialog.open(SearchTranactionTypesComponent, {
+      width: '1130px',
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+        if(response.data.id.toString()=="2") {
+          this.search_property_tax();
+        }
+        console.log(response);
+        
+      }
+    });
+  }
+
+  open_bank() {
+    const dialogRef = this.dialog.open(SearchBanksComponent, {
+      width: '1130px',
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+      }
+    });
+  }
+
+  Search_applicant(){
+    const dialogRef = this.dialog.open(SearchApplicantComponent, {
+      width: '1130px',
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+      }
+    });
+  }
+
+  search_property_tax(){
+    const dialogRef = this.dialog.open(SearchPropertyTaxComponent, {
+      width: '1130px',
+    });
+    dialogRef?.afterClosed().subscribe((response: any) => {
+      if (response && response.data) {
+      }
+    });
+  
+   }
 
 }

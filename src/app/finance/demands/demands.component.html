@@ -8,11 +8,25 @@
                             <h6>Demand</h6>
                         </div>
 
-                    </div>
-
-                    <!--header right side -->
-                    <div class="right-side">
-
+                 
+                        <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                            </div>
+                            <div class="col-9 left-side">
+                                <div class="row gx-1 gy-1">
+                                    <div class="col-6">
+                                        <input type="text" name="demand_no" id="demand_no"
+                                            class="form-control xs" placeholder="Demand No">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" name="demand_dt" id="demand_no" readonly
+                                            class="form-control xs" value="10-04-2025">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -32,29 +46,7 @@
                                         <div class="row form-row">
 
                                             <!--Invoice no -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="invoice" class="form-label">Demand No</label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="row gx-1 gy-1">
-                                                                <div class="col-6">
-                                                                    <input type="text" name="demand_no" id="demand_no"
-                                                                        class="form-control xs" value="4002015">
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="demand_dt" id="demand_no"
-                                                                        class="form-control xs" value="10-04-2025">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <div class="row form-inner-row">
@@ -64,21 +56,46 @@
                                                         </div>
                                                         <div class="col-9 right-side">
 
-                                                            <div class="select-wrap">
-                                                                <select [(ngModel)]="selectedOption"
-                                                                    (ngModelChange)="onOptionChange($event)"
-                                                                    class="form-select xs">
-                                                                    <option *ngFor="let option of transaction_options"
-                                                                        [value]="option.id">
-                                                                        {{ option.label }}
-                                                                    </option>
-                                                                </select>
+                                                            <div class="input-group right xs">
+                                                                <input type="text" name="transaction_type" id="transaction_type"
+                                                                    class="form-control xs" (click)="open_transactions();">
+                                                                <span class="input-group-text xs"><i
+                                                                        class="icon icon-search-gray"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                        </div>
+                                        <div class="row form-row bg-box">
+                                            <h6 class="head">Zone / Ward No./ Door No.</h6>
+                                            <!--Invoice no -->
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="row form-inner-row">
+                                                        <div class="col-3 left-side">
+                                                        </div>
+                                                        <div class="col-9 right-side">
+                                                            <div class="row gx-1 gy-1">
+                                                                <div class="col-4">
+                                                                    <input type="text" name="zone" id="zone" class="form-control xs"  placeholder="Zone" >
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="ward" id="ward" class="form-control xs" placeholder="Ward"  >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <input type="text" name="doorno" id="doorno" class="form-control xs" placeholder="Door"  >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
 
@@ -95,7 +112,7 @@
 
                                                         <div class="col-9 right-side">
                                                             <div class="input-group right xs">
-                                                                <input type="text" name="applicant" id="applicant"
+                                                                <input type="text" name="applicant" id="applicant" (click)="Search_applicant();"
                                                                     class="form-control xs">
                                                                 <span class="input-group-text xs"><i
                                                                         class="icon icon-search-gray"></i></span>
@@ -223,6 +240,12 @@
                                                                         class="form-check-input">
                                                                     <label for="type" class="form-label">Bank</label>
                                                                 </div>
+                                                                <div class="form-check">
+                                                                    <input type="radio" [(ngModel)]="cash_mode"
+                                                                        name="type" id="type" value="3"
+                                                                        class="form-check-input">
+                                                                    <label for="type" class="form-label">Digital Payment</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -240,7 +263,7 @@
                                                         <div class="col-9 right-side">
                                                             <div class="input-group right xs">
                                                                 <input type="text" name="bankname" id="bankname"
-                                                                    class="form-control xs">
+                                                                    class="form-control xs" readonly (click)="open_bank();">
                                                                 <span class="input-group-text xs"><i
                                                                         class="icon icon-search-gray"></i></span>
                                                             </div>
@@ -254,26 +277,38 @@
                                                 <div class="row gx-3 gy-3">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="" class="form-label">Name</label>
-                                                            <p class="desc">Suntech Indian Ltd</p>
+                                                            <label for="" class="form-label">Bank Account No.</label>
+                                                            <p class="desc">690067890567</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="" class="form-label">Email</label>
-                                                            <p class="desc">dummymail&#64;gmail.com</p>
+                                                            <label for="" class="form-label">Account Head Code</label>
+                                                            <p class="desc">450101001</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="" class="form-label">Mobile</label>
-                                                            <p class="desc">+91 8956 235 125</p>
+                                                            <label for="" class="form-label">Branch</label>
+                                                            <p class="desc">Kesavadasapuram</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">GST No</label>
-                                                            <p class="desc">GATS12364615</p>
+                                                  
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12" *ngIf="cash_mode==3">
+                                                <div class="form-group">
+                                                    <div class="row form-inner-row">
+                                                        <div class="col-3 left-side">
+                                                            <label for="supplier" class="form-label">Transaction No <span
+                                                                    class="sub-text">referenceNo</span></label>
+                                                        </div>
+                                                        <div class="col-9 right-side">
+                                                            <div class="input-group right xs">
+                                                                <input type="text" name="reference_no" id="reference_no"
+                                                                    class="form-control xs">                                                               
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,18 +337,16 @@
                                                                 <div class="col-6">
                                                                     <div class="form-group">
                                                                         <div class="date-picker-wrap">
-                                                                            <input class="form-control xs"
-                                                                                placeholder="Date"
-                                                                                [matDatepicker]="picker"
-                                                                                [(ngModel)]="selectedDate"
-                                                                                (focus)="picker.open()"
-                                                                                [matDatepicker]="picker">
-
-                                                                            <mat-datepicker-toggle matSuffix
-                                                                                [for]="picker"></mat-datepicker-toggle>
-                                                                            <mat-datepicker #picker></mat-datepicker>
+                                                                          <input class="form-control xs"
+                                                                                 placeholder="Date"
+                                                                                 [matDatepicker]="picker"
+                                                                                 [(ngModel)]="selectedDate"
+                                                                                 (focus)="picker.open()">
+                                                                      
+                                                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                          <mat-datepicker #picker></mat-datepicker>
                                                                         </div>
-                                                                    </div>
+                                                                      </div>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -1,0 +1,163 @@
+<app-common-modal [title]="'Select Applicant'" [buttons]="modalButtons">
+    <!-- content -->
+    <div class="search-flex-outer">
+
+
+        <div class="left-side">
+            <div class="search-wrap">
+                <label for="search" class="form-label">Search by Applicant Name</label>
+                <div class="input-wrap">
+                    <input type="text" name="search" id="search01" placeholder="Type your applicant"
+                        class="form-control md">
+                    <button class="btn btn-primary-80 sm search-btn" (click)="do_profile_filter()"> Go </button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="right-side">
+
+            <div class="clear-filter">
+                <button class="btn sm" (click)="clear_filters()"> <i class="icon icon-reload "></i> Clear
+                    filter</button>
+            </div>
+
+            <div class="filter-btn">
+                <button class="btn btn-none filter-btn-search sm" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#advsearch" aria-expanded="false" aria-controls="advsearch">
+                    <i class="icon icon-filter-search xl"></i>
+                    Show Advance Search
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- adv search collapse -->
+    <div class="collapse advanced-search" id="advsearch">
+        <div class="card-header card widget-card">
+            <div card-body>
+                <div class="filter-wrap">
+                    <div class="row gy-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="subj2" class="form-label">District</label>
+                                <select name="district" id="district" class="form-select md"
+                                    (change)="filter_district_wise()">
+                                    <option *ngFor=" let dist of districts" [value]="dist.int_district_id">
+                                        {{dist.district}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="subj" class="form-label">ID Proof</label>
+                                <select name="proof_type" id="proof_type" class="form-select md">
+                                    <option *ngFor="let proof of proof_types" [value]="proof.int_doc_type_id">
+                                        {{proof.vch_doc_type}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-wrap">
+                                    <label for="subj" class="form-label">ID Proof No</label>
+                                    <input type="text" name="proof_no" id="proof_no" placeholder="Type your code"
+                                        (blur)="filter_by_idproof()" class="form-control md">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div class="input-wrap">
+
+                                    <button class="btn btn-primary-80 sm search-btn" (click)="do_search()"> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- content full wrap inside modal body -->
+    <div class="body-outer-wrap">
+        <!-- Spinner -->
+        <div class="loading-spinner-overlay" *ngIf="is_loading">
+            <div class="spinner"></div>
+        </div>
+        <!-- End of Block :: Spinner -->
+
+        <!-- applicant card wrap -->
+
+
+
+
+
+        <div class="table-outer-wrap ">
+
+            <!-- Table list Start-->
+            <div class="table-wrap file-box-wrap pagination-included" style="height: calc(75vh - 20rem)">
+                <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
+
+                    <!-- Sl No Column -->
+                    <ng-container matColumnDef="SlNo">
+                        <th mat-header-cell *matHeaderCellDef> Sl No </th>
+                        <td mat-cell *matCellDef="let element = index"> {{ element + 1 + getPaginationOffset() }}
+
+                        </td>
+                    </ng-container>
+                    <!--  Head -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.name }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Code -->
+                    <ng-container matColumnDef="place">
+                        <th mat-header-cell *matHeaderCellDef>Place</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.place }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Code -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>email</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element.email }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Module Column -->
+                    <ng-container matColumnDef="mobile">
+                        <th mat-header-cell *matHeaderCellDef>Mobile</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.mobile}}
+                        </td>
+                    </ng-container>
+
+
+
+                    <!-- Header and Row Definitions -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="
+                      let row;
+                      let i = index;
+                      columns: displayedColumns
+                    " (click)="rowActive(row, i)" [ngClass]="{ 'active-row': activeRowIndex === i }"
+                        (dblclick)="rowActive(row, i)"></tr>
+                </table>
+            </div>
+
+            <!-- MatPaginator for Pagination -->
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+
+</app-common-modal>

@@ -18,6 +18,11 @@ import {  MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SearchTranactionTypesComponent } from './modals/search-tranaction-types/search-tranaction-types.component';
+import { SearchBanksComponent } from './modals/search-banks/search-banks.component';
+import { SearchApplicantComponent } from './modals/search-applicant/search-applicant.component';
+import { SearchPropertyTaxComponent } from './modals/search-property-tax/search-property-tax.component';
+import { SearchPropertyTaxDetailsComponent } from './modals/search-property-tax-details/search-property-tax-details.component';
 
 
 @NgModule({
@@ -28,7 +33,12 @@ import { MatInputModule } from '@angular/material/input';
     BanksComponent,
     SearchOfficeComponent,
     SearchAccountHeadsComponent,
-    DemandsComponent
+    DemandsComponent,
+    SearchTranactionTypesComponent,
+    SearchBanksComponent,
+    SearchApplicantComponent,
+    SearchPropertyTaxComponent,
+    SearchPropertyTaxDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +53,9 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
 
+  ],
+  exports:[
+    CommonModalComponent
   ]
 })
 export class FinanceModule { }

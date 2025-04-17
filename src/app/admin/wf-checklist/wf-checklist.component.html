@@ -1,0 +1,158 @@
+<app-common-modal [title]="title" [buttons]="modalButtons" class="admin-modal admin-layout">
+  <div class="card admin-card">
+    <div class="card-body">
+      <div class="card-body-content">
+        <div class="primary-subject-content">
+          <div class="form-wrap h-100 table-form-wrap">
+            <div class="form-body">
+
+              <div class="que-body" *ngIf="flag===null">
+              <!-- Question Row -->
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="question" class="form-label">Question</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.questions" name="question" id="question" class="form-control xs">
+                  </div>
+                </div>
+                <div class="col-lg-6" *ngIf="bilingual">
+                  <div class="form-group">
+                    <label for="question_ln" class="form-label">Question (മലയാളം)</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.questions_ln" name="question_ln" id="question_ln" class="form-control xs">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Yes Answer Row -->
+              <div class="row mt-1">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="ans_yes" class="form-label">Answer (If Yes)</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.yes_ans" name="ans_yes" id="ans_yes" class="form-control xs">
+                  </div>
+                </div>
+                <div class="col-lg-6" *ngIf="bilingual">
+                  <div class="form-group">
+                    <label for="ans_yes_ln" class="form-label">Answer (If Yes) (മലയാളം)</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.yes_ans_ln" name="ans_yes_ln" id="ans_yes_ln" class="form-control xs">
+                  </div>
+                </div>
+              </div>
+
+              <!-- No Answer Row -->
+              <div class="row mt-1">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="ans_no" class="form-label">Answer (If No)</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.no_ans" name="ans_no" id="ans_no" class="form-control xs">
+                  </div>
+                </div>
+                <div class="col-lg-6" *ngIf="bilingual">
+                  <div class="form-group">
+                    <label for="ans_no_ln" class="form-label">Answer (If No) (മലയാളം)</label>
+                    <input type="text" (keyup)="clear_error_flg()" [(ngModel)]="form_data.no_ans_ln" name="ans_no_ln" id="ans_no_ln" class="form-control xs">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Buttons and Error Message -->
+              <div class="row mt-2">
+                <div class="col-lg-6">
+                  <div class="add-more-wrap" *ngIf="show_error">
+                    <span class="error-msg">{{msg}}</span>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="button-item mb-3">
+                    <div class="button-wrap gap-3 justify-content-end">
+                      <button (click)="add_question()" class="btn btn-primary-90 xs">Add</button>
+                      <button (click)="clear_form()" class="btn btn-outline-primary-90 xs">Clear</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+              <hr>
+
+              <!-- Table -->
+              <div class="row">
+                  <div class="d-flex justify-content-end align-items-center mb-2">
+                      <div class="form-group mb-0">
+                        <input matInput type="text" placeholder="Search..." class="form-control"
+                               (keyup)="applyFilter($event)" />
+                      </div>
+                    </div>
+                <div class="col-lg-12">
+                  <div class="table-inner-wrap">
+                    <div class="table-wrap file-box-wrap pagination-included" style="height: calc(25vh - 2rem);">
+                      <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
+                        
+                        <ng-container matColumnDef="slNo">
+                          <th mat-header-cell *matHeaderCellDef>Sl No</th>
+                          <td mat-cell *matCellDef="let element; let i = index">
+                              {{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="question">
+                          <th mat-header-cell *matHeaderCellDef>Question</th>
+                          <td mat-cell *matCellDef="let element">{{ element.questions }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="question_ln" *ngIf="bilingual">
+                          <th mat-header-cell *matHeaderCellDef>Question (മലയാളം)</th>
+                          <td mat-cell *matCellDef="let element">{{ element.questions_ln }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="yes_ans">
+                          <th mat-header-cell *matHeaderCellDef>Answer (If Yes)</th>
+                          <td mat-cell *matCellDef="let element">{{ element.yes_ans }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="yes_ans_ln" *ngIf="bilingual">
+                          <th mat-header-cell *matHeaderCellDef>Answer (If Yes) (മലയാളം)</th>
+                          <td mat-cell *matCellDef="let element">{{ element.yes_ans_ln }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="no_ans">
+                          <th mat-header-cell *matHeaderCellDef>Answer (If No)</th>
+                          <td mat-cell *matCellDef="let element">{{ element.no_ans }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="no_ans_ln" *ngIf="bilingual">
+                          <th mat-header-cell *matHeaderCellDef>Answer (If No) (മലയാളം)</th>
+                          <td mat-cell *matCellDef="let element">{{ element.no_ans_ln }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="edit">
+                          <th mat-header-cell *matHeaderCellDef></th>
+                          <td mat-cell *matCellDef="let element">
+                            <ng-container *ngIf="flag === null">
+                              <a (click)="row_click(element)" role="button">
+                                <i class="icon icon-edit"></i>
+                              </a>&nbsp;&nbsp;
+                              <a role="button">
+                                <i class="icon icon-delete" (click)="delete_item(element)"></i>
+                              </a>
+                            </ng-container>
+                          </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="language === 'en' ? displayedColumns_en : displayedColumns_ln"></tr>
+                        <tr mat-row *matRowDef="let row; columns: language === 'en' ? displayedColumns_en : displayedColumns_ln;"></tr>
+
+                      </table>
+                    </div>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 15, 100]" showFirstLastButtons></mat-paginator>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-common-modal>

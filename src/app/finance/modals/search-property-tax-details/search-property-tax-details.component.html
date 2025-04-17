@@ -1,0 +1,202 @@
+<app-common-modal class="finance-modal finance-layout finance-container" [title]="'Property Tax'"
+    [buttons]="modalButtons">
+
+    <div class="transaction-content ">
+        <div class="row gy-3 gx-0 main-row">
+
+            <!-- left column -->
+            <div class="col-md-4 left-column">
+                <!-- form -->
+                <div class="form-wrap table-form-wrap pt-3 multi-type">
+                    <div class="form-body sticky-bottom-widget-include receipts">
+                        <div class="row form-row">
+
+                            <!-- applicant -->
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="row form-inner-row">
+                                        <div class="col-12 left-side">
+                                            <label for="applicant" class="form-label">Applicant</label>
+                                        </div>
+
+                                        <div class="col-12 right-side">
+                                            <div class="input-group right xs">
+                                                <input type="text" name="applicant" id="applicant"
+                                                    class="form-control xs">
+                                                <span class="input-group-text xs"><i
+                                                        class="icon icon-search-gray"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="row gx-3 gy-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Name</label>
+                                            <p class="desc">Alex David</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Email</label>
+                                            <p class="desc">dummymail&#64;gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Mobile</label>
+                                            <p class="desc">+91 8956 235 125</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">House/Building Name</label>
+                                            <p class="desc">Yamuna</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">House No</label>
+                                            <p class="desc">145</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Street</label>
+                                            <p class="desc">Medical College</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Local Place</label>
+                                            <p class="desc">Ulloor</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Main Place</label>
+                                            <p class="desc">Kesavadasapuram</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Post/Pin Code</label>
+                                            <p class="desc">695587</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">District</label>
+                                            <p class="desc">Thiruvananthapuram</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="" class="form-label">State</label>
+                                            <p class="desc">Kerala</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- right column -->
+            <div class="col-md-8 right-column position-relative">
+                <div class="multiple-contents-wrap sticky-bottom-widget-include receipts">
+
+                    <!-- table outer wrap -->
+                    <div class="table-outer-wrap relative">
+                        <div class="table-wrap file-box-wrap pagination-included">
+                            <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
+                          
+                              <!-- Year Column -->
+                              <ng-container matColumnDef="year">
+                                <th mat-header-cell *matHeaderCellDef> Year </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.year }} </td>
+                              </ng-container>
+                          
+                              <!-- 1st Half Column -->
+                              <ng-container matColumnDef="firstHalf">
+                                <th mat-header-cell *matHeaderCellDef> 1st Half </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.firstHalf }} </td>
+                              </ng-container>
+                          
+                              <!-- 2nd Half Column -->
+                              <ng-container matColumnDef="secondHalf">
+                                <th mat-header-cell *matHeaderCellDef> 2nd Half </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.secondHalf }} </td>
+                              </ng-container>
+                          
+                              <!-- Amount Column -->
+                              <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.amount | currency }} </td>
+                              </ng-container>
+                          
+                              <!-- Arier Column -->
+                              <ng-container matColumnDef="arier">
+                                <th mat-header-cell *matHeaderCellDef> Arier </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.arier | currency }} </td>
+                              </ng-container>
+                        
+                              <!-- checkbox Column -->
+                              <ng-container matColumnDef="check">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element"> <input type="checkbox" name="" id="" class="form-check-input"></td>
+                              </ng-container>
+                          
+                              <!-- Header and Row Definitions -->
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                          
+                            <!-- MatPaginator for Pagination -->
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                          </div>
+                          
+                    </div>
+
+                    <!-- transaction etails wrap -->
+                    <div class="transaction-details-wrap sticky-bottom ">
+                        <!-- each row -->
+
+                        <div class="item-row total-row">
+
+                            <div class="discount-item">
+                                <div class="form-group item p-0">
+                                    <h6 class="head">Amount Available</h6>
+                                    <input type="text" class="form-control xs" id="amount" name="amount">
+                                </div>
+                                <div class="form-group item p-0">
+                                    <h6 class="head">Panel Interest</h6>
+                                    <input type="text" class="form-control xs" id="amount" name="amount">
+                                </div>
+                            </div>
+
+                            <div class="total-item item">
+                                <h6 class="head">Grand Total</h6>
+                                <h5 class="desc">₹ <span class="amount">23,980.00</span></h5>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</app-common-modal>
