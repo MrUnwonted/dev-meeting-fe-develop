@@ -334,7 +334,7 @@ export class BanksComponent {
         this.selected_bank.unit.unit = res.vch_unit;
         // Set the combined display value
         this.bankTypeDisplay = `${this.selected_bank.bank_type.secondary_code}-${res.vch_parent_head}`;
-        this.accountHeadDisplay = `${this.selected_bank.acc_head.head_code}`;
+        this.accountHeadDisplay = `${this.selected_bank.acc_head.head_code}-${res.vch_head}`;
         // Populate bank_details from API response
         this.selected_bank.details = {
           // Preserve existing values
