@@ -26,7 +26,7 @@ export class BanksComponent {
     'code',
     'short_description',
     'head',
-    // 'unit',
+    'unit',
   ];
   dataSource = new MatTableDataSource<any>();
   isEditing: boolean = false; // Editing flag
@@ -58,7 +58,7 @@ export class BanksComponent {
   // Fetch records from the server and populate the data source for the table
   fetch_records() {
     let param = {
-      unit_id: 1,
+      unit_id: '',
     };
     // Check if data is available in cache
     this.svr.fin_getService('api/v0/get_bank_list', param).subscribe(
@@ -165,14 +165,9 @@ export class BanksComponent {
       this.showNotification('info', 'Info', 'Select Unit First');
       return;
     }
-    this.bankTypeDisplay = ''; // Reset display variable
-    this.accountHeadDisplay = ''; // Reset display variable
     // console.log('Selected Unit', this.selected_unit);
     this.open_bank_type();
-    this.selected_bank.acc_head = {
-      head_code: '',
-      head_id: '',
-    };
+
     // }
   }
 
@@ -184,28 +179,43 @@ export class BanksComponent {
       data: { source: 'bankHead' },
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
-      if (response && response.data) {
-        const userData = response.data;
-        this.selected_bank = {
-          ...this.selected_bank, // Preserve existing values
-          bank_type: {
-            secondary_id: userData.int_secondary_id,
-            secondary_code: userData.vch_secondary_code,
-            secondary_head: userData.vch_secondary_head,
-          },
-        };
-        // Set the combined display value
-        this.bankTypeDisplay = `${userData.vch_secondary_code}-${userData.vch_secondary_head}`;
-        // Only fetch heads if secondary_code is set
-        if (this.selected_bank.bank_type.secondary_code) {
-          console.log(
-            'Fetching heads for:',
-            this.selected_bank.bank_type.secondary_code
-          );
-          // this.fetch_heads();
-        }
-        // console.log('Selected Acc Head:', this.selected_bank.bank_type);
+      if (!response || !response.data) {
+        console.log('Dialog was canceled, no changes applied.');
+        return; // Do nothing if dialog was canceled
       }
+      const userData = response.data;
+      const newSecondaryId = userData.int_secondary_id;
+      // Compare with current value
+      const currentSecondaryId = this.selected_bank?.bank_type?.secondary_id;
+      const bankTypeChanged = newSecondaryId !== currentSecondaryId;
+      this.selected_bank = {
+        ...this.selected_bank, // Preserve existing values
+        bank_type: {
+          secondary_id: userData.int_secondary_id,
+          secondary_code: userData.vch_secondary_code,
+          secondary_head: userData.vch_secondary_head,
+        },
+      };
+      // Reset acc_head only if bank type changed
+      if (bankTypeChanged) {
+        this.selected_bank.acc_head = {
+          head_code: '',
+          head_id: '',
+        };
+        this.bankTypeDisplay = ''; // Reset display variable
+        this.accountHeadDisplay = ''; // Reset display variable
+      }
+      // Set the combined display value
+      this.bankTypeDisplay = `${userData.vch_secondary_code}-${userData.vch_secondary_head}`;
+      // Only fetch heads if secondary_code is set
+      if (this.selected_bank.bank_type.secondary_code) {
+        console.log(
+          'Fetching heads for:',
+          this.selected_bank.bank_type.secondary_code
+        );
+        // this.fetch_heads();
+      }
+      // console.log('Selected Acc Head:', this.selected_bank.bank_type);
     });
     // }
   }
@@ -216,11 +226,7 @@ export class BanksComponent {
     if (!this.selected_bank.unit.unit && !this.selected_bank.unit.id) {
       this.showNotification('info', 'Info', 'Select Unit First');
       return;
-    } else if (
-      !this.selected_bank.bank_type.secondary_id &&
-      !this.selected_bank.bank_type.secondary_head &&
-      !this.selected_bank.bank_type.secondary_code?.toString().trim()
-    ) {
+    } else if (!this.selected_bank.bank_type.secondary_id) {
       this.showNotification('info', 'Info', 'Select Bank Type');
       return;
     }
@@ -237,20 +243,22 @@ export class BanksComponent {
       data: { filterParam: this.selected_bank?.bank_type.secondary_id },
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
-      if (response && response.data) {
-        const userData = response.data;
-        this.selected_bank = {
-          ...this.selected_bank,
-          acc_head: {
-            head_code: userData.vch_head_code,
-            head_id: userData.int_head_id,
-            head: userData.vch_head,
-          },
-        };
-        // Set the combined display value
-        this.accountHeadDisplay = `${userData.vch_head_code}-${userData.vch_head}`;
-        // console.log('Selected Row', this.selected_bank.acc_head);
+      if (!response || !response.data) {
+        console.log('Account head dialog canceled. No changes applied.');
+        return; // Do nothing if dialog was canceled
       }
+      const userData = response.data;
+      this.selected_bank = {
+        ...this.selected_bank,
+        acc_head: {
+          head_code: userData.vch_head_code,
+          head_id: userData.int_head_id,
+          head: userData.vch_head,
+        },
+      };
+      // Set the combined display value
+      this.accountHeadDisplay = `${userData.vch_head_code}-${userData.vch_head}`;
+      // console.log('Selected Row', this.selected_bank.acc_head);
     });
     // }
   }
@@ -511,6 +519,11 @@ export class BanksComponent {
     const isValid = await this.validateAllFields();
     if (!isValid) {
       console.error('Form has validation errors:', this.errors);
+      // Show the first error as a notification
+      const firstError = Object.values(this.errors).find((err) => !!err); // find the first non-empty error
+      if (firstError) {
+        this.showNotification('warning', 'Warning', firstError as string);
+      }
       return;
     }
     let payload: any = {};
@@ -590,20 +603,24 @@ export class BanksComponent {
     // Clear previous errors
     this.errors = {};
     if (!this.selected_bank.unit.unit) {
-      this.showNotification('info', 'Info', 'Select Unit First');
-      return false;
+      this.errors.unit = 'Select Unit First';
+      // this.showNotification('info', 'Info', 'Select Unit First');
+      // return false;
     }
     if (!this.selected_bank.bank_type.secondary_code) {
-      this.showNotification('info', 'Info', 'Select Bank Type');
-      return false;
+      this.errors.bankType = 'Select Bank Type';
+      // this.showNotification('info', 'Info', 'Select Bank Type');
+      // return false;
     }
     if (!this.selected_bank.acc_head.head_code) {
-      this.showNotification('info', 'Info', 'Select Account Head');
-      return false;
+      this.errors.accHead = 'Select Account Head';
+      // this.showNotification('info', 'Info', 'Select Account Head');
+      // return false;
     }
     if (!this.selected_bank.details.bank_code) {
-      this.showNotification('info', 'Info', 'Please Enter Bank Code');
-      return false;
+      this.errors.bankCode = 'Please Enter Bank Code';
+      // this.showNotification('info', 'Info', 'Please Enter Bank Code');
+      // return false;
     }
     // console.log(
     //   'Data before validation:',
@@ -611,21 +628,22 @@ export class BanksComponent {
     // );
     this.validateField('bank_name', this.selected_bank.details.bank_name);
     this.validateField('short_name', this.selected_bank.details.short_name);
-    this.validateField('branch', this.selected_bank.details.branch);
     this.validateField('ifsc', this.selected_bank.details.ifsc);
     this.validateField('account_no', this.selected_bank.details.account_no);
+    this.validateField('branch', this.selected_bank.details.branch);
     this.validateField('email', this.selected_bank.details.email);
     this.validateField('mobile', this.selected_bank.details.mobile);
-    this.validateField('post', this.selected_bank.details.post);
-    this.validateField('pin', this.selected_bank.details.pin);
+    // this.validateField('post', this.selected_bank.details.post);
+    // this.validateField('pin', this.selected_bank.details.pin);
     // Check for empty address only if other validations pass
-    // Always run address validation regardless of errors
+    // Step 4: If any field error exists, skip address check
+    const hasFieldErrors = Object.values(this.errors).some((error) => !!error);
+    if (hasFieldErrors) {
+      return false;
+    }
+    // Step 5: Validate address only if above validations pass
     const addressConfirmed = await this.validateAddress();
-    // Combine both conditions to determine overall result
-    const noFieldErrors = Object.values(this.errors).every(
-      (error) => error === ''
-    );
-    return addressConfirmed && noFieldErrors;
+    return addressConfirmed;
   }
 
   async validateAddress(): Promise<boolean> {
@@ -679,7 +697,7 @@ export class BanksComponent {
         if (!strValue) {
           this.errors.ifsc = 'IFSC Code is required.';
         } else if (!this.isValidIFSC(strValue)) {
-          this.errors.ifsc = 'Invalid IFSC Code format.';
+          this.errors.ifsc = 'Invalid IFSC Code format';
         }
         break;
       case 'account_no':
@@ -700,17 +718,17 @@ export class BanksComponent {
           this.errors.mobile = 'Valid Mobile Number is required.';
         }
         break;
-      case 'post':
-        if (!strValue) {
-          // Changed from !value?.trim()
-          this.errors.post = 'Post is required.';
-        }
-        break;
-      case 'pin':
-        if (!strValue || !this.isValidPin(strValue)) {
-          this.errors.pin = 'Valid Pin Number is required.';
-        }
-        break;
+      // case 'post':
+      //   if (!strValue) {
+      //     // Changed from !value?.trim()
+      //     this.errors.post = 'Post is required.';
+      //   }
+      //   break;
+      // case 'pin':
+      //   if (!strValue || !this.isValidPin(strValue)) {
+      //     this.errors.pin = 'Valid Pin Number is required.';
+      //   }
+      //   break;
     }
     // Force change detection
     this.errors = { ...this.errors };

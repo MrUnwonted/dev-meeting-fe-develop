@@ -43,6 +43,7 @@
                               [(ngModel)]="selected_bank?.unit.unit"
                               [disabled]="isReadOnly && isEnabled"
                               #unitInput
+                              readonly
                             />
                             <span class="input-group-text xs"
                               ><i class="icon icon-search-gray"></i
@@ -68,7 +69,7 @@
                             (dblclick)="callOpenBankType()"
                             [value]="bankTypeDisplay"
                             [disabled]="isReadOnly && isEnabled"
-                            required
+                            readonly
                           />
                           <input
                             type="hidden"
@@ -98,6 +99,7 @@
                             (dblclick)="callOpenAccountHeads()"
                             [value]="accountHeadDisplay"
                             [disabled]="isReadOnly && isEnabled"
+                            readonly
                           />
                           <input
                             type="hidden"
@@ -247,6 +249,7 @@
                                       name="ifsc"
                                       id="ifsc"
                                       class="form-control xs"
+                                      placeholder="Enter IFSC Code (e.g., SBIN0001234)"
                                       [(ngModel)]="selected_bank.details.ifsc"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="11"
