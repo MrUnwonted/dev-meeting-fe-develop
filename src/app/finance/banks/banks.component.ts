@@ -132,19 +132,9 @@ export class BanksComponent {
         block: 'center',
       });
     }, 100);
-    // this.scrollToBankName(); // Scroll to the Bank Name input field
-  }
-  scrollToBankName() {
-    // Select the "Info" tab (assuming it's at index 0)
-    this.tabGroup.selectedIndex = 0;
-
-    // Wait for the tab content to render before scrolling
-    setTimeout(() => {
-      this.bankNameInput?.nativeElement?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }, 100); // Delay ensures the tab content is available
+    if (this.tabGroup) {
+      this.tabGroup.selectedIndex = 0; // Info tab
+    }
   }
 
   // Open the search dialog for selecting a unit
@@ -500,20 +490,12 @@ export class BanksComponent {
   }
 
   async save() {
-    const isValid = this.validateAllFields();
+    const isValid = await this.validateAllFields();
     if (!isValid) {
       console.error('Form has validation errors:', this.errors);
       return;
     }
 
-    const hasErrors = Object.values(this.errors).some((error) => error !== '');
-
-    if (hasErrors) {
-      console.error('Form has validation errors:', this.errors);
-      return;
-    }
-    const canProceed = await this.validateAddress();
-    if (!canProceed) return;
     let payload: any = {};
     // Find the selected district object
     const selectedDistrictObj = this.districts.find(
@@ -578,7 +560,7 @@ export class BanksComponent {
     );
   }
 
-  validateAllFields(): boolean {
+  async validateAllFields(): Promise<boolean> {
     // Clear previous errors
     this.errors = {};
     if (!this.selected_bank.unit.unit) {
@@ -611,11 +593,14 @@ export class BanksComponent {
     this.validateField('post', this.selected_bank.details.post);
     this.validateField('pin', this.selected_bank.details.pin);
     // Check for empty address only if other validations pass
-    if (Object.keys(this.errors).length === 0) {
-      this.validateAddress();
-    }
-    // Return true only if no errors
-    return Object.values(this.errors).every((error) => error === '');
+    // 🔁 Always run address validation regardless of errors
+    const addressConfirmed = await this.validateAddress();
+
+    // ✅ Combine both conditions to determine overall result
+    const noFieldErrors = Object.values(this.errors).every(
+      (error) => error === ''
+    );
+    return addressConfirmed && noFieldErrors;
   }
 
   async validateAddress(): Promise<boolean> {
@@ -633,7 +618,10 @@ export class BanksComponent {
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
       });
-
+      if (!result.isConfirmed) {
+        // 👉 Switch to Address tab (adjust the index if needed)
+        this.tabGroup.selectedIndex = 2; // replace `2` with the correct index for your Address tab
+      }
       return result.isConfirmed;
     }
     return true;
