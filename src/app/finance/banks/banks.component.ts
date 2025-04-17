@@ -1,9 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchOfficeComponent } from '../modals/search-office/search-office.component';
@@ -118,15 +113,6 @@ export class BanksComponent {
         listing: 1,
       },
     };
-  }
-
-  addNew() {
-    this.init();
-    this.isEditing = false;
-    this.isAdding = true;
-    this.isReadOnly = false;
-    this.isEnabled = true;
-    this.editingRow = null;
     // Scroll to the Unit input field
     setTimeout(() => {
       this.unitInput?.nativeElement?.scrollIntoView({
@@ -137,6 +123,15 @@ export class BanksComponent {
     if (this.tabGroup) {
       this.tabGroup.selectedIndex = 0; // Info tab
     }
+  }
+
+  addNew() {
+    this.init();
+    this.isEditing = false;
+    this.isAdding = true;
+    this.isReadOnly = false;
+    this.isEnabled = true;
+    this.editingRow = null;
   }
 
   // Open the search dialog for selecting a unit
@@ -317,6 +312,9 @@ export class BanksComponent {
         block: 'center',
       });
     }, 100);
+    if (this.tabGroup) {
+      this.tabGroup.selectedIndex = 0; // Info tab
+    }
     // Highlight the selected row
     this.rowColors = this.rowColors.map(() => '');
     this.rowColors[index] = '#ff0000';
@@ -369,7 +367,6 @@ export class BanksComponent {
         ) {
           this.fetch_districts(this.selected_bank.details.state_id);
         }
-
         this.hasDeactivatedRows = res.tny_listing !== 1; // Check if listing is not 1, for marking as deactivated
         console.log('Selected Bank Details:', this.selected_bank);
       },
@@ -384,7 +381,6 @@ export class BanksComponent {
   fetch_states() {
     this.svr.fin_getService('api/v0/get_states', {}).subscribe((res: any) => {
       this.statesWithDistricts = res.filter((state: any) => state.active === 1);
-
       // Now that states are loaded, bind state_id properly
       if (this.isEditing && this.selected_bank.details.state_id) {
         const state = this.statesWithDistricts.find(
@@ -392,7 +388,7 @@ export class BanksComponent {
         );
         if (state) {
           this.selectedStateId = state.id;
-          // ✅ Trigger districts load after state is set
+          // Trigger districts load after state is set
           this.fetch_districts(state.id);
         }
       }
@@ -405,7 +401,6 @@ export class BanksComponent {
       .fin_getService('api/v0/get_districts', { state_id: stateId })
       .subscribe((res: any) => {
         this.districts = res.filter((district: any) => district.active === 1);
-
         // Set district only after districts are fetched
         if (this.isEditing && this.selected_bank.details.dist_id) {
           const district = this.districts.find(
@@ -413,7 +408,6 @@ export class BanksComponent {
           );
           if (district) {
             this.selected_bank.details.district = district.district;
-
             // Optional: re-assign dist_id to trigger change detection
             this.selected_bank.details.dist_id = district.id;
           } else {
@@ -430,7 +424,6 @@ export class BanksComponent {
     const state = this.statesWithDistricts.find(
       (s) => s.id === selectedStateId
     );
-
     if (state) {
       this.selectedStateId = selectedStateId;
       this.selected_bank.details.state = state.state;
@@ -458,7 +451,6 @@ export class BanksComponent {
   validateCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const userInput = inputElement.value.trim();
-
     //  Function to check uniqness of the code
     // Check if input is a valid number
     if (!/^\d*$/.test(userInput)) {
@@ -476,11 +468,9 @@ export class BanksComponent {
   padBankCode(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     let userInput = inputElement.value.trim();
-
     if (userInput) {
       // Pad with leading zeros to make it 4 digits
       const paddedValue = userInput.padStart(4, '0');
-
       // Update both the input field and the model
       inputElement.value = paddedValue;
       this.selected_bank.details.bank_code = paddedValue;
@@ -499,7 +489,6 @@ export class BanksComponent {
         row.int_head_id === headId &&
         (!this.editingRow || row.int_bank_id !== this.editingRow.int_bank_id)
     );
-
     if (isDuplicate) {
       // Show error notification
       this.showNotification(
@@ -507,9 +496,8 @@ export class BanksComponent {
         'Duplicate Code',
         'This bank code already exists for the selected account head'
       );
-
-      // Clear or focus the field 
-      // this.selected_bank.details.bank_code = '';
+      // Clear or focus the field
+      this.selected_bank.details.bank_code = '';
       // event.target.focus(); // if you want to focus back
     }
   }
@@ -525,7 +513,6 @@ export class BanksComponent {
       console.error('Form has validation errors:', this.errors);
       return;
     }
-
     let payload: any = {};
     // Find the selected district object
     const selectedDistrictObj = this.districts.find(
@@ -558,13 +545,11 @@ export class BanksComponent {
       pin: this.selected_bank.details?.pin || '',
       mobile: this.selected_bank.details?.mobile || '',
       email: this.selected_bank.details?.email || '',
-
       // State and District from the selected values
       // state: this.selected_bank.details.state,
       state_id: this.selected_bank.details.state_id,
       // district: this.selected_bank.details.district,
       dist_id: this.selected_bank.details.dist_id,
-
       group_id: 8, // Static value, change if needed
       address_id: 1,
       passbook_ob: '0.00',
@@ -575,17 +560,28 @@ export class BanksComponent {
       (response) => {
         if (response && !response.error) {
           console.log('Response:', response);
-
-          Swal.fire('Success', 'Bank details saved successfully!', 'success');
+          this.showNotification(
+            'success',
+            'Success',
+            'Bank details saved successfully!'
+          );
           this.addNew(); // Reset the form after saving
           this.fetch_records();
         } else {
-          Swal.fire('Error', 'Failed to save bank details', 'error');
+          this.showNotification(
+            'error',
+            'Error',
+            'Failed to save bank details'
+          );
         }
       },
       (error) => {
         console.error('Error saving bank details:', error);
-        Swal.fire('Error', 'Error saving bank details. Try again!', 'error');
+        this.showNotification(
+          'error',
+          'Error',
+          'Error saving bank details. Try again!'
+        );
       }
     );
   }
@@ -623,10 +619,9 @@ export class BanksComponent {
     this.validateField('post', this.selected_bank.details.post);
     this.validateField('pin', this.selected_bank.details.pin);
     // Check for empty address only if other validations pass
-    // 🔁 Always run address validation regardless of errors
+    // Always run address validation regardless of errors
     const addressConfirmed = await this.validateAddress();
-
-    // ✅ Combine both conditions to determine overall result
+    // Combine both conditions to determine overall result
     const noFieldErrors = Object.values(this.errors).every(
       (error) => error === ''
     );
@@ -649,7 +644,7 @@ export class BanksComponent {
         cancelButtonText: 'No',
       });
       if (!result.isConfirmed) {
-        // 👉 Switch to Address tab (adjust the index if needed)
+        // Switch to Address tab (adjust the index if needed)
         this.tabGroup.selectedIndex = 2; // replace `2` with the correct index for your Address tab
       }
       return result.isConfirmed;
@@ -659,10 +654,8 @@ export class BanksComponent {
 
   validateField(fieldName: string, value: any): void {
     this.errors[fieldName] = ''; // Clear previous error
-
     // Convert value to string and trim
     const strValue = String(value || '').trim();
-
     switch (fieldName) {
       case 'bank_name':
         if (!strValue) {
@@ -670,21 +663,18 @@ export class BanksComponent {
           this.errors.bank_name = 'Bank Name is required.';
         }
         break;
-
       case 'short_name':
         if (!strValue) {
           // Changed from !value?.trim()
           this.errors.short_name = 'Short Name is required.';
         }
         break;
-
       case 'branch':
         if (!strValue) {
           // Changed from !value?.trim()
           this.errors.branch = 'Branch is required.';
         }
         break;
-
       case 'ifsc':
         if (!strValue) {
           this.errors.ifsc = 'IFSC Code is required.';
@@ -692,7 +682,6 @@ export class BanksComponent {
           this.errors.ifsc = 'Invalid IFSC Code format.';
         }
         break;
-
       case 'account_no':
         if (!strValue) {
           this.errors.account_no = 'Account Number is required.';
@@ -701,33 +690,28 @@ export class BanksComponent {
             'Account Number must be between 9 to 18 digits.';
         }
         break;
-
       case 'email':
         if (!strValue || !this.isValidEmail(strValue)) {
           this.errors.email = 'Valid Email is required.';
         }
         break;
-
       case 'mobile':
         if (!strValue || !this.isValidMobile(strValue)) {
           this.errors.mobile = 'Valid Mobile Number is required.';
         }
         break;
-
       case 'post':
         if (!strValue) {
           // Changed from !value?.trim()
           this.errors.post = 'Post is required.';
         }
         break;
-
       case 'pin':
         if (!strValue || !this.isValidPin(strValue)) {
           this.errors.pin = 'Valid Pin Number is required.';
         }
         break;
     }
-
     // Force change detection
     this.errors = { ...this.errors };
   }
@@ -736,20 +720,16 @@ export class BanksComponent {
   isValidEmail(email: string): boolean {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   }
-
   isValidMobile(mobile: string): boolean {
     return /^[0-9]{10}$/.test(mobile);
   }
-
   isValidPin(pin: string): boolean {
     return /^[1-9][0-9]{5}$/.test(pin);
   }
-
   isValidIFSC(ifsc: string): boolean {
     const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
     return regex.test(ifsc);
   }
-
   isValidAccountNumber(accountNo: string): boolean {
     const regex = /^\d{9,18}$/;
     return regex.test(accountNo);
