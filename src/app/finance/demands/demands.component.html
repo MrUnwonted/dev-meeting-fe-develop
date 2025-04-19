@@ -1,590 +1,738 @@
 <div class="finance-container">
-    <div class="fin-card">
-        <div class="card widget-card table-card">
-            <div class="card-header">
-                <div class="header-wrap-outer">
-                    <div class="header-wrap">
-                        <div class="text-wrap">
-                            <h6>Demand</h6>
-                        </div>
-
-                 
-                        <div class="row form-inner-row">
-                            <div class="col-3 left-side">
-                            </div>
-                            <div class="col-9 left-side">
-                                <div class="row gx-1 gy-1">
-                                    <div class="col-6">
-                                        <input type="text" name="demand_no" id="demand_no"
-                                            class="form-control xs" placeholder="Demand No">
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <input type="text" name="demand_dt" id="demand_no" readonly
-                                            class="form-control xs" value="10-04-2025">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
+  <div class="fin-card">
+    <div class="card widget-card table-card">
+      <div class="card-header">
+        <div class="header-wrap-outer">
+          <div class="header-wrap">
+            <div class="text-wrap">
+              <h6>Demand</h6>
             </div>
-            <div class="card-body">
-                <div class="card-body-content">
-                    <div class="transaction-content">
-                        <div class="row gy-3 gx-0 main-row">
 
-                            <!-- left column -->
-                            <div class="col-md-4 left-column">
-                                <!-- form -->
+            <div class="row form-inner-row">
+              <div class="col-3 left-side"></div>
+              <div class="col-9 left-side">
+                <div class="row gx-1 gy-1">
+                  <div class="col-6">
+                    <input
+                      type="text"
+                      name="demand_no"
+                      id="demand_no"
+                      class="form-control xs"
+                      placeholder="Demand No"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="demand_dt"
+                        id="demand_no"
+                        readonly
+                        class="form-control xs"
+                        value="10-04-2025"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-content">
+          <div class="transaction-content">
+            <div class="row gy-3 gx-0 main-row">
+              <!-- left column -->
+              <div class="col-md-4 left-column">
+                <!-- form -->
 
-                                <div class="form-wrap table-form-wrap multi-type">
-                                    <div class="form-body sticky-bottom-widget-include receipts">
-                                        <div class="row form-row">
+                <div class="form-wrap table-form-wrap multi-type">
+                  <div class="form-body sticky-bottom-widget-include receipts">
+                    <div class="row form-row">
+                      <!--Invoice no -->
 
-                                            <!--Invoice no -->
-                                           
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="invoice" class="form-label">Transaction
-                                                                Type</label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="invoice" class="form-label"
+                                >Transaction Type</label
+                              >
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="input-group right xs">
+                                <input
+                                  type="text"
+                                  name="transaction_type"
+                                  id="transaction_type"
+                                  class="form-control xs"
+                                  (dblclick)="open_transactions()"
+                                />
+                                <span class="input-group-text xs"
+                                  ><i class="icon icon-search-gray"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row form-row bg-box">
+                      <h6 class="head">Zone / Ward No./ Door No.</h6>
+                      <!--Invoice no -->
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side"></div>
+                            <div class="col-9 right-side">
+                              <div class="row gx-1 gy-1">
+                                <div class="col-4">
+                                  <input
+                                    type="text"
+                                    name="zone"
+                                    id="zone"
+                                    class="form-control xs"
+                                    placeholder="Zone"
+                                  />
+                                </div>
+                                <div class="col-4">
+                                  <div class="form-group">
+                                    <input
+                                      type="text"
+                                      name="ward"
+                                      id="ward"
+                                      class="form-control xs"
+                                      placeholder="Ward"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="form-group">
+                                    <input
+                                      type="text"
+                                      name="doorno"
+                                      id="doorno"
+                                      class="form-control xs"
+                                      placeholder="Door"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                                                            <div class="input-group right xs">
-                                                                <input type="text" name="transaction_type" id="transaction_type"
-                                                                    class="form-control xs" (click)="open_transactions();">
-                                                                <span class="input-group-text xs"><i
-                                                                        class="icon icon-search-gray"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="row form-row">
+                      <!-- cash -->
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="applicant" class="form-label"
+                                >Applicant</label
+                              >
+                            </div>
 
-                                        </div>
-                                        <div class="row form-row bg-box">
-                                            <h6 class="head">Zone / Ward No./ Door No.</h6>
-                                            <!--Invoice no -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="row gx-1 gy-1">
-                                                                <div class="col-4">
-                                                                    <input type="text" name="zone" id="zone" class="form-control xs"  placeholder="Zone" >
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="ward" id="ward" class="form-control xs" placeholder="Ward"  >
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-4">
-                                                                    <div class="form-group">
-                                                                        <input type="text" name="doorno" id="doorno" class="form-control xs" placeholder="Door"  >
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="col-9 right-side">
+                              <div class="input-group right xs">
+                                <input
+                                  type="text"
+                                  name="applicant"
+                                  id="applicant"
+                                  (click)="Search_applicant()"
+                                  class="form-control xs"
+                                />
+                                <span class="input-group-text xs"
+                                  ><i class="icon icon-search-gray"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-
-                                        <div class="row form-row">
-
-
-                                            <!-- cash -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="applicant" class="form-label">Applicant</label>
-                                                        </div>
-
-                                                        <div class="col-9 right-side">
-                                                            <div class="input-group right xs">
-                                                                <input type="text" name="applicant" id="applicant" (click)="Search_applicant();"
-                                                                    class="form-control xs">
-                                                                <span class="input-group-text xs"><i
-                                                                        class="icon icon-search-gray"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12">
-                                                <div class="row gx-3 gy-3">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Name</label>
-                                                            <p class="desc">Alex David</p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="col-md-6">
+                      <div class="col-lg-12">
+                        <div class="row gx-3 gy-3">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">Name</label>
+                              <p class="desc">Alex David</p>
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="" class="form-label">Email</label>
                                                         <p class="desc">dummymail&#64;gmail.com</p>
                                                     </div>
                                                 </div> -->
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Mobile</label>
-                                                            <p class="desc">+91 8956 235 125</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">House/Building Name</label>
-                                                            <p class="desc">Yamuna</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Zone/Ward/Door no.</label>
-                                                            <p class="desc">2/3104/145</p>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Main Place</label>
-                                                            <p class="desc">Kesavadasapuram</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Post/Pin Code</label>
-                                                            <p class="desc">695587</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">District</label>
-                                                            <p class="desc">Thiruvananthapuram</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">State</label>
-                                                            <p class="desc">Kerala</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <div class="row form-row">
-                                            <div class="col-lg-12">
-                                                <div class="select-wrap">
-                                                    <label for="select" class="form-label">Mode of Collection</label>
-                                                    <select [(ngModel)]="selected_collection_option"
-                                                        class="form-select xs">
-                                                        <option *ngFor="let option of collection_options"
-                                                            [value]="option.id">
-                                                            {{ option.label }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12" *ngIf="selected_collection_option==2">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="applicant" class="form-label">Bill
-                                                                Collector</label>
-                                                        </div>
-
-                                                        <div class="col-9 right-side">
-                                                            <div class="input-group right xs">
-                                                                <input type="text" name="billcollector"
-                                                                    id="billcollector" class="form-control xs">
-                                                                <span class="input-group-text xs"><i
-                                                                        class="icon icon-search-gray"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="type" class="form-label"></label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="check-wrap-outer">
-                                                                <div class="form-check">
-                                                                    <input type="radio" [(ngModel)]="cash_mode"
-                                                                        name="type" id="type" value="1"
-                                                                        class="form-check-input">
-                                                                    <label for="type" class="form-label">Cash</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input type="radio" [(ngModel)]="cash_mode"
-                                                                        name="type" id="type" value="2"
-                                                                        class="form-check-input">
-                                                                    <label for="type" class="form-label">Bank</label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input type="radio" [(ngModel)]="cash_mode"
-                                                                        name="type" id="type" value="3"
-                                                                        class="form-check-input">
-                                                                    <label for="type" class="form-label">Digital Payment</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Date -->
-                                            <div class="col-lg-12" *ngIf="cash_mode==2">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="supplier" class="form-label">Bank <span
-                                                                    class="sub-text">Name</span></label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="input-group right xs">
-                                                                <input type="text" name="bankname" id="bankname"
-                                                                    class="form-control xs" readonly (click)="open_bank();">
-                                                                <span class="input-group-text xs"><i
-                                                                        class="icon icon-search-gray"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-lg-12" *ngIf="cash_mode==2">
-                                                <div class="row gx-3 gy-3">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Bank Account No.</label>
-                                                            <p class="desc">690067890567</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Account Head Code</label>
-                                                            <p class="desc">450101001</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label">Branch</label>
-                                                            <p class="desc">Kesavadasapuram</p>
-                                                        </div>
-                                                    </div>
-                                                  
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12" *ngIf="cash_mode==3">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="supplier" class="form-label">Transaction No <span
-                                                                    class="sub-text">referenceNo</span></label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="input-group right xs">
-                                                                <input type="text" name="reference_no" id="reference_no"
-                                                                    class="form-control xs">                                                               
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-
-
-                                        <div class="row form-row bg-box">
-                                            <h6 class="head">Instrument Details</h6>
-                                            <!--Invoice no -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="cheque" class="form-label">Cheque No</label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="row gx-1 gy-1">
-                                                                <div class="col-6">
-                                                                    <input type="text" name="cheque" id="chequee"
-                                                                        class="form-control xs" value="4002015">
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="form-group">
-                                                                        <div class="date-picker-wrap">
-                                                                          <input class="form-control xs"
-                                                                                 placeholder="Date"
-                                                                                 [matDatepicker]="picker"
-                                                                                 [(ngModel)]="selectedDate"
-                                                                                 (focus)="picker.open()">
-                                                                      
-                                                                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                          <mat-datepicker #picker></mat-datepicker>
-                                                                        </div>
-                                                                      </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Date -->
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="date" class="form-label">Instrument Type</label>
-                                                        </div>
-                                                        <div class="col-9 right-side">
-                                                            <div class="select-wrap">
-                                                                <select [(ngModel)]="selectedType"
-                                                                    class="form-select xs">
-                                                                    <option *ngFor="let option of instrument_options"
-                                                                        [value]="option.id">
-                                                                        {{ option.label }}
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <div class="row form-inner-row">
-                                                        <div class="col-3 left-side">
-                                                            <label for="sales" class="form-label">Drawn <span
-                                                                    class="sub-text">Bank / Branch</span></label>
-                                                        </div>
-
-                                                        <div class="col-9 right-side">
-                                                            <input type="text" name="cash" id="sales"
-                                                                class="form-control xs">
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- transaction etails wrap outside form-body -->
-                                    <div class="transaction-details-wrap sticky-bottom b-top">
-
-                                        <div class="item-row border-bottom-0 ">
-
-                                            <div class="discount-item">
-                                                <div class="item">
-                                                    <h6 class="head">Counter</h6>
-                                                    <h5 class="desc summary-text">One</h5>
-                                                </div>
-                                            </div>
-
-                                            <div class="discount-item">
-                                                <div class="item">
-                                                    <h6 class="head">Staff</h6>
-                                                    <h5 class="desc summary-text">Patricia Sanders</h5>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">Mobile</label>
+                              <p class="desc">+91 8956 235 125</p>
                             </div>
-
-                            <!-- right column -->
-                            <div class="col-md-8 right-column position-relative">
-                                <div class="multiple-contents-wrap sticky-bottom-widget-include receipts">
-                                    <!-- input-boxes -->
-                                    <div class="p-box input-boxes-wrap pb-0">
-
-                                        <div class="item md">
-                                            <div class="form-group">
-                                                <label for="code" class="form-label">Head Code</label>
-                                                <input type="text" class="form-control xs" name="code" id="code">
-                                            </div>
-                                        </div>
-
-                                        <div class="item lg">
-                                            <div class="form-group">
-                                                <label for="ahead" class="form-label">Account Head</label>
-                                                <input type="text" class="form-control xs" name="ahead" id="ahead">
-                                            </div>
-                                        </div>
-
-                                        <div class="item md">
-                                            <div class="form-group">
-                                                <label for="year" class="form-label">Year</label>
-                                                <input type="text" class="form-control xs" name="year" id="year">
-                                            </div>
-                                        </div>
-
-                                        <div class="item md">
-                                            <div class="form-group">
-                                                <label for="period" class="form-label">Period</label>
-                                                <input type="text" class="form-control xs" name="period" id="period">
-                                            </div>
-                                        </div>
-
-                                        <div class="item md">
-                                            <div class="form-group">
-                                                <label for="amount" class="form-label">Amount</label>
-                                                <input type="number" step="0.01" class="form-control xs" name="amount"
-                                                    id="amount">
-                                            </div>
-                                        </div>
-
-                                        <div class="item add-btn-item">
-                                            <div class="button-wrap">
-                                                <button class="btn btn-outline-primary-90 xs add-btn btn-flex">
-                                                    <i class="icon icon-add-fin"></i>
-                                                    <span class="text">Add</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- table outer wrap -->
-                                    <div class="table-outer-wrap relative">
-                                        <div>
-                                            <div class="table-wrap file-box-wrap pagination-included">
-                                                <table mat-table [dataSource]="dataSource"
-                                                    class="w-100 admin-table file-table">
-
-                                                    <!-- Sl Column -->
-                                                    <ng-container matColumnDef="sl">
-                                                        <th mat-header-cell *matHeaderCellDef> Sl </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.sl }} </td>
-                                                    </ng-container>
-
-                                                    <!-- Head Code Column -->
-                                                    <ng-container matColumnDef="headCode">
-                                                        <th mat-header-cell *matHeaderCellDef> Head Code </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.headCode }}
-                                                        </td>
-                                                    </ng-container>
-
-                                                    <!-- Head Column -->
-                                                    <ng-container matColumnDef="head">
-                                                        <th mat-header-cell *matHeaderCellDef> Head </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.head }} </td>
-                                                    </ng-container>
-
-                                                    <!-- Year Column -->
-                                                    <ng-container matColumnDef="year">
-                                                        <th mat-header-cell *matHeaderCellDef> Year </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.year }} </td>
-                                                    </ng-container>
-
-                                                    <!-- Period Column -->
-                                                    <ng-container matColumnDef="period">
-                                                        <th mat-header-cell *matHeaderCellDef> Period </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.period }}
-                                                        </td>
-                                                    </ng-container>
-
-                                                    <!-- Amount Column -->
-                                                    <ng-container matColumnDef="amount">
-                                                        <th mat-header-cell *matHeaderCellDef> Amount </th>
-                                                        <td mat-cell *matCellDef="let element"> {{ element.amount }}
-                                                        </td>
-                                                    </ng-container>
-
-                                                    <!-- Header and Row Definitions -->
-                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                                </table>
-
-                                                <!-- MatPaginator for Pagination -->
-                                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
-                                                    showFirstLastButtons></mat-paginator>
-                                            </div>
-
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-
-                                <!-- transaction etails wrap -->
-                                <div class="transaction-details-wrap sticky-bottom ">
-                                    <!-- each row -->
-
-                                    <div class="item-row total-row">
-
-                                        <div class="discount-item">
-                                            <div class="item">
-                                                <h6 class="head">Summary</h6>
-                                                <h5 class="desc summary-text">2020 2nd half to 2024 Ist half</h5>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="discount-item">
-                                            <div class="item">
-                                                <h6 class="head">Round Off</h6>
-                                                <h5 class="desc">0.00</h5>
-                                            </div>
-                                        </div>
-
-                                        <div class="total-item item">
-                                            <h6 class="head">Grand Total</h6>
-                                            <h5 class="desc">₹ <span class="amount">23,980.00</span></h5>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >House/Building Name</label
+                              >
+                              <p class="desc">Yamuna</p>
                             </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >Zone/Ward/Door no.</label
+                              >
+                              <p class="desc">2/3104/145</p>
+                            </div>
+                          </div>
 
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >Main Place</label
+                              >
+                              <p class="desc">Kesavadasapuram</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >Post/Pin Code</label
+                              >
+                              <p class="desc">695587</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">District</label>
+                              <p class="desc">Thiruvananthapuram</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">State</label>
+                              <p class="desc">Kerala</p>
+                            </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                    <div class="row form-row">
+                      <div class="col-lg-12">
+                        <div class="select-wrap">
+                          <label for="select" class="form-label"
+                            >Mode of Collection</label
+                          >
+                          <select
+                            [(ngModel)]="selected_collection_option"
+                            class="form-select xs"
+                          >
+                            <option
+                              *ngFor="let option of collection_options"
+                              [value]="option.id"
+                            >
+                              {{ option.label }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div
+                        class="col-lg-12"
+                        *ngIf="selected_collection_option == 2"
+                      >
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="applicant" class="form-label"
+                                >Bill Collector</label
+                              >
+                            </div>
+
+                            <div class="col-9 right-side">
+                              <div class="input-group right xs">
+                                <input
+                                  type="text"
+                                  name="billcollector"
+                                  id="billcollector"
+                                  class="form-control xs"
+                                />
+                                <span class="input-group-text xs"
+                                  ><i class="icon icon-search-gray"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="type" class="form-label"></label>
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="check-wrap-outer">
+                                <div class="form-check">
+                                  <input
+                                    type="radio"
+                                    [(ngModel)]="cash_mode"
+                                    name="type"
+                                    id="type"
+                                    value="1"
+                                    class="form-check-input"
+                                  />
+                                  <label for="type" class="form-label"
+                                    >Cash</label
+                                  >
+                                </div>
+                                <div class="form-check">
+                                  <input
+                                    type="radio"
+                                    [(ngModel)]="cash_mode"
+                                    name="type"
+                                    id="type"
+                                    value="2"
+                                    class="form-check-input"
+                                  />
+                                  <label for="type" class="form-label"
+                                    >Bank</label
+                                  >
+                                </div>
+                                <div class="form-check">
+                                  <input
+                                    type="radio"
+                                    [(ngModel)]="cash_mode"
+                                    name="type"
+                                    id="type"
+                                    value="3"
+                                    class="form-check-input"
+                                  />
+                                  <label for="type" class="form-label"
+                                    >Digital Payment</label
+                                  >
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Date -->
+                      <div class="col-lg-12" *ngIf="cash_mode == 2">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="supplier" class="form-label"
+                                >Bank <span class="sub-text">Name</span></label
+                              >
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="input-group right xs">
+                                <input
+                                  type="text"
+                                  name="bankname"
+                                  id="bankname"
+                                  class="form-control xs"
+                                  readonly
+                                  (click)="open_bank()"
+                                />
+                                <span class="input-group-text xs"
+                                  ><i class="icon icon-search-gray"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12" *ngIf="cash_mode == 2">
+                        <div class="row gx-3 gy-3">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >Bank Account No.</label
+                              >
+                              <p class="desc">690067890567</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label"
+                                >Account Head Code</label
+                              >
+                              <p class="desc">450101001</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">Branch</label>
+                              <p class="desc">Kesavadasapuram</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12" *ngIf="cash_mode == 3">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="supplier" class="form-label"
+                                >Transaction No
+                                <span class="sub-text">referenceNo</span></label
+                              >
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="input-group right xs">
+                                <input
+                                  type="text"
+                                  name="reference_no"
+                                  id="reference_no"
+                                  class="form-control xs"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row form-row bg-box">
+                      <h6 class="head">Instrument Details</h6>
+                      <!--Invoice no -->
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="cheque" class="form-label"
+                                >Cheque No</label
+                              >
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="row gx-1 gy-1">
+                                <div class="col-6">
+                                  <input
+                                    type="text"
+                                    name="cheque"
+                                    id="chequee"
+                                    class="form-control xs"
+                                    value="4002015"
+                                  />
+                                </div>
+                                <div class="col-6">
+                                  <div class="form-group">
+                                    <div class="date-picker-wrap">
+                                      <input
+                                        class="form-control xs"
+                                        placeholder="Date"
+                                        [matDatepicker]="picker"
+                                        [(ngModel)]="selectedDate"
+                                        (focus)="picker.open()"
+                                      />
+
+                                      <mat-datepicker-toggle
+                                        matSuffix
+                                        [for]="picker"
+                                      ></mat-datepicker-toggle>
+                                      <mat-datepicker #picker></mat-datepicker>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Date -->
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="date" class="form-label"
+                                >Instrument Type</label
+                              >
+                            </div>
+                            <div class="col-9 right-side">
+                              <div class="select-wrap">
+                                <select
+                                  [(ngModel)]="selectedType"
+                                  class="form-select xs"
+                                >
+                                  <option
+                                    *ngFor="let option of instrument_options"
+                                    [value]="option.id"
+                                  >
+                                    {{ option.label }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label for="sales" class="form-label"
+                                >Drawn
+                                <span class="sub-text"
+                                  >Bank / Branch</span
+                                ></label
+                              >
+                            </div>
+
+                            <div class="col-9 right-side">
+                              <input
+                                type="text"
+                                name="cash"
+                                id="sales"
+                                class="form-control xs"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- transaction etails wrap outside form-body -->
+                  <div class="transaction-details-wrap sticky-bottom b-top">
+                    <div class="item-row border-bottom-0">
+                      <div class="discount-item">
+                        <div class="item">
+                          <h6 class="head">Counter</h6>
+                          <h5 class="desc summary-text">One</h5>
+                        </div>
+                      </div>
+
+                      <div class="discount-item">
+                        <div class="item">
+                          <h6 class="head">Staff</h6>
+                          <h5 class="desc summary-text">Patricia Sanders</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <!-- right column -->
+              <div class="col-md-8 right-column position-relative">
+                <div
+                  class="multiple-contents-wrap sticky-bottom-widget-include receipts"
+                >
+                  <!-- input-boxes -->
+                  <div class="p-box input-boxes-wrap pb-0">
+                    <div class="item md">
+                      <div class="form-group">
+                        <label for="code" class="form-label">Head Code</label>
+                        <input
+                          type="text"
+                          class="form-control xs"
+                          name="code"
+                          id="code"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="item lg">
+                      <div class="form-group">
+                        <label for="ahead" class="form-label"
+                          >Account Head</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control xs"
+                          name="ahead"
+                          id="ahead"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="item md">
+                      <div class="form-group">
+                        <label for="year" class="form-label">Year</label>
+                        <input
+                          type="text"
+                          class="form-control xs"
+                          name="year"
+                          id="year"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="item md">
+                      <div class="form-group">
+                        <label for="period" class="form-label">Period</label>
+                        <input
+                          type="text"
+                          class="form-control xs"
+                          name="period"
+                          id="period"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="item md">
+                      <div class="form-group">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          class="form-control xs"
+                          name="amount"
+                          id="amount"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="item add-btn-item">
+                      <div class="button-wrap">
+                        <button
+                          class="btn btn-outline-primary-90 xs add-btn btn-flex"
+                        >
+                          <i class="icon icon-add-fin"></i>
+                          <span class="text">Add</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- table outer wrap -->
+                  <div class="table-outer-wrap relative">
+                    <div>
+                      <div class="table-wrap file-box-wrap pagination-included">
+                        <table
+                          mat-table
+                          [dataSource]="dataSource"
+                          class="w-100 admin-table file-table"
+                          style="height: calc(100vh - 20rem)"
+                        >
+                          <!-- Sl Column -->
+                          <ng-container matColumnDef="sl">
+                            <th mat-header-cell *matHeaderCellDef>Sl</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.sl }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Head Code Column -->
+                          <ng-container matColumnDef="headCode">
+                            <th mat-header-cell *matHeaderCellDef>Head Code</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.headCode }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Head Column -->
+                          <ng-container matColumnDef="head">
+                            <th mat-header-cell *matHeaderCellDef>Head</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.head }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Year Column -->
+                          <ng-container matColumnDef="year">
+                            <th mat-header-cell *matHeaderCellDef>Year</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.year }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Period Column -->
+                          <ng-container matColumnDef="period">
+                            <th mat-header-cell *matHeaderCellDef>Period</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.period }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Amount Column -->
+                          <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef>Amount</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.amount }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Header and Row Definitions -->
+                          <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                          ></tr>
+                          <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                          ></tr>
+                        </table>
+
+                        <!-- MatPaginator for Pagination -->
+                        <mat-paginator
+                          [pageSizeOptions]="[5, 10, 25, 100]"
+                          showFirstLastButtons
+                        ></mat-paginator>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- transaction etails wrap -->
+                <div class="transaction-details-wrap sticky-bottom">
+                  <!-- each row -->
+
+                  <div class="item-row total-row">
+                    <div class="discount-item">
+                      <div class="item">
+                        <h6 class="head">Summary</h6>
+                        <h5 class="desc summary-text">
+                          2020 2nd half to 2024 Ist half
+                        </h5>
+                      </div>
+                    </div>
+
+                    <div class="discount-item">
+                      <div class="item">
+                        <h6 class="head">Round Off</h6>
+                        <h5 class="desc">0.00</h5>
+                      </div>
+                    </div>
+
+                    <div class="total-item item">
+                      <h6 class="head">Grand Total</h6>
+                      <h5 class="desc">
+                        ₹ <span class="amount">23,980.00</span>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="card-footer">
-                <div class="card-action-wrap">
-                    <!-- <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="card-action-wrap">
+          <!-- <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
                             class="icon icon-print-fin"></i> Print</button>
                     <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
                             class="icon icon-fin-copy"></i> Copy to Record</button> -->
-                    <button type="button" class="btn btn-outline-primary-90 sm new-btn">New</button>
-                    <button type="button" class="btn btn-primary-90 sm save-btn">Save</button>
-                </div>
-            </div>
+          <button type="button" class="btn btn-outline-primary-90 sm new-btn">
+            New
+          </button>
+          <button type="button" class="btn btn-primary-90 sm save-btn">
+            Save
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
