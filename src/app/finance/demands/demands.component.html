@@ -67,7 +67,9 @@
                                   name="transaction_type"
                                   id="transaction_type"
                                   class="form-control xs"
-                                  [(ngModel)]="selectedTransactionType.trans_type"
+                                  [(ngModel)]="
+                                    selectedTransactionType.trans_type
+                                  "
                                   (dblclick)="open_transactions()"
                                   #transactionType
                                   readonly
@@ -162,7 +164,9 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">Name</label>
-                              <p class="desc">Alex David</p>
+                              <p class="desc">
+                                {{ selectedApplicant.name || "—" }}
+                              </p>
                             </div>
                           </div>
                           <!-- <div class="col-md-6">
@@ -174,7 +178,9 @@
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">Mobile</label>
-                              <p class="desc">+91 8956 235 125</p>
+                              <p class="desc">
+                                {{ selectedApplicant.mobile || "—" }}
+                              </p>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -182,7 +188,9 @@
                               <label for="" class="form-label"
                                 >House/Building Name</label
                               >
-                              <p class="desc">Yamuna</p>
+                              <p class="desc">
+                                {{ selectedApplicant.building || "—" }}
+                              </p>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -190,7 +198,9 @@
                               <label for="" class="form-label"
                                 >Zone/Ward/Door no.</label
                               >
-                              <p class="desc">2/3104/145</p>
+                              <p class="desc">
+                                {{ selectedApplicant.profile_code || "—" }}
+                              </p>
                             </div>
                           </div>
 
@@ -199,7 +209,9 @@
                               <label for="" class="form-label"
                                 >Main Place</label
                               >
-                              <p class="desc">Kesavadasapuram</p>
+                              <p class="desc">
+                                {{ selectedApplicant.main_place || "—" }}
+                              </p>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -207,19 +219,27 @@
                               <label for="" class="form-label"
                                 >Post/Pin Code</label
                               >
-                              <p class="desc">695587</p>
+                              <p class="desc">
+                                {{ selectedApplicant.post || "—" }}/{{
+                                  selectedApplicant.pin || "—"
+                                }}
+                              </p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">District</label>
-                              <p class="desc">Thiruvananthapuram</p>
+                              <p class="desc">
+                                {{ selectedApplicant.district || "—" }}
+                              </p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">State</label>
-                              <p class="desc">Kerala</p>
+                              <p class="desc">
+                                {{ selectedApplicant.state || "—" }}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -729,7 +749,11 @@
                             class="icon icon-print-fin"></i> Print</button>
                     <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
                             class="icon icon-fin-copy"></i> Copy to Record</button> -->
-          <button type="button" class="btn btn-outline-primary-90 sm new-btn" (click)="addNew()">
+          <button
+            type="button"
+            class="btn btn-outline-primary-90 sm new-btn"
+            (click)="addNew()"
+          >
             New
           </button>
           <button type="button" class="btn btn-primary-90 sm save-btn">

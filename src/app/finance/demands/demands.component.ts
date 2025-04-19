@@ -30,6 +30,7 @@ export class DemandsComponent {
   selectedOption: any;
   selectedTransactionType: any = {};
   selectedPropertyTax: any = {};
+  selectedApplicant: any = {};
   selectedBank: any = {};
   selectedType: any = {};
   instrument_options = [
@@ -61,6 +62,17 @@ export class DemandsComponent {
       type_id: null,
       trans_type: null,
       short_desc: null,
+    };
+    this.selectedApplicant = {
+      name: null,
+      email: null,
+      mobile: null,
+      building: null,
+      main_place: null,
+      post: null,
+      pin: null,
+      district: null,
+      state: null,
     };
     this.selectedPropertyTax = {
       type_id: null,
@@ -211,7 +223,20 @@ export class DemandsComponent {
       width: '1130px',
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
+      console.log("Applicant",response);
       if (response && response.data) {
+        const userData = response.data;
+        this.selectedApplicant = {
+          name: userData.name,
+          email: userData.email,
+          mobile: userData.mobile,
+          building: userData.building,
+          main_place: userData.main_place,
+          post: userData.post,
+          pin: userData.pin,
+          district: userData.district,
+          state: userData.state,
+        };
       }
     });
   }
