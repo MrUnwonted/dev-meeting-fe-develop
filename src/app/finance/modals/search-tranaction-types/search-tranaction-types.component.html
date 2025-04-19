@@ -40,7 +40,15 @@
         <ng-container matColumnDef="transaction_type">
           <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.transaction_type }}
+            {{ element.trans_type }}
+          </td>
+        </ng-container>
+
+        <!-- Short Description Column -->
+        <ng-container matColumnDef="short_desc">
+          <th mat-header-cell *matHeaderCellDef>Short Description</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.short_desc }}
           </td>
         </ng-container>
 

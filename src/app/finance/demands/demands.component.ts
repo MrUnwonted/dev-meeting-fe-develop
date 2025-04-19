@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,6 +15,7 @@ import { SearchPropertyTaxComponent } from '../modals/search-property-tax/search
 export class DemandsComponent {
   trn_list: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('transactionType') transactionType!: ElementRef;
 
   displayedColumns: string[] = [
     'sl',
@@ -28,6 +29,8 @@ export class DemandsComponent {
   selectedDate: Date | null = null;
   selectedOption: any;
   selectedTransactionType: any = {};
+  selectedPropertyTax: any = {};
+  selectedBank: any = {};
   selectedType: any = {};
   instrument_options = [
     { id: 1, label: 'DD' },
@@ -37,6 +40,7 @@ export class DemandsComponent {
     { id: 1, label: 'Direct Collection' },
     { id: 2, label: 'OutDoor Collection' },
   ];
+  information: any = {};
 
   selected_collection_option: any;
 
@@ -48,6 +52,28 @@ export class DemandsComponent {
   }
 
   ngOnInit() {
+    this.init();
+    this.addNew();
+  }
+
+  init() {
+    this.selectedTransactionType = {
+      type_id: null,
+      trans_type: null,
+      short_desc: null,
+    };
+    this.selectedPropertyTax = {
+      type_id: null,
+    };
+    this.selectedBank = {
+      bank_code: null,
+      bank: null,
+      acc_no: null,
+      short_desc: null,
+      unit: null,
+      branch: null,
+      head_code: null,
+    };
     this.trn_list = [
       {
         sl: 1,
@@ -114,13 +140,20 @@ export class DemandsComponent {
         amount: 5020,
       },
     ];
-    this.init();
     this.dataSource = new MatTableDataSource(this.trn_list);
+    this.dataSource.paginator = this.paginator;
+
+    // Scroll to the Unit input field
+    setTimeout(() => {
+      this.transactionType?.nativeElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 100);
   }
 
-  init() {
-    this.selectedTransactionType = { TnType: null };
-    this.dataSource.paginator = this.paginator;
+  addNew() {
+    this.init();
   }
 
   fetch_trn_list() {}
@@ -138,8 +171,14 @@ export class DemandsComponent {
     dialogRef?.afterClosed().subscribe((response: any) => {
       if (response && response.data) {
         const userData = response.data;
-        this.selectedTransactionType.TnType =  userData.transaction_type;
-        if (response.data.id.toString() == '2') {
+        this.selectedTransactionType = {
+          type_id: userData.type_id,
+          trans_type: userData.trans_type,
+          short_desc: userData.short_desc,
+        };
+        if (
+          response.data.trans_type.toString() === 'Property Tax Collection '
+        ) {
           this.search_property_tax();
         }
         console.log(response);
@@ -153,6 +192,16 @@ export class DemandsComponent {
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
       if (response && response.data) {
+        const userData = response.data;
+        this.selectedBank = {
+          bank_code: userData.vch_bank_code,
+          bank: userData.vch_bank,
+          acc_no: userData.vch_acc_no,
+          short_desc: userData.vch_short_desc,
+          unit: userData.vch_unit,
+          branch: userData.vch_branch,
+          head_code: userData.vch_head_code,
+        };
       }
     });
   }
@@ -173,6 +222,8 @@ export class DemandsComponent {
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
       if (response && response.data) {
+        const userData = response.data;
+        this.selectedPropertyTax.type_id = userData.type_id;
       }
     });
   }

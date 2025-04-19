@@ -19,7 +19,7 @@ export class SearchTranactionTypesComponent {
   selected_rec: any;
   transaction_list: any = [];
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['slNo', 'transaction_type'];
+  displayedColumns: string[] = ['slNo', 'transaction_type','short_desc'];
   activeRowIndex: any;
   rowColors: string[] = [];
   transaction_options: any = [];
@@ -47,16 +47,7 @@ export class SearchTranactionTypesComponent {
   ) {}
 
   ngOnInit(): void {
-    this.transaction_options = [
-      { id: 1, transaction_type: 'Ordinary' },
-      { id: 2, transaction_type: 'Property Tax' },
-      { id: 3, transaction_type: 'Profession Tax' },
-      { id: 4, transaction_type: 'Tender Form' },
-      { id: 5, transaction_type: 'Sales Form' },
-      { id: 6, transaction_type: 'Road Cutting Charge' },
-    ];
-    this.dataSource = new MatTableDataSource(this.transaction_options);
-    // this.fetch_transactions();
+    this.fetch_transactions();
   }
 
   ngAfterViewInit() {

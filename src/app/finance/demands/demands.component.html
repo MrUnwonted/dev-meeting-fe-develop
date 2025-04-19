@@ -67,8 +67,10 @@
                                   name="transaction_type"
                                   id="transaction_type"
                                   class="form-control xs"
-                                  [(ngModel)]="selectedTransactionType.TnType"
+                                  [(ngModel)]="selectedTransactionType.trans_type"
                                   (dblclick)="open_transactions()"
+                                  #transactionType
+                                  readonly
                                 />
                                 <span class="input-group-text xs"
                                   ><i class="icon icon-search-gray"></i
@@ -143,7 +145,7 @@
                                   type="text"
                                   name="applicant"
                                   id="applicant"
-                                  (click)="Search_applicant()"
+                                  (dblclick)="Search_applicant()"
                                   class="form-control xs"
                                 />
                                 <span class="input-group-text xs"
@@ -340,8 +342,9 @@
                                   name="bankname"
                                   id="bankname"
                                   class="form-control xs"
+                                  [(ngModel)]="selectedBank.bank"
                                   readonly
-                                  (click)="open_bank()"
+                                  (dblclick)="open_bank()"
                                 />
                                 <span class="input-group-text xs"
                                   ><i class="icon icon-search-gray"></i
@@ -359,7 +362,7 @@
                               <label for="" class="form-label"
                                 >Bank Account No.</label
                               >
-                              <p class="desc">690067890567</p>
+                              <p class="desc">{{ selectedBank.acc_no }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -367,13 +370,13 @@
                               <label for="" class="form-label"
                                 >Account Head Code</label
                               >
-                              <p class="desc">450101001</p>
+                              <p class="desc">{{ selectedBank.head_code }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">Branch</label>
-                              <p class="desc">Kesavadasapuram</p>
+                              <p class="desc">{{ selectedBank.branch }}</p>
                             </div>
                           </div>
                         </div>
@@ -726,7 +729,7 @@
                             class="icon icon-print-fin"></i> Print</button>
                     <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
                             class="icon icon-fin-copy"></i> Copy to Record</button> -->
-          <button type="button" class="btn btn-outline-primary-90 sm new-btn">
+          <button type="button" class="btn btn-outline-primary-90 sm new-btn" (click)="addNew()">
             New
           </button>
           <button type="button" class="btn btn-primary-90 sm save-btn">
