@@ -1,52 +1,67 @@
-<app-common-modal [title]="'Select Transaction Type'" [buttons]="modalButtons" >
+<app-common-modal [title]="'Select Transaction Type'" [buttons]="modalButtons">
+  <div class="search-flex-outer">
+    <div class="left-side"></div>
 
-    <div class="search-flex-outer">
-        <div class="left-side">
-           
-        </div>
-       
-        <div class="right-side">
-
-            <div class="filter-btn search-wrap">
-                <input type="text" name="search" id="search" placeholder="Search" class="form-control sm"
-                (keyup)="applyFilter($event)" #input />
-            </div>
-        </div>
+    <div class="right-side">
+      <div class="filter-btn search-wrap">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Search"
+          class="form-control sm"
+          (keyup)="applyFilter($event)"
+          #input
+        />
       </div>
-      
-    
-      <div class="table-outer-wrap ">      
-       
-    
-        <!-- Table list Start-->
-        <div class="table-wrap file-box-wrap pagination-included" style="height: calc(85vh - 20rem)"  >
-          <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
-    
-            <!-- Sl No Column -->
-            <ng-container matColumnDef="slNo">
-              <th mat-header-cell *matHeaderCellDef> Sl No </th>
-              <td mat-cell *matCellDef="let element = index"> {{ element + 1 + getPaginationOffset() }}
-            </td>
-            </ng-container>
-    
-            <!-- Title Column -->
-            <ng-container matColumnDef="transaction_type">
-              <th mat-header-cell *matHeaderCellDef> Transaction Type</th>
-              <td mat-cell *matCellDef="let element">{{element.transaction_type}}</td>
-            </ng-container>    
-           
-    
-            <!-- Header and Row Definitions -->
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <!-- <tr mat-row *matRowDef="let row; columns: displayedcolumns1;"></tr> -->
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;let i = index" (click)="rowActive(row,i)"
-              [class.active]="activeRowIndex === i"></tr>
-    
-          </table>
-        </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons [pageSize]="10"></mat-paginator>
-    
-        <!-- end of table list-->
-      </div>
+    </div>
+  </div>
 
+  <div class="table-outer-wrap">
+    <!-- Table list Start-->
+    <div
+      class="table-wrap file-box-wrap pagination-included"
+      style="height: calc(85vh - 20rem)"
+    >
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="w-100 admin-table file-table"
+      >
+        <!-- Sl No Column -->
+        <ng-container matColumnDef="slNo">
+          <th mat-header-cell *matHeaderCellDef>Sl No</th>
+          <td mat-cell *matCellDef="let element = index">
+            {{ element + 1 + getPaginationOffset() }}
+          </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="transaction_type">
+          <th mat-header-cell *matHeaderCellDef>Transaction Type</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.transaction_type }}
+          </td>
+        </ng-container>
+
+        <!-- Header and Row Definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <!-- <tr mat-row *matRowDef="let row; columns: displayedcolumns1;"></tr> -->
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns; let i = index"
+          (click)="rowActive(row, i)"
+          [class.active]="activeRowIndex === i"
+          (dblclick)="navigateToSearch()"
+        ></tr>
+      </table>
+    </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      showFirstLastButtons
+      [pageSize]="10"
+    ></mat-paginator>
+
+    <!-- end of table list-->
+  </div>
 </app-common-modal>

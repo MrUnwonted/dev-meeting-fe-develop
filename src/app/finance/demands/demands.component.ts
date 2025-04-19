@@ -27,8 +27,8 @@ export class DemandsComponent {
   dataSource = new MatTableDataSource<any>();
   selectedDate: Date | null = null;
   selectedOption: any;
-
-  selectedType: any;
+  selectedTransactionType: any = {};
+  selectedType: any = {};
   instrument_options = [
     { id: 1, label: 'DD' },
     { id: 2, label: 'Cheque' },
@@ -114,8 +114,13 @@ export class DemandsComponent {
         amount: 5020,
       },
     ];
-
+    this.init();
     this.dataSource = new MatTableDataSource(this.trn_list);
+  }
+
+  init() {
+    this.selectedTransactionType = { TnType: null };
+    this.dataSource.paginator = this.paginator;
   }
 
   fetch_trn_list() {}
@@ -132,6 +137,8 @@ export class DemandsComponent {
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
       if (response && response.data) {
+        const userData = response.data;
+        this.selectedTransactionType.TnType =  userData.transaction_type;
         if (response.data.id.toString() == '2') {
           this.search_property_tax();
         }
