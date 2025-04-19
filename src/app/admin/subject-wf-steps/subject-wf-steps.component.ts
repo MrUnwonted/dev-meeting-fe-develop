@@ -58,10 +58,6 @@ export class SubjectWfStepsComponent {
   }
 
   onRowClick(e: any) {
-
-    console.log(JSON.stringify(e, null, 2)+ "TESTING THIS");
-    
-
     const dialogRef = this.dialog.open(WfChecklistComponent, {
       width: '80%',
       data: {

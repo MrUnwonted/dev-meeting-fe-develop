@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './common-modal.component.html',
   styleUrl: './common-modal.component.scss'
 })
-export class CommonModalComponent {
+export class  CommonModalComponent {
   @Input() title: string = '';
 
   @Input() imageSrc: string = ''; 

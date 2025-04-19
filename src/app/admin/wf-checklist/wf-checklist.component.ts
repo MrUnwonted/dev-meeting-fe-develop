@@ -15,15 +15,15 @@ export class WfChecklistComponent {
 
   bilingual: boolean = environment.bilingual;
   language: any = 'en';
-   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns_en: string[] = ['slNo', 'question', 'yes_ans', 'no_ans', 'edit'];
   displayedColumns_ln: string[] = ['slNo', 'question_ln', 'yes_ans_ln', 'no_ans_ln', 'edit'];
 
-  dataSource: any ;
+  dataSource: any;
   question_ar: any = [];
   step_id: any;
-  flag: any
+  flag: any;
 
 
   title: any = 'Checklist for - ';
@@ -45,10 +45,12 @@ export class WfChecklistComponent {
 
   selected_child: any;
 
-  modalButtons = [
-    { text: 'Cancel', className: 'btn btn-outline-primary-90 xs', action: this.closeModal.bind(this) },
-    { text: 'Save', className: 'btn btn-primary-90 xs', action: this.save.bind(this) },
-  ];
+  modalButtons: any[] = [];
+
+  // modalButtons = [
+  //   { text: 'Cancel', className: 'btn btn-outline-primary-90 xs', action: this.closeModal.bind(this) },
+  //   { text: 'Save', className: 'btn btn-primary-90 xs', action: this.save.bind(this) },
+  // ];
 
   constructor(private dialogRef: MatDialogRef<any>,
     private dialog: MatDialog,
@@ -68,24 +70,21 @@ export class WfChecklistComponent {
   }
 
   ngOnInit(): void {
-    console.log("testing ");
     
+
     if (this.data) {
       console.log(this.data);
       this.title += "(" + this.data.stage + " - " + this.data.step_name + ")";
       this.step_id = this.data.step_id;
       this.flag = this.data.flag
-
-      console.log( this.flag +" testing the flag is working ");
-
-      console.log( this.step_id +" step_id the flag is working ");
-      
       if (this.step_id > 0) {
         this.fetch_checklist();
       }
     }
-    console.log("testing");
-    
+
+    this.modal_buttons()
+  
+
 
   }
 
@@ -94,10 +93,12 @@ export class WfChecklistComponent {
   }
 
   add_question() {
+    console.log(this.validate_formdata());
+
     if (!this.validate_formdata()) {
       return;
     }
-    if (this.selected_child!=null) {
+    if (this.selected_child != null) {
       this.question_ar[this.selected_child] = this.form_data;
     } else {
       this.form_data.order_id = this.question_ar.length + 1;
@@ -115,46 +116,70 @@ export class WfChecklistComponent {
   }
 
   validate_formdata() {
-    if (this.form_data.questions == '' || this.form_data.questions.trim().length === 0) {
+
+    if (this.form_data.questions === '' || this.form_data.questions.trim().length === 0) {
       this.show_error = true;
       this.msg = "Enter Question !!"
       return false;
-    } else if ((this.form_data.questions_ln == '' && this.bilingual) || (this.form_data.questions_ln?.trim().length === 0 && this.bilingual)) {
-      this.show_error = true;
-      this.msg = "Enter Question(മലയാളം)!!"
-      return false;
-    } else if (this.form_data.yes_ans == '' || this.form_data.yes_ans.trim().length === 0) {
+    } else if (this.form_data.yes_ans === '' || this.form_data.yes_ans.trim().length === 0) {
       this.show_error = true;
       this.msg = "Enter answer relevant to option-Yes!!"
       return false;
-    } else if ((this.form_data.yes_ans_ln == '' && this.bilingual) || (this.form_data.yes_ans_ln?.trim().length === 0 && this.bilingual)) {
-      this.show_error = true;
-      this.msg = "Enter answer relevant to option-Yes(മലയാളം)!!";
-      return false;
-    } if (this.form_data.no_ans == '' || this.form_data.no_ans.trim().length === 0) {
+    } if (this.form_data.no_ans === '' || this.form_data.no_ans.trim().length === 0) {
       this.show_error = true;
       this.msg = "Enter answer relevant to option-No!!"
       return false;
-    } else if ((this.form_data.no_ans_ln == '' && this.bilingual) || (this.form_data.no_ans_ln?.trim().length === 0 && this.bilingual)) {
-      this.show_error = true;
-      this.msg = "Enter answer relevant to option-No(മലയാളം)!!";
-      return false;
+    }
+
+    if (this.bilingual) {
+      return this.bilingual_validation()
     }
     return true;
   }
 
+  bilingual_validation() {
+
+    if (this.form_data.questions_ln === undefined || this.form_data.questions_ln === null || this.form_data.questions_ln?.trim().length === 0) {
+      this.show_error = true;
+      this.msg = "Enter Question(മലയാളം)!!"
+      return false;
+    } else if (this.form_data.yes_ans_ln === undefined || this.form_data.yes_ans_ln === null || this.form_data.yes_ans_ln?.trim().length === 0) {
+      this.show_error = true;
+      this.msg = "Enter answer relevant to option-Yes(മലയാളം)!!";
+      return false;
+    } else if (this.form_data.no_ans_ln === undefined || this.form_data.no_ans === null || this.form_data.no_ans_ln?.trim().length === 0) {
+      this.show_error = true;
+      this.msg = "Enter answer relevant to option-No(മലയാളം)!!";
+      return false;
+    }
+
+    return true
+
+  }
+
   row_click(row: any): void {
+    this.clear_error_flg()
+
     console.log(row);
+
     let index = row.order_id;
-    this.form_data = { ...row }; 
- 
-    this.selected_child= parseInt(row.order_id)-1;
+    this.form_data = { ...row };
+
+    this.selected_child = parseInt(row.order_id) - 1;
     console.log(this.selected_child);
-   // let step = this.question_ar.find((obj: any) => obj.order_id == index);
+    // let step = this.question_ar.find((obj: any) => obj.order_id == index);
   }
 
 
   clear_form(): void {
+    console.log(this.form_data);
+  
+    const hasValues = Object.values(this.form_data).some(value => value !== '' && value !== null);
+  
+    if (hasValues) {
+      this.clear_error_flg();
+    }
+  
     this.form_data = {
       questions: '',
       questions_ln: '',
@@ -165,31 +190,43 @@ export class WfChecklistComponent {
       id: null,
       order_id: ''
     };
-
-    this.selected_child = null
+  
+    this.selected_child = null;
   }
+  
 
-    delete_item(row: any) {
-    console.log(row);
+  delete_item(row: any) {
     const index = this.question_ar.findIndex((item: any) => item.order_id === row.order_id);
+  
+  
     if (index > -1) {
-        this.question_ar.splice(index, 1);
-        // Reassign order_id
-        this.question_ar.forEach((item: any, idx: number) => {
-            item.order_id = idx + 1;
-        });
-        this.dataSource = new MatTableDataSource(this.question_ar);
+      const deletedItem = this.question_ar[index];
+
+      console.log(deletedItem.id + " id checking ");
+      
+      this.question_ar.splice(index, 1);
+  
+      this.question_ar.forEach((item: any, idx: number) => {
+        item.order_id = idx + 1;
+      });
+  
+      if (deletedItem.id == this.form_data.id) {
+        this.clear_form();
+      }
+  
+      this.dataSource = new MatTableDataSource(this.question_ar);
     }
-}
+  }
+  
 
 
   save() {
-    
-  if (this.question_ar.length === 0) {
-    this.openCustomSnackbar('error', 'Please add at least one data to save.');
-    return;
-  }
-    console.log(this.question_ar);
+
+    if (this.question_ar.length === 0) {
+      this.openCustomSnackbar('error', 'Please add at least one data to save.');
+      return;
+    }
+    console.log(JSON.stringify(this.question_ar, null, 2));
     let param = {
       "step_id": this.step_id,
       "child": this.question_ar
@@ -213,6 +250,9 @@ export class WfChecklistComponent {
       "step_id": this.step_id
     }
 
+    console.log(this.flag);
+    
+
     this.commonsvr.postservice('api/v0/get_wf_checklists', param).subscribe((res: any) => {
       console.log(res);
       res.forEach((element: any) => {
@@ -231,7 +271,8 @@ export class WfChecklistComponent {
       });
 
       this.dataSource = new MatTableDataSource(this.question_ar);
-
+      console.log("testing");
+      
     })
 
   }
@@ -249,4 +290,20 @@ export class WfChecklistComponent {
     //   panelClass: ['custom-toast']
     // });
   }
+
+  modal_buttons() {
+    this.modalButtons = [
+      { text: 'Cancel', className: 'btn btn-outline-primary-90 xs', action: this.closeModal.bind(this) },
+    ];
+
+    if (this.flag === null) {
+      this.modalButtons.push({
+        text: 'Save',
+        className: 'btn btn-primary-90 xs',
+        action: this.save.bind(this),
+      });
+    }
+  }
+  
+
 }

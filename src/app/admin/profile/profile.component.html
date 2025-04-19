@@ -1,0 +1,386 @@
+<div class="inward-card-container">
+    <app-cards [cardClass]="'card widget-card new-inward-card profile-card'">
+        
+        <div card-header>
+            <div class="heading-wrap">
+                <h6 class="head semi-bold">Profile</h6>
+            </div>
+        </div>
+
+        <div card-body>
+            
+            <div class="profile-edit-wrap-outer" >
+                <div class="row gy-3 gx-3 profile-row">
+            
+                    <!-- left col -->
+                    <div class="col-md-6 col-xl-6 col-xxl-6 left-column">
+                        <div class="" >
+                            <div class="left-side-content">
+
+                                <!-- profile image -->
+                                <div class="profile-image-wrap-outer">
+                                    <div class="profile-image-wrap">
+                                        <img [src]="sel_record.img || '../../assets/public//image/png/dummy-avatar-2.png.png'" alt="profile-image" class="profile-image" >
+
+                                        <a role="button" class="edit-btn"><i class="icon icon-edit-blue"></i></a>
+                                    </div>
+                                </div>
+                            
+                                <!-- edit content -->
+                                 <div class="details-content">
+                                    <div class="item-outer personal-details">
+                                        <form action="" class="document-form">
+                                           <div class="row gy-2 gx-2">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="full-name" class="form-label">Full name</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                        <input type="text" name="full-name" id="full-name" class="form-control xs" [(ngModel)]="sel_record.username">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="mobile-no" class="form-label">Mobile No</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                        <input type="tel" name="mobile-no" [(ngModel)]="sel_record.mob" id="mobile-no" class="form-control xs">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="email-id" class="form-label">Email ID</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                        <input type="email" name="email-id" id="email-id" [(ngModel)]="sel_record.email" class="form-control xs">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="dob" class="form-label">Date of Birth</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                        <input type="date" name="dob" id="dob" [(ngModel)]="sel_record.dob" class="form-control xs">
+                                                    </div>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="gender" class="form-label">Gender</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                       <div class="check-wrap-outer">
+                                                            
+
+
+                                                            <div class="form-check">
+                                                                <input type="radio" name="data_details.gender" [value]=sel_record.gender
+                                                                    id="1" class="form-check-input" [checked]="sel_record.gender == 1">
+                                                                <label for="male"
+                                                                    class="form-label">Male</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input type="radio" name="data_details.gender"
+                                                                    id="2"[value]="sel_record.gender"
+                                                                    class="form-check-input" [checked]="sel_record.gender == 2">
+                                                                <label for="male"
+                                                                    class="form-label">Female</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input type="radio" name="data_details.gender"
+                                                                    id="3"  [value]="sel_record.gender"
+                                                                    class="form-check-input" [checked]="sel_record.gender == 3">
+                                                                <label for="male"
+                                                                    class="form-label">Other</label>
+                                                            </div>
+                                                       </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <div class="left-side">
+                                                        <label for="parent-guardian" class="form-label">Parent/Guardian</label>
+                                                    </div>
+                                                    <div class="right-side">
+                                                        <input type="text" name="parent-guardian" id="parent-guardian"  [(ngModel)]="sel_record.guardian" class="form-control xs">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                           </div>
+                                        </form>
+                                    </div>
+                            
+                                    <div class="item-outer address-details">
+                                       <div class="tabs-wrap-outer">
+                                            <mat-tab-group>
+                                                <mat-tab label="Permanent Address">
+                                                    <form action="" class="document-form">
+                                                        <div class="row gy-2 gx-2">
+                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="ward-no" class="form-label">Ward No</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="ward-no" id="ward-no" [(ngModel)]="sel_record.perm_addr.ward" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="house-name" class="form-label">House No/ Name</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="house-name" id="house-name" [(ngModel)]="sel_record.perm_addr.house" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="local-place" class="form-label">Local Place</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="local-place" id="local-place" [(ngModel)]="sel_record.perm_addr.local" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="main-place" class="form-label">Main Place</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="main-place" id="main-place" [(ngModel)]="sel_record.perm_addr.main" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="street" class="form-label">Street</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="street" id="street"  [(ngModel)]="sel_record.perm_addr.street" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="pin-code" class="form-label">Pin Code</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="pin-code" id="pin-code" [(ngModel)]="sel_record.perm_addr.pin" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="post-office" class="form-label">Post Office</label>
+                                                                    </div>
+                                                                    <div class="right-side"> 
+                                                                        <input type="text" name="post-office" id="post-office" [(ngModel)]="sel_record.perm_addr.post" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <div class="left-side">
+                                                                        <label for="country" class="form-label">Country</label>
+                                                                    </div>
+                                                                    <div class="right-side">
+                                                                        <input type="text" name="country" id="country" [(ngModel)]="sel_record.perm_addr.country" class="form-control xs">
+                                                                    </div>
+                                                                </div>
+                                                            </div>                                                 
+                                                         
+                                                        </div>
+                                                     </form>
+                                                </mat-tab>
+                                                <mat-tab label="Secondary Address">
+                                                    <form action="" class="document-form">
+                                                        <div class="row gy-2 gx-2">
+                                                       <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="ward-no" class="form-label">Ward No</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="ward-no" id="ward-no"  [(ngModel)]="sel_record.curr_addr.ward" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="house-name" class="form-label">House No/ Name</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="house-name" id="house-name" [(ngModel)]="sel_record.curr_addr.house" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="local-place" class="form-label">Local Place</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="local-place" id="local-place" [(ngModel)]="sel_record.curr_addr.local" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="main-place" class="form-label">Main Place</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="main-place" id="main-place" [(ngModel)]="sel_record.curr_addr.main" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="street" class="form-label">Street</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="street" id="street" [(ngModel)]="sel_record.curr_addr.street" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="pin-code" class="form-label">Pin Code</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="pin-code" id="pin-code" [(ngModel)]="sel_record.curr_addr.pin" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="post-office" class="form-label">Post Office</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="post-office" id="post-office" [(ngModel)]="sel_record.curr_addr.post" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <div class="left-side">
+                                                                    <label for="country" class="form-label">Country</label>
+                                                                </div>
+                                                                <div class="right-side">
+                                                                    <input type="text" name="country" id="country"  [(ngModel)]="sel_record.curr_addr.country" class="form-control xs">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                            
+                                                        </div>
+                                                     </form>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                       </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+            
+                    <!-- right col -->
+                    <div class="col-md-6 col-xl-6 col-xxl-6 right-column">                        
+                        <div class="">
+                            <div class="right-side-content">
+                                <div class="heading-wrap"  *ngIf="flg_first">
+                                    <h6 class="head">Uploaded Files</h6>
+                                    <div class="flex-head no-action">
+                                        <div class="document-name-wrap">
+                                            <small class="doc-name"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <app-profile-docs [data_flg]="flag_data" *ngIf="flg_first"></app-profile-docs> -->
+                                <div class="upload-document-wrap item" *ngIf="! flg_first" >
+                                    <div class="heading-wrap">
+                                        <h6 class="head">Upload Files</h6>
+                                        <small class="subhead">Select and upload the files of your choice</small>
+                                    </div>
+                        
+                                    <div class="drop-file-inner"
+                                        (dragover)="onDragOver($event)"
+                                        (dragleave)="onDragLeave($event)"
+                                        (drop)="onDrop($event)"
+                                        [class.drag-over]="isDragOver"
+                                    >
+                                    <input type="text" placeholder="Document Name" class="document-name form-control xs">
+                                    <img src="../../../../../assets/public/image/svg/cloud-add.svg" alt="icon" class="drop-icon">
+                                    <div class="text-wrap">
+                                        <h6 class="head">Choose a file or drag & drop it here</h6>
+                                        <small class="subdesc">JPEG, PNG and PDF formats, up to 50MB</small>
+                                    </div>
+                                    <button class="btn btn-primary-90 sm browse-btn"  (click)="fileInput.click()">Browse File</button>
+                                    <input type="file" #fileInput (change)="onFileSelected($event)" hidden accept=".jpeg, .jpg, .png, .pdf" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+        <div card-footer  class="card-footer-group">
+            <div class="card-action-wrap" >
+                <button type="button" class="btn btn-outline-primary-90 sm">Cancel</button>
+                <button type="button" 
+                type="button" 
+                class="btn btn-primary-90 sm" 
+                (click)="currentStep === 2 ? handleEdit() : handleSave()">
+                {{ currentStep === 2 ? 'Edit' : 'Save' }}
+                </button>
+            </div>
+        </div>
+    </app-cards>
+</div>
