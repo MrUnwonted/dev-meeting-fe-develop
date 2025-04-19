@@ -149,6 +149,7 @@
                                   id="applicant"
                                   (dblclick)="Search_applicant()"
                                   class="form-control xs"
+                                  readonly
                                 />
                                 <span class="input-group-text xs"
                                   ><i class="icon icon-search-gray"></i
@@ -169,12 +170,14 @@
                               </p>
                             </div>
                           </div>
-                          <!-- <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="" class="form-label">Email</label>
-                                                        <p class="desc">dummymail&#64;gmail.com</p>
-                                                    </div>
-                                                </div> -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="form-label">Email</label>
+                              <p class="desc">
+                                {{ selectedApplicant.email || "—" }}
+                              </p>
+                            </div>
+                          </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">Mobile</label>
@@ -183,7 +186,10 @@
                               </p>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <!-- <div
+                            class="col-md-6"
+                            *ngIf="selectedApplicant.building"
+                          >
                             <div class="form-group">
                               <label for="" class="form-label"
                                 >House/Building Name</label
@@ -192,7 +198,7 @@
                                 {{ selectedApplicant.building || "—" }}
                               </p>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label"
@@ -204,7 +210,10 @@
                             </div>
                           </div>
 
-                          <div class="col-md-6">
+                          <!-- <div
+                            class="col-md-6"
+                            *ngIf="selectedApplicant.main_place"
+                          >
                             <div class="form-group">
                               <label for="" class="form-label"
                                 >Main Place</label
@@ -213,8 +222,14 @@
                                 {{ selectedApplicant.main_place || "—" }}
                               </p>
                             </div>
-                          </div>
-                          <div class="col-md-6">
+                          </div> -->
+
+                          <!-- <div
+                            class="col-md-6"
+                            *ngIf="
+                              selectedApplicant.post || selectedApplicant.pin
+                            "
+                          >
                             <div class="form-group">
                               <label for="" class="form-label"
                                 >Post/Pin Code</label
@@ -225,20 +240,43 @@
                                 }}
                               </p>
                             </div>
-                          </div>
-                          <div class="col-md-6">
+                          </div> -->
+
+                          <!-- <div
+                            class="col-md-6"
+                            *ngIf="selectedApplicant.district"
+                          >
                             <div class="form-group">
                               <label for="" class="form-label">District</label>
                               <p class="desc">
                                 {{ selectedApplicant.district || "—" }}
                               </p>
                             </div>
-                          </div>
-                          <div class="col-md-6">
+                          </div> -->
+
+                          <!-- <div class="col-md-6" *ngIf="selectedApplicant.state">
                             <div class="form-group">
                               <label for="" class="form-label">State</label>
                               <p class="desc">
                                 {{ selectedApplicant.state || "—" }}
+                              </p>
+                            </div>
+                          </div> -->
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="form-label">UID</label>
+                              <p class="desc">
+                                {{ selectedApplicant.uid || "—" }}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="form-label">DOB</label>
+                              <p class="desc">
+                                {{ selectedApplicant.dob || "—" }}
                               </p>
                             </div>
                           </div>
@@ -297,7 +335,7 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="type" class="form-label"></label>
+                              <label class="form-label">Payment Type</label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="check-wrap-outer">
@@ -306,11 +344,11 @@
                                     type="radio"
                                     [(ngModel)]="cash_mode"
                                     name="type"
-                                    id="type"
+                                    id="type-cash"
                                     value="1"
                                     class="form-check-input"
                                   />
-                                  <label for="type" class="form-label"
+                                  <label for="type-cash" class="form-label"
                                     >Cash</label
                                   >
                                 </div>
@@ -319,11 +357,11 @@
                                     type="radio"
                                     [(ngModel)]="cash_mode"
                                     name="type"
-                                    id="type"
+                                    id="type-bank"
                                     value="2"
                                     class="form-check-input"
                                   />
-                                  <label for="type" class="form-label"
+                                  <label for="type-bank" class="form-label"
                                     >Bank</label
                                   >
                                 </div>
@@ -332,11 +370,11 @@
                                     type="radio"
                                     [(ngModel)]="cash_mode"
                                     name="type"
-                                    id="type"
+                                    id="type-digital"
                                     value="3"
                                     class="form-check-input"
                                   />
-                                  <label for="type" class="form-label"
+                                  <label for="type-digital" class="form-label"
                                     >Digital Payment</label
                                   >
                                 </div>
@@ -382,7 +420,7 @@
                               <label for="" class="form-label"
                                 >Bank Account No.</label
                               >
-                              <p class="desc">{{ selectedBank.acc_no }}</p>
+                              <p class="desc">{{ selectedBank.acc_no || "—" }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -390,13 +428,13 @@
                               <label for="" class="form-label"
                                 >Account Head Code</label
                               >
-                              <p class="desc">{{ selectedBank.head_code }}</p>
+                              <p class="desc">{{ selectedBank.head_code || "—" }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
                               <label for="" class="form-label">Branch</label>
-                              <p class="desc">{{ selectedBank.branch }}</p>
+                              <p class="desc">{{ selectedBank.branch || "—" }}</p>
                             </div>
                           </div>
                         </div>
@@ -638,7 +676,6 @@
                           mat-table
                           [dataSource]="dataSource"
                           class="w-100 admin-table file-table"
-                          style="height: calc(100vh - 20rem)"
                         >
                           <!-- Sl Column -->
                           <ng-container matColumnDef="sl">
@@ -698,15 +735,14 @@
                             *matRowDef="let row; columns: displayedColumns"
                           ></tr>
                         </table>
-
-                        <!-- MatPaginator for Pagination -->
-                        <mat-paginator
-                          [pageSizeOptions]="[5, 10, 25, 100]"
-                          showFirstLastButtons
-                        ></mat-paginator>
                       </div>
                     </div>
                   </div>
+                  <!-- MatPaginator for Pagination -->
+                  <mat-paginator
+                    [pageSizeOptions]="[5, 10, 25, 100]"
+                    showFirstLastButtons
+                  ></mat-paginator>
                 </div>
 
                 <!-- transaction etails wrap -->

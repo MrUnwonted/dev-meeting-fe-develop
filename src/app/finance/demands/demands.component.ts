@@ -55,6 +55,7 @@ export class DemandsComponent {
   ngOnInit() {
     this.init();
     this.addNew();
+    this.fetch_trn_list();
   }
 
   init() {
@@ -73,6 +74,15 @@ export class DemandsComponent {
       pin: null,
       district: null,
       state: null,
+      addr_id: null,
+      dob: null,
+      gender: null,
+      img: null,
+      img_path: null,
+      profile_code: null,
+      profile_id: null,
+      profile_type: null,
+      uid: null,
     };
     this.selectedPropertyTax = {
       type_id: null,
@@ -86,6 +96,20 @@ export class DemandsComponent {
       branch: null,
       head_code: null,
     };
+    // Scroll to the Unit input field
+    setTimeout(() => {
+      this.transactionType?.nativeElement?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }, 100);
+  }
+
+  addNew() {
+    this.init();
+  }
+
+  fetch_trn_list() {
     this.trn_list = [
       {
         sl: 1,
@@ -154,21 +178,7 @@ export class DemandsComponent {
     ];
     this.dataSource = new MatTableDataSource(this.trn_list);
     this.dataSource.paginator = this.paginator;
-
-    // Scroll to the Unit input field
-    setTimeout(() => {
-      this.transactionType?.nativeElement?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }, 100);
   }
-
-  addNew() {
-    this.init();
-  }
-
-  fetch_trn_list() {}
 
   onOptionChange(value: any): void {
     console.log(value);
@@ -223,7 +233,7 @@ export class DemandsComponent {
       width: '1130px',
     });
     dialogRef?.afterClosed().subscribe((response: any) => {
-      console.log("Applicant",response);
+      console.log('Applicant', response);
       if (response && response.data) {
         const userData = response.data;
         this.selectedApplicant = {
@@ -236,6 +246,15 @@ export class DemandsComponent {
           pin: userData.pin,
           district: userData.district,
           state: userData.state,
+          addr_id: userData.addr_id,
+          dob: userData.dob,
+          gender: userData.gender,
+          img: userData.img,
+          img_path: userData.img_path,
+          profile_code: userData.profile_code,
+          profile_id: userData.profile_id,
+          profile_type: userData.profile_type,
+          uid: userData.uid,
         };
       }
     });
