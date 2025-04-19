@@ -71,7 +71,7 @@ export class BanksComponent {
         this.hasDeactivatedRows = res.some((row: any) => row.tny_flag === 2);
       },
       (error) => {
-        console.error('Error saving Account Head:', error);
+        console.error('Error fetching Table:', error);
         this.showNotification('error', 'Error', 'Error fetching Table');
       }
     );
@@ -259,7 +259,8 @@ export class BanksComponent {
       };
       // Set the combined display value
       this.accountHeadDisplay = `${userData.vch_head_code}-${userData.vch_head}`;
-      // console.log('Selected Row', this.selected_bank.acc_head);
+      console.log('Selected Row', this.selected_bank.acc_head);
+      console.log('Account Head Display', this.accountHeadDisplay);
     });
     // }
   }
@@ -610,7 +611,10 @@ export class BanksComponent {
     //   JSON.parse(JSON.stringify(this.selected_bank.details))
     // );
     this.validateField('unit', this.selected_bank.unit?.unit);
-    this.validateField('bankType', this.selected_bank.bank_type?.secondary_code);
+    this.validateField(
+      'bankType',
+      this.selected_bank.bank_type?.secondary_code
+    );
     this.validateField('accHead', this.selected_bank.acc_head?.head_code);
     this.validateField('bankCode', this.selected_bank.details?.bank_code);
 
@@ -639,7 +643,11 @@ export class BanksComponent {
       !this.selected_bank.details.building &&
       !this.selected_bank.details.street_name &&
       !this.selected_bank.details.place &&
-      !this.selected_bank.details.main_place
+      !this.selected_bank.details.main_place &&
+      !this.selected_bank.details.state_id &&
+      !this.selected_bank.details.dist_id &&
+      !this.selected_bank.details.post &&
+      !this.selected_bank.details.pin
     ) {
       const result = await Swal.fire({
         icon: 'info',

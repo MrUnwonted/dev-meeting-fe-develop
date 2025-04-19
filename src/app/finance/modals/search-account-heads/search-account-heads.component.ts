@@ -66,7 +66,7 @@ export class SearchAccountHeadsComponent {
         result: 'selected data',
         data: this.selected_data,
       });
-      // console.log('Selected Account head:', this.selected_data);
+      console.log('Selected Account head:', this.selected_data);
     } else {
       Swal.fire({
         icon: 'error',

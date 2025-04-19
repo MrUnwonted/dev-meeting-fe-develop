@@ -42,7 +42,6 @@
                               (dblclick)="open_unit()"
                               [(ngModel)]="selected_bank?.unit.unit"
                               [disabled]="isReadOnly && isEnabled"
-                              #unitInput
                               readonly
                             />
                             <span class="input-group-text xs"
@@ -100,9 +99,9 @@
                             (dblclick)="callOpenAccountHeads()"
                             [value]="accountHeadDisplay"
                             [disabled]="isReadOnly && isEnabled"
-                            [(ngModel)]="selected_bank?.acc_head.head_code"
                             readonly
-                          />
+                            />
+                            <!-- [(ngModel)]="selected_bank?.acc_head.head_code" -->
                           <!-- <div class="text-danger" *ngIf="errors.accHead">
                             {{ errors.accHead }}
                           </div> -->
@@ -648,6 +647,7 @@
                                       [(ngModel)]="selected_bank.details.pin"
                                       [readOnly]="isReadOnly && isEnabled"
                                       maxlength="6"
+                                      (keypress)="numberOnly($event)"
                                       (blur)="
                                         validateField(
                                           'pin',

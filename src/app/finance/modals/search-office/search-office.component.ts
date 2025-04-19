@@ -70,7 +70,7 @@ export class SearchOfficeComponent {
       });
     }
   }
-
+// Add a method to check transaction type in future
   fetch_heads() {
     this.svr.fin_getService('api/v0/get_units').subscribe((res: any) => {
       if (res) {
