@@ -1,0 +1,50 @@
+/* Compact date picker style */
+.date-picker-wrap.compact {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .date-picker-wrap.compact .mat-datepicker-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ensures clicks pass through to the actual toggle */
+  }
+  
+  .date-picker-wrap.compact .mat-datepicker-toggle button {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+  
+  .date-picker-wrap.compact input {
+    padding-right: 32px; /* Make space for the icon */
+    width: 100%;
+  }
+  /* Ensure action buttons are visible */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+  border: none;
+}
+
+.icon-delete {
+  color: #dc3545; /* Red color for delete */
+  font-size: 1rem;
+}
+
+.icon-edit {
+  color: #007bff; /* Blue color for edit */
+  font-size: 1rem;
+}
+
+/* Add hover effects */
+.btn-sm:hover .icon-delete {
+  color: #c82333;
+}
+
+.btn-sm:hover .icon-edit {
+  color: #0056b3;
+}

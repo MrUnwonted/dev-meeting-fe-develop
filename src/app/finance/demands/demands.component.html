@@ -13,13 +13,13 @@
               <div class="col-9 left-side">
                 <div class="row gx-1 gy-1">
                   <div class="col-6">
-                    <input type="text" name="demand_no" id="demand_no" class="form-control xs"
-                      placeholder="Demand No" />
+                    <input type="text" name="demand_no" id="demand_no" class="form-control xs" placeholder="Demand No"
+                      readonly [value]="demandNumber" />
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <input type="text" name="demand_dt" id="demand_no" readonly class="form-control xs"
-                      [value]="minDate | date:'dd-MMM-yyyy'" />
+                        [value]="minDate | date:'dd-MMM-yyyy'" />
                     </div>
                   </div>
                 </div>
@@ -466,41 +466,52 @@
                     <div class="item md">
                       <div class="form-group">
                         <label for="code" class="form-label">Head Code</label>
-                        <input type="text" class="form-control xs" name="code" id="code" />
+                        <input type="text" class="form-control xs" name="code" id="code"
+                          [(ngModel)]="selectedHead.head_code" (dblclick)=" callOpenAccountHeads()" />
                       </div>
                     </div>
 
                     <div class="item lg">
                       <div class="form-group">
                         <label for="ahead" class="form-label">Account Head</label>
-                        <input type="text" class="form-control xs" name="ahead" id="ahead" />
+                        <input type="text" class="form-control xs" name="ahead" id="ahead"
+                          [(ngModel)]="selectedHead.head" />
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="year" class="form-label">Year</label>
-                        <input type="text" class="form-control xs" name="year" id="year" />
+                        <!-- <input type="number" class="form-control xs" name="year" id="year"
+                          [(ngModel)]="selectedHead.year" min="1900" max="2100" step="1" (blur)="validateYear()" /> -->
+                        <div class="date-picker-wrap compact">
+                          <input class="form-control xs" placeholder="Select Date" [matDatepicker]="picker"
+                            [(ngModel)]="selectedHead.year" [min]="minDate" (dateChange)="validateYear()"
+                            (click)="picker.open()" /> <!-- important to open on input click -->
+                          <mat-datepicker #picker></mat-datepicker>
+                        </div>
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="period" class="form-label">Period</label>
-                        <input type="text" class="form-control xs" name="period" id="period" />
+                        <input type="text" class="form-control xs" name="period" id="period"
+                          [(ngModel)]="selectedHead.period" />
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="amount" class="form-label">Amount</label>
-                        <input type="number" step="0.01" class="form-control xs" name="amount" id="amount" />
+                        <input type="number" class="form-control xs" name="amount" id="amount"
+                          [(ngModel)]="selectedHead.amount" (blur)="roundOffAmountIfNeeded()" maxlength="6" />
                       </div>
                     </div>
 
                     <div class="item add-btn-item">
                       <div class="button-wrap">
-                        <button class="btn btn-outline-primary-90 xs add-btn btn-flex">
+                        <button class="btn btn-outline-primary-90 xs add-btn btn-flex" (click)="addNewHead()">
                           <i class="icon icon-add-fin"></i>
                           <span class="text">Add</span>
                         </button>
@@ -537,11 +548,10 @@
                             </td>
                           </ng-container>
 
-                          <!-- Year Column -->
                           <ng-container matColumnDef="year">
                             <th mat-header-cell *matHeaderCellDef>Year</th>
                             <td mat-cell *matCellDef="let element">
-                              {{ element.year }}
+                              {{ element.year ? (element.year | date:'dd-MM-yyyy') : '—' }}
                             </td>
                           </ng-container>
 
@@ -561,6 +571,24 @@
                             </td>
                           </ng-container>
 
+                          <!-- Action Column -->
+                          <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef>Action</th>
+                            <td mat-cell *matCellDef="let element; let i = index">
+                              <!-- Edit Icon -->
+                              <button class="btn btn-sm " (click)="editRow(element, i)">
+                                <i class="icon icon-edit"></i>
+                              </button>
+
+                              <!-- Delete Icon -->
+                              <button class="btn btn-sm " (click)="deleteRow(i)">
+                                <i class="icon icon-delete"></i>
+                              </button>
+                            </td>
+                          </ng-container>
+
+
+
                           <!-- Header and Row Definitions -->
                           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -569,7 +597,7 @@
                     </div>
                   </div>
                   <!-- MatPaginator for Pagination -->
-                  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator> -->
                 </div>
 
                 <!-- transaction etails wrap -->
@@ -586,6 +614,15 @@
                       </div>
                     </div>
 
+                    <!-- Total count of item -->
+                    <div class="discount-item">
+                      <div class="item">
+                        <h6 class="head">Total Items</h6>
+                        <h5 class="desc">{{ itemCount }}</h5>
+                      </div>
+                    </div>
+
+
                     <div class="discount-item">
                       <div class="item">
                         <h6 class="head">Round Off</h6>
@@ -595,8 +632,11 @@
 
                     <div class="total-item item">
                       <h6 class="head">Grand Total</h6>
-                      <h5 class="desc">
+                      <!-- <h5 class="desc">
                         ₹ <span class="amount">23,980.00</span>
+                      </h5> -->
+                      <h5 class="desc">
+                        ₹ <span class="amount">{{ grandTotal | number:'1.2-2' }}</span>
                       </h5>
                     </div>
                   </div>
@@ -615,7 +655,7 @@
           <button type="button" class="btn btn-outline-primary-90 sm new-btn" (click)="addNew()">
             New
           </button>
-          <button type="button" class="btn btn-primary-90 sm save-btn">
+          <button type="button" class="btn btn-primary-90 sm save-btn" (click)="save()">
             Save
           </button>
         </div>
