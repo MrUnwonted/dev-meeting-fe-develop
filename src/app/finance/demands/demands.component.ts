@@ -42,14 +42,18 @@ export class DemandsComponent {
     { id: 2, label: 'OutDoor Collection' },
   ];
   information: any = {};
-
-  selected_collection_option: any;
-
-  cash_mode: any;
+  // selected_collection_option: any;
+  selected_collection_option: any = 1;
+  cash_mode = 1; // Default to Cash
+  cashHeadCode = '450100000'; // Example cash head code
+  minDate: Date;
 
   constructor(private dialog: MatDialog) {
     this.selectedOption = 1;
-    this.cash_mode = '1';
+    // Set minimum date to today
+    this.minDate = new Date();
+    // Optional: If you want to include today's date but disable previous dates
+    // this.minDate.setHours(0, 0, 0, 0); // This sets time to midnight to ensure today is included
   }
 
   ngOnInit() {
@@ -95,6 +99,8 @@ export class DemandsComponent {
       unit: null,
       branch: null,
       head_code: null,
+      email: null,
+      ifsc: null
     };
     // Scroll to the Unit input field
     setTimeout(() => {
@@ -107,6 +113,17 @@ export class DemandsComponent {
 
   addNew() {
     this.init();
+  }
+
+  getAccountHead() {
+    switch (this.cash_mode) {
+      case 1: // Cash
+        return this.cashHeadCode;
+      case 2: // Bank
+        return this.selectedBank.head_code || '—';
+      default:
+        return '—';
+    }
   }
 
   fetch_trn_list() {
@@ -223,6 +240,8 @@ export class DemandsComponent {
           unit: userData.vch_unit,
           branch: userData.vch_branch,
           head_code: userData.vch_head_code,
+          ifsc: userData.vch_ifsc,
+          email: userData.vch_email,
         };
       }
     });
@@ -270,5 +289,17 @@ export class DemandsComponent {
         this.selectedPropertyTax.type_id = userData.type_id;
       }
     });
+  }
+
+  numberOnly(event: any): boolean {
+    var regex = new RegExp('^[0-9]');
+    var key = String.fromCharCode(
+      event.charCode ? event.which : event.charCode
+    );
+    if (!regex.test(key)) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 }

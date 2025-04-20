@@ -13,24 +13,13 @@
               <div class="col-9 left-side">
                 <div class="row gx-1 gy-1">
                   <div class="col-6">
-                    <input
-                      type="text"
-                      name="demand_no"
-                      id="demand_no"
-                      class="form-control xs"
-                      placeholder="Demand No"
-                    />
+                    <input type="text" name="demand_no" id="demand_no" class="form-control xs"
+                      placeholder="Demand No" />
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                      <input
-                        type="text"
-                        name="demand_dt"
-                        id="demand_no"
-                        readonly
-                        class="form-control xs"
-                        value="10-04-2025"
-                      />
+                      <input type="text" name="demand_dt" id="demand_no" readonly class="form-control xs"
+                      [value]="minDate | date:'dd-MMM-yyyy'" />
                     </div>
                   </div>
                 </div>
@@ -56,27 +45,15 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="invoice" class="form-label"
-                                >Transaction Type</label
-                              >
+                              <label for="invoice" class="form-label">Transaction Type</label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="input-group right xs">
-                                <input
-                                  type="text"
-                                  name="transaction_type"
-                                  id="transaction_type"
-                                  class="form-control xs"
+                                <input type="text" name="transaction_type" id="transaction_type" class="form-control xs"
                                   [(ngModel)]="
                                     selectedTransactionType.trans_type
-                                  "
-                                  (dblclick)="open_transactions()"
-                                  #transactionType
-                                  readonly
-                                />
-                                <span class="input-group-text xs"
-                                  ><i class="icon icon-search-gray"></i
-                                ></span>
+                                  " (dblclick)="open_transactions()" #transactionType readonly />
+                                <span class="input-group-text xs"><i class="icon icon-search-gray"></i></span>
                               </div>
                             </div>
                           </div>
@@ -93,34 +70,18 @@
                             <div class="col-9 right-side">
                               <div class="row gx-1 gy-1">
                                 <div class="col-4">
-                                  <input
-                                    type="text"
-                                    name="zone"
-                                    id="zone"
-                                    class="form-control xs"
-                                    placeholder="Zone"
-                                  />
+                                  <input type="text" name="zone" id="zone" class="form-control xs" placeholder="Zone" />
                                 </div>
                                 <div class="col-4">
                                   <div class="form-group">
-                                    <input
-                                      type="text"
-                                      name="ward"
-                                      id="ward"
-                                      class="form-control xs"
-                                      placeholder="Ward"
-                                    />
+                                    <input type="text" name="ward" id="ward" class="form-control xs"
+                                      placeholder="Ward" />
                                   </div>
                                 </div>
                                 <div class="col-4">
                                   <div class="form-group">
-                                    <input
-                                      type="text"
-                                      name="doorno"
-                                      id="doorno"
-                                      class="form-control xs"
-                                      placeholder="Door"
-                                    />
+                                    <input type="text" name="doorno" id="doorno" class="form-control xs"
+                                      placeholder="Door" />
                                   </div>
                                 </div>
                               </div>
@@ -136,24 +97,14 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="applicant" class="form-label"
-                                >Applicant</label
-                              >
+                              <label for="applicant" class="form-label">Applicant</label>
                             </div>
 
                             <div class="col-9 right-side">
                               <div class="input-group right xs">
-                                <input
-                                  type="text"
-                                  name="applicant"
-                                  id="applicant"
-                                  (dblclick)="Search_applicant()"
-                                  class="form-control xs"
-                                  readonly
-                                />
-                                <span class="input-group-text xs"
-                                  ><i class="icon icon-search-gray"></i
-                                ></span>
+                                <input type="text" name="applicant" id="applicant" (dblclick)="Search_applicant()"
+                                  class="form-control xs" readonly />
+                                <span class="input-group-text xs"><i class="icon icon-search-gray"></i></span>
                               </div>
                             </div>
                           </div>
@@ -201,9 +152,7 @@
                           </div> -->
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="" class="form-label"
-                                >Zone/Ward/Door no.</label
-                              >
+                              <label for="" class="form-label">Zone/Ward/Door no.</label>
                               <p class="desc">
                                 {{ selectedApplicant.profile_code || "—" }}
                               </p>
@@ -286,45 +235,25 @@
                     <div class="row form-row">
                       <div class="col-lg-12">
                         <div class="select-wrap">
-                          <label for="select" class="form-label"
-                            >Mode of Collection</label
-                          >
-                          <select
-                            [(ngModel)]="selected_collection_option"
-                            class="form-select xs"
-                          >
-                            <option
-                              *ngFor="let option of collection_options"
-                              [value]="option.id"
-                            >
+                          <label for="select" class="form-label">Mode of Collection</label>
+                          <select [(ngModel)]="selected_collection_option" class="form-select xs">
+                            <option *ngFor="let option of collection_options" [value]="option.id">
                               {{ option.label }}
                             </option>
                           </select>
                         </div>
                       </div>
-                      <div
-                        class="col-lg-12"
-                        *ngIf="selected_collection_option == 2"
-                      >
+                      <div class="col-lg-12" *ngIf="selected_collection_option == 2">
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="applicant" class="form-label"
-                                >Bill Collector</label
-                              >
+                              <label for="applicant" class="form-label">Bill Collector</label>
                             </div>
 
                             <div class="col-9 right-side">
                               <div class="input-group right xs">
-                                <input
-                                  type="text"
-                                  name="billcollector"
-                                  id="billcollector"
-                                  class="form-control xs"
-                                />
-                                <span class="input-group-text xs"
-                                  ><i class="icon icon-search-gray"></i
-                                ></span>
+                                <input type="text" name="billcollector" id="billcollector" class="form-control xs" />
+                                <span class="input-group-text xs"><i class="icon icon-search-gray"></i></span>
                               </div>
                             </div>
                           </div>
@@ -340,45 +269,35 @@
                             <div class="col-9 right-side">
                               <div class="check-wrap-outer">
                                 <div class="form-check">
-                                  <input
-                                    type="radio"
-                                    [(ngModel)]="cash_mode"
-                                    name="type"
-                                    id="type-cash"
-                                    value="1"
-                                    class="form-check-input"
-                                  />
-                                  <label for="type-cash" class="form-label"
-                                    >Cash</label
-                                  >
+                                  <input type="radio" [(ngModel)]="cash_mode" name="type" id="type-cash" [value]="1"
+                                    class="form-check-input" />
+                                  <label for="type-cash" class="form-label">Cash</label>
                                 </div>
                                 <div class="form-check">
-                                  <input
-                                    type="radio"
-                                    [(ngModel)]="cash_mode"
-                                    name="type"
-                                    id="type-bank"
-                                    value="2"
-                                    class="form-check-input"
-                                  />
-                                  <label for="type-bank" class="form-label"
-                                    >Bank</label
-                                  >
+                                  <input type="radio" [(ngModel)]="cash_mode" name="type" id="type-bank" [value]="2"
+                                    class="form-check-input" />
+                                  <label for="type-bank" class="form-label">Bank</label>
                                 </div>
                                 <div class="form-check">
-                                  <input
-                                    type="radio"
-                                    [(ngModel)]="cash_mode"
-                                    name="type"
-                                    id="type-digital"
-                                    value="3"
-                                    class="form-check-input"
-                                  />
-                                  <label for="type-digital" class="form-label"
-                                    >Digital Payment</label
-                                  >
+                                  <input type="radio" [(ngModel)]="cash_mode" name="type" id="type-digital" [value]="3"
+                                    class="form-check-input" />
+                                  <label for="type-digital" class="form-label">Digital Payment</label>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Common Account Head Section (always visible) -->
+                      <div class="col-lg-12" *ngIf="cash_mode != 3">
+                        <div class="form-group">
+                          <div class="row form-inner-row">
+                            <div class="col-3 left-side">
+                              <label class="form-label">Account Head</label>
+                            </div>
+                            <div class="col-9 right-side">
+                              <p class="desc">{{ getAccountHead() }}</p>
                             </div>
                           </div>
                         </div>
@@ -389,24 +308,13 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="supplier" class="form-label"
-                                >Bank <span class="sub-text">Name</span></label
-                              >
+                              <label for="supplier" class="form-label">Bank <span class="sub-text">Name</span></label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="input-group right xs">
-                                <input
-                                  type="text"
-                                  name="bankname"
-                                  id="bankname"
-                                  class="form-control xs"
-                                  [(ngModel)]="selectedBank.bank"
-                                  readonly
-                                  (dblclick)="open_bank()"
-                                />
-                                <span class="input-group-text xs"
-                                  ><i class="icon icon-search-gray"></i
-                                ></span>
+                                <input type="text" name="bankname" id="bankname" class="form-control xs"
+                                  [(ngModel)]="selectedBank.bank" readonly (dblclick)="open_bank()" />
+                                <span class="input-group-text xs"><i class="icon icon-search-gray"></i></span>
                               </div>
                             </div>
                           </div>
@@ -417,24 +325,26 @@
                         <div class="row gx-3 gy-3">
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="" class="form-label"
-                                >Bank Account No.</label
-                              >
+                              <label for="" class="form-label">Bank Account No.</label>
                               <p class="desc">{{ selectedBank.acc_no || "—" }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="" class="form-label"
-                                >Account Head Code</label
-                              >
-                              <p class="desc">{{ selectedBank.head_code || "—" }}</p>
+                              <label for="" class="form-label">Bank Branch</label>
+                              <p class="desc">{{ selectedBank.branch || "—" }}</p>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="form-group">
-                              <label for="" class="form-label">Branch</label>
-                              <p class="desc">{{ selectedBank.branch || "—" }}</p>
+                              <label for="" class="form-label">IFSC Code</label>
+                              <p class="desc">{{ selectedBank.ifsc || "—" }}</p>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="" class="form-label">Email</label>
+                              <p class="desc">{{ selectedBank.email || "—" }}</p>
                             </div>
                           </div>
                         </div>
@@ -444,19 +354,13 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="supplier" class="form-label"
-                                >Transaction No
-                                <span class="sub-text">referenceNo</span></label
-                              >
+                              <label for="supplier" class="form-label">Transaction No
+                                <span class="sub-text">referenceNo</span></label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="input-group right xs">
-                                <input
-                                  type="text"
-                                  name="reference_no"
-                                  id="reference_no"
-                                  class="form-control xs"
-                                />
+                                <input type="text" name="reference_no" id="reference_no" class="form-control xs"
+                                  (keypress)="numberOnly($event)" />
                               </div>
                             </div>
                           </div>
@@ -464,43 +368,28 @@
                       </div>
                     </div>
 
-                    <div class="row form-row bg-box">
+                    <div class="row form-row bg-box" *ngIf="cash_mode == 2">
                       <h6 class="head">Instrument Details</h6>
                       <!--Invoice no -->
                       <div class="col-lg-12">
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="cheque" class="form-label"
-                                >Cheque No</label
-                              >
+                              <label for="cheque" class="form-label">Cheque No</label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="row gx-1 gy-1">
                                 <div class="col-6">
-                                  <input
-                                    type="text"
-                                    name="cheque"
-                                    id="chequee"
-                                    class="form-control xs"
-                                    value="4002015"
-                                  />
+                                  <input type="text" name="cheque" id="chequee" class="form-control xs"
+                                    placeholder="4002015" (keypress)="numberOnly($event)" />
                                 </div>
                                 <div class="col-6">
                                   <div class="form-group">
                                     <div class="date-picker-wrap">
-                                      <input
-                                        class="form-control xs"
-                                        placeholder="Date"
-                                        [matDatepicker]="picker"
-                                        [(ngModel)]="selectedDate"
-                                        (focus)="picker.open()"
-                                      />
+                                      <input class="form-control xs" placeholder="Date" [matDatepicker]="picker"
+                                        [(ngModel)]="selectedDate" [min]="minDate" (focus)="picker.open()" />
 
-                                      <mat-datepicker-toggle
-                                        matSuffix
-                                        [for]="picker"
-                                      ></mat-datepicker-toggle>
+                                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                       <mat-datepicker #picker></mat-datepicker>
                                     </div>
                                   </div>
@@ -516,20 +405,12 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="date" class="form-label"
-                                >Instrument Type</label
-                              >
+                              <label for="date" class="form-label">Instrument Type</label>
                             </div>
                             <div class="col-9 right-side">
                               <div class="select-wrap">
-                                <select
-                                  [(ngModel)]="selectedType"
-                                  class="form-select xs"
-                                >
-                                  <option
-                                    *ngFor="let option of instrument_options"
-                                    [value]="option.id"
-                                  >
+                                <select [(ngModel)]="selectedType" class="form-select xs">
+                                  <option *ngFor="let option of instrument_options" [value]="option.id">
                                     {{ option.label }}
                                   </option>
                                 </select>
@@ -543,21 +424,12 @@
                         <div class="form-group">
                           <div class="row form-inner-row">
                             <div class="col-3 left-side">
-                              <label for="sales" class="form-label"
-                                >Drawn
-                                <span class="sub-text"
-                                  >Bank / Branch</span
-                                ></label
-                              >
+                              <label for="sales" class="form-label">Drawn
+                                <span class="sub-text">Bank / Branch</span></label>
                             </div>
 
                             <div class="col-9 right-side">
-                              <input
-                                type="text"
-                                name="cash"
-                                id="sales"
-                                class="form-control xs"
-                              />
+                              <input type="text" name="cash" id="sales" class="form-control xs" />
                             </div>
                           </div>
                         </div>
@@ -588,79 +460,47 @@
 
               <!-- right column -->
               <div class="col-md-8 right-column position-relative">
-                <div
-                  class="multiple-contents-wrap sticky-bottom-widget-include receipts"
-                >
+                <div class="multiple-contents-wrap sticky-bottom-widget-include receipts">
                   <!-- input-boxes -->
                   <div class="p-box input-boxes-wrap pb-0">
                     <div class="item md">
                       <div class="form-group">
                         <label for="code" class="form-label">Head Code</label>
-                        <input
-                          type="text"
-                          class="form-control xs"
-                          name="code"
-                          id="code"
-                        />
+                        <input type="text" class="form-control xs" name="code" id="code" />
                       </div>
                     </div>
 
                     <div class="item lg">
                       <div class="form-group">
-                        <label for="ahead" class="form-label"
-                          >Account Head</label
-                        >
-                        <input
-                          type="text"
-                          class="form-control xs"
-                          name="ahead"
-                          id="ahead"
-                        />
+                        <label for="ahead" class="form-label">Account Head</label>
+                        <input type="text" class="form-control xs" name="ahead" id="ahead" />
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="year" class="form-label">Year</label>
-                        <input
-                          type="text"
-                          class="form-control xs"
-                          name="year"
-                          id="year"
-                        />
+                        <input type="text" class="form-control xs" name="year" id="year" />
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="period" class="form-label">Period</label>
-                        <input
-                          type="text"
-                          class="form-control xs"
-                          name="period"
-                          id="period"
-                        />
+                        <input type="text" class="form-control xs" name="period" id="period" />
                       </div>
                     </div>
 
                     <div class="item md">
                       <div class="form-group">
                         <label for="amount" class="form-label">Amount</label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          class="form-control xs"
-                          name="amount"
-                          id="amount"
-                        />
+                        <input type="number" step="0.01" class="form-control xs" name="amount" id="amount" />
                       </div>
                     </div>
 
                     <div class="item add-btn-item">
                       <div class="button-wrap">
-                        <button
-                          class="btn btn-outline-primary-90 xs add-btn btn-flex"
-                        >
+                        <button class="btn btn-outline-primary-90 xs add-btn btn-flex">
                           <i class="icon icon-add-fin"></i>
                           <span class="text">Add</span>
                         </button>
@@ -672,11 +512,7 @@
                   <div class="table-outer-wrap relative">
                     <div>
                       <div class="table-wrap file-box-wrap pagination-included">
-                        <table
-                          mat-table
-                          [dataSource]="dataSource"
-                          class="w-100 admin-table file-table"
-                        >
+                        <table mat-table [dataSource]="dataSource" class="w-100 admin-table file-table">
                           <!-- Sl Column -->
                           <ng-container matColumnDef="sl">
                             <th mat-header-cell *matHeaderCellDef>Sl</th>
@@ -726,23 +562,14 @@
                           </ng-container>
 
                           <!-- Header and Row Definitions -->
-                          <tr
-                            mat-header-row
-                            *matHeaderRowDef="displayedColumns"
-                          ></tr>
-                          <tr
-                            mat-row
-                            *matRowDef="let row; columns: displayedColumns"
-                          ></tr>
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                         </table>
                       </div>
                     </div>
                   </div>
                   <!-- MatPaginator for Pagination -->
-                  <mat-paginator
-                    [pageSizeOptions]="[5, 10, 25, 100]"
-                    showFirstLastButtons
-                  ></mat-paginator>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                 </div>
 
                 <!-- transaction etails wrap -->
@@ -785,11 +612,7 @@
                             class="icon icon-print-fin"></i> Print</button>
                     <button type="button" class="btn btn-outline-primary-90 sm print-btn"><i
                             class="icon icon-fin-copy"></i> Copy to Record</button> -->
-          <button
-            type="button"
-            class="btn btn-outline-primary-90 sm new-btn"
-            (click)="addNew()"
-          >
+          <button type="button" class="btn btn-outline-primary-90 sm new-btn" (click)="addNew()">
             New
           </button>
           <button type="button" class="btn btn-primary-90 sm save-btn">
